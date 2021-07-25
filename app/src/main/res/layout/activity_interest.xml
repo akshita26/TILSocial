@@ -1,9 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@android:color/white"
+android:fitsSystemWindows="true"
+android:orientation="vertical"
+tools:context=".Interest"
+android:theme="@style/AppTheme.Material">
+
+<com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <include layout="@layout/toolbar" />
+
+</com.google.android.material.appbar.AppBarLayout>
+
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/nested_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Interest">
+    android:scrollbars="none"
+    android:scrollingCache="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_large"
+            android:text="Interests"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@color/grey_80" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_middle"
+            app:singleSelection="false">
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_xxxlarge"
+                android:onClick="onChipClick"
+                android:text="Interest1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60"
+                app:checkedIcon="@drawable/ic_done"
+                app:checkedIconEnabled="true"
+                app:checkedIconTint="@color/grey_60"
+                app:chipEndPadding="@dimen/spacing_large"
+                app:chipStartPadding="@dimen/spacing_large" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_xxxlarge"
+                android:checked="true"
+                android:onClick="onChipClick"
+                android:text="Interest2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60"
+                app:checkedIcon="@drawable/ic_done"
+                app:checkedIconEnabled="true"
+                app:checkedIconTint="@color/grey_60"
+                app:chipEndPadding="@dimen/spacing_large"
+                app:chipStartPadding="@dimen/spacing_large" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_xxxlarge"
+                android:onClick="onChipClick"
+                android:text="Interest3"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60"
+                app:checkedIcon="@drawable/ic_done"
+                app:checkedIconEnabled="true"
+                app:checkedIconTint="@color/grey_60"
+                app:chipEndPadding="@dimen/spacing_large"
+                app:chipStartPadding="@dimen/spacing_large" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_xxxlarge"
+                android:onClick="onChipClick"
+                android:text="Interest4"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60"
+                app:checkedIcon="@drawable/ic_done"
+                app:checkedIconEnabled="true"
+                app:checkedIconTint="@color/grey_60"
+                app:chipEndPadding="@dimen/spacing_large"
+                app:chipStartPadding="@dimen/spacing_large" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_xxxlarge"
+                android:onClick="onChipClick"
+                android:text="Interest5"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60"
+                app:checkedIcon="@drawable/ic_done"
+                app:checkedIconEnabled="true"
+                app:checkedIconTint="@color/grey_60"
+                app:chipEndPadding="@dimen/spacing_large"
+                app:chipStartPadding="@dimen/spacing_large" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_xxxlarge"
+
+                android:onClick="onChipClick"
+                android:text="Interest6"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60"
+                app:checkedIcon="@drawable/ic_done"
+                app:checkedIconEnabled="true"
+                app:checkedIconTint="@color/grey_60"
+                app:chipEndPadding="@dimen/spacing_large"
+                app:chipStartPadding="@dimen/spacing_large" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_xxxlarge"
+                android:onClick="onChipClick"
+                android:text="Interest7"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60"
+                app:checkedIcon="@drawable/ic_done"
+                app:checkedIconEnabled="true"
+                app:checkedIconTint="@color/grey_60"
+                app:chipEndPadding="@dimen/spacing_large"
+                app:chipStartPadding="@dimen/spacing_large" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_xxxlarge"
+                android:onClick="onChipClick"
+                android:text="Interest8"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60"
+                app:checkedIcon="@drawable/ic_done"
+                app:checkedIconEnabled="true"
+                app:checkedIconTint="@color/grey_60"
+                app:chipEndPadding="@dimen/spacing_large"
+                app:chipStartPadding="@dimen/spacing_large" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/spacing_xxxlarge"
+                android:onClick="onChipClick"
+                android:text="Interest9"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60"
+                app:checkedIcon="@drawable/ic_done"
+                app:checkedIconEnabled="true"
+                app:checkedIconTint="@color/grey_60"
+                app:chipEndPadding="@dimen/spacing_large"
+                app:chipStartPadding="@dimen/spacing_large" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

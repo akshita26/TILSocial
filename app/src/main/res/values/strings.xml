@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TIL Social</string>
+    <string name="interests">Interests</string>
+    <string name="interest1">Interest1</string>
+    <string name="interest2">Interest2</string>
+    <string name="interest3">Interest3</string>
+    <string name="interest4">Interest4</string>
+    <string name="interest5">Interest5</string>
+    <string name="interest6">Interest6</string>
+    <string name="interest7">Interest7</string>
+    <string name="interest8">Interest8</string>
+    <string name="interest9">Interest9</string>
 </resources>

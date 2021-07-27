@@ -24,7 +24,7 @@ public class SignUp extends AppCompatActivity {
     Spinner department;
     Spinner team;
     Spinner designation;
-
+//changed temp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

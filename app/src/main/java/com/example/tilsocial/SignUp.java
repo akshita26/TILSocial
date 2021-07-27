@@ -2,23 +2,25 @@ package com.example.tilsocial;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SignUp extends AppCompatActivity {
 
 
 
-    ArrayAdapter DepartmentarrayAdapter;
-    ArrayList DepartmentarrayList;
-    ArrayAdapter TeamarrayAdapter;
-    ArrayList TeamarrayList;
 
-    ArrayAdapter DesignationarrayAdapter;
-    ArrayList DesignationarrayList;
     Spinner department;
     Spinner team;
     Spinner designation;
@@ -33,44 +35,179 @@ public class SignUp extends AppCompatActivity {
         team = findViewById(R.id.spinner5);
         designation = findViewById(R.id.spinner6);
 
-        DepartmentarrayList = new ArrayList();
-        DepartmentarrayList.add("Department1");
-        DepartmentarrayList.add("Department2");
-        DepartmentarrayList.add("Department3");
-        DepartmentarrayList.add("Department4");
-        DepartmentarrayList.add("Department5");
 
-        TeamarrayList = new ArrayList();
-        TeamarrayList.add("Team1");
-        TeamarrayList.add("Team2");
-        TeamarrayList.add("Team3");
-        TeamarrayList.add("Team4");
-        TeamarrayList.add("Team5");
+        //Department Spinner
 
-        DesignationarrayList = new ArrayList();
-        DesignationarrayList.add("designation1");
-        DesignationarrayList.add("designation2");
-        DesignationarrayList.add("designation3");
-        DesignationarrayList.add("designation4");
-        DesignationarrayList.add("designation5");
+        String[] Department = new String[]{
+                "Select Department...",
+                "Department 1",
+                "Department 2",
+                "Department 3",
+                "Department 3"
+        };
 
-        //department Spinner
+        final List<String> DepartmentList = new ArrayList<>(Arrays.asList(Department));
 
-        DepartmentarrayAdapter = new ArrayAdapter(SignUp.this, android.R.layout.simple_list_item_1,DepartmentarrayList);
+        // Initializing an ArrayAdapter
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinnneritem,DepartmentList){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        department.setAdapter(spinnerArrayAdapter);
 
-        department.setAdapter(DepartmentarrayAdapter);
 
-        //Team Spinner
+ //Team spinner
 
-        TeamarrayAdapter = new ArrayAdapter(SignUp.this, android.R.layout.simple_list_item_1,TeamarrayList);
 
-        team.setAdapter(TeamarrayAdapter);
+        String[] Team = new String[]{
+                "Select Team...",
+                "Team 1",
+                "Team 2",
+                "Team 3",
+                "Team 3"
+        };
 
-        //Designation
+        final List<String> TeamList = new ArrayList<>(Arrays.asList(Team ));
 
-        DesignationarrayAdapter = new ArrayAdapter(SignUp.this, android.R.layout.simple_list_item_1,DesignationarrayList);
+        // Initializing an ArrayAdapter
+        final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinnneritem, TeamList){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        team.setAdapter(TeamArrayAdapter);
 
-        designation.setAdapter(DesignationarrayAdapter);
+
+    //designation Spinnner
+
+        String[] Designation = new String[]{
+                "Select Designation...",
+                "Designation 1",
+                "Designation 2",
+                "Designation 3",
+                "Designation 3"
+        };
+
+        final List<String> DesignationList = new ArrayList<>(Arrays.asList(Designation ));
+
+        // Initializing an ArrayAdapter
+        final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinnneritem, DesignationList){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        designation.setAdapter(DesignationArrayAdapter);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }

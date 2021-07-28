@@ -12,6 +12,7 @@ import com.example.tilsocial.databinding.ActivityInterestBinding;
 
 public class Interest extends AppCompatActivity {
     ActivityInterestBinding binding;
+    //changed
 
 
     @Override

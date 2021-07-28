@@ -1,56 +1,119 @@
 package com.example.tilsocial;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SignUp extends AppCompatActivity {
 
-
+public class siggnuppfragment extends Fragment {
 
 
     Spinner department;
     Spinner team;
     Spinner designation;
-//changed temp
+    View view;
+    EditText employeeidd;
+
+
+    public siggnuppfragment()
+    {
+
+    }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
 
-        department = findViewById(R.id.spinner4);
-        team = findViewById(R.id.spinner5);
-        designation = findViewById(R.id.spinner6);
+        view = inflater.inflate(R.layout.fragment_siggnuppfragment, container, false);
 
 
-        //Department Spinner
+        department = view.findViewById(R.id.spinner4);
+        team = view.findViewById(R.id.spinner5);
+        designation = view.findViewById(R.id.spinner6);
+        employeeidd = view.findViewById(R.id.editTextTextPersonName2);
+
+
+     //adding constant text to edit text
+
+        employeeidd.setText("14050435");
+        Selection.setSelection(employeeidd.getText(), employeeidd.getText().length());
+
+
+        employeeidd.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().startsWith("14050435")){
+                    employeeidd.setText("14050435");
+                    Selection.setSelection(employeeidd.getText(), employeeidd.getText().length());
+
+                }
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //department Spinnner
 
         String[] Department = new String[]{
-                "Select Department...",
-                "Department 1",
-                "Department 2",
-                "Department 3",
-                "Department 3"
+                "Select department...",
+                "department 1",
+                "department 2",
+                "department 3",
+                "department 3"
         };
 
-        final List<String> DepartmentList = new ArrayList<>(Arrays.asList(Department));
+        final List<String> departmentList = new ArrayList<>(Arrays.asList(Department));
 
         // Initializing an ArrayAdapter
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                this,R.layout.spinnneritem,DepartmentList){
+        final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
+                getActivity(),R.layout.spinnneritem, departmentList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
@@ -79,12 +142,12 @@ public class SignUp extends AppCompatActivity {
                 return view;
             }
         };
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-        department.setAdapter(spinnerArrayAdapter);
+        DepartmentArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        department.setAdapter(DepartmentArrayAdapter);
 
 
- //Team spinner
 
+        //Team Spinnner
 
         String[] Team = new String[]{
                 "Select Team...",
@@ -94,11 +157,11 @@ public class SignUp extends AppCompatActivity {
                 "Team 3"
         };
 
-        final List<String> TeamList = new ArrayList<>(Arrays.asList(Team ));
+        final List<String> TeamList = new ArrayList<>(Arrays.asList(Team));
 
         // Initializing an ArrayAdapter
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-                this,R.layout.spinnneritem, TeamList){
+                getActivity(),R.layout.spinnneritem, TeamList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
@@ -130,8 +193,7 @@ public class SignUp extends AppCompatActivity {
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         team.setAdapter(TeamArrayAdapter);
 
-
-    //designation Spinnner
+        //designation Spinnner
 
         String[] Designation = new String[]{
                 "Select Designation...",
@@ -145,7 +207,7 @@ public class SignUp extends AppCompatActivity {
 
         // Initializing an ArrayAdapter
         final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
-                this,R.layout.spinnneritem, DesignationList){
+                getActivity(),R.layout.spinnneritem, DesignationList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
@@ -185,29 +247,12 @@ public class SignUp extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
+        return view;
     }
+}
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-    }

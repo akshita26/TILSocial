@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class siggnuppfragment extends Fragment {
     Spinner team;
     Spinner designation;
     View view;
+    EditText employeeidd;
 
 
     public siggnuppfragment()
@@ -49,6 +51,53 @@ public class siggnuppfragment extends Fragment {
         department = view.findViewById(R.id.spinner4);
         team = view.findViewById(R.id.spinner5);
         designation = view.findViewById(R.id.spinner6);
+        employeeidd = view.findViewById(R.id.editTextTextPersonName2);
+
+
+     //adding constant text to edit text
+
+        employeeidd.setText("14050435");
+        Selection.setSelection(employeeidd.getText(), employeeidd.getText().length());
+
+
+        employeeidd.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().startsWith("14050435")){
+                    employeeidd.setText("14050435");
+                    Selection.setSelection(employeeidd.getText(), employeeidd.getText().length());
+
+                }
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //department Spinnner
 

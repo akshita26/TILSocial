@@ -53,62 +53,7 @@
                             android:layout_gravity="center"/>
 
 
-<!--                        //textinput layout1-->
 
-<!--                        <com.google.android.material.textfield.TextInputLayout-->
-<!--                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="20dp"-->
-<!--                            android:focusable="true"-->
-<!--                            app:boxCornerRadiusBottomEnd="30dp">-->
-
-<!--                            <com.google.android.material.textfield.TextInputEditText-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:id="@+id/name"-->
-<!--                                android:hint="Name" />-->
-<!--                        </com.google.android.material.textfield.TextInputLayout>-->
-
-
-<!--                        textinputlayout2-->
-
-<!--                        <com.google.android.material.textfield.TextInputLayout-->
-<!--                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="20dp"-->
-<!--                            android:focusable="true"-->
-<!--                            app:boxCornerRadiusBottomEnd="30dp"-->
-
-<!--                            >-->
-
-<!--                            <com.google.android.material.textfield.TextInputEditText-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:id="@+id/employeeidd"-->
-<!--                                android:hint="Employee Id" />-->
-<!--                        </com.google.android.material.textfield.TextInputLayout>-->
-
-
-
-<!--                        //textinput 3-->
-
-<!--                        <com.google.android.material.textfield.TextInputLayout-->
-<!--                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="20dp"-->
-<!--                            android:focusable="true"-->
-<!--                            app:boxCornerRadiusBottomEnd="30dp">-->
-
-<!--                            <com.google.android.material.textfield.TextInputEditText-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:hint="Bio" />-->
-
-
-<!--                        </com.google.android.material.textfield.TextInputLayout>-->
 
 
                         <EditText

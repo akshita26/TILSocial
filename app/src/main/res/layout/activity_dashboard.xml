@@ -8,7 +8,7 @@
     tools:context=".DashboardActivity">
 
     <FrameLayout
-        android:id="@+id/your_placeholder"
+        android:id="@+id/dashboard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">

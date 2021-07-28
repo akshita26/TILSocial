@@ -45,6 +45,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
         holder.title.setText(modelPost.getUtitle());
         holder.description.setText(modelPost.getDescription());
         holder.time.setText(modelPost.getUtime());
+        holder.like.setText("Likes "+ modelPost.getUlike());
+
 
 
 

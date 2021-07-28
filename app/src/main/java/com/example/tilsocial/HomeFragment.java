@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,10 +16,15 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment {
+
+    RecyclerView recyclerView;
+    List<ModelPost> posts;
+    AdapterPosts adapterPosts;
 
 
 
@@ -38,11 +45,43 @@ public class HomeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
-
-
-
+        recyclerView = view.findViewById(R.id.postrecyclerview);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
+        posts = new ArrayList<>();
+        loadPosts();
+        adapterPosts = new AdapterPosts(getActivity(), posts);
+        recyclerView.setAdapter(adapterPosts);
         return view;
     }
+
+    private void loadPosts() {
+
+
+        ModelPost modelPost = new ModelPost();
+        modelPost.setName("User1");
+        modelPost.setDescription("MyDescription is Here");
+        modelPost.setUimage("imageurl");
+        modelPost.setUlike("20");
+        modelPost.setUtime("1 min");
+        modelPost.setUcomment("comments");
+        modelPost.setUtitle("MYPOST");
+        posts.add(modelPost);
+
+
+
+
+
+    }
+
+//    @Override
+//    public void onCreate( Bundle savedInstanceState) {
+//        setHasOptionsMenu(true);
+//        super.onCreate(savedInstanceState);
+//    }
 
 
 

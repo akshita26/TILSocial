@@ -10,4 +10,6 @@
     <string name="interest7">Interest7</string>
     <string name="interest8">Interest8</string>
     <string name="interest9">Interest9</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

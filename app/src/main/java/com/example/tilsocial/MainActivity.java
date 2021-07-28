@@ -12,13 +12,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        siggnuppfragment siggnuppfragment = new siggnuppfragment();
+        signinfragment signinfragment = new signinfragment();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-        ft.replace(R.id.your_placeholder, siggnuppfragment);
+        ft.replace(R.id.your_placeholder, signinfragment);
 
         ft.commit();
+
 
 
     }

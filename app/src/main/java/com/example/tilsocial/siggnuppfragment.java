@@ -86,19 +86,6 @@ public class siggnuppfragment extends Fragment {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         //department Spinnner
 
         String[] Department = new String[]{

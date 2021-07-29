@@ -25,6 +25,7 @@
                 app:cardCornerRadius="20dp">
 
                 <LinearLayout
+                    android:id="@+id/linearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -53,100 +54,27 @@
                         android:singleLine="true" />
 
                     <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/spacing_middle"
                         app:singleSelection="false">
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/tag1"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/spacing_xxxlarge"
-                            android:text="#tag1"
-                            android:visibility="gone"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                            android:textColor="@color/grey_60"
-                            app:checkedIcon="@drawable/ic_done"
-                            app:checkedIconEnabled="true"
-                            app:checkedIconTint="@color/grey_60"
-                            app:chipEndPadding="@dimen/spacing_medium"
-                            app:chipStartPadding="@dimen/spacing_medium" />
+<!--                        <com.google.android.material.chip.Chip-->
+<!--                            android:id="@+id/tag1"-->
+<!--                            style="@style/Widget.MaterialComponents.Chip.Choice"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="@dimen/spacing_xxxlarge"-->
+<!--                            android:text="#tag1"-->
+<!--                            android:visibility="gone"-->
+<!--                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"-->
+<!--                            android:textColor="@color/grey_60"-->
+<!--                            app:checkedIcon="@drawable/ic_done"-->
+<!--                            app:checkedIconEnabled="true"-->
+<!--                            app:checkedIconTint="@color/grey_60"-->
+<!--                            app:chipEndPadding="@dimen/spacing_medium"-->
+<!--                            app:chipStartPadding="@dimen/spacing_medium" />-->
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/tag2"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/spacing_xxxlarge"
-                            android:text="#tag2"
-                            android:visibility="gone"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                            android:textColor="@color/grey_60"
-                            app:checkedIcon="@drawable/ic_done"
-                            app:checkedIconEnabled="true"
-                            app:checkedIconTint="@color/grey_60"
-                            app:chipEndPadding="@dimen/spacing_medium"
-                            app:chipStartPadding="@dimen/spacing_medium" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/tag3"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/spacing_xxxlarge"
-                            android:text="#tag3"
-                            android:visibility="gone"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                            android:textColor="@color/grey_60"
-                            app:checkedIcon="@drawable/ic_done"
-                            app:checkedIconEnabled="true"
-                            app:checkedIconTint="@color/grey_60"
-                            app:chipEndPadding="@dimen/spacing_medium"
-                            app:chipStartPadding="@dimen/spacing_medium" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/tag4"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/spacing_xxxlarge"
-                            android:text="#tag4"
-                            android:visibility="gone"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                            android:textColor="@color/grey_60"
-                            app:checkedIcon="@drawable/ic_done"
-                            app:checkedIconEnabled="true"
-                            app:checkedIconTint="@color/grey_60"
-                            app:chipEndPadding="@dimen/spacing_medium"
-                            app:chipStartPadding="@dimen/spacing_medium" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/tag5"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/spacing_xxxlarge"
-                            android:text="#tag5"
-                            android:visibility="gone"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                            android:textColor="@color/grey_60"
-                            app:checkedIcon="@drawable/ic_done"
-                            app:checkedIconEnabled="true"
-                            app:checkedIconTint="@color/grey_60"
-                            app:chipEndPadding="@dimen/spacing_medium"
-                            app:chipStartPadding="@dimen/spacing_medium" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/tag6"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/spacing_xxxlarge"
-                            android:text="#tag6"
-                            android:visibility="gone"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                            android:textColor="@color/grey_60"
-                            app:checkedIcon="@drawable/ic_done"
-                            app:checkedIconEnabled="true"
-                            app:checkedIconTint="@color/grey_60"
-                            app:chipEndPadding="@dimen/spacing_medium"
-                            app:chipStartPadding="@dimen/spacing_medium" />
 
                     </com.google.android.material.chip.ChipGroup>
 

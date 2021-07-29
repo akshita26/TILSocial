@@ -72,16 +72,18 @@
                             android:ems="10"
                             android:inputType="textPersonName"
                             android:hint="Employee Id"
-                            android:layout_marginBottom="20dp"/>
+                            android:layout_marginBottom="20dp"
+                            />
 
                         <EditText
                             android:id="@+id/editTextTextPersonName3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:inputType="textPersonName"
+                            android:inputType="textMultiLine"
                             android:hint="Bio"
-                            android:layout_marginBottom="20dp"/>
+                            android:layout_marginBottom="20dp"
+                            android:maxLines="20"/>
 
                         <Spinner
                             android:id="@+id/spinner4"

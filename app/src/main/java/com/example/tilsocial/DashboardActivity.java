@@ -31,7 +31,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         HomeFragment fragment = new HomeFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.your_placeholder, fragment, "");
+        fragmentTransaction.replace(R.id.dashboard, fragment, "");
         fragmentTransaction.commit();
 
 
@@ -47,7 +47,7 @@ public class DashboardActivity extends AppCompatActivity {
                     actionBar.setTitle("Home");
                     HomeFragment fragment = new HomeFragment();
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.your_placeholder, fragment, "");
+                    fragmentTransaction.replace(R.id.dashboard, fragment, "");
                     fragmentTransaction.commit();
                     return true;
 
@@ -55,7 +55,7 @@ public class DashboardActivity extends AppCompatActivity {
                     actionBar.setTitle("Add Post");
                     AddPostFragment fragment1 = new AddPostFragment();
                     FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction1.replace(R.id.your_placeholder, fragment1);
+                    fragmentTransaction1.replace(R.id.dashboard, fragment1);
                     fragmentTransaction1.commit();
                     return true;
 
@@ -63,7 +63,7 @@ public class DashboardActivity extends AppCompatActivity {
                     actionBar.setTitle("Users");
                     ProfileFragment fragment2 = new ProfileFragment();
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction2.replace(R.id.your_placeholder, fragment2, "");
+                    fragmentTransaction2.replace(R.id.dashboard, fragment2, "");
                     fragmentTransaction2.commit();
                     return true;
 

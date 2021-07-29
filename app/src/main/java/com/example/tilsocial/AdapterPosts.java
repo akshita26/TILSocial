@@ -32,7 +32,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
 
 
     public MyHolder onCreateViewHolder( ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.postcardview, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
         return new MyHolder(view);
 
     }
@@ -42,7 +42,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
 
         ModelPost modelPost = modelPosts.get(position);
         holder.name.setText( modelPost.getName());
-        holder.title.setText(modelPost.getUtitle());
+//        holder.title.setText(modelPost.getUtitle());
         holder.description.setText(modelPost.getDescription());
         holder.time.setText(modelPost.getUtime());
         holder.like.setText("Likes "+ modelPost.getUlike());
@@ -70,13 +70,13 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
             super(itemView);
 //            picture = itemView.findViewById(R.id.picturetv);
 //            image = itemView.findViewById(R.id.pimagetv);
-            name = itemView.findViewById(R.id.unametv);
-            time = itemView.findViewById(R.id.utimetv);
+            name = itemView.findViewById(R.id.userprofilename);
+            time = itemView.findViewById(R.id.timeofpost);
 //            more = itemView.findViewById(R.id.morebtn);
-            title = itemView.findViewById(R.id.ptitletv);
-            description = itemView.findViewById(R.id.descript);
-            like = itemView.findViewById(R.id.plikeb);
-            comments = itemView.findViewById(R.id.pcommentco);
+//            title = itemView.findViewById(R.id.PostDescription);
+            description = itemView.findViewById(R.id.PostDescription);
+            like = itemView.findViewById(R.id.nooflikepost);
+            comments = itemView.findViewById(R.id.noofcomment);
 //            likebtn = itemView.findViewById(R.id.like);
 //            comment = itemView.findViewById(R.id.comment);
 //            profile = itemView.findViewById(R.id.profilelayout);

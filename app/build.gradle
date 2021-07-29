@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,8 +31,7 @@ android {
 
         dataBinding true
 
-        // for view binding:
-        // viewBinding true
+
     }
 }
 
@@ -47,6 +47,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.tilsocial;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ public class siggnuppfragment extends Fragment {
     Spinner designation;
     View view;
     EditText employeeidd;
+    Button signuppbtn;
 
 
     public siggnuppfragment()
@@ -52,39 +55,20 @@ public class siggnuppfragment extends Fragment {
         team = view.findViewById(R.id.spinner5);
         designation = view.findViewById(R.id.spinner6);
         employeeidd = view.findViewById(R.id.editTextTextPersonName2);
+        signuppbtn = view.findViewById(R.id.buttonsignup);
 
 
-     //adding constant text to edit text
-
-        employeeidd.setText("14050435");
-        Selection.setSelection(employeeidd.getText(), employeeidd.getText().length());
-
-
-        employeeidd.addTextChangedListener(new TextWatcher() {
+        signuppbtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onClick(View v) {
                 // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(!s.toString().startsWith("14050435")){
-                    employeeidd.setText("14050435");
-                    Selection.setSelection(employeeidd.getText(), employeeidd.getText().length());
-
-                }
-
+                Intent intent = new Intent(getActivity(), DashboardActivity.class);
+                startActivity(intent);
             }
         });
+
+
 
         //department Spinnner
 
@@ -225,15 +209,6 @@ public class siggnuppfragment extends Fragment {
         };
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         designation.setAdapter(DesignationArrayAdapter);
-
-
-
-
-
-
-
-
-
         return view;
     }
 }

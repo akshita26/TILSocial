@@ -50,12 +50,12 @@ public class SigninFragment extends Fragment {
             }
         });
 
-
         signinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DashboardActivity.class);
                 startActivity(intent);
+
             }
         });
 

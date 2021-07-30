@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/feedcardview.xml" value="0.18125" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_add_post.xml" value="0.1" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_profile.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/postcardview.xml" value="0.13697916666666668" />
       </map>
     </option>

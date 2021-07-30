@@ -79,6 +79,8 @@ public class ProfileFragment extends Fragment {
         modelPost.setUcomment("comments");
         modelPost.setUtitle("MYPOST");
         posts.add(modelPost);
+        posts.add(modelPost);
+        posts.add(modelPost);
 
 
     }

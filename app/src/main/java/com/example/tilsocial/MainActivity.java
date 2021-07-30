@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         SigninFragment signinfragment = new SigninFragment();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -30,10 +29,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
 
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".CommentFragment">
 
-    <?xml version="1.0" encoding="utf-8"?>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -199,9 +199,45 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <RelativeLayout
+            android:id="@+id/commentsa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/commentimge"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/profile" />
+
+            <EditText
+                android:id="@+id/typecommet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/sendcomment"
+                android:layout_toEndOf="@id/commentimge"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:hint="Enter Comment..."
+                android:inputType="textCapSentences|textMultiLine"
+                android:padding="15dp" />
+
+            <ImageButton
+                android:id="@+id/sendcomment"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@color/white"
+                android:src="@drawable/icpost" />
+
+        </RelativeLayout>
+
 
 
     </LinearLayout>
+
+
 
 
 

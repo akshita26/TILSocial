@@ -62,7 +62,7 @@
                         android:gravity="center_vertical"
                         android:text="Homer J. Allen"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/grey_90" />
+                        android:textColor="@color/grey_60" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
                             android:gravity="center_vertical"
                             android:text="City, Office"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                            android:textColor="@color/light_blue_400"
+                            android:textColor="@color/blue_grey_600"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -108,7 +108,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/grey_5" />
+                android:background="@color/grey_20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                         android:layout_marginEnd="@dimen/spacing_middle"
                         android:layout_marginRight="@dimen/spacing_middle"
                         app:srcCompat="@drawable/ic_thumb_up"
-                        app:tint="@color/light_green_300" />
+                        app:tint="@color/grey_80" />
 
                     <TextView
                         android:id="@+id/nooflikepost"
@@ -140,7 +140,7 @@
                         android:gravity="center_vertical"
                         android:text="45 likes"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        android:textColor="@color/grey_40" />
+                        android:textColor="@color/grey_60" />
 
                 </LinearLayout>
 
@@ -162,7 +162,7 @@
                         android:layout_marginEnd="@dimen/spacing_middle"
                         android:layout_marginRight="@dimen/spacing_middle"
                         app:srcCompat="@drawable/ic_textsms"
-                        app:tint="@color/light_blue_400" />
+                        app:tint="@color/grey_60" />
 
                     <TextView
                         android:id="@+id/noofcomment"
@@ -171,7 +171,7 @@
                         android:gravity="center_vertical"
                         android:text="12 Comments"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        android:textColor="@color/grey_40" />
+                        android:textColor="@color/grey_80" />
 
                 </LinearLayout>
 
@@ -182,7 +182,7 @@
                     android:gravity="end|right"
                     android:text="12h ago"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/grey_40" />
+                    android:textColor="@color/grey_80" />
 
             </LinearLayout>
 

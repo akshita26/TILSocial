@@ -36,13 +36,13 @@ public class ProfileFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         name=view.findViewById(R.id.textView);
         dept=view.findViewById(R.id.textView4);
-       // bio=view.findViewById(R.id.bio);
+      //  bio=view.findViewById(R.id.bio);
         profile=view.findViewById(R.id.profile_image);
         editprof=view.findViewById(R.id.imageView2);
 
-        bio.setText("Shoot your own horn. Show off your achievements, give them a little personality, tell them what problem you’ll solve. Your bio helps you build a connection right from the start.");
+       // bio.setText("Shoot your own horn. Show off your achievements, give them a little personality, tell them what problem you’ll solve. Your bio helps you build a connection right from the start.");
 
-      //  recyclerView = view.findViewById(R.id.recyid);
+        recyclerView = view.findViewById(R.id.recyid);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
@@ -78,6 +78,8 @@ public class ProfileFragment extends Fragment {
         modelPost.setUtime("1 min");
         modelPost.setUcomment("comments");
         modelPost.setUtitle("MYPOST");
+        posts.add(modelPost);
+        posts.add(modelPost);
         posts.add(modelPost);
 
 

@@ -27,7 +27,7 @@
                 android:background="@color/teal_700"/>
 
                 <com.mikhaellopez.circularimageview.CircularImageView
-                    android:id="@+id/image"
+                    android:id="@+id/profile_image"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
                     android:layout_marginLeft="20dp"
@@ -74,22 +74,22 @@
                     android:text="Department" />
             </LinearLayout>
 
-            <com.google.android.flexbox.FlexboxLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="@dimen/spacing_middle"
-                app:flexWrap="wrap"
-                app:justifyContent="flex_start">
-                <TextView
-                    android:id="@+id/bio"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="17dp"
-                    android:textColor="#ED000000"
-                    android:text="Bio"/>
-            </com.google.android.flexbox.FlexboxLayout>
+<!--            <com.google.android.flexbox.FlexboxLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="25dp"-->
+<!--                android:layout_marginRight="25dp"-->
+<!--                android:layout_marginTop="@dimen/spacing_middle"-->
+<!--                app:flexWrap="wrap"-->
+<!--                app:justifyContent="flex_start">-->
+<!--                <TextView-->
+<!--                    android:id="@+id/bio"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:textSize="17dp"-->
+<!--                    android:textColor="#ED000000"-->
+<!--                    android:text="Bio"/>-->
+<!--            </com.google.android.flexbox.FlexboxLayout>-->
 
             <TextView
                 android:layout_width="wrap_content"

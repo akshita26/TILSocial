@@ -83,6 +83,7 @@
                 app:flexWrap="wrap"
                 app:justifyContent="flex_start">
                 <TextView
+                    android:id="@+id/bio"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="17dp"

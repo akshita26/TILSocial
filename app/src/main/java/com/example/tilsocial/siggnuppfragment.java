@@ -65,6 +65,7 @@ public class siggnuppfragment extends Fragment {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(getActivity(), DashboardActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 

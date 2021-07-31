@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         ft.replace(R.id.your_placeholder, signinfragment);
-
         ft.commit();
 
 

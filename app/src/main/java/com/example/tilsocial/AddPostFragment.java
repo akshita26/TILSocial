@@ -8,6 +8,8 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -39,9 +41,11 @@ public class AddPostFragment extends Fragment {
     String s;
     Integer count;
 
+
     public AddPostFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -57,6 +61,7 @@ public class AddPostFragment extends Fragment {
         imageView = view.findViewById(R.id.image);
         hashtag = view.findViewById(R.id.hashtag);
         chipGroup = view.findViewById(R.id.chip_group);
+
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override

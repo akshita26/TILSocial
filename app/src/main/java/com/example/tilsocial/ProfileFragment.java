@@ -59,6 +59,7 @@ public class ProfileFragment extends Fragment {
                 EditProfile editProfile = new EditProfile();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.dashboard, editProfile);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });

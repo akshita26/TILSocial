@@ -1,5 +1,6 @@
 package com.example.tilsocial;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
  *
  */
 public class EditProfile extends Fragment {
+    ActionBar actionBar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,4 +62,5 @@ public class EditProfile extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_profile, container, false);
     }
+
 }

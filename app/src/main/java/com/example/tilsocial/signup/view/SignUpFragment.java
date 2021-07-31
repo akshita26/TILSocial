@@ -1,10 +1,11 @@
-package com.example.tilsocial;
+package com.example.tilsocial.signup.view;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -19,7 +20,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.tilsocial.DashboardActivity;
+import com.example.tilsocial.R;
+import com.example.tilsocial.signup.model.SignUpModel;
+import com.example.tilsocial.signup.model.SignupRequestParams;
+import com.example.tilsocial.signup.presenter.SignupPresentor;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -28,9 +35,9 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class siggnuppfragment extends Fragment {
+public class SignUpFragment extends Fragment implements SignupPresentor.SignupView {
 
-
+    SignupPresentor signupPresentor;
     Spinner department;
     Spinner team;
     Spinner designation;
@@ -39,10 +46,19 @@ public class siggnuppfragment extends Fragment {
     Button signuppbtn;
 
 
-    public siggnuppfragment()
+    public SignUpFragment()
     {
 
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        signupPresentor = new SignupPresentor(this,new SignUpModel());
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,8 +79,12 @@ public class siggnuppfragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                startActivity(intent);
+                SignupRequestParams signupRequestParams = new SignupRequestParams();
+                signupRequestParams.setEmployeeid(employeeidd.getText().toString());
+                signupPresentor.doSignUp(signupRequestParams);
+
+//                Intent intent = new Intent(getActivity(), DashboardActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -210,6 +230,13 @@ public class siggnuppfragment extends Fragment {
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         designation.setAdapter(DesignationArrayAdapter);
         return view;
+    }
+
+    @Override
+    public void showError() {
+
+        Toast.makeText(getActivity(), "Required Fields", Toast.LENGTH_SHORT).show();
+
     }
 }
 

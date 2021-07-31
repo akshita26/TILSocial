@@ -4,26 +4,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
-
+public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
     Context context;
     List<ModelPost> modelPosts;
 
 
-    public AdapterPosts(Context context, List<ModelPost> modelPosts) {
+    public UserPosts(Context context, List<ModelPost> modelPosts) {
         this.context = context;
         this.modelPosts = modelPosts;
 
@@ -31,14 +23,14 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
 
 
 
-    public MyHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+    public UserPosts.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
-        return new MyHolder(view);
+        return new UserPosts.MyHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder( MyHolder holder, int position) {
+    public void onBindViewHolder(UserPosts.MyHolder holder, int position) {
 
         ModelPost modelPost = modelPosts.get(position);
         holder.name.setText( modelPost.getName());
@@ -60,7 +52,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
-//        ImageView picture, image;
+        //        ImageView picture, image;
         TextView name, time, title, description, like, comments;
 //        ImageButton more;
 //        Button likebtn, comment;
@@ -82,8 +74,4 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
 //            profile = itemView.findViewById(R.id.profilelayout);
         }
     }
-
-
-
-
 }

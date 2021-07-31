@@ -1,5 +1,6 @@
 package com.example.tilsocial;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,14 +17,13 @@ public class DashboardActivity extends AppCompatActivity {
     BottomNavigationView navigationView;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
         actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
@@ -35,12 +35,21 @@ public class DashboardActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
 
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
-        public boolean onNavigationItemSelected( MenuItem menuItem) {
+        public boolean onNavigationItemSelected(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
 
                 case R.id.nav_home:
@@ -71,9 +80,6 @@ public class DashboardActivity extends AppCompatActivity {
             return false;
         }
     };
-
-
-
 
 
 }

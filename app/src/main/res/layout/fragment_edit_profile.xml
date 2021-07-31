@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".siggnuppfragment"
-    >
-
+    tools:context=".EditProfile">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,8 +19,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="350dp"
@@ -30,60 +27,46 @@
                     android:layout_centerInParent="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="50dp"
-                    app:cardCornerRadius="20dp"
-                    >
+                    app:cardCornerRadius="20dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:padding="20dp"
-                        >
+                        android:padding="20dp">
 
 
                         <com.mikhaellopez.circularimageview.CircularImageView
                             android:layout_width="150dp"
                             android:layout_height="150dp"
+                            android:layout_gravity="center"
                             android:src="@drawable/profile"
                             app:civ_border_color="#FF018786"
                             app:civ_border_width="4dp"
                             app:civ_shadow="true"
-                            app:civ_shadow_radius="10dp"
                             app:civ_shadow_color="#FF018786"
-                            android:layout_gravity="center"/>
-
-
-
+                            app:civ_shadow_radius="10dp" />
 
 
                         <EditText
                             android:id="@+id/editTextTextPersonName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:hint ="Name"
-                            android:layout_marginBottom="20dp"/>
-
-                        <EditText
-                            android:id="@+id/editTextTextPersonName2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:hint="Employee Id"
                             android:layout_marginBottom="20dp"
-                            />
+                            android:ems="10"
+                            android:hint="Name"
+                            android:inputType="textPersonName" />
+
 
                         <EditText
                             android:id="@+id/editTextTextPersonName3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textMultiLine"
-                            android:hint="Bio"
                             android:layout_marginBottom="20dp"
-                            android:maxLines="20"/>
+                            android:ems="10"
+                            android:hint="Bio"
+                            android:inputType="textMultiLine"
+                            android:maxLines="20" />
 
                         <Spinner
                             android:id="@+id/spinner4"
@@ -126,17 +109,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:padding="20dp"
-                                >
+                                android:padding="10dp">
+
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Please select minimum 3 interests"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    android:textSize="15dp"
                                     android:layout_marginBottom="10dp"
-                                    android:textColor="@color/grey_80">
-                                </TextView>
+                                    android:text="Interests"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                                    android:textColor="@color/grey_80"
+                                    android:textSize="15dp"/>
 
                                 <com.google.android.material.chip.ChipGroup
                                     android:layout_width="match_parent"
@@ -224,8 +206,6 @@
                                         app:chipStartPadding="@dimen/spacing_medium" />
 
 
-
-
                                 </com.google.android.material.chip.ChipGroup>
 
                             </LinearLayout>
@@ -240,9 +220,8 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="30dp"
                             android:backgroundTint="#FF018786"
-                            android:text="Sign up"
-                            android:textStyle="bold"
-                            />
+                            android:text="Update"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -252,7 +231,5 @@
         </ScrollView>
 
     </LinearLayout>
-
-
 
 </FrameLayout>

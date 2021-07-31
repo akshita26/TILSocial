@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SigninFragment">
+    tools:context=".signinfragment">
 
     <View
         android:layout_width="match_parent"
@@ -47,9 +47,6 @@
                     android:hint="Employee Id" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"
@@ -71,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="viewEnd"
                     android:layout_weight="1"
-                    android:text="New User?" />
+                    android:text="@string/new_user" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -80,13 +77,8 @@
                     android:layout_weight="1"
                     android:textColor="#FF018786"
                     android:clickable="true"
-                    android:text="Sign Up" />
+                    android:text="@string/create_profile" />
             </LinearLayout>
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
-
-
-
 </FrameLayout>

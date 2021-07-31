@@ -1,4 +1,4 @@
-package com.example.tilsocial;
+package com.example.tilsocial.addpost.view;
 
 import android.Manifest;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -27,22 +28,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.tilsocial.R;
+import com.example.tilsocial.addpost.model.AddPostModel;
+import com.example.tilsocial.addpost.model.AddPostRequestParams;
+import com.example.tilsocial.addpost.presenter.AddPostPresenter;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.resources.TextAppearance;
 
-public class AddPostFragment extends Fragment {
+public class AddPostFragment extends Fragment implements AddPostPresenter.AddPostView {
     Button post;
     ImageView btncamera, btngallery, imageView, hashtag;
     EditText title, desc;
     ChipGroup chipGroup;
     String s;
     Integer count;
+    AddPostPresenter addPostPresenter;
 
     public AddPostFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPostPresenter=new AddPostPresenter(this,new AddPostModel());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +72,12 @@ public class AddPostFragment extends Fragment {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AddPostRequestParams addPostRequestParams=new AddPostRequestParams();
+                addPostRequestParams.setTitle(title.getText().toString());
+                addPostRequestParams.setDescription(desc.getText().toString());
+                addPostPresenter.doPost(addPostRequestParams);
+
                 count=chipGroup.getChildCount();
                 Toast.makeText(getActivity(), "Posted:", Toast.LENGTH_LONG).show();
                 title.getText().clear();
@@ -74,6 +91,7 @@ public class AddPostFragment extends Fragment {
                     a+=chipGroup.getChildCount()+chip.getText().toString();
                     chipGroup.removeView(chip);
                 }
+
             }
         });
 
@@ -191,4 +209,9 @@ public class AddPostFragment extends Fragment {
     }
 
 
+    @Override
+    public void showError() {
+        Toast.makeText(getActivity(), "Required Fields", Toast.LENGTH_SHORT).show();
+
+    }
 }

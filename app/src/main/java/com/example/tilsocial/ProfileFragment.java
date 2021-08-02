@@ -59,6 +59,7 @@ public class ProfileFragment extends Fragment {
                 EditProfile editProfile = new EditProfile();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.dashboard, editProfile);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });
@@ -78,6 +79,8 @@ public class ProfileFragment extends Fragment {
         modelPost.setUtime("1 min");
         modelPost.setUcomment("comments");
         modelPost.setUtitle("MYPOST");
+        posts.add(modelPost);
+        posts.add(modelPost);
         posts.add(modelPost);
 
 

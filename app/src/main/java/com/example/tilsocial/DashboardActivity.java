@@ -1,8 +1,10 @@
 package com.example.tilsocial;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
@@ -33,16 +35,16 @@ public class DashboardActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.dashboard, fragment, "");
         fragmentTransaction.commit();
-
-
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+        if(navigationView.getSelectedItemId()==R.id.nav_home){
+            super.onOptionsItemSelected(item);
+            finish();
+        }
+        else{
+            navigationView.setSelectedItemId(R.id.nav_home);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -65,7 +67,9 @@ public class DashboardActivity extends AppCompatActivity {
                     AddPostFragment fragment1 = new AddPostFragment();
                     FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction1.replace(R.id.dashboard, fragment1);
+                    fragmentTransaction1.setReorderingAllowed(true);
                     fragmentTransaction1.commit();
+
                     return true;
 
                 case R.id.nav_profile:
@@ -81,5 +85,14 @@ public class DashboardActivity extends AppCompatActivity {
         }
     };
 
-
+    @Override
+    public void onBackPressed() {
+        if(navigationView.getSelectedItemId()==R.id.nav_home){
+            super.onBackPressed();
+            finish();
+        }
+        else{
+            navigationView.setSelectedItemId(R.id.nav_home);
+        }
+    }
 }

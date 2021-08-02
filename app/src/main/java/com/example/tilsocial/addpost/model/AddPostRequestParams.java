@@ -1,15 +1,20 @@
 package com.example.tilsocial.addpost.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddPostRequestParams {
-    String title, description, hashtag, image;
+//    String title;
+    String description;
+    List<String> hashtag, image;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+//    public String getTitle() {
+//        return title;
+//    }
+//
+//    public void setTitle(String title) {
+//        this.title = title;
+//    }
 
     public String getDescription() {
         return description;
@@ -19,19 +24,19 @@ public class AddPostRequestParams {
         this.description = description;
     }
 
-    public String getHashtag() {
+    public List<String> getHashtag() {
         return hashtag;
     }
 
-    public void setHashtag(String hashtag) {
+    public void setHashtag(List<String> hashtag) {
         this.hashtag = hashtag;
     }
 
-    public String getImage() {
+    public List<String> getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(List<String> image) {
         this.image = image;
     }
 }

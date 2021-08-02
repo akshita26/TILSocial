@@ -3,6 +3,8 @@ package com.example.tilsocial.addpost.presenter;
 import com.example.tilsocial.addpost.model.AddPostModel;
 import com.example.tilsocial.addpost.model.AddPostRequestParams;
 
+import org.json.JSONException;
+
 public class AddPostPresenter {
     AddPostModel addPostModel;
     AddPostView addPostView;
@@ -12,8 +14,8 @@ public class AddPostPresenter {
         this.addPostView = addPostView;
     }
 
-    public void doPost(AddPostRequestParams addPostRequestParams) {
-        if (addPostRequestParams.getTitle().length() > 0) {
+    public void doPost(AddPostRequestParams addPostRequestParams) throws JSONException {
+        if (addPostRequestParams.getDescription().length() < 200) {
             addPostModel.doPost(addPostRequestParams);
 
         } else {

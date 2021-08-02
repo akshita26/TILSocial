@@ -36,13 +36,26 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.resources.TextAppearance;
 
+import org.json.JSONException;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 public class AddPostFragment extends Fragment implements AddPostPresenter.AddPostView {
     Button post;
     ImageView btncamera, btngallery, imageView, hashtag;
     EditText title, desc;
     ChipGroup chipGroup;
-    String s;
+    String s,simage;
     Integer count;
+    Uri imageUri;
+    List<String> imageList = new ArrayList<>();
+    List<String> hashList = new ArrayList<>();
     AddPostPresenter addPostPresenter;
 
     public AddPostFragment() {
@@ -61,7 +74,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_post, container, false);
         post = view.findViewById(R.id.postupload);
-        title = view.findViewById(R.id.title);
+//        title = view.findViewById(R.id.title);
         desc = view.findViewById(R.id.description);
         btncamera = view.findViewById(R.id.camera);
         btngallery = view.findViewById(R.id.gallery);
@@ -74,13 +87,19 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             public void onClick(View v) {
 
                 AddPostRequestParams addPostRequestParams=new AddPostRequestParams();
-                addPostRequestParams.setTitle(title.getText().toString());
+//                addPostRequestParams.setTitle(title.getText().toString());
                 addPostRequestParams.setDescription(desc.getText().toString());
-                addPostPresenter.doPost(addPostRequestParams);
+                addPostRequestParams.setImage(imageList);
+                addPostRequestParams.setHashtag(hashList);
+                try {
+                    addPostPresenter.doPost(addPostRequestParams);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 count=chipGroup.getChildCount();
                 Toast.makeText(getActivity(), "Posted:", Toast.LENGTH_LONG).show();
-                title.getText().clear();
+//                title.getText().clear();
                 desc.getText().clear();
                 imageView.setImageDrawable(null);
                 imageView.getLayoutParams().height = 0;
@@ -163,21 +182,27 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                     @Override
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
                         if ((keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_SPACE)) {
-                            s=editText.getText().toString();
-                            editText.setVisibility(View.GONE);
-                            Chip chip = new Chip(getActivity());
-                            chip.setText(s);
-                            chip.setCloseIconVisible(true);
-                            chip.setTextColor(getResources().getColor(R.color.grey_60));
-                            chip.setTextAppearance(R.style.TextAppearance_AppCompat_Body2);
-                            chipGroup.addView(chip);
-                            chip.setOnCloseIconClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    chipGroup.removeView(chip);
-                                }
-                            });
-                            return true;
+                            try {
+                                s = editText.getText().toString();
+                                editText.setVisibility(View.GONE);
+                                Chip chip = new Chip(getActivity());
+                                chip.setText(s);
+                                hashList.add(s);
+                                chip.setCloseIconVisible(true);
+                                chip.setTextColor(getResources().getColor(R.color.grey_60));
+                                chip.setTextAppearance(R.style.TextAppearance_AppCompat_Body2);
+                                chipGroup.addView(chip);
+                                chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        chipGroup.removeView(chip);
+                                    }
+                                });
+                                return true;
+                            }
+                            catch (Exception e){
+                                Toast.makeText(getActivity(), "Re--"+e, Toast.LENGTH_LONG).show();
+                            }
                         }
                         return false;
                     }
@@ -198,7 +223,25 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             imageView.setImageBitmap(bitmap);
             imageView.getLayoutParams().height = 200;
             imageView.getLayoutParams().width = 200;
+            try{
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+                File mFileTemp = null;
+                mFileTemp= File.createTempFile("ab"+timeStamp,".jpg",getActivity().getCacheDir());
+                FileOutputStream fout;
+                fout = new FileOutputStream(mFileTemp);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
+                fout.flush();
+                imageUri=Uri.fromFile(mFileTemp);
+                simage = imageUri.toString();
+                imageList.add(simage);
+            }
+            catch (Exception e){
+                Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
+            }
         } else if (requestCode == 27) {
+            imageUri = data.getData();
+            simage = imageUri.toString();
+            imageList.add(simage);
             Uri selectedImageUri = data.getData();
             if (null != selectedImageUri) {
                 imageView.setImageURI(selectedImageUri);

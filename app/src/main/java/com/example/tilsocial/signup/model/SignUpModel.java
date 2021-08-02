@@ -1,18 +1,13 @@
 package com.example.tilsocial.signup.model;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.tilsocial.ApiClient;
-import com.example.tilsocial.ApiInterface;
-
-import java.util.List;
+import com.example.tilsocial.signup.data.ApiClient;
+import com.example.tilsocial.signup.data.ApiInterface;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignUpModel {
 

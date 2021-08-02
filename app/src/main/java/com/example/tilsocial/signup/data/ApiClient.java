@@ -1,4 +1,4 @@
-package com.example.tilsocial;
+package com.example.tilsocial.signup.data;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

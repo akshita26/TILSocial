@@ -1,4 +1,4 @@
-package com.example.tilsocial;
+package com.example.tilsocial.signup.data;
 
 import com.example.tilsocial.signup.model.SignupRequestParams;
 

@@ -97,6 +97,9 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
 
                 signupPresentor.doSignUp(signupRequestParams);
 
+                Intent intent = new Intent(getActivity(), DashboardActivity.class);
+                startActivity(intent);
+
 
 
 

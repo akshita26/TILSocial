@@ -3,19 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/activity_dashboard.xml" value="0.196875" />
-        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/feedcardview.xml" value="0.18125" />
-        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_add_post.xml" value="0.1" />
-        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_edit_profile.xml" value="0.196875" />
-        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_profile.xml" value="0.196875" />
-        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/menu_nav.xml" value="0.196875" />
-        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/postcardview.xml" value="0.13697916666666668" />
-      </map>
-    </option>
-  </component>
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/activity_main.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_siggnuppfragment.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_signin.xml" value="0.40525587828492393" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_comment.xml" value="0.196875" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_edit_profile.xml" value="0.18125" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_profile.xml" value="0.196875" />

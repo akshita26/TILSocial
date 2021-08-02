@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     View view;
     EditText employeeidd;
     Button signuppbtn;
+    EditText namee;
+    EditText bioo;
 
 
     public SignUpFragment()
@@ -71,20 +74,32 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         team = view.findViewById(R.id.spinner5);
         designation = view.findViewById(R.id.spinner6);
         employeeidd = view.findViewById(R.id.editTextTextPersonName2);
+        namee = view.findViewById(R.id.editTextTextPersonName);
         signuppbtn = view.findViewById(R.id.buttonsignup);
+        bioo = view.findViewById(R.id.editTextTextPersonName3);
+
 
 
         signuppbtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
+                String[] interest = {"Ani", "Sam", " Joe"};
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
                 signupRequestParams.setEmployeeid(employeeidd.getText().toString());
+                signupRequestParams.setName(namee.getText().toString());
+                signupRequestParams.setBio(bioo.getText().toString());
+                signupRequestParams.setDepartment(department.getSelectedItem().toString());
+                signupRequestParams.setTeam(team.getSelectedItem().toString());
+                signupRequestParams.setDesignation(designation.getSelectedItem().toString());
+                signupRequestParams.setInterset(interest);
+
                 signupPresentor.doSignUp(signupRequestParams);
 
-//                Intent intent = new Intent(getActivity(), DashboardActivity.class);
-//                startActivity(intent);
+
+
+
             }
         });
 

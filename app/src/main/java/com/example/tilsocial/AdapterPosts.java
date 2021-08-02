@@ -4,16 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -21,6 +19,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
 
     Context context;
     List<ModelPost> modelPosts;
+    ActionBar actionBar;
 
 
     public AdapterPosts(Context context, List<ModelPost> modelPosts) {
@@ -46,6 +45,23 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder>{
         holder.description.setText(modelPost.getDescription());
         holder.time.setText(modelPost.getUtime());
         holder.like.setText("Likes "+ modelPost.getUlike());
+
+        holder.comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
+                actionBar.setDisplayHomeAsUpEnabled(true);
+
+                actionBar.setTitle("Comment");
+                CommentFragment commentFragment = new CommentFragment();
+                FragmentManager fragmentManager =((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.dashboard, commentFragment);
+                fragmentTransaction.commit();
+
+            }
+        });
 
 
 

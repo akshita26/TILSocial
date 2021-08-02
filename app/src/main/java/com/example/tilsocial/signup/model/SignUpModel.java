@@ -26,7 +26,7 @@ public class SignUpModel {
 
 
         Call<SignupRequestParams> PostCall = apiInterface.postSignUp(signupRequestParams);
-//        Log.e(TAG, "onResponse: " + PostCall );
+
         PostCall.enqueue(new Callback<SignupRequestParams>() {
             @Override
             public void onResponse(Call<SignupRequestParams> call, Response<SignupRequestParams> response) {

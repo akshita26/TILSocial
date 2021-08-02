@@ -1,5 +1,7 @@
 package com.example.tilsocial.signup.presenter;
 
+import android.util.Log;
+
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 
@@ -18,14 +20,9 @@ public class SignupPresentor {
     public void doSignUp(SignupRequestParams signupRequestParams)
     {
 
-        if(signupRequestParams.getEmployeeid().length() > 0 && signupRequestParams.getEmployeeid().length() <=16 )
-        {
+
            signUpModel.doSignup(signupRequestParams);
-         }
-        else
-        {
-           signupView.showError();
-       }
+
 
     }
 

@@ -9,8 +9,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/Theme.TILSocial">
-        <activity android:name=".DashboardActivity">
+        <activity android:name=".DashboardActivity" android:windowSoftInputMode="adjustPan">
 
 
 

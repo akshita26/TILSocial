@@ -47,6 +47,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     Button signuppbtn;
     EditText namee;
     EditText bioo;
+    String employeeid,name,bio,deprtment,teamm,desgniationn;
 
 
     public SignUpFragment()
@@ -79,34 +80,49 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         bioo = view.findViewById(R.id.editTextTextPersonName3);
 
 
-
         signuppbtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                String[] interest = {"Ani", "Sam", " Joe"};
-                SignupRequestParams signupRequestParams = new SignupRequestParams();
-                signupRequestParams.setEmployeeid(employeeidd.getText().toString());
-                signupRequestParams.setName(namee.getText().toString());
-                signupRequestParams.setBio(bioo.getText().toString());
-                signupRequestParams.setDepartment(department.getSelectedItem().toString());
-                signupRequestParams.setTeam(team.getSelectedItem().toString());
-                signupRequestParams.setDesignation(designation.getSelectedItem().toString());
-                signupRequestParams.setInterset(interest);
 
-                signupPresentor.doSignUp(signupRequestParams);
+                 employeeid = employeeidd.getText().toString();
+                 name = namee.getText().toString();
+                 bio = bioo.getText().toString();
+                 deprtment = department.getSelectedItem().toString();
+                 teamm = team.getSelectedItem().toString();
+                 desgniationn = designation.getSelectedItem().toString();
 
-                Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                startActivity(intent);
+
+
+                if (!validateInputs(employeeid,name, bio, deprtment, teamm, desgniationn)){
+
+
+                    String[] interest = {"Ani", "Sam", " Joe"};
+                    SignupRequestParams signupRequestParams = new SignupRequestParams();
+                    signupRequestParams.setEmployeeid(employeeidd.getText().toString());
+                    signupRequestParams.setName(namee.getText().toString());
+                    signupRequestParams.setBio(bioo.getText().toString());
+                    signupRequestParams.setDepartment(department.getSelectedItem().toString());
+                    signupRequestParams.setTeam(team.getSelectedItem().toString());
+                    signupRequestParams.setDesignation(designation.getSelectedItem().toString());
+                    signupRequestParams.setInterset(interest);
+
+                    signupPresentor.doSignUp(signupRequestParams);
+
+                    Intent intent = new Intent(getActivity(), DashboardActivity.class);
+                    startActivity(intent);
+                }
 
 
 
 
             }
+
+
+
+
         });
-
-
 
         //department Spinnner
 
@@ -248,6 +264,41 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         designation.setAdapter(DesignationArrayAdapter);
         return view;
+    }
+
+    private boolean validateInputs(String employeeid, String name, String bio, String deprtment, String teamm, String desgniationn) {
+
+
+        if (name.isEmpty()) {
+            namee.setError("Name Required");
+            namee.requestFocus();
+            return true;
+        }
+        if (employeeid.isEmpty()) {
+            employeeidd.setError("Employee id Required");
+            employeeidd.requestFocus();
+            return true;
+        }
+        if (bio.isEmpty()) {
+            bioo.setError("Bio Required");
+            bioo.requestFocus();
+            return true;
+        }
+        if (deprtment.equals("Select department...")) {
+            Toast.makeText(getActivity(), "Department is Required", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (teamm.equals("Select Team...")) {
+            Toast.makeText(getActivity(), "Team is Required", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (desgniationn.equals("Select Designation...")) {
+            Toast.makeText(getActivity(), "Designation is Required", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return false;
+
     }
 
     @Override

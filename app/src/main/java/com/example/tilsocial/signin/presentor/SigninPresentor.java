@@ -27,9 +27,6 @@ public class SigninPresentor {
         if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16 )
         {
             signInModel.doSignin(signinRequestParams,context);
-               // Intent intent = new Intent(context, DashboardActivity.class);
-                //startActivity(intent);
-                //getActivity().finish();
             return 1;
         }
         else

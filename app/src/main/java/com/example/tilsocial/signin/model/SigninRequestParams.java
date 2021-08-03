@@ -1,13 +1,16 @@
 package com.example.tilsocial.signin.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class SigninRequestParams {
-    String employeeid;
+    @SerializedName("empId")
+    String empId;
 
     public String getEmployeeid() {
-        return employeeid;
+        return empId;
     }
 
-    public void setEmployeeid(String employeeid) {
-        this.employeeid = employeeid;
+    public void setEmployeeid(String empId) {
+        this.empId = empId;
     }
 }

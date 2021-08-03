@@ -68,7 +68,7 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
             public void onClick(View v) {
                 SigninRequestParams signinRequestParams = new SigninRequestParams();
                 signinRequestParams.setEmployeeid(editText.getText().toString());
-            int res=    signinPresentor.doSignin(signinRequestParams,getActivity());
+            int res=signinPresentor.doSignin(signinRequestParams,getActivity());
             if (res==1){
                 Intent intent = new Intent(getActivity(), DashboardActivity.class);
                 startActivity(intent);

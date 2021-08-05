@@ -143,20 +143,13 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Please add minimum 3 interests"
+                                    android:text="Please select interests"
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                                     android:textSize="15dp"
                                     android:layout_weight="3"
                                     android:layout_marginBottom="10dp"
                                     android:textColor="@color/grey_80">
                                 </TextView>
-                                <ImageView
-                                    android:id="@+id/add"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:layout_weight="1"
-                                    android:background="?attr/selectableItemBackgroundBorderless"
-                                    android:src="@drawable/add" />
                             </LinearLayout>
 
                                 <com.google.android.material.chip.ChipGroup

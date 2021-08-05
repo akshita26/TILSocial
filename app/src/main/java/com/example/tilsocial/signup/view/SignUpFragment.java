@@ -53,6 +53,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     EditText namee;
     EditText bioo;
     ChipGroup chipGroup;
+    Chip chip;
     String s;
     ImageView add;
     List<String> addList = new ArrayList<>();
@@ -114,54 +115,16 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
             }
         });
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinearLayout linearLayout = view.findViewById(R.id.linearlayout);
-                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                EditText editText = new EditText(getActivity());
-                editText.setLayoutParams(p);
-                linearLayout.addView(editText);
+       //Interest in chips
+        String[] genres = {"Mobile Application Development", "Android", "iOS","System Design"};
+        for(String genre : genres) {
+            chip = new Chip(getActivity());
+            chip.setText(genre);
 
-                editText.setOnKeyListener(new View.OnKeyListener() {
-                    @Override
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        if ((keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_SPACE)) {
-                            try {
-                                s = editText.getText().toString();
-                                editText.setVisibility(View.GONE);
-                                Chip chip = new Chip(getActivity());
-                                chip.setText(s);
-                                addList.add(s);
-                                chip.setCloseIconVisible(true);
-                                chip.setTextColor(getResources().getColor(R.color.grey_60));
-                                chip.setTextAppearance(R.style.TextAppearance_AppCompat_Body2);
-                                chipGroup.addView(chip);
-                                chip.setOnCloseIconClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        chipGroup.removeView(chip);
-                                    }
-                                });
-                                return true;
-                            } catch (Exception e) {
-                                Toast.makeText(getActivity(), "Re--" + e, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                        return false;
-                    }
-                });
-
-            }
-        });
-
-
-
-
-
-
-
-
+            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+            chip.setCheckable(true);
+            chipGroup.addView(chip);
+        }
 
         //department Spinnner
 

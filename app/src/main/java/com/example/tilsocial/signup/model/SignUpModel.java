@@ -2,14 +2,10 @@ package com.example.tilsocial.signup.model;
 
 import android.util.Log;
 
-
-
 import com.example.tilsocial.api.ApiClient;
 import com.example.tilsocial.api.ApiInterface;
-
 import com.example.tilsocial.signup.presenter.SignupPresentor;
 import com.example.tilsocial.signup.view.SignUpFragment;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;

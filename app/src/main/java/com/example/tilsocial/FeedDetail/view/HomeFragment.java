@@ -1,20 +1,18 @@
-package com.example.tilsocial;
+package com.example.tilsocial.FeedDetail.view;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.R;
 
 import java.util.ArrayList;
 import java.util.List;

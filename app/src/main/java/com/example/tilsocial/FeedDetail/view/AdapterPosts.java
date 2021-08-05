@@ -1,4 +1,4 @@
-package com.example.tilsocial;
+package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.tilsocial.CommentFragment;
+import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.R;
 
 import java.util.List;
 

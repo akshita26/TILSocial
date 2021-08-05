@@ -1,9 +1,9 @@
 package com.example.tilsocial;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Bundle;
 
 import com.example.tilsocial.signin.view.SigninFragment;
 
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        SigninFragment signinfragment = new SigninFragment();
+        SigninFragment signinfragment = new SigninFragment(MainActivity.this);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 

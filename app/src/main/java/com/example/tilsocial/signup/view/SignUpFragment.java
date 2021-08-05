@@ -13,12 +13,15 @@ import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,8 @@ import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -47,6 +52,10 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     Button signuppbtn;
     EditText namee;
     EditText bioo;
+    ChipGroup chipGroup;
+    String s;
+    ImageView add;
+    List<String> addList = new ArrayList<>();
 
 
     public SignUpFragment()
@@ -77,7 +86,8 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         namee = view.findViewById(R.id.editTextTextPersonName);
         signuppbtn = view.findViewById(R.id.buttonsignup);
         bioo = view.findViewById(R.id.editTextTextPersonName3);
-
+        add = view.findViewById(R.id.add);
+        chipGroup = view.findViewById(R.id.chip_group);
 
 
         signuppbtn.setOnClickListener(new View.OnClickListener() {
@@ -101,10 +111,55 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
                 startActivity(intent);
 
 
+            }
+        });
 
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout linearLayout = view.findViewById(R.id.linearlayout);
+                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                EditText editText = new EditText(getActivity());
+                editText.setLayoutParams(p);
+                linearLayout.addView(editText);
+
+                editText.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        if ((keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_SPACE)) {
+                            try {
+                                s = editText.getText().toString();
+                                editText.setVisibility(View.GONE);
+                                Chip chip = new Chip(getActivity());
+                                chip.setText(s);
+                                addList.add(s);
+                                chip.setCloseIconVisible(true);
+                                chip.setTextColor(getResources().getColor(R.color.grey_60));
+                                chip.setTextAppearance(R.style.TextAppearance_AppCompat_Body2);
+                                chipGroup.addView(chip);
+                                chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        chipGroup.removeView(chip);
+                                    }
+                                });
+                                return true;
+                            } catch (Exception e) {
+                                Toast.makeText(getActivity(), "Re--" + e, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        return false;
+                    }
+                });
 
             }
         });
+
+
+
+
+
+
 
 
 

@@ -1,20 +1,17 @@
 package com.example.tilsocial.signup.view;
 
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,15 +21,18 @@ import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 
 public class SignUpFragment extends Fragment implements SignupPresentor.SignupView {
 
     SignupPresentor signupPresentor;
     Spinner department;
-    private static final String TAG = "123jdvsn";
-
     Spinner team;
     Spinner designation;
     View view;
@@ -40,29 +40,24 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     Button signuppbtn;
     EditText namee;
     EditText bioo;
-    ArrayAdapter departmentAdapter;
+    ChipGroup chipGroup;
+    Chip chip;
+    String s;
+    ImageView add;
+    List<String> addList = new ArrayList<>();
 
-    Context s26;
 
-    public SignUpFragment() {
+    public SignUpFragment()
+    {
 
-    }
-
-    public SignUpFragment(Context s25) {
-        this.s26=s25;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        signupPresentor = new SignupPresentor(this, new SignUpModel());
+        signupPresentor = new SignupPresentor(this,new SignUpModel());
 
-      //  s26=getActivity();
-        Log.d(TAG, "4234324235gdfg: "+
-                "c1 is" +s26
-
-        );
     }
 
     @Override
@@ -80,82 +75,57 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         namee = view.findViewById(R.id.editTextTextPersonName);
         signuppbtn = view.findViewById(R.id.buttonsignup);
         bioo = view.findViewById(R.id.editTextTextPersonName3);
-//        signupPresentor.getdetailsofspinnertoview();
+        add = view.findViewById(R.id.add);
+        chipGroup = view.findViewById(R.id.chip_group);
 
-        signupPresentor.departmentSpinnerdetail();
-        signupPresentor.TeamSpinnerDetail();
-        signupPresentor.DesignationSpinnerDetail();
 
-        signuppbtn.setOnClickListener(v -> {
+        signuppbtn.setOnClickListener(new View.OnClickListener() {
 
-            String[] interest = {"Ani", "Sam", " Joe"};
-            SignupRequestParams signupRequestParams = new SignupRequestParams();
-            signupRequestParams.setEmployeeid(employeeidd.getText().toString());
-            signupRequestParams.setName(namee.getText().toString());
-            signupRequestParams.setBio(bioo.getText().toString());
-            signupRequestParams.setDepartment(department.getSelectedItem().toString());
-            signupRequestParams.setTeam(team.getSelectedItem().toString());
-            signupRequestParams.setDesignation(designation.getSelectedItem().toString());
-            signupRequestParams.setInterset(interest);
-            signupPresentor.doSignUp(signupRequestParams);
+            @Override
+            public void onClick(View v) {
+
+                String[] interest = {"Ani", "Sam", " Joe"};
+                SignupRequestParams signupRequestParams = new SignupRequestParams();
+                signupRequestParams.setEmployeeid(employeeidd.getText().toString());
+                signupRequestParams.setName(namee.getText().toString());
+                signupRequestParams.setBio(bioo.getText().toString());
+                signupRequestParams.setDepartment(department.getSelectedItem().toString());
+                signupRequestParams.setTeam(team.getSelectedItem().toString());
+                signupRequestParams.setDesignation(designation.getSelectedItem().toString());
+                signupRequestParams.setInterset(interest);
+
+                signupPresentor.doSignUp(signupRequestParams);
+
+                Intent intent = new Intent(getActivity(), DashboardActivity.class);
+                startActivity(intent);
+
+
+            }
         });
-        return view;
-    }
 
+        //Interest in chips
+        String[] genres = {"Mobile Application Development", "Android", "iOS","System Design"};
+        for(String genre : genres) {
+            chip = new Chip(getActivity());
+            chip.setText(genre);
+            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+            chip.setCheckable(true);
+            chipGroup.addView(chip);
+        }
 
-    @Override
-    public void shownamevalidation() {
+        //department Spinnner
 
-        namee.setError("Name Required");
-        namee.requestFocus();
-    }
+        String[] Department = new String[]{
+                "Select department...",
+                "department 1",
+                "department 2",
+                "department 3",
+                "department 3"
+        };
 
-    @Override
-    public void showgetemployeevalidation() {
-        employeeidd.setError("Employee id Required");
-        employeeidd.requestFocus();
-    }
+        final List<String> departmentList = new ArrayList<>(Arrays.asList(Department));
 
-    @Override
-    public void showbiovalidation() {
-        bioo.setError("Bio Required");
-        bioo.requestFocus();
-    }
-
-    @Override
-    public void showdepartmentvalidation() {
-        Toast.makeText(getActivity(), "Department is Required", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showteamvalidation() {
-        Toast.makeText(getActivity(), "Team is Required", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void designationvalidation() {
-        Toast.makeText(getActivity(), "Designation is Required", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void nextfragment() {
-
-        Intent intent = new Intent(getActivity(), DashboardActivity.class);
-        startActivity(intent);
-    }
-
-
-
-    @Override
-    public void departmentSpinner(List<String> departmentList) {
-
-
-        Log.e("getting detailsss", "onResponsespinner4242department: " + departmentList);
-//        departmentAdapter = new ArrayAdapter(getActivity(), android.R.layout.spinnneritem, departmentList);
-//        Log.e("getting detailsss", "departmentadapter1334 " + departmentAdapter.getCount());
-//        departmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-//        department.setAdapter(departmentAdapter);
-
+        // Initializing an ArrayAdapter
         final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, departmentList){
             @Override
@@ -191,53 +161,19 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
 
 
 
-//        final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
-//                getActivity(),R.layout.spinnneritem, departmentList){
-//            @Override
-//            public boolean isEnabled(int position){
-//                if(position == 0)
-//                {
-//                    // Disable the first item from Spinner
-//                    // First item will be use for hint
-//                    return false;
-//                }
-//                else
-//                {
-//                    return true;
-//                }
-//            }
-//            @Override
-//            public View getDropDownView(int position, View convertView,
-//                                        ViewGroup parent) {
-//                View view = super.getDropDownView(position, convertView, parent);
-//                TextView tv = (TextView) view;
-//                if(position == 0){
-//                    // Set the hint text color gray
-//                    tv.setTextColor(Color.GRAY);
-//                }
-//                else {
-//                    tv.setTextColor(Color.BLACK);
-//                }
-//                return view;
-//            }
-//        };
-//        DepartmentArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-//        department.setAdapter(DepartmentArrayAdapter);
-    }
+        //Team Spinnner
 
+        String[] Team = new String[]{
+                "Select Team...",
+                "Team 1",
+                "Team 2",
+                "Team 3",
+                "Team 3"
+        };
 
-  /*  @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+        final List<String> TeamList = new ArrayList<>(Arrays.asList(Team));
 
-        if (context instanceof Activity){
-            s23 =(Activity) context;
-        }
-    }*/
-    @Override
-    public void teamSpinner(List<String> TeamList){
-
-
+        // Initializing an ArrayAdapter
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, TeamList){
             @Override
@@ -271,10 +207,19 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         team.setAdapter(TeamArrayAdapter);
 
-    }
-    @Override
-    public void designationSpinner(List<String> DesignationList) {
-        Log.e("getting detailsss", "onResponsespinner4242designation: " + DesignationList);
+        //designation Spinnner
+
+        String[] Designation = new String[]{
+                "Select Designation...",
+                "Designation 1",
+                "Designation 2",
+                "Designation 3",
+                "Designation 3"
+        };
+
+        final List<String> DesignationList = new ArrayList<>(Arrays.asList(Designation ));
+
+        // Initializing an ArrayAdapter
         final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, DesignationList){
             @Override
@@ -307,7 +252,69 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         };
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         designation.setAdapter(DesignationArrayAdapter);
+        return view;
+    }
 
+    @Override
+    public void shownamevalidation() {
 
-      }
+    }
+
+    @Override
+    public void showgetemployeevalidation() {
+
+    }
+
+    @Override
+    public void showbiovalidation() {
+
+    }
+
+    @Override
+    public void showdepartmentvalidation() {
+
+    }
+
+    @Override
+    public void showteamvalidation() {
+
+    }
+
+    @Override
+    public void designationvalidation() {
+
+    }
+
+    @Override
+    public void nextfragment() {
+
+    }
+
+    @Override
+    public void departmentSpinner(List<String> departmentList) {
+
+    }
+
+    @Override
+    public void teamSpinner(List<String> TeamList) {
+
+    }
+
+    @Override
+    public void designationSpinner(List<String> DesignationList) {
+
+    }
+
+//    @Override
+//    public void showError() {
+//
+//        Toast.makeText(getActivity(), "Required Fields", Toast.LENGTH_SHORT).show();
+//
+//    }
 }
+
+
+
+
+
+

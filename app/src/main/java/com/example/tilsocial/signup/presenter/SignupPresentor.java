@@ -48,11 +48,11 @@ public class SignupPresentor {
             return true;
         }
         if (bio.isEmpty()) {
-            signupView.showbiovalidation();
+           signupView.showbiovalidation();
             return true;
         }
         if (deprtment.equals("Select department...")) {
-            signupView.showdepartmentvalidation();
+           signupView.showdepartmentvalidation();
             return true;
         }
         if (teamm.equals("Select Team...")) {
@@ -60,7 +60,7 @@ public class SignupPresentor {
             return true;
         }
         if (desgniationn.equals("Select Designation...")) {
-            signupView.designationvalidation();
+           signupView.designationvalidation();
             return true;
         }
 
@@ -136,10 +136,11 @@ public class SignupPresentor {
     }
 
     public void doSignUp(SignupRequestParams signupRequestParams) {
-        if (!validateInputs(signupRequestParams.getEmployeeid(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDepartment(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
-            signUpModel.doSignup(signupRequestParams);
-            signupView.nextfragment();
-        }
+//        if (!validateInputs(signupRequestParams.getEmployeeid(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDepartment(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
+
+//            signupView.nextfragment();
+//        }
+        signUpModel.doSignup(signupRequestParams);
     }
 
 

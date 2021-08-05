@@ -8,7 +8,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:background="#FF018786"/>
+        android:background="@color/teal_400"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
@@ -52,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:backgroundTint="#FF018786"
+                app:backgroundTint="@null"
+                android:background="@drawable/clrgrad"
                 android:textStyle="bold"
                 android:text="Sign In"/>
 
@@ -74,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#FF018786"
+                    android:textColor="@color/teal_600"
                     android:clickable="true"
                     android:text="@string/create_profile" />
             </LinearLayout>

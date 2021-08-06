@@ -33,11 +33,8 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
     TextInputEditText editText;
     SigninPresentor signinPresentor;
 
-    Context s24;
-    Context s25;
+    public SigninFragment() {
 
-    public SigninFragment(MainActivity mainActivity) {
-        this.s25=mainActivity;
     }
 
     @Override
@@ -56,17 +53,15 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
         signupbtn=view.findViewById(R.id.textView3);
         signinbtn=view.findViewById(R.id.button);
 
-        signupbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SignUpFragment s = new SignUpFragment(s25);
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        signupbtn.setOnClickListener(v -> {
+            SignUpFragment s = new SignUpFragment(getActivity());
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 
-                Log.d(TAG, "onClick: "+ft);
-                ft.replace(R.id.your_placeholder, s);
-                ft.commit();
-            }
+            Log.d(TAG, "onClick: "+ft);
+            ft.replace(R.id.your_placeholder, s);
+            ft.commit();
         });
+        signupbtn.performClick();
 
         signinbtn.setOnClickListener(v -> {
             SigninRequestParams signinRequestParams = new SigninRequestParams();
@@ -79,22 +74,8 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
         } else {
             Toast.makeText(getActivity(), "Signin Error", Toast.LENGTH_SHORT).show();
         }
-//                Intent intent = new Intent(getActivity(), DashboardActivity.class);
-//                startActivity(intent);
-//                getActivity().finish();
-
         });
 
-        s24=getActivity();
-        //s25=getContext();
-        Log.d(TAG, "12342fdepartmentSpinner: "+
-                "c1 is" +getActivity()+
-                "c2 is" +getContext()+
-
-                "c5 is" +s24+
-                "c6 is" +s25
-
-        );
         return view;
     }
 

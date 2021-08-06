@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        SigninFragment signinfragment = new SigninFragment(MainActivity.this);
+        SigninFragment signinfragment = new SigninFragment();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 

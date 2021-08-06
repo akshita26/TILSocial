@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -23,54 +24,36 @@ import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SignUpFragment extends Fragment implements SignupPresentor.SignupView {
 
-    SignupPresentor signupPresentor;
-    Spinner department;
+    SignupPresentor signupPresentor;    Spinner department;
     private static final String TAG = "123jdvsn";
+    Spinner team;    Spinner designation;    View view;
+    EditText employeeidd;    Button signuppbtn;    EditText namee;
+    EditText bioo;    ArrayAdapter departmentAdapter;    Context maincontext;
+    Context attachcontext;
 
-    Spinner team;
-    Spinner designation;
-    View view;
-    EditText employeeidd;
-    Button signuppbtn;
-    EditText namee;
-    EditText bioo;
-    ArrayAdapter departmentAdapter;
+    View holderl;
 
-    Context s26;
-
-    public SignUpFragment() {
-
-    }
+    ArrayList<String>  dummylist;
+    ArrayAdapter dummyadapter;
 
     public SignUpFragment(Context s25) {
-        this.s26=s25;
+        this.maincontext=s25;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        signupPresentor = new SignupPresentor(this, new SignUpModel());
-
-      //  s26=getActivity();
-        Log.d(TAG, "4234324235gdfg: "+
-                "c1 is" +s26
-
-        );
+        signupPresentor = new SignupPresentor(SignUpFragment.this,getActivity());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,   Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_siggnuppfragment, container, false);
-
-
         department = view.findViewById(R.id.spinner4);
         team = view.findViewById(R.id.spinner5);
         designation = view.findViewById(R.id.spinner6);
@@ -80,9 +63,14 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         bioo = view.findViewById(R.id.editTextTextPersonName3);
         signupPresentor.getdetailsofspinnertoview();
 
-//          signupPresentor.departmentSpinnerdetail();
-//        signupPresentor.TeamSpinnerDetail();
-//        signupPresentor.DesignationSpinnerDetail();
+        dummylist = new ArrayList<>();
+        dummylist.add("wrffr");
+        dummylist.add("wrffr");
+        dummylist.add("wrffr");
+        dummyadapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,dummylist);
+        // department.setAdapter(dummyadapter);
+
+        this.holderl=view;
 
         signuppbtn.setOnClickListener(v -> {
 
@@ -97,8 +85,37 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
             signupRequestParams.setInterset(interest);
             signupPresentor.doSignUp(signupRequestParams);
         });
+
         return view;
     }
+
+
+    @Override
+    public void nextfragment() {
+
+        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void departmentSpinner(List<String> departmentList,Context c) {
+            if (c!=null){
+                departmentAdapter=new ArrayAdapter(c,android.R.layout.simple_spinner_item,departmentList);
+               departmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+               department.setAdapter(departmentAdapter);
+            } else {
+                Log.d(TAG, "departmentSpinner: " + "context is null");
+            }
+    }
+
+
+
+
+
+
+
+
+
 
 
     @Override
@@ -135,161 +152,10 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         Toast.makeText(getActivity(), "Designation is Required", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void nextfragment() {
-
-        Intent intent = new Intent(getActivity(), DashboardActivity.class);
-        startActivity(intent);
-    }
-
-
 
     @Override
-    public void departmentSpinner(List<String> departmentList) {
-
-        Log.e("getting detailsss", "onResponsespinner4242department: " + departmentList);
-
-        Log.d(TAG, "12342fdepartmentSpinner: "+
-
-                "c6 is" +s26
-
-        );
-        try {
-            if (s26!=null){
-                departmentAdapter = new ArrayAdapter(s26, android.R.layout.simple_spinner_item, departmentList);
-                Log.e("getting detailsss", "departmentadapter1334 " + departmentAdapter.getCount());
-                departmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                department.setAdapter(departmentAdapter);
-
-            } else {
-                Log.d(TAG, "departmentSpinner: "+"context is null!!!!");
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "scsdepartmentSpinner: "+e.getMessage());
-
-            e.printStackTrace();
-        }
-
-//        final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
-//                getActivity(),R.layout.spinnneritem, departmentList){
-//            @Override
-//            public boolean isEnabled(int position){
-//                if(position == 0)
-//                {
-//                    // Disable the first item from Spinner
-//                    // First item will be use for hint
-//                    return false;
-//                }
-//                else
-//                {
-//                    return true;
-//                }
-//            }
-//            @Override
-//            public View getDropDownView(int position, View convertView,
-//                                        ViewGroup parent) {
-//                View view = super.getDropDownView(position, convertView, parent);
-//                TextView tv = (TextView) view;
-//                if(position == 0){
-//                    // Set the hint text color gray
-//                    tv.setTextColor(Color.GRAY);
-//                }
-//                else {
-//                    tv.setTextColor(Color.BLACK);
-//                }
-//                return view;
-//            }
-//        };
-//        DepartmentArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-//        department.setAdapter(DepartmentArrayAdapter);
-    }
-
-
-  /*  @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        if (context instanceof Activity){
-            s23 =(Activity) context;
-        }
-    }*/
-//    @Override
-//    public void teamSpinner(List<String> TeamList){
-//        Log.e("getting detailsss", "onResponsespinner4242team: " + TeamList);
-//        departmentAdapter=new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item,departmentList);
-//        departmentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        department.setAdapter(departmentAdapter);
-//
-////        final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-////                getActivity(),R.layout.spinnneritem, TeamList){
-//////            @Override
-//////            public boolean isEnabled(int position){
-//////                if(position == 0)
-//////                {
-//////                    // Disable the first item from Spinner
-//////                    // First item will be use for hint
-//////                    return false;
-//////                }
-//////                else
-//////                {
-//////                    return true;
-//////                }
-//////            }
-////            @Override
-////            public View getDropDownView(int position, View convertView,
-////                                        ViewGroup parent) {
-////                View view = super.getDropDownView(position, convertView, parent);
-////                TextView tv = (TextView) view;
-////                if(position == 0){
-////                    // Set the hint text color gray
-////                    tv.setTextColor(Color.GRAY);
-////                }
-////                else {
-////                    tv.setTextColor(Color.BLACK);
-////                }
-////                return view;
-////            }
-////        };
-////        TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-////        team.setAdapter(TeamArrayAdapter);
-//
-//    }
-//    @Override
-//    public void designationSpinner(List<String> DesignationList) {
-//        Log.e("getting detailsss", "onResponsespinner4242designation: " + DesignationList);
-//        final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
-//                getActivity(),R.layout.spinnneritem, DesignationList){
-//            @Override
-//            public boolean isEnabled(int position){
-//                if(position == 0)
-//                {
-//                    // Disable the first item from Spinner
-//                    // First item will be use for hint
-//                    return false;
-//                }
-//                else
-//                {
-//                    return true;
-//                }
-//            }
-//            @Override
-//            public View getDropDownView(int position, View convertView,
-//                                        ViewGroup parent) {
-//                View view = super.getDropDownView(position, convertView, parent);
-//                TextView tv = (TextView) view;
-//                if(position == 0){
-//                    // Set the hint text color gray
-//                    tv.setTextColor(Color.GRAY);
-//                }
-//                else {
-//                    tv.setTextColor(Color.BLACK);
-//                }
-//                return view;
-//            }
-//        };
-//        DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-//        designation.setAdapter(DesignationArrayAdapter);
-//
-//
-//      }
+    }
 }

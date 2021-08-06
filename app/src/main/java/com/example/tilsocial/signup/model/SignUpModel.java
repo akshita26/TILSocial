@@ -1,5 +1,6 @@
 package com.example.tilsocial.signup.model;
 
+import android.content.Context;
 import android.util.Log;
 
 
@@ -10,6 +11,9 @@ import com.example.tilsocial.api.ApiInterface;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
 import com.example.tilsocial.signup.view.SignUpFragment;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,15 +26,20 @@ public class SignUpModel
     ApiInterface apiInterface;
     SpinnerRequestParams spinnerRequestParams;
     SignupPresentor signupPresentor;
+    Context mc;
+    Context msc;
+    ArrayList<String> d;
+    public SignUpModel(Context mc, SignupPresentor signupPresentor) {
+        this.msc = mc;
+        this.signupPresentor = signupPresentor;
 
+    }
 
-    public void doSignup(SignupRequestParams signupRequestParams)
+    public void doSignup(SignupRequestParams signupRequestParams, Context mainacontext)
     {
-
+        //this.mc=mainacontext;
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-
         Call<SignupRequestParams> PostCall = apiInterface.postSignUp(signupRequestParams);
-
         PostCall.enqueue(new Callback<SignupRequestParams>() {
             @Override
             public void onResponse(Call<SignupRequestParams> call, Response<SignupRequestParams> response) {
@@ -43,9 +52,7 @@ public class SignUpModel
                 {
                     Log.e("null1234", "onResponse: " + "nulll getting" );
                 }
-
             }
-
             @Override
             public void onFailure(Call<SignupRequestParams> call, Throwable t) {
                 Log.e(TAG, "onResponse: " + t.getMessage() );
@@ -54,18 +61,13 @@ public class SignUpModel
         });
 
     }
-    public void getspinnerdetails()
+    public List<String> getspinnerdetails()
     {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        signupPresentor = new SignupPresentor(new SignUpFragment(),this);
-
         Call<SpinnerRequestParams> call = apiInterface.getSpinnerDetails();
         call.enqueue(new Callback<SpinnerRequestParams>() {
             @Override
             public void onResponse(Call<SpinnerRequestParams> call, Response<SpinnerRequestParams> response) {
-
-
-
                     Log.e(TAG, "onResponsespinner: " +  response.body());
                     spinnerRequestParams = new SpinnerRequestParams();
                     spinnerRequestParams.setDepartment(response.body().department);
@@ -74,15 +76,7 @@ public class SignUpModel
                     Log.e(TAG, "onResponsespinnersignparams: " +  spinnerRequestParams);
 
 
-//                  spinnerRequestParams = response.body();\
-                signupPresentor.getSpinnerDetailinpresentor(spinnerRequestParams);
-                try {
-                    Thread.sleep(  5000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-
+                 signupPresentor.getSpinnerDetailinpresentor(spinnerRequestParams);
 
 
             }
@@ -92,8 +86,6 @@ public class SignUpModel
                 Log.e(TAG, "onFailure: " + t.getLocalizedMessage() );
             }
         });
-
-
-
+        return d;
     }
 }

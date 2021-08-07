@@ -26,7 +26,7 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
@@ -34,21 +34,21 @@ public class DashboardActivity extends AppCompatActivity {
 
         HomeFragment fragment = new HomeFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.dashboard, fragment, "");
+        fragmentTransaction.add(R.id.dashboard, fragment, "");
         fragmentTransaction.commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(navigationView.getSelectedItemId()==R.id.nav_home){
-            super.onOptionsItemSelected(item);
-            finish();
-        }
-        else{
-            navigationView.setSelectedItemId(R.id.nav_home);
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        if(navigationView.getSelectedItemId()==R.id.nav_home){
+//            super.onOptionsItemSelected(item);
+//            finish();
+//        }
+//        else{
+//            navigationView.setSelectedItemId(R.id.nav_home);
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -86,14 +86,14 @@ public class DashboardActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    public void onBackPressed() {
-        if(navigationView.getSelectedItemId()==R.id.nav_home){
-            super.onBackPressed();
-            finish();
-        }
-        else{
-            navigationView.setSelectedItemId(R.id.nav_home);
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if(navigationView.getSelectedItemId()==R.id.nav_home){
+//            super.onBackPressed();
+//            finish();
+//        }
+//        else{
+//            navigationView.setSelectedItemId(R.id.nav_home);
+//        }
+//    }
 }

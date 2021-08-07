@@ -24,7 +24,7 @@ public class SigninPresentor {
     public int doSignin(SigninRequestParams signinRequestParams, FragmentActivity activity)
     {
 
-        if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16 )
+        if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16 && signinRequestParams.getEmployeeid().startsWith("1450"))
         {
             signInModel.doSignin(signinRequestParams,context);
             return 1;

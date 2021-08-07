@@ -43,7 +43,9 @@
                     android:id="@+id/edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Employee Id" />
+                    android:hint="Employee Id"
+                    android:keyboardNavigationCluster="false"
+                    android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button

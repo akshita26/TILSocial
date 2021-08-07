@@ -26,30 +26,18 @@ public class HomeFragment extends Fragment {
     List<ModelPost> posts;
     AdapterPosts adapterPosts;
 
-
-
-
     public HomeFragment() {
         // Required empty public constructor
     }
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
-
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = view.findViewById(R.id.postrecyclerview);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         posts = new ArrayList<>();
         loadPosts();
@@ -59,7 +47,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadPosts() {
-
 
         ModelPost modelPost = new ModelPost();
         modelPost.setName("User1");
@@ -73,10 +60,6 @@ public class HomeFragment extends Fragment {
         posts.add(modelPost);
         posts.add(modelPost);
 
-
-
-
-
     }
 
 //    @Override
@@ -84,7 +67,5 @@ public class HomeFragment extends Fragment {
 //        setHasOptionsMenu(true);
 //        super.onCreate(savedInstanceState);
 //    }
-
-
 
 }

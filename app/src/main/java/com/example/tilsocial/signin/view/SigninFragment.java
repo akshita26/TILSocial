@@ -58,7 +58,7 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
             public void onClick(View v) {
                 SignUpFragment SignUpFragment = new SignUpFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.your_placeholder, SignUpFragment);
+                ft.add(R.id.your_placeholder, SignUpFragment);
                 ft.commit();
             }
         });
@@ -74,7 +74,7 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
                 startActivity(intent);
                 getActivity().finish();
             } else {
-                Toast.makeText(getActivity(), "Signin Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Incorrect ID", Toast.LENGTH_SHORT).show();
             }
 //                Intent intent = new Intent(getActivity(), DashboardActivity.class);
 //                startActivity(intent);

@@ -11,14 +11,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
             <View
                 android:id="@+id/view"
@@ -41,7 +42,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
@@ -49,7 +50,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
@@ -67,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:clickable="true"
-                        android:src="@android:drawable/ic_menu_edit" />
+                        android:src="@drawable/pencil" />
                 </LinearLayout>
 
                 <TextView
@@ -77,23 +78,23 @@
                     android:text="@string/department" />
             </LinearLayout>
 
-<!--            <com.google.android.flexbox.FlexboxLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="25dp"-->
-<!--                android:layout_marginRight="25dp"-->
-<!--                android:layout_marginTop="@dimen/spacing_middle"-->
-<!--                app:flexWrap="wrap"-->
-<!--                app:justifyContent="flex_start">-->
-<!--                <TextView-->
-<!--                    android:id="@+id/bio"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:textSize="17dp"-->
-<!--                    android:textColor="#C9000000"-->
-<!--                    android:justificationMode="inter_word"-->
-<!--                    android:text="Bio"/>-->
-<!--            </com.google.android.flexbox.FlexboxLayout>-->
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="@dimen/spacing_middle"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start">
+                <TextView
+                    android:id="@+id/bio"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="17dp"
+                    android:textColor="#C9000000"
+                    android:justificationMode="inter_word"
+                    android:text="Bio"/>
+            </com.google.android.flexbox.FlexboxLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -116,44 +117,11 @@
                         android:layout_height="wrap_content">
 
                     <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_group"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        app:singleSelection="false">
 
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            android:text="@string/interest1"/>
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            android:text="@string/interest2" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            android:text="@string/interest3" />
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            android:text="@string/interest4"/>
-
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/chip8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            android:text="@string/interest5"/>
                     </com.google.android.material.chip.ChipGroup>
                     </HorizontalScrollView>
                 </LinearLayout>
@@ -174,7 +142,7 @@
                 android:layout_height="match_parent">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
 </FrameLayout>

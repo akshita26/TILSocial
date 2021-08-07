@@ -18,14 +18,14 @@ public class SignInModel {
     {
         apiInterface = SigninAPIClient.getClient().create(SigninAPIinterface.class);
 
-        Call<SigninRequestParams> GetCall = apiInterface.postSignIn();
+        Call<SigninRequestParams> GetCall = apiInterface.postSignIn(signinRequestParams.empId);
 
         GetCall.enqueue(new Callback<SigninRequestParams>() {
             @Override
             public void onResponse(Call<SigninRequestParams> call, Response<SigninRequestParams> response) {
-                if(response!=null)
+                if(response.isSuccessful())
                 {
-                    Log.e("Employeeid", "onResponse: " + response.body().getEmployeeid() );
+                    Log.e("Employeeid", "onResponse: " + response.body().getEmployeeid());
                 }
                 else
                 {

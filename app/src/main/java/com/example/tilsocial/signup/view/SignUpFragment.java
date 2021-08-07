@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.Selection;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.R;
+import com.example.tilsocial.signin.view.SigninFragment;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
@@ -44,14 +46,11 @@ import java.util.List;
 public class SignUpFragment extends Fragment implements SignupPresentor.SignupView {
 
     SignupPresentor signupPresentor;
-    Spinner department;
-    Spinner team;
-    Spinner designation;
+    Spinner department,team,designation;
     View view;
-    EditText employeeidd;
+    EditText employeeidd,namee,bioo;
     Button signuppbtn;
-    EditText namee;
-    EditText bioo;
+    TextView gotosign;
     ChipGroup chipGroup;
     Chip chip;
     String s;
@@ -89,6 +88,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         bioo = view.findViewById(R.id.editTextTextPersonName3);
         add = view.findViewById(R.id.add);
         chipGroup = view.findViewById(R.id.chip_group);
+        gotosign=view.findViewById(R.id.gotosignin);
 
 
         signuppbtn.setOnClickListener(new View.OnClickListener() {
@@ -115,8 +115,19 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
             }
         });
 
+        gotosign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SigninFragment signinFragment = new SigninFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.your_placeholder, signinFragment);
+                ft.commit();
+            }
+        });
+
        //Interest in chips
         String[] genres = {"Mobile Application Development", "Android", "iOS","System Design"};
+        chipGroup.removeAllViews();
         for(String genre : genres) {
             chip = new Chip(getActivity());
             chip.setText(genre);

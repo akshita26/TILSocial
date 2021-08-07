@@ -1,9 +1,11 @@
 package com.example.tilsocial.addpost.view;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,10 +24,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tilsocial.R;
@@ -42,15 +48,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class AddPostFragment extends Fragment implements AddPostPresenter.AddPostView {
     Button post;
-    ImageView btncamera, btngallery, imageView, hashtag;
+    Spinner interest_tag;
+    ImageView btncamera, btngallery, imageView;
     EditText title, desc;
-    ChipGroup chipGroup;
+    ChipGroup chipGroup,chipGroup2;
+    Chip chip;
     String s,simage;
     Integer count;
     Uri imageUri;
@@ -79,8 +88,10 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         btncamera = view.findViewById(R.id.camera);
         btngallery = view.findViewById(R.id.gallery);
         imageView = view.findViewById(R.id.image);
-        hashtag = view.findViewById(R.id.hashtag);
         chipGroup = view.findViewById(R.id.chip_group);
+        interest_tag=view.findViewById(R.id.spinner);
+        chipGroup2 = view.findViewById(R.id.chip_group2);
+
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +152,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 post.setEnabled(!s.toString().trim().isEmpty());
+                post.setBackgroundColor(getResources().getColor(R.color.teal_600));
             }
 
             @Override
@@ -149,64 +161,67 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             }
         });
 
-        hashtag.setOnClickListener(new View.OnClickListener() {
+//        Interest Tag selection
+        String[] Interests = new String[]{
+                "Select Interest...",
+                "Interest 1",
+                "Interest 2",
+                "Interest 3",
+                "Interest 4"
+        };
+
+        final List<String> InterestList = new ArrayList<>(Arrays.asList(Interests));
+
+        // Initializing an ArrayAdapter
+        final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
+                getActivity(),R.layout.spinnneritem, InterestList){
             @Override
-            public void onClick(View v) {
-                LinearLayout linearLayout = view.findViewById(R.id.linearlayout);
-                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                EditText editText = new EditText(getActivity());
-                editText.setLayoutParams(p);
-                linearLayout.addView(editText, 2);
-                editText.setText("#");
-                Selection.setSelection(editText.getText(), editText.getText().length());
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        interest_tag.setAdapter(TeamArrayAdapter);
 
-                editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        ArrayList<String> interest= new ArrayList<>();
+        interest_tag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i!=0) {
+                    interest.add(adapterView.getItemAtPosition(i).toString());
+                    chipGroup2.removeAllViews();
+                    for(String genre : interest) {
+                        chip = new Chip(getActivity());
+                        chip.setText(genre);
+                        chipGroup2.addView(chip);
                     }
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if (!s.toString().startsWith("#")) {
-                            editText.setText("#");
-                            Selection.setSelection(editText.getText(), editText.getText().length());
-                        }
-                    }
-                });
-
-                editText.setOnKeyListener(new View.OnKeyListener() {
-                    @Override
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        if ((keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_SPACE)) {
-                            try {
-                                s = editText.getText().toString();
-                                editText.setVisibility(View.GONE);
-                                Chip chip = new Chip(getActivity());
-                                chip.setText(s);
-                                hashList.add(s);
-                                chip.setCloseIconVisible(true);
-                                chip.setTextColor(getResources().getColor(R.color.grey_60));
-                                chip.setTextAppearance(R.style.TextAppearance_AppCompat_Body2);
-                                chipGroup.addView(chip);
-                                chip.setOnCloseIconClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        chipGroup.removeView(chip);
-                                    }
-                                });
-                                return true;
-                            }
-                            catch (Exception e){
-                                Toast.makeText(getActivity(), "Re--"+e, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                        return false;
-                    }
-                });
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });

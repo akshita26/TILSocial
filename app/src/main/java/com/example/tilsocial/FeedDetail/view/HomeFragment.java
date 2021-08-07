@@ -1,15 +1,13 @@
 package com.example.tilsocial.FeedDetail.view;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
@@ -24,30 +22,20 @@ public class HomeFragment extends Fragment {
     List<ModelPost> posts;
     AdapterPosts adapterPosts;
 
-
-
-
     public HomeFragment() {
         // Required empty public constructor
     }
-
-
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
-
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = view.findViewById(R.id.postrecyclerview);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         posts = new ArrayList<>();
         loadPosts();
@@ -57,7 +45,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadPosts() {
-
 
         ModelPost modelPost = new ModelPost();
         modelPost.setName("User1");
@@ -70,18 +57,8 @@ public class HomeFragment extends Fragment {
         posts.add(modelPost);
         posts.add(modelPost);
         posts.add(modelPost);
-
-
-
-
-
     }
 
-//    @Override
-//    public void onCreate( Bundle savedInstanceState) {
-//        setHasOptionsMenu(true);
-//        super.onCreate(savedInstanceState);
-//    }
 
 
 

@@ -42,6 +42,7 @@
 
 
                         <com.mikhaellopez.circularimageview.CircularImageView
+                            android:id="@+id/userprofilee"
                             android:layout_width="150dp"
                             android:layout_height="150dp"
                             android:src="@drawable/profile"
@@ -50,11 +51,8 @@
                             app:civ_shadow="true"
                             app:civ_shadow_radius="10dp"
                             app:civ_shadow_color="#FF018786"
-                            android:layout_gravity="center"/>
-
-
-
-
+                            android:layout_gravity="center"
+                           />
 
                         <EditText
                             android:id="@+id/editTextTextPersonName"

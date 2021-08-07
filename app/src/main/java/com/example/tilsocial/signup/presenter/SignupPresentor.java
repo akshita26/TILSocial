@@ -1,10 +1,8 @@
 package com.example.tilsocial.signup.presenter;
 
-import androidx.annotation.NonNull;
-
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
-import com.example.tilsocial.signup.model.SpinnerRequestParams;
+import com.example.tilsocial.signup.model.SpinnerDetails;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,33 +13,22 @@ public class SignupPresentor {
     private static final String TAG = "123jdvsn";
     SignupView signupView;
     SignUpModel signUpModel;
-//    String[] Department;
-//    List<String> departmentList;
-//    String[] Team;
-//    List<String> TeamList;
-//    String[] Designation;
-//    List<String> DesignationList;
-//    Context c;
-
-
-
-
+    SpinnerDetails spinnerDetails;
 
     public SignupPresentor(SignupView signupView, SignUpModel signUpModel) {
         this.signupView = signupView;
         this.signUpModel = signUpModel;
+    }
 
+    public SignupPresentor() {
 
     }
 
-
     private boolean validateInputs(String employeeid, String name, String bio, String deprtment, String teamm, String desgniationn) {
-
 
         if (name.isEmpty()) {
             signupView.shownamevalidation();
             return true;
-
         }
         if (employeeid.isEmpty()) {
             signupView.showgetemployeevalidation();
@@ -63,37 +50,12 @@ public class SignupPresentor {
            signupView.designationvalidation();
             return true;
         }
-
         return false;
 
     }
-    public void getdetailsofspinnertoview() {
 
 
-        signUpModel.getspinnerdetails();
 
-    }
-
-    public void getSpinnerDetailinpresentor(@NonNull SpinnerRequestParams spinnerRequestParams) {
-
-
-//        Log.e("getting detailsss", "onResponsespinner4242: " + spinnerRequestParams);
-//         Department = spinnerRequestParams.getDepartment();
-//         Log.e("getting detailsss", "onResponsespinner4242: " + Department);
-//         departmentList = new ArrayList<>(Arrays.asList(Department));
-//         Log.e("getting detailsss", "onResponsespinnerdepartmnetlistt " + departmentList);
-//         Team = spinnerRequestParams.getTeam();
-//         TeamList = new ArrayList<>(Arrays.asList(Team));
-//         Designation = spinnerRequestParams.getDesignation();
-//         DesignationList = new ArrayList<>(Arrays.asList(Designation));
-//         signupView.departmentSpinner(departmentList);
-
-
-//         signupView.teamSpinner(TeamList);
-//         signupView.designationSpinner(DesignationList);
-
-
-    }
 
     public void departmentSpinnerdetail() {
 
@@ -136,15 +98,20 @@ public class SignupPresentor {
     }
 
     public void doSignUp(SignupRequestParams signupRequestParams) {
-//        if (!validateInputs(signupRequestParams.getEmployeeid(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDepartment(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
+        if (!validateInputs(signupRequestParams.getEmployeeid(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDepartment(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
 
-//            signupView.nextfragment();
-//        }
-        signUpModel.doSignup(signupRequestParams);
+            signUpModel.doSignup(signupRequestParams);
+            signupView.nextfragment();
+        }
+
     }
+    public void spinnerdata()
+    {
+
+          signUpModel.getspinnerdetails();
 
 
-
+    }
 
     public interface SignupView {
 

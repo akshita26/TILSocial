@@ -2,48 +2,49 @@ package com.example.tilsocial.signup.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SpinnerRequestParams {
+public class SpinnerDetails {
 
     @SerializedName("departments")
-    String [] department;
+    ArrayList department;
 
     @SerializedName("teams")
-    String [] team;
+    ArrayList team;
 
     @SerializedName("designations")
-    String [] designation;
+    ArrayList[] designation;
 
-    public String[] getDepartment() {
+    public ArrayList getDepartment() {
         return department;
     }
 
-    public void setDepartment(String[] department) {
+    public void setDepartment(ArrayList department) {
         this.department = department;
     }
 
-    public String[] getTeam() {
+    public ArrayList getTeam() {
         return team;
     }
 
-    public void setTeam(String[] team) {
+    public void setTeam(ArrayList team) {
         this.team = team;
     }
 
-    public String[] getDesignation() {
+    public ArrayList[] getDesignation() {
         return designation;
     }
 
-    public void setDesignation(String[] designation) {
+    public void setDesignation(ArrayList[] designation) {
         this.designation = designation;
     }
 
     @Override
     public String toString() {
-        return "SpinnerRequestParams{" +
-                "department=" + Arrays.toString(department) +
-                ", team=" + Arrays.toString(team) +
+        return "SpinnerDetails{" +
+                "department=" + department +
+                ", team=" + team +
                 ", designation=" + Arrays.toString(designation) +
                 '}';
     }

@@ -3,40 +3,39 @@ package com.example.tilsocial.signup.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SpinnerDetails {
 
     @SerializedName("departments")
-    ArrayList department;
+    ArrayList<String> department;
 
     @SerializedName("teams")
-    ArrayList team;
+    ArrayList<String> team;
 
     @SerializedName("designations")
-    ArrayList[] designation;
+    ArrayList<String> designation;
 
-    public ArrayList getDepartment() {
+    public ArrayList<String> getDepartment() {
         return department;
     }
 
-    public void setDepartment(ArrayList department) {
+    public void setDepartment(ArrayList<String> department) {
         this.department = department;
     }
 
-    public ArrayList getTeam() {
+    public ArrayList<String> getTeam() {
         return team;
     }
 
-    public void setTeam(ArrayList team) {
+    public void setTeam(ArrayList<String> team) {
         this.team = team;
     }
 
-    public ArrayList[] getDesignation() {
+    public ArrayList<String> getDesignation() {
         return designation;
     }
 
-    public void setDesignation(ArrayList[] designation) {
+    public void setDesignation(ArrayList<String> designation) {
         this.designation = designation;
     }
 
@@ -45,7 +44,7 @@ public class SpinnerDetails {
         return "SpinnerDetails{" +
                 "department=" + department +
                 ", team=" + team +
-                ", designation=" + Arrays.toString(designation) +
+                ", designation=" + designation +
                 '}';
     }
 }

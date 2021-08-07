@@ -18,6 +18,7 @@ public class SignUpModel
     SpinnerDetails spinnerDetails;
 
 
+
     public void doSignup(SignupRequestParams signupRequestParams)
     {
         signupPresentor = new SignupPresentor();
@@ -44,27 +45,33 @@ public class SignUpModel
     }
 
 
-    public void getspinnerdetails()
+    public SpinnerDetails getspinnerdetails()
     {
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<SpinnerDetails> call = apiInterface.getspinnerdetails();
+        Call<SpinnerDetails> call = apiInterface.getspinnerDetails();
         call.enqueue(new Callback<SpinnerDetails>() {
             @Override
             public void onResponse(Call<SpinnerDetails> call, Response<SpinnerDetails> response) {
 
                 Log.e(TAG, "onResponsespinner: " +  response.body());
+                spinnerDetails = new SpinnerDetails();
+                spinnerDetails = response.body();
+//                departmentt = new ArrayList<>();
+//                departmentt = response.body().department;
 
-                //not able to get response body details from api
+
 
 
             }
 
             @Override
             public void onFailure(Call<SpinnerDetails> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getLocalizedMessage() );
+                Log.e(TAG, "onFailure343: " + t.getLocalizedMessage() );
             }
         });
+
+        return spinnerDetails;
 
 
     }

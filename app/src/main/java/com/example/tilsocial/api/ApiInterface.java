@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 public interface ApiInterface {
 
     @GET("dropdown")
-    Call<SpinnerDetails> getspinnerdetails();
+    Call<SpinnerDetails> getspinnerDetails();
 
     @POST("signup")
     Call<SignupRequestParams> postSignUp(@Body SignupRequestParams signupRequestParams);

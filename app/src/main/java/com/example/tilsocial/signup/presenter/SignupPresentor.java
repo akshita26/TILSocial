@@ -1,5 +1,7 @@
 package com.example.tilsocial.signup.presenter;
 
+import android.util.Log;
+
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
@@ -107,8 +109,10 @@ public class SignupPresentor {
     }
     public void spinnerdata()
     {
-
-          signUpModel.getspinnerdetails();
+        spinnerDetails = new SpinnerDetails();
+        spinnerDetails =  signUpModel.getspinnerdetails();
+        Log.e(TAG, "detailofspinnerinpresentor: " + spinnerDetails);
+        //getting null value here why??
 
 
     }

@@ -45,36 +45,7 @@ public class SignUpModel
     }
 
 
-    public SpinnerDetails getspinnerdetails()
-    {
 
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<SpinnerDetails> call = apiInterface.getspinnerDetails();
-        call.enqueue(new Callback<SpinnerDetails>() {
-            @Override
-            public void onResponse(Call<SpinnerDetails> call, Response<SpinnerDetails> response) {
-
-                Log.e(TAG, "onResponsespinner: " +  response.body());
-                spinnerDetails = new SpinnerDetails();
-                spinnerDetails = response.body();
-//                departmentt = new ArrayList<>();
-//                departmentt = response.body().department;
-
-
-
-
-            }
-
-            @Override
-            public void onFailure(Call<SpinnerDetails> call, Throwable t) {
-                Log.e(TAG, "onFailure343: " + t.getLocalizedMessage() );
-            }
-        });
-
-        return spinnerDetails;
-
-
-    }
 
 
 

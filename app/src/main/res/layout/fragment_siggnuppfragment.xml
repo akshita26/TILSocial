@@ -25,12 +25,17 @@
                 >
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="350dp"
+
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    app:cardCornerRadius="20dp"
+
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="3dp"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true"
+                    app:contentPadding="5dp"
+                    android:visibility="visible"
+
                     >
 
                     <LinearLayout

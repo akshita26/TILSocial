@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class SignUpFragment extends Fragment implements SignupPresentor.SignupView {
+public class SignUpFragment extends Fragment implements SignupPresentor.SignupView  {
 
     SignupPresentor signupPresentor;
     Spinner department,team,designation;
@@ -55,6 +55,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     List<String> imageList = new ArrayList<>();
     ArrayList<String> genres = new ArrayList<>();
     SpinnerDetails spinnerDetails;
+    SignupPresentor.SignupView signupView;
 
 
 
@@ -92,7 +93,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         spinnerDetails =new SpinnerDetails();
         signupPresentor.spinnerdata();
 
-        signupPresentor.departmentSpinnerdetail();
+//        signupPresentor.departmentSpinnerdetail();
         signupPresentor.TeamSpinnerDetail();
         signupPresentor.DesignationSpinnerDetail();
 
@@ -365,6 +366,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         designation.setAdapter(DesignationArrayAdapter);
     }
+
 
 
 }

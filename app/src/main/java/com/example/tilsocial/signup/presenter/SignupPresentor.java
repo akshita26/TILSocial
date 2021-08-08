@@ -2,6 +2,8 @@ package com.example.tilsocial.signup.presenter;
 
 import android.util.Log;
 
+import com.example.tilsocial.api.ApiClient;
+import com.example.tilsocial.api.ApiInterface;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
@@ -10,16 +12,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class SignupPresentor {
 
     private static final String TAG = "123jdvsn";
     SignupView signupView;
     SignUpModel signUpModel;
     SpinnerDetails spinnerDetails;
+    ApiInterface apiInterface;
+    SignupPresentor signupPresentor;
+
+
 
     public SignupPresentor(SignupView signupView, SignUpModel signUpModel) {
         this.signupView = signupView;
         this.signUpModel = signUpModel;
+
     }
 
     public SignupPresentor() {
@@ -37,11 +48,11 @@ public class SignupPresentor {
             return true;
         }
         if (bio.isEmpty()) {
-           signupView.showbiovalidation();
+            signupView.showbiovalidation();
             return true;
         }
         if (deprtment.equals("Select department...")) {
-           signupView.showdepartmentvalidation();
+            signupView.showdepartmentvalidation();
             return true;
         }
         if (teamm.equals("Select Team...")) {
@@ -49,14 +60,12 @@ public class SignupPresentor {
             return true;
         }
         if (desgniationn.equals("Select Designation...")) {
-           signupView.designationvalidation();
+            signupView.designationvalidation();
             return true;
         }
         return false;
 
     }
-
-
 
 
     public void departmentSpinnerdetail() {
@@ -107,30 +116,63 @@ public class SignupPresentor {
         }
 
     }
-    public void spinnerdata()
-    {
-        spinnerDetails = new SpinnerDetails();
-        spinnerDetails =  signUpModel.getspinnerdetails();
-        Log.e(TAG, "detailofspinnerinpresentor: " + spinnerDetails);
-        //getting null value here why??
 
+    public void spinnerdata() {
+
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<SpinnerDetails> call = apiInterface.getspinnerDetails();
+        call.enqueue(new Callback<SpinnerDetails>() {
+            @Override
+            public void onResponse(Call<SpinnerDetails> call, Response<SpinnerDetails> response) {
+
+                if (response.isSuccessful()) {
+                    Log.e(TAG, "onResponsespinner: " + response.body());
+                    spinnerDetails = new SpinnerDetails();
+                    spinnerDetails = response.body();
+                    final List<String> departmentList = new ArrayList (Arrays.asList(spinnerDetails.getDepartment()));
+                    Log.e(TAG, "onResponsespinner: " + departmentList);
+                    signupView.departmentSpinner(departmentList);
+
+
+//                    Log.e(TAG, "onResponsespinner123454: " + spinnerDetails.getDepartment());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SpinnerDetails> call, Throwable t) {
+                Log.e(TAG, "onFailure343: " + t.getLocalizedMessage() );
+            }
+        });
 
     }
+
+
 
     public interface SignupView {
 
         void shownamevalidation();
+
         void showgetemployeevalidation();
+
         void showbiovalidation();
+
         void showdepartmentvalidation();
+
         void showteamvalidation();
+
         void designationvalidation();
+
         void nextfragment();
+
         void departmentSpinner(List<String> departmentList);
+
         void teamSpinner(List<String> TeamList);
+
         void designationSpinner(List<String> DesignationList);
 
     }
+
 
 
 }

@@ -233,7 +233,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 26) {
+        if (requestCode == 26 && resultCode!=0) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(bitmap);
             imageView.getLayoutParams().height = 200;
@@ -253,7 +253,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             catch (Exception e){
                 Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
             }
-        } else if (requestCode == 27) {
+        } else if (requestCode == 27 && resultCode!=0) {
             imageUri = data.getData();
             simage = imageUri.toString();
             imageList.add(simage);

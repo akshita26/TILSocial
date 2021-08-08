@@ -2,17 +2,16 @@ package com.example.tilsocial.signin.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.R;
@@ -58,7 +57,7 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
             public void onClick(View v) {
                 SignUpFragment SignUpFragment = new SignUpFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.your_placeholder, SignUpFragment);
+                ft.replace(R.id.your_placeholder, SignUpFragment);
                 ft.commit();
             }
         });

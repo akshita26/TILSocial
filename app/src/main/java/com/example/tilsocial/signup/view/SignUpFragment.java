@@ -1,20 +1,13 @@
 package com.example.tilsocial.signup.view;
 
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.text.Editable;
-import android.text.Selection;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,40 +15,48 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.R;
-import com.example.tilsocial.signin.view.SigninFragment;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
+import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
-public class SignUpFragment extends Fragment implements SignupPresentor.SignupView {
+public class SignUpFragment extends Fragment implements SignupPresentor.SignupView  {
 
     SignupPresentor signupPresentor;
     Spinner department,team,designation;
     View view;
     EditText employeeidd,namee,bioo;
     Button signuppbtn;
-    TextView gotosign;
     ChipGroup chipGroup;
     Chip chip;
-    String s;
-    ImageView add;
-    List<String> addList = new ArrayList<>();
+    ImageView add,userprofile;
+    Uri imageUri;
+    String simage;
+    List<String> imageList = new ArrayList<>();
+    ArrayList<String> genres = new ArrayList<>();
+    SpinnerDetails spinnerDetails;
+    SignupPresentor.SignupView signupView;
+
 
 
     public SignUpFragment()
@@ -88,15 +89,41 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         bioo = view.findViewById(R.id.editTextTextPersonName3);
         add = view.findViewById(R.id.add);
         chipGroup = view.findViewById(R.id.chip_group);
-        gotosign=view.findViewById(R.id.gotosignin);
+        userprofile = view.findViewById(R.id.userprofilee);
+        spinnerDetails =new SpinnerDetails();
+        signupPresentor.spinnerdata();
 
+//        signupPresentor.departmentSpinnerdetail();
+        signupPresentor.TeamSpinnerDetail();
+        signupPresentor.DesignationSpinnerDetail();
+
+        //Interest in chips
+        genres.add("Mobile Application Development");
+        genres.add("Android");
+        genres.add("iOS");
+        genres.add("System Design");
+        for(int i = 0 ; i<genres.size(); i++) {
+
+            chip = new Chip(getActivity());
+            chip.setText(genres.get(i));
+            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+            chip.setCheckable(true);
+            chipGroup.addView(chip);
+        }
+
+        userprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
 
         signuppbtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
                 String[] interest = {"Ani", "Sam", " Joe"};
+
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
                 signupRequestParams.setEmployeeid(employeeidd.getText().toString());
                 signupRequestParams.setName(namee.getText().toString());
@@ -105,51 +132,136 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterset(interest);
-
                 signupPresentor.doSignUp(signupRequestParams);
-
-                Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                startActivity(intent);
-
-
             }
         });
+        return view;
+    }
 
-        gotosign.setOnClickListener(new View.OnClickListener() {
+    private void selectImage() {
+
+
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                SigninFragment signinFragment = new SigninFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.your_placeholder, signinFragment);
-                ft.commit();
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo"))
+                {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 26);
+                }
+                else if (options[item].equals("Choose from Gallery"))
+                {
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), 27);
+                }
+                else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
             }
         });
+        builder.show();
 
-       //Interest in chips
-        String[] genres = {"Mobile Application Development", "Android", "iOS","System Design"};
-        chipGroup.removeAllViews();
-        for(String genre : genres) {
-            chip = new Chip(getActivity());
-            chip.setText(genre);
 
-            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
-            chip.setCheckable(true);
-            chipGroup.addView(chip);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 26) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            userprofile.setImageBitmap(bitmap);
+            userprofile.getLayoutParams().height = 200;
+            userprofile.getLayoutParams().width = 200;
+            try{
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+                File mFileTemp = null;
+                mFileTemp= File.createTempFile("ab"+timeStamp,".jpg",getActivity().getCacheDir());
+                FileOutputStream fout;
+                fout = new FileOutputStream(mFileTemp);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
+                fout.flush();
+                imageUri=Uri.fromFile(mFileTemp);
+                simage = imageUri.toString();
+                imageList.add(simage);
+            }
+            catch (Exception e){
+                Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
+            }
+        } else if (requestCode == 27) {
+            imageUri = data.getData();
+            simage = imageUri.toString();
+            imageList.add(simage);
+            Uri selectedImageUri = data.getData();
+            if (null != selectedImageUri) {
+                userprofile.setImageURI(selectedImageUri);
+                userprofile.getLayoutParams().height = 200;
+                userprofile.getLayoutParams().width = 200;
+            }
         }
+    }
 
-        //department Spinnner
+    @Override
+    public void shownamevalidation() {
+        namee.requestFocus();
+        namee.setError("FIELD CANNOT BE EMPTY");
+    }
 
-        String[] Department = new String[]{
-                "Select department...",
-                "department 1",
-                "department 2",
-                "department 3",
-                "department 3"
-        };
+    @Override
+    public void showgetemployeevalidation() {
+        employeeidd.requestFocus();
+        employeeidd.setError("FIELD CANNOT BE EMPTY");
 
-        final List<String> departmentList = new ArrayList<>(Arrays.asList(Department));
+    }
 
-        // Initializing an ArrayAdapter
+    @Override
+    public void showbiovalidation() {
+        bioo.requestFocus();
+        bioo.setError("FIELD CANNOT BE EMPTY");
+
+    }
+
+    @Override
+    public void showdepartmentvalidation() {
+
+//        Toast toast = new Toast(getActivity());
+//        toast.setDuration(Toast.LENGTH_LONG);
+//
+//        //inflate view
+//        View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
+//        ((TextView) custom_view.findViewById(R.id.message)).setText("Department Required");
+//        ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_error_outline);
+//        ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.blue_500));
+//
+//        toast.setView(custom_view);
+//        toast.show();
+
+      Toast.makeText(getActivity(), "Department Required", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showteamvalidation() {
+        Toast.makeText(getActivity(), "Team Required", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void designationvalidation() {
+        Toast.makeText(getActivity(), "Designation Required", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void nextfragment() {
+        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void departmentSpinner(List<String> departmentList) {
         final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, departmentList){
             @Override
@@ -182,22 +294,10 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         };
         DepartmentArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         department.setAdapter(DepartmentArrayAdapter);
+    }
 
-
-
-        //Team Spinnner
-
-        String[] Team = new String[]{
-                "Select Team...",
-                "Team 1",
-                "Team 2",
-                "Team 3",
-                "Team 3"
-        };
-
-        final List<String> TeamList = new ArrayList<>(Arrays.asList(Team));
-
-        // Initializing an ArrayAdapter
+    @Override
+    public void teamSpinner(List<String> TeamList) {
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, TeamList){
             @Override
@@ -231,27 +331,16 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         team.setAdapter(TeamArrayAdapter);
 
-        //designation Spinnner
+    }
 
-        String[] Designation = new String[]{
-                "Select Designation...",
-                "Designation 1",
-                "Designation 2",
-                "Designation 3",
-                "Designation 3"
-        };
-
-        final List<String> DesignationList = new ArrayList<>(Arrays.asList(Designation ));
-
-        // Initializing an ArrayAdapter
+    @Override
+    public void designationSpinner(List<String> DesignationList) {
         final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, DesignationList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
                 {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
                     return false;
                 }
                 else
@@ -276,15 +365,10 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         };
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         designation.setAdapter(DesignationArrayAdapter);
-        return view;
     }
 
-    @Override
-    public void showError() {
 
-        Toast.makeText(getActivity(), "Required Fields", Toast.LENGTH_SHORT).show();
 
-    }
 }
 
 

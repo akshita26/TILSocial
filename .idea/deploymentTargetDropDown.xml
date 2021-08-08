@@ -9,11 +9,13 @@
             <type value="VIRTUAL_DEVICE_PATH" />
             <value value="C:\Users\SAMEER.BANARJEE\.android\avd\3.4_WQVGA_API_27.avd" />
             <value value="C:\Users\akshita.sharma\.android\avd\3.4_WQVGA_API_27.avd" />
+            <value value="C:\Users\manpreet.kamboj\.android\avd\3.2_QVGA_ADP2_API_27.avd" />
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
     <timeTargetWasSelectedWithDropDown value="2021-08-06T10:27:24.354289400Z" />
     <timeTargetWasSelectedWithDropDown value="2021-08-07T18:07:53.923664900Z" />
+    <timeTargetWasSelectedWithDropDown value="2021-08-05T08:15:30.579129800Z" />
   </component>
 </project>

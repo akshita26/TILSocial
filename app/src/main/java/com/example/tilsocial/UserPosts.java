@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tilsocial.FeedDetail.model.ModelPost;
+
 import java.util.List;
 
 public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{

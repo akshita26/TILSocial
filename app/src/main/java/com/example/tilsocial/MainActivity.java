@@ -1,9 +1,9 @@
 package com.example.tilsocial;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Bundle;
 
 import com.example.tilsocial.signin.view.SigninFragment;
 

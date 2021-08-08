@@ -1,4 +1,4 @@
-package com.example.tilsocial;
+package com.example.tilsocial.FeedDetail.model;
 
 public class ModelPost {
 

@@ -25,12 +25,17 @@
                 >
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="350dp"
+
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    app:cardCornerRadius="20dp"
+
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="3dp"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true"
+                    app:contentPadding="5dp"
+                    android:visibility="visible"
+
                     >
 
                     <LinearLayout
@@ -42,6 +47,7 @@
 
 
                         <com.mikhaellopez.circularimageview.CircularImageView
+                            android:id="@+id/userprofilee"
                             android:layout_width="150dp"
                             android:layout_height="150dp"
                             android:src="@drawable/profile"
@@ -50,11 +56,8 @@
                             app:civ_shadow="true"
                             app:civ_shadow_radius="10dp"
                             app:civ_shadow_color="#FF018786"
-                            android:layout_gravity="center"/>
-
-
-
-
+                            android:layout_gravity="center"
+                           />
 
                         <EditText
                             android:id="@+id/editTextTextPersonName"
@@ -69,10 +72,11 @@
                             android:id="@+id/editTextTextPersonName2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
                             android:ems="10"
+                            android:inputType="number"
                             android:hint="Employee Id"
-                            android:inputType="textPersonName" />
+                            android:layout_marginBottom="20dp"
+                            />
 
                         <EditText
                             android:id="@+id/editTextTextPersonName3"
@@ -175,12 +179,7 @@
                             android:text="Sign up"
                             android:textStyle="bold"
                             />
-                        <TextView
-                            android:id="@+id/gotosignin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="Go to Sign In"/>
+
 
                     </LinearLayout>
 

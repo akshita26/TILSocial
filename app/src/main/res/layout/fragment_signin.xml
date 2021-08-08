@@ -45,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Employee Id"
                     android:keyboardNavigationCluster="false"
+                    android:inputType="number"
                     android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
 

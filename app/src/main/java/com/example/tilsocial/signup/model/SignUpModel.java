@@ -6,6 +6,8 @@ import com.example.tilsocial.api.ApiClient;
 import com.example.tilsocial.api.ApiInterface;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,7 +47,15 @@ public class SignUpModel
     }
 
 
+    interface Signupmodellgetspinnerdetails {
 
+        interface OnFinishedListener {
+            void onFinished(ArrayList<SpinnerDetails> noticeArrayList);
+            void onFailure(Throwable t);
+        }
+
+        void getNoticeArrayList(OnFinishedListener onFinishedListener);
+    }
 
 
 

@@ -1,34 +1,49 @@
 package com.example.tilsocial.FeedDetail.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
+import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements MainContract.MainView {
 
     RecyclerView recyclerView;
     List<ModelPost> posts;
     AdapterPosts adapterPosts;
     Spinner feedspinner;
+    private MainContract.presenter presenter;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        presenter = new FeedPresentor(this,new MainFeedModel());
+        presenter.requestDataFromServer();
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,7 +80,7 @@ public class HomeFragment extends Fragment {
         modelPost.setUlike("20");
         modelPost.setUtime("1 min");
         modelPost.setUcomment("comments");
-        modelPost.setUtitle("MYPOST");
+//        modelPost.se("MYPOST");
         posts.add(modelPost);
         posts.add(modelPost);
         posts.add(modelPost);
@@ -73,4 +88,18 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @Override
+    public void setDataToRecyclerView(List<ModelPost> ModalPostList) {
+
+        Log.e("HomeActivityfeed", "onResponse: " +  ModalPostList);
+
+    }
+
+    @Override
+    public void onResponseFailure(Throwable t) {
+        Toast.makeText(getActivity(),
+                "Something went wrong...Error message: " + t.getMessage(),
+                Toast.LENGTH_LONG).show();
+
+    }
 }

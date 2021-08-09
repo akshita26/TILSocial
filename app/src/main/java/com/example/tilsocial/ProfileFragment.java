@@ -1,22 +1,18 @@
 package com.example.tilsocial;
 
-import android.app.ActionBar;
-import android.app.Notification;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.tilsocial.FeedDetail.model.ModelPost;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -98,7 +94,7 @@ public class ProfileFragment extends Fragment {
         modelPost.setUlike("20");
         modelPost.setUtime("1 min");
         modelPost.setUcomment("comments");
-        modelPost.setUtitle("MYPOST");
+//        modelPost.setUtitle("MYPOST");
         posts.add(modelPost);
         posts.add(modelPost);
         posts.add(modelPost);

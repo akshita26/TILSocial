@@ -2,16 +2,25 @@ package com.example.tilsocial.FeedDetail.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toolbar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.MainActivity;
 import com.example.tilsocial.R;
 
 import java.util.ArrayList;
@@ -24,11 +33,23 @@ public class HomeFragment extends Fragment {
     List<ModelPost> posts;
     AdapterPosts adapterPosts;
     Spinner feedspinner;
+    ActionBar actionBar;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.my_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +57,6 @@ public class HomeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
-        feedspinner = view.findViewById(R.id.filterfeed);
         recyclerView = view.findViewById(R.id.postrecyclerview);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -46,15 +66,10 @@ public class HomeFragment extends Fragment {
         adapterPosts = new AdapterPosts(getActivity(), posts);
         recyclerView.setAdapter(adapterPosts);
 
-        String [] filterlist ={ "Recent", "Trending"};
-
-        ArrayAdapter filteradapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, filterlist);
-        filteradapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        feedspinner.setAdapter( filteradapter);
-
 
         return view;
     }
+
 
     private void loadPosts() {
 

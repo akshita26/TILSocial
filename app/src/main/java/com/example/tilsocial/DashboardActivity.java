@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 
 import com.example.tilsocial.FeedDetail.view.HomeFragment;
 import com.example.tilsocial.addpost.view.AddPostFragment;
@@ -86,6 +87,7 @@ public class DashboardActivity extends AppCompatActivity {
             return false;
         }
     };
+
 
 //    @Override
 //    public void onBackPressed() {

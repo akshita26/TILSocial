@@ -1,31 +1,42 @@
 package com.example.tilsocial.FeedDetail.presentor;
 
-import com.example.tilsocial.FeedDetail.model.FeedPostModel;
-import com.example.tilsocial.signup.model.SignupRequestParams;
+import com.example.tilsocial.FeedDetail.model.ModelPost;
 
-public class FeedPresentor {
+import java.util.List;
 
-          FeedPostModel feedPostModel;
-          FeedPostView feedPostView;
+public class FeedPresentor implements MainContract.presenter ,MainContract.GetFeedList.OnFinishedListener{
 
-    public FeedPresentor(FeedPostModel feedPostModel, FeedPostView feedPostView) {
-        this.feedPostModel = feedPostModel;
-        this.feedPostView = feedPostView;
+    private MainContract.MainView mainView;
+    private MainContract.GetFeedList getFeedList;
+
+    public FeedPresentor(MainContract.MainView mainView, MainContract.GetFeedList getFeedList) {
+        this.mainView = mainView;
+        this.getFeedList = getFeedList;
     }
 
-    public void GetFeedPost()    {
+    @Override
+    public void requestDataFromServer() {
 
-
-        feedPostModel.GetFeedPost();
-
-
-
-    }
-
-    public  interface FeedPostView
-    {
-        void showError () ;
+        getFeedList.getFeedList(this);
 
     }
 
+    @Override
+    public void onFinished(List<ModelPost> ModalPostList) {
+
+        if(mainView != null){
+            mainView.setDataToRecyclerView(ModalPostList);
+        }
+
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+
+        if(mainView != null){
+            mainView.onResponseFailure(t);
+
+        }
+
+    }
 }

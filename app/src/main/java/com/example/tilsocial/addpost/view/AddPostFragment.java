@@ -156,9 +156,16 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isdesc = 1;
-                if (isinterest == 1) {
-                    post.setEnabled(true);
-                    post.setBackgroundColor(getResources().getColor(R.color.teal_600));
+                if (isinterest >= 1) {
+                    Boolean b=!s.toString().trim().isEmpty();
+                    post.setEnabled(b);
+                    if(b) {
+                        post.setBackgroundColor(getResources().getColor(R.color.teal_600));
+                    }
+                    else{
+                        post.setTextColor(getResources().getColor(R.color.white));
+                        post.setBackgroundColor(getResources().getColor(R.color.grey_20));
+                    }
                 }
             }
 
@@ -216,7 +223,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i != 0) {
                     interest.add(adapterView.getItemAtPosition(i).toString());
-                    isinterest=1;
+                    isinterest+=1;
                     chip = new Chip(getActivity());
                     chip.setText(adapterView.getItemAtPosition(i).toString());
                     chip.setCloseIconVisible(true);
@@ -230,10 +237,17 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                             public void onClick(View v) {
                                 chipGroup.removeView(chip);
                                 interest.remove(chip.getText());
+                                isinterest-=1;
+                                if (isinterest == 0)
+                                {
+                                    post.setTextColor(getResources().getColor(R.color.white));
+                                    post.setBackgroundColor(getResources().getColor(R.color.grey_20));
+                                    post.setEnabled(false);
+                                }
                             }
                         });
                     }
-                    if (isdesc == 1) {
+                    if (isdesc == 1 && isinterest>=1) {
                         post.setEnabled(true);
                         post.setBackgroundColor(getResources().getColor(R.color.teal_600));
                     }

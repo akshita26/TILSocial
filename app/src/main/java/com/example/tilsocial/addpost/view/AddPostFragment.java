@@ -58,13 +58,13 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     Spinner interest_tag;
     ImageView btncamera, btngallery, imageView;
     EditText title, desc;
-    ChipGroup chipGroup,chipGroup2;
+    ChipGroup chipGroup, chipGroup2;
     Chip chip;
-    String s,simage;
-    Integer count;
+    String s, simage;
+    Integer count, cinterest, isdesc = 0, isinterest = 0;
     Uri imageUri;
+    List<String> interest;
     List<String> imageList = new ArrayList<>();
-    List<String> hashList = new ArrayList<>();
     AddPostPresenter addPostPresenter;
 
     public AddPostFragment() {
@@ -74,7 +74,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPostPresenter=new AddPostPresenter(this,new AddPostModel());
+        addPostPresenter = new AddPostPresenter(this, new AddPostModel());
     }
 
     @Override
@@ -89,39 +89,43 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         btngallery = view.findViewById(R.id.gallery);
         imageView = view.findViewById(R.id.image);
         chipGroup = view.findViewById(R.id.chip_group);
-        interest_tag=view.findViewById(R.id.spinner);
-        chipGroup2 = view.findViewById(R.id.chip_group2);
+        interest_tag = view.findViewById(R.id.spinner);
+//        chipGroup2 = view.findViewById(R.id.chip_group2);
 
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AddPostRequestParams addPostRequestParams=new AddPostRequestParams();
+                AddPostRequestParams addPostRequestParams = new AddPostRequestParams();
 //                addPostRequestParams.setTitle(title.getText().toString());
                 addPostRequestParams.setDescription(desc.getText().toString());
                 addPostRequestParams.setImage(imageList);
-                addPostRequestParams.setHashtag(hashList);
+                addPostRequestParams.setHashtag(interest);
                 try {
                     addPostPresenter.doPost(addPostRequestParams);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                count=chipGroup.getChildCount();
+                count = chipGroup.getChildCount();
                 Toast.makeText(getActivity(), "Posted:", Toast.LENGTH_LONG).show();
 //                title.getText().clear();
                 desc.getText().clear();
                 imageView.setImageDrawable(null);
                 imageView.getLayoutParams().height = 0;
                 imageView.getLayoutParams().width = 0;
-                String a="";
-                for (int i=0; i<count;i++){
+                String a = "";
+                for (int i = 0; i < count; i++) {
                     Chip chip = (Chip) chipGroup.getChildAt(0);
-                    a+=chipGroup.getChildCount()+chip.getText().toString();
+                    a += chipGroup.getChildCount() + chip.getText().toString();
                     chipGroup.removeView(chip);
                 }
-
+                post.setTextColor(getResources().getColor(R.color.white));
+                post.setBackgroundColor(getResources().getColor(R.color.grey_20));
+                post.setEnabled(false);
+                isdesc=0;
+                isinterest=0;
             }
         });
 
@@ -151,8 +155,11 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                post.setEnabled(!s.toString().trim().isEmpty());
-                post.setBackgroundColor(getResources().getColor(R.color.teal_600));
+                isdesc = 1;
+                if (isinterest == 1) {
+                    post.setEnabled(true);
+                    post.setBackgroundColor(getResources().getColor(R.color.teal_600));
+                }
             }
 
             @Override
@@ -174,30 +181,27 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
 
         // Initializing an ArrayAdapter
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, InterestList){
+                getActivity(), R.layout.spinnneritem, InterestList) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     // Disable the first item from Spinner
                     // First item will be use for hint
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -206,24 +210,41 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         interest_tag.setAdapter(TeamArrayAdapter);
 
-        ArrayList<String> interest= new ArrayList<>();
+        interest = new ArrayList<>();
         interest_tag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i!=0) {
+                if (i != 0) {
                     interest.add(adapterView.getItemAtPosition(i).toString());
-                    chipGroup2.removeAllViews();
-                    for(String genre : interest) {
-                        chip = new Chip(getActivity());
-                        chip.setText(genre);
-                        chipGroup2.addView(chip);
+                    isinterest=1;
+                    chip = new Chip(getActivity());
+                    chip.setText(adapterView.getItemAtPosition(i).toString());
+                    chip.setCloseIconVisible(true);
+                    chipGroup.addView(chip);
+
+                    cinterest = chipGroup.getChildCount();
+                    for (int j = 0; j < cinterest; j++) {
+                        Chip chip = (Chip) chipGroup.getChildAt(j);
+                        chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                chipGroup.removeView(chip);
+                                interest.remove(chip.getText());
+                            }
+                        });
+                    }
+                    if (isdesc == 1) {
+                        post.setEnabled(true);
+                        post.setBackgroundColor(getResources().getColor(R.color.teal_600));
                     }
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+
         });
 
         return view;
@@ -233,27 +254,26 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 26 && resultCode!=0) {
+        if (requestCode == 26 && resultCode != 0) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(bitmap);
             imageView.getLayoutParams().height = 200;
             imageView.getLayoutParams().width = 200;
-            try{
+            try {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
                 File mFileTemp = null;
-                mFileTemp= File.createTempFile("ab"+timeStamp,".jpg",getActivity().getCacheDir());
+                mFileTemp = File.createTempFile("ab" + timeStamp, ".jpg", getActivity().getCacheDir());
                 FileOutputStream fout;
                 fout = new FileOutputStream(mFileTemp);
                 bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
                 fout.flush();
-                imageUri=Uri.fromFile(mFileTemp);
+                imageUri = Uri.fromFile(mFileTemp);
                 simage = imageUri.toString();
                 imageList.add(simage);
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
             }
-            catch (Exception e){
-                Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
-            }
-        } else if (requestCode == 27 && resultCode!=0) {
+        } else if (requestCode == 27 && resultCode != 0) {
             imageUri = data.getData();
             simage = imageUri.toString();
             imageList.add(simage);

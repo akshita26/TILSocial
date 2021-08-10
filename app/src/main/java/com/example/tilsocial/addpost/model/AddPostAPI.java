@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public class AddPostAPI {
-    private static final String url="https://demo1577342.mockable.io/";
+    private static final String url="https://demo1192777.mockable.io/";
     public static PostService postService=null;
     public static PostService getService(){
         if(postService==null){

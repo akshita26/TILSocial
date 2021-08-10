@@ -1,6 +1,9 @@
 package com.example.tilsocial.signin.data;
 
+import android.util.Log;
+
 import com.example.tilsocial.signin.model.SigninRequestParams;
+import com.example.tilsocial.signin.model.UserData;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 
 import retrofit2.Call;
@@ -12,5 +15,5 @@ import retrofit2.http.Path;
 
 public interface SigninAPIinterface {
     @GET("signin/{empId}")
-    Call<SigninRequestParams> postSignIn(@Path("empId") String empId);
+    Call<UserData> getSignIn(@Path("empId") Integer empId);
 }

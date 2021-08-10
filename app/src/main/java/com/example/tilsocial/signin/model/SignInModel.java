@@ -18,14 +18,17 @@ public class SignInModel {
     {
         apiInterface = SigninAPIClient.getClient().create(SigninAPIinterface.class);
 
-        Call<SigninRequestParams> GetCall = apiInterface.postSignIn(signinRequestParams.empId);
+        int EmployeeId=Integer.parseInt(signinRequestParams.getEmployeeid());
 
-        GetCall.enqueue(new Callback<SigninRequestParams>() {
+        Call<UserData> GetCall = apiInterface.getSignIn(EmployeeId);
+
+        GetCall.enqueue(new Callback<UserData>() {
             @Override
-            public void onResponse(Call<SigninRequestParams> call, Response<SigninRequestParams> response) {
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
                 if(response.isSuccessful())
                 {
-                    Log.e("Employeeid", "onResponse: " + response.body().getEmployeeid());
+                    Log.e("Employeeid", "onResponse: " + response.body().getEmpId());
+                    Log.e("Employeename", "onResponse: " + response.body().getName());
                 }
                 else
                 {
@@ -35,8 +38,8 @@ public class SignInModel {
             }
 
             @Override
-            public void onFailure(Call<SigninRequestParams> call, Throwable t) {
-//                Log.e(TAG, "onResponse: " + t.getMessage() );
+            public void onFailure(Call<UserData> call, Throwable t) {
+                Log.e("Failure", "onResponse: " + t.getMessage() );
 
             }
         });

@@ -75,10 +75,6 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
             } else {
                 Toast.makeText(getActivity(), "Incorrect ID", Toast.LENGTH_SHORT).show();
             }
-//                Intent intent = new Intent(getActivity(), DashboardActivity.class);
-//                startActivity(intent);
-//                getActivity().finish();
-
             }
         });
 

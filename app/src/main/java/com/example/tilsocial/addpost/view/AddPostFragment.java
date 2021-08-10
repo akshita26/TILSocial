@@ -109,7 +109,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 }
 
                 count = chipGroup.getChildCount();
-                Toast.makeText(getActivity(), "Posted:", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Posted", Toast.LENGTH_LONG).show();
 //                title.getText().clear();
                 desc.getText().clear();
                 imageView.setImageDrawable(null);

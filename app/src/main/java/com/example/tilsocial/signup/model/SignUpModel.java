@@ -2,28 +2,26 @@ package com.example.tilsocial.signup.model;
 
 import android.util.Log;
 
+import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.api.ApiClient;
 import com.example.tilsocial.api.ApiInterface;
-import com.example.tilsocial.signup.presenter.SignupPresentor;
-
-import java.util.ArrayList;
+import com.example.tilsocial.signup.presenter.MainContractSignup;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignUpModel
+public class SignUpModel implements MainContractSignup.Model
 {
     private static final String TAG = "SignupPost1234";
     ApiInterface apiInterface;
-    SignupPresentor signupPresentor;
-    SpinnerDetails spinnerDetails;
 
 
 
-    public void doSignup(SignupRequestParams signupRequestParams)
+
+    public void dosignup(SignupRequestParams signupRequestParams)
     {
-        signupPresentor = new SignupPresentor();
+
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<SignupRequestParams> PostCall = apiInterface.postSignUp(signupRequestParams);
         PostCall.enqueue(new Callback<SignupRequestParams>() {
@@ -47,17 +45,9 @@ public class SignUpModel
     }
 
 
-    interface Signupmodellgetspinnerdetails {
+    @Override
+    public void getSpinnerDetail(MainContract.GetFeedList.OnFinishedListener onFinishedListener) {
 
-        interface OnFinishedListener {
-            void onFinished(ArrayList<SpinnerDetails> noticeArrayList);
-            void onFailure(Throwable t);
-        }
 
-        void getNoticeArrayList(OnFinishedListener onFinishedListener);
     }
-
-
-
-
 }

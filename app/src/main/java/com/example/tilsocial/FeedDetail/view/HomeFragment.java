@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     Spinner feedspinner;
     private MainContract.presenter presenter;
     ActionBar actionBar;
+    private ProgressBar progressBar;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,8 +61,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         // Inflate the layout for this fragment
 
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+
         presenter = new FeedPresentor(this,new MainFeedModel());
-        presenter.requestDataFromServer("recent");
+        //presenter.requestDataFromServer("recent");
         recyclerView = view.findViewById(R.id.postrecyclerview);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -71,16 +74,19 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         ArrayAdapter spinnersort = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,sortlist);
         spinnersort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         feedspinner.setAdapter(spinnersort);
+
         feedspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
 
                 if(position == 0)
                 {
+
                     presenter.requestDataFromServer("recent");
                 }
                 else
                 {
+
                     presenter.requestDataFromServer("trending");
                 }
 
@@ -116,4 +122,5 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                 Toast.LENGTH_LONG).show();
 
     }
+
 }

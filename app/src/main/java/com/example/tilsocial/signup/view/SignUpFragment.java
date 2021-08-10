@@ -23,10 +23,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.tilsocial.DashboardActivity;
+import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
+import com.example.tilsocial.signup.presenter.MainContractSignup;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -40,9 +42,9 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class SignUpFragment extends Fragment implements SignupPresentor.SignupView  {
+public class SignUpFragment extends Fragment implements MainContractSignup.MainView {
 
-    SignupPresentor signupPresentor;
+
     Spinner department,team,designation;
     View view;
     EditText employeeidd,namee,bioo;
@@ -55,7 +57,8 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     List<String> imageList = new ArrayList<>();
     ArrayList<String> genres = new ArrayList<>();
     SpinnerDetails spinnerDetails;
-    SignupPresentor.SignupView signupView;
+    MainContractSignup.presenter presenter;
+
 
 
 
@@ -68,7 +71,8 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        signupPresentor = new SignupPresentor(this,new SignUpModel());
+
+        presenter = new SignupPresentor(this,new SignUpModel());
 
     }
 
@@ -91,11 +95,9 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         chipGroup = view.findViewById(R.id.chip_group);
         userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails =new SpinnerDetails();
-        signupPresentor.spinnerdata();
-
-//        signupPresentor.departmentSpinnerdetail();
-        signupPresentor.TeamSpinnerDetail();
-        signupPresentor.DesignationSpinnerDetail();
+        presenter.departmentSpinnerdetail();
+        presenter.TeamSpinnerDetail();
+        presenter.DesignationSpinnerDetail();
 
         //Interest in chips
         genres.add("Mobile Application Development");
@@ -132,11 +134,14 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterset(interest);
-                signupPresentor.doSignUp(signupRequestParams);
+                presenter.dosignup(signupRequestParams);
             }
         });
         return view;
     }
+
+
+
 
     private void selectImage() {
 
@@ -173,7 +178,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 26) {
+        if (requestCode == 26 &&   resultCode!=0) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             userprofile.setImageBitmap(bitmap);
             userprofile.getLayoutParams().height = 200;
@@ -193,7 +198,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
             catch (Exception e){
                 Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
             }
-        } else if (requestCode == 27) {
+        } else if (requestCode == 27 && resultCode!=0) {
             imageUri = data.getData();
             simage = imageUri.toString();
             imageList.add(simage);
@@ -205,6 +210,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
             }
         }
     }
+
 
     @Override
     public void shownamevalidation() {
@@ -368,7 +374,17 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     }
 
 
+    @Override
+    public void setDataToSpinner(List<ModelPost> ModalPostList) {
 
+
+
+    }
+
+    @Override
+    public void onResponseFailure(Throwable t) {
+
+    }
 }
 
 

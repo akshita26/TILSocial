@@ -107,6 +107,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     }
 
+
     @Override
     public int getItemViewType(int position) {
         if(position == 3){

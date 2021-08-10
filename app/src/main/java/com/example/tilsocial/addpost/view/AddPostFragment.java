@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.Image;
@@ -122,10 +123,12 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                     chipGroup.removeView(chip);
                 }
                 post.setTextColor(getResources().getColor(R.color.white));
-                post.setBackgroundColor(getResources().getColor(R.color.grey_20));
+                post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
+                post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey_20)));
                 post.setEnabled(false);
                 isdesc=0;
                 isinterest=0;
+                interest = new ArrayList<>();
             }
         });
 
@@ -156,9 +159,18 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isdesc = 1;
-                if (isinterest == 1) {
-                    post.setEnabled(true);
-                    post.setBackgroundColor(getResources().getColor(R.color.teal_600));
+                if (isinterest >= 1) {
+                    Boolean b=!s.toString().trim().isEmpty();
+                    post.setEnabled(b);
+                    if(b) {
+                        post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
+                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.teal_600)));
+                    }
+                    else{
+                        post.setTextColor(getResources().getColor(R.color.white));
+                        post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
+                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey_20)));
+                    }
                 }
             }
 
@@ -215,27 +227,43 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i != 0) {
-                    interest.add(adapterView.getItemAtPosition(i).toString());
-                    isinterest=1;
-                    chip = new Chip(getActivity());
-                    chip.setText(adapterView.getItemAtPosition(i).toString());
-                    chip.setCloseIconVisible(true);
-                    chipGroup.addView(chip);
+                    if (!interest.contains(adapterView.getItemAtPosition(i).toString())) {
+                        interest.add(adapterView.getItemAtPosition(i).toString());
+                        isinterest += 1;
+                        chip = new Chip(getActivity());
+                        chip.setText(adapterView.getItemAtPosition(i).toString());
+                        chip.setCloseIconVisible(true);
+                        chipGroup.addView(chip);
 
-                    cinterest = chipGroup.getChildCount();
-                    for (int j = 0; j < cinterest; j++) {
-                        Chip chip = (Chip) chipGroup.getChildAt(j);
-                        chip.setOnCloseIconClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                chipGroup.removeView(chip);
-                                interest.remove(chip.getText());
-                            }
-                        });
+                        interest_tag.setSelection(0);
+
+                        cinterest = chipGroup.getChildCount();
+                        for (int j = 0; j < cinterest; j++) {
+                            Chip chip = (Chip) chipGroup.getChildAt(j);
+                            chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    chipGroup.removeView(chip);
+                                    interest.remove(chip.getText());
+                                    isinterest -= 1;
+                                    if (isinterest == 0) {
+                                        post.setTextColor(getResources().getColor(R.color.white));
+                                        post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
+                                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey_20)));
+                                        post.setEnabled(false);
+                                    }
+                                }
+                            });
+                        }
+                        if (isdesc == 1 && isinterest >= 1) {
+                            post.setEnabled(true);
+                            post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
+                            post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.teal_600)));
+                        }
                     }
-                    if (isdesc == 1) {
-                        post.setEnabled(true);
-                        post.setBackgroundColor(getResources().getColor(R.color.teal_600));
+                    else{
+                        Toast.makeText(getActivity(), adapterView.getItemAtPosition(i).toString()+" already selected", Toast.LENGTH_SHORT).show();
+                        interest_tag.setSelection(0);
                     }
                 }
             }
@@ -290,6 +318,5 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     @Override
     public void showError() {
         Toast.makeText(getActivity(), "Required Fields", Toast.LENGTH_SHORT).show();
-
     }
 }

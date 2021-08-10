@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:icon="@drawable/funnel"
+        android:iconTint="@color/white"
+        android:icon="@drawable/ic_error_outline"
         android:title="menu"
         app:showAsAction="always">
         <menu>
@@ -11,7 +12,8 @@
             <item
                 android:id="@+id/sort_by_recent"
                 android:title="Trending"
-                android:orderInCategory="4" />
+                android:orderInCategory="4"
+                />
             <item
                 android:id="@+id/sort_by_trending"
                 android:title="Recent"

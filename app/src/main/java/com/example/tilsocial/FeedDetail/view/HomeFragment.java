@@ -1,34 +1,29 @@
 package com.example.tilsocial.FeedDetail.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toolbar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
-import com.example.tilsocial.MainActivity;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,9 +43,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        presenter = new FeedPresentor(this,new MainFeedModel());
-        presenter.requestDataFromServer();
         setHasOptionsMenu(true);
 
     }
@@ -65,41 +57,55 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
+
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        presenter = new FeedPresentor(this,new MainFeedModel());
+        presenter.requestDataFromServer("recent");
         recyclerView = view.findViewById(R.id.postrecyclerview);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        posts = new ArrayList<>();
-        loadPosts();
-        adapterPosts = new AdapterPosts(getActivity(), posts);
-        recyclerView.setAdapter(adapterPosts);
+        feedspinner = view.findViewById(R.id.spinnersort);
+
+        String[] sortlist = {"Recent","Trending"} ;
+        ArrayAdapter spinnersort = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,sortlist);
+        spinnersort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        feedspinner.setAdapter(spinnersort);
+        feedspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+
+                if(position == 0)
+                {
+                    presenter.requestDataFromServer("recent");
+                }
+                else
+                {
+                    presenter.requestDataFromServer("trending");
+                }
+
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         return view;
     }
 
-    private void loadPosts() {
 
-        ModelPost modelPost = new ModelPost();
-        modelPost.setName("User1");
-        modelPost.setDescription("MyDescription is Here");
-        modelPost.setUimage("imageurl");
-        modelPost.setUlike("20");
-        modelPost.setUtime("1 min");
-        modelPost.setUcomment("comments");
-//        modelPost.se("MYPOST");
-        posts.add(modelPost);
-        posts.add(modelPost);
-        posts.add(modelPost);
-
-    }
 
 
     @Override
     public void setDataToRecyclerView(List<ModelPost> ModalPostList) {
 
-        Log.e("HomeActivityfeed", "onResponse: " +  ModalPostList);
+        adapterPosts = new AdapterPosts(getActivity(), ModalPostList);
+        recyclerView.setAdapter(adapterPosts);
+
+        //Log.e("HomeActivityfeed", "onResponse: " +  ModalPostList.get(0).getImgurl());
 
     }
 

@@ -7,6 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".FeedDetail.view.HomeFragment">
 
+
+
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,6 +19,30 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:minHeight="?attr/actionBarSize"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnersort"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/feedcustomspinner"
+                    />
+
+                <View
+                    android:layout_width="@dimen/spacing_large"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/textView6"
@@ -29,6 +56,7 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 </FrameLayout>
 
 

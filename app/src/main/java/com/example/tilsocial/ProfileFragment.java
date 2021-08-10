@@ -89,11 +89,11 @@ public class ProfileFragment extends Fragment {
 
         ModelPost modelPost = new ModelPost();
         modelPost.setName("User1");
-        modelPost.setDescription("MyDescription is Here");
-        modelPost.setUimage("imageurl");
-        modelPost.setUlike("20");
-        modelPost.setUtime("1 min");
-        modelPost.setUcomment("comments");
+//        modelPost.setDescription("MyDescription is Here");
+//        modelPost.setUimage("imageurl");
+//        modelPost.setUlike("20");
+//        modelPost.setUtime("1 min");
+//        modelPost.setUcomment("comments");
 //        modelPost.setUtitle("MYPOST");
         posts.add(modelPost);
         posts.add(modelPost);

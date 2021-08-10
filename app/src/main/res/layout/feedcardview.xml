@@ -61,7 +61,8 @@
                         android:gravity="center_vertical"
                         android:text="Homer J. Allen"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/grey_60" />
+                        android:textColor="@color/grey_60"
+                        android:textStyle="bold"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -70,16 +71,16 @@
                         android:orientation="horizontal">
 
 
-
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/placeofpost"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:text="City, Office"
+                            android:text="Employeeid here"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             android:textColor="@color/blue_grey_600"
-                            android:textStyle="bold" />
+                             />
 
                     </LinearLayout>
 
@@ -96,6 +97,15 @@
                 android:text="Text Posttt"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:textColor="@color/grey_60" />
+
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_groupfortags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="false">
+
+            </com.google.android.material.chip.ChipGroup>
 
             <ImageView
                 android:id="@+id/userPostimage"

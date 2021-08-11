@@ -22,6 +22,18 @@ public class UserData {
         return empId;
     }
 
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "empId=" + empId +
+                ", name='" + name + '\'' +
+                ", dept='" + dept + '\'' +
+                ", bio='" + bio + '\'' +
+                ", team='" + team + '\'' +
+                ", designation='" + designation + '\'' +
+                '}';
+    }
+
     public void setEmpId(Integer empId) {
         this.empId = empId;
     }

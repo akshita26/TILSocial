@@ -14,6 +14,6 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface SigninAPIinterface {
-    @GET("signin/{empId}")
+    @GET("{empId}")
     Call<UserData> getSignIn(@Path("empId") Integer empId);
 }

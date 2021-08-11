@@ -8,6 +8,7 @@ import androidx.appcompat.view.ActionMode;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toolbar;
 
@@ -28,7 +29,6 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
@@ -76,8 +76,20 @@ public class DashboardActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.nav_profile:
-                    actionBar.setTitle("Users");
+                    actionBar.setTitle("Profile");
+                    String empid = getIntent().getStringExtra("empid");
+                    String name = getIntent().getStringExtra("name");
+                    String bio = getIntent().getStringExtra("bio");
+                    String dept = getIntent().getStringExtra("dept");
+                    String desig = getIntent().getStringExtra("desig");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("empid",empid);
+                    bundle.putString("name",name);
+                    bundle.putString("dept",dept);
+                    bundle.putString("bio",bio);
+                    bundle.putString("desig",desig);
                     ProfileFragment fragment2 = new ProfileFragment();
+                    fragment2.setArguments(bundle);
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction2.replace(R.id.dashboard, fragment2, "");
                     fragmentTransaction2.commit();

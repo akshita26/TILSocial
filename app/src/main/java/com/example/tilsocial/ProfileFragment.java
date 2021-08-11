@@ -1,12 +1,14 @@
 package com.example.tilsocial;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,14 +24,14 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
-
-    TextView bio,name,dept;
+    TextView bio,name,dept,desig;
     RecyclerView recyclerView;
     UserPosts userPosts;
     List<ModelPost> posts;
     ImageView profile,editprof;
     ChipGroup chipGroup;
     Chip chip;
+    Bundle mBundle;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -43,6 +45,7 @@ public class ProfileFragment extends Fragment {
         dept=view.findViewById(R.id.textView4);
         bio=view.findViewById(R.id.bio);
         profile=view.findViewById(R.id.profile_image);
+        desig=view.findViewById(R.id.desig);
         editprof=view.findViewById(R.id.imageView2);
         chipGroup = view.findViewById(R.id.chip_group);
        // bio.setText("Shoot your own horn. Show off your achievements, give them a little personality, tell them what problem you’ll solve. Your bio helps you build a connection right from the start.");
@@ -77,10 +80,13 @@ public class ProfileFragment extends Fragment {
             chip.setText(genre);
 
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
-            chip.setCheckable(true);
             chipGroup.addView(chip);
         }
 
+        name.setText(getArguments().getString("name"));
+        dept.setText(getArguments().getString("dept"));
+        bio.setText(getArguments().getString("bio"));
+        desig.setText(getArguments().getString("desig"));
         return view;
     }
 

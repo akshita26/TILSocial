@@ -2,12 +2,12 @@ package com.example.tilsocial.signin.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,20 +17,20 @@ import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signin.model.SignInModel;
 import com.example.tilsocial.signin.model.SigninRequestParams;
+import com.example.tilsocial.signin.model.UserData;
+import com.example.tilsocial.signin.presentor.ModeltoPresenter;
 import com.example.tilsocial.signin.presentor.SigninPresentor;
-import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.view.SignUpFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 
-public class SigninFragment extends Fragment implements SigninPresentor.SigninView {
+public class SigninFragment extends Fragment implements ModeltoPresenter.MainView {
 
     TextView signupbtn;
     Button signinbtn;
     TextInputEditText editText;
-    SigninPresentor signinPresentor;
-
-
+//    SigninPresentor signinPresentor;
+    private ModeltoPresenter.presenter presenter;
 
     public SigninFragment() {
         // Required empty public constructor
@@ -39,7 +39,7 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        signinPresentor=new SigninPresentor(this, new SignInModel());
+        presenter=new SigninPresentor(this, new SignInModel());
     }
 
     @Override
@@ -67,18 +67,7 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
             public void onClick(View v) {
                 SigninRequestParams signinRequestParams = new SigninRequestParams();
                 signinRequestParams.setEmployeeid(editText.getText().toString());
-            int res=signinPresentor.doSignin(signinRequestParams,getActivity());
-            if (res==1){
-                Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            } else {
-                Toast.makeText(getActivity(), "Incorrect ID", Toast.LENGTH_SHORT).show();
-            }
-//                Intent intent = new Intent(getActivity(), DashboardActivity.class);
-//                startActivity(intent);
-//                getActivity().finish();
-
+                presenter.doSigninn(signinRequestParams);
             }
         });
 
@@ -86,7 +75,32 @@ public class SigninFragment extends Fragment implements SigninPresentor.SigninVi
     }
 
     @Override
+    public void setDataToRecyclerView(UserData userData) {
+        Log.d("Userdataa", "getDataa: "+userData);
+        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putString("empid",userData.getEmpId().toString());
+        mBundle.putString("name", userData.getName());
+        mBundle.putString("dept", userData.getDept());
+        mBundle.putString("bio", userData.getBio());
+        mBundle.putString("desig", userData.getDesignation());
+        intent.putExtras(mBundle);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    @Override
+    public void onResponseFailure(Throwable t) {
+
+    }
+
+    @Override
     public void showError() {
+
+    }
+
+    @Override
+    public void nextActivity() {
 
     }
 }

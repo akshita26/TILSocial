@@ -23,6 +23,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="name">Name</string>
     <string name="department">Department</string>
+    <string name="designation">Designation</string>
     <string name="user_activity">User Activity</string>
     <string name="create_profile">Create profile</string>
     <string name="new_user">New user?</string>

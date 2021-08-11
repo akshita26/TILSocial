@@ -8,38 +8,79 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.signin.model.SignInModel;
 import com.example.tilsocial.signin.model.SigninRequestParams;
+import com.example.tilsocial.signin.model.UserData;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 
-public class SigninPresentor {
+import java.util.List;
 
-    SignInModel signInModel;
-    SigninView signinView;
-    Context context;
+public class SigninPresentor implements ModeltoPresenter.presenter, ModeltoPresenter.SignInModel.OnFinishedListener {
 
-    public SigninPresentor(SigninView signinView, SignInModel signInModel){
-        this.signinView=signinView;
-        this.signInModel=signInModel;
+//    SignInModel signInModel;
+//    SigninView signinView;
+//    Context context;
+    private ModeltoPresenter.MainView mainView;
+    private ModeltoPresenter.SignInModel signInModel;
+
+//    public SigninPresentor(SigninView signinView, SignInModel signInModel){
+//        this.signinView=signinView;
+//        this.signInModel=signInModel;
+//    }
+
+    public SigninPresentor(ModeltoPresenter.MainView mainView, ModeltoPresenter.SignInModel signInModel) {
+        this.mainView = mainView;
+        this.signInModel = signInModel;
     }
 
-    public int doSignin(SigninRequestParams signinRequestParams, FragmentActivity activity)
-    {
+//    public int doSignin(SigninRequestParams signinRequestParams)
+//    {
+//
+//        if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16 && signinRequestParams.getEmployeeid().startsWith("1450"))
+//        {
+//            signInModel.doSignin(signinRequestParams,context);
+//            return 1;
+//        }
+//        else
+//        {
+//            signinView.showError();
+//            return 2;
+//
+//        }
+//
+//    }
 
-        if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16 && signinRequestParams.getEmployeeid().startsWith("1450"))
+    @Override
+    public void requestDataFromServer() {
+
+    }
+
+    @Override
+    public void doSigninn(SigninRequestParams signinRequestParams) {
+        if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16)
         {
-            signInModel.doSignin(signinRequestParams,context);
-            return 1;
+            signInModel.doSignin(signinRequestParams, this);
+            mainView.nextActivity();
         }
         else
         {
-            signinView.showError();
-            return 2;
+            mainView.showError();
 
         }
+    }
+
+    @Override
+    public void onFinished(UserData UserDataList) {
+        if(mainView != null){
+            mainView.setDataToRecyclerView(UserDataList);
+        }
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
 
     }
 
-    public interface SigninView {
-        void showError();
-    }
+//    public interface SigninView {
+//        void showError();
+//    }
 
 }

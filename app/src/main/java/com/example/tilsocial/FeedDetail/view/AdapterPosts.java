@@ -1,7 +1,6 @@
 package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.example.tilsocial.CommentFragment;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
@@ -33,7 +30,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     ActionBar actionBar;
     Integer VIEWTYPE_POSTS=1;
     Integer VIEWTYPE_INTERESTS=2;
-    Chip chip;
+
 
 
     public AdapterPosts(Context context, List<ModelPost> modelPosts) {
@@ -67,20 +64,16 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             PostsHolder holder1=(PostsHolder)holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
-//            holder1.empid.setText("empid  " +modelPost.getEmpId());
-            holder1.like.setText(modelPost.getLikesCount());
-            holder1.comments.setText(modelPost.getCommentsCount());
+            holder1.like.setText(modelPost.getLikesCount() + " Likes"  );
+            holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
             holder1.time.setText(modelPost.getCreatedAt());
             holder1.content.setText(modelPost.getContent());
             String taggs [] = modelPost.getTags();
+            String tagg = "";
             for(int i = 0 ; i<taggs.length; i++) {
-
-                chip = new Chip(context);
-                chip.setText(taggs[i]);
-                chip.setTextColor(Color.WHITE);
-                chip.setChipBackgroundColor(AppCompatResources.getColorStateList(context, R.color.color_tags_chip_state));
-                holder1.chipGroup.addView(chip);
+                tagg = tagg + "#" + taggs[i] + " ";
             }
+            holder1.tags.setText(tagg);
             Glide.with(context).load(modelPost.getImgurl())
                     .placeholder(R.drawable.icprofile)
                     .error(R.drawable.ic_error_outline)
@@ -125,7 +118,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     class PostsHolder extends RecyclerView.ViewHolder {
 
-        TextView name, empid, content,like, comments,time,tags;
+        TextView name, content,like, comments,time,tags;
         ImageView imageView;
         ChipGroup chipGroup;
 
@@ -133,13 +126,14 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             super(itemView);
 
             name = itemView.findViewById(R.id.userprofilename);
-            empid = itemView.findViewById(R.id.placeofpost);
+//            empid = itemView.findViewById(R.id.placeofpost);
             content = itemView.findViewById(R.id.PostDescription);
             like = itemView.findViewById(R.id.nooflikepost);
             comments = itemView.findViewById(R.id.noofcomment);
             imageView = itemView.findViewById(R.id.userPostimage);
             time = itemView.findViewById(R.id.timeofpost);
             chipGroup = itemView.findViewById(R.id.chip_groupfortags);
+            tags = itemView.findViewById(R.id.tagss);
         }
     }
 

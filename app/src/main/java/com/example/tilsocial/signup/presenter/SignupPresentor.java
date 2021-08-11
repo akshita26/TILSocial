@@ -1,14 +1,14 @@
 package com.example.tilsocial.signup.presenter;
 
 
-import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.signup.model.SignupRequestParams;
+import com.example.tilsocial.signup.model.SpinnerDetails;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SignupPresentor implements MainContractSignup.presenter ,MainContractSignup.Model {
+public class SignupPresentor implements MainContractSignup.presenter ,MainContractSignup.Model.OnFinishedListener {
 
     private MainContractSignup.MainView mainView;
     private MainContractSignup.Model model;
@@ -60,8 +60,12 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
     }
 
+
+
     @Override
     public void requestDataFromServerSpinner() {
+
+        model.getSpinnerDetail(this);
 
     }
 
@@ -79,19 +83,6 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
     }
 
-    @Override
-    public void TeamSpinnerDetail() {
-        String[] Team = new String[]{
-                "Select Team...",
-                "Team 1",
-                "Team 2",
-                "Team 3",
-                "Team 3"
-        };
-        final List<String> TeamList = new ArrayList<>(Arrays.asList(Team));
-        mainView.teamSpinner(TeamList);
-
-    }
 
     @Override
     public void DesignationSpinnerDetail() {
@@ -109,9 +100,36 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
 
     @Override
-    public void getSpinnerDetail(MainContract.GetFeedList.OnFinishedListener onFinishedListener) {
+    public void onFinished(SpinnerDetails spinnerDetails) {
+
+        if(mainView != null){
+
+            final List<String> TeamList = new ArrayList (Arrays.asList(spinnerDetails.getTeam()));
+            mainView.teamSpinner(TeamList);
+
+            String[] Departmentt = new String[spinnerDetails.getDepartmentList().size()];
+
+            for(int i = 0 ;i<spinnerDetails.getDepartmentList().size();i++)
+            {
+                Departmentt[i] = spinnerDetails.getDepartmentList().get(i).getName();
+
+            }
+            final List<String> departmentList = new ArrayList<>(Arrays.asList(Departmentt));
+            mainView.departmentSpinner(departmentList);
 
 
+
+        }
+
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+
+        if(mainView != null){
+            mainView.onResponseFailure(t);
+
+        }
 
     }
 }

@@ -23,7 +23,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.tilsocial.DashboardActivity;
-import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
@@ -59,9 +58,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
 
-
-
-
     public SignUpFragment()
     {
 
@@ -70,8 +66,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         presenter = new SignupPresentor(this,new SignUpModel());
 
     }
@@ -82,7 +76,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
 
         view = inflater.inflate(R.layout.fragment_siggnuppfragment, container, false);
-
 
         department = view.findViewById(R.id.spinner4);
         team = view.findViewById(R.id.spinner5);
@@ -95,9 +88,12 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         chipGroup = view.findViewById(R.id.chip_group);
         userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails =new SpinnerDetails();
-        presenter.departmentSpinnerdetail();
-        presenter.TeamSpinnerDetail();
-        presenter.DesignationSpinnerDetail();
+        presenter.requestDataFromServerSpinner();
+
+//        presenter.departmentSpinnerdetail();
+////        presenter.TeamSpinnerDetail();
+       presenter.DesignationSpinnerDetail();
+
 
         //Interest in chips
         genres.add("Mobile Application Development");
@@ -170,8 +166,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             }
         });
         builder.show();
-
-
 
     }
 
@@ -268,14 +262,13 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void departmentSpinner(List<String> departmentList) {
+        departmentList.add(0, "Select department...");
         final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, departmentList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
                 {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
                     return false;
                 }
                 else
@@ -304,14 +297,13 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void teamSpinner(List<String> TeamList) {
+        TeamList.add(0, "Select Team...");
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, TeamList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
                 {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
                     return false;
                 }
                 else
@@ -375,14 +367,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
 
     @Override
-    public void setDataToSpinner(List<ModelPost> ModalPostList) {
-
-
-
-    }
-
-    @Override
     public void onResponseFailure(Throwable t) {
+        Toast.makeText(getActivity(),
+                "Something went wrong...Error message: " + t.getMessage(),
+                Toast.LENGTH_LONG).show();
 
     }
 }

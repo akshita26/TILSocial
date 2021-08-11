@@ -2,49 +2,48 @@ package com.example.tilsocial.signup.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SpinnerDetails {
 
-    @SerializedName("departments")
-    ArrayList<String> department;
+    @SerializedName("team")
+    String [] team;
+    @SerializedName("interest")
+    List<Interset> intersetList;
+    @SerializedName("department")
+    List<Department> departmentList;
 
-    @SerializedName("teams")
-    ArrayList<String> team;
-
-    @SerializedName("designations")
-    ArrayList<String> designation;
-
-    public ArrayList<String> getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(ArrayList<String> department) {
-        this.department = department;
-    }
-
-    public ArrayList<String> getTeam() {
+    public String[] getTeam() {
         return team;
     }
 
-    public void setTeam(ArrayList<String> team) {
+    public void setTeam(String[] team) {
         this.team = team;
     }
 
-    public ArrayList<String> getDesignation() {
-        return designation;
+    public List<Interset> getIntersetList() {
+        return intersetList;
     }
 
-    public void setDesignation(ArrayList<String> designation) {
-        this.designation = designation;
+    public void setIntersetList(List<Interset> intersetList) {
+        this.intersetList = intersetList;
+    }
+
+    public List<Department> getDepartmentList() {
+        return departmentList;
+    }
+
+    public void setDepartmentList(List<Department> departmentList) {
+        this.departmentList = departmentList;
     }
 
     @Override
     public String toString() {
         return "SpinnerDetails{" +
-                "department=" + department +
-                ", team=" + team +
-                ", designation=" + designation +
+                "team=" + Arrays.toString(team) +
+                ", intersetList=" + intersetList +
+                ", departmentList=" + departmentList +
                 '}';
     }
 }

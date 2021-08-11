@@ -34,19 +34,10 @@ public class DashboardActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.dashboard, fragment, "");
         fragmentTransaction.commit();
+
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        if(navigationView.getSelectedItemId()==R.id.nav_home){
-//            super.onOptionsItemSelected(item);
-//            finish();
-//        }
-//        else{
-//            navigationView.setSelectedItemId(R.id.nav_home);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -84,15 +75,4 @@ public class DashboardActivity extends AppCompatActivity {
         }
     };
 
-
-//    @Override
-//    public void onBackPressed() {
-//        if(navigationView.getSelectedItemId()==R.id.nav_home){
-//            super.onBackPressed();
-//            finish();
-//        }
-//        else{
-//            navigationView.setSelectedItemId(R.id.nav_home);
-//        }
-//    }
 }

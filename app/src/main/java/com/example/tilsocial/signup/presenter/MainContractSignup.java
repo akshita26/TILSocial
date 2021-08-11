@@ -1,8 +1,7 @@
 package com.example.tilsocial.signup.presenter;
 
-import com.example.tilsocial.FeedDetail.model.ModelPost;
-import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.signup.model.SignupRequestParams;
+import com.example.tilsocial.signup.model.SpinnerDetails;
 
 import java.util.List;
 
@@ -13,13 +12,12 @@ public interface MainContractSignup {
         void dosignup(SignupRequestParams signupRequestParams);
         void requestDataFromServerSpinner();
         void departmentSpinnerdetail();
-        void TeamSpinnerDetail();
         void DesignationSpinnerDetail();
     }
 
     interface MainView {
 
-        void setDataToSpinner(List<ModelPost> ModalPostList);
+//        void setDataToSpinner(SpinnerDetails spinnerDetails);
         void shownamevalidation();
         void showgetemployeevalidation();
         void showbiovalidation();
@@ -41,13 +39,13 @@ public interface MainContractSignup {
      **/
     interface Model {
 
+
         interface OnFinishedListener {
-            void onFinished(List<ModelPost> ModalPostList);
+            void onFinished(SpinnerDetails spinnerDetails);
             void onFailure(Throwable t);
         }
         void dosignup(SignupRequestParams signupRequestParams);
-
-        void getSpinnerDetail(MainContract.GetFeedList.OnFinishedListener onFinishedListener);
+        void getSpinnerDetail(OnFinishedListener onFinishedListener);
     }
 
 

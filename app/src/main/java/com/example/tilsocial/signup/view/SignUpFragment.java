@@ -27,6 +27,7 @@ import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
+import com.example.tilsocial.signup.presenter.MainContractSignup;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -40,9 +41,9 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class SignUpFragment extends Fragment implements SignupPresentor.SignupView  {
+public class SignUpFragment extends Fragment implements MainContractSignup.MainView {
 
-    SignupPresentor signupPresentor;
+
     Spinner department,team,designation;
     View view;
     EditText employeeidd,namee,bioo;
@@ -55,9 +56,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     List<String> imageList = new ArrayList<>();
     ArrayList<String> genres = new ArrayList<>();
     SpinnerDetails spinnerDetails;
-    SignupPresentor.SignupView signupView;
-
-
+    MainContractSignup.presenter presenter;
 
     public SignUpFragment()
     {
@@ -67,8 +66,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        signupPresentor = new SignupPresentor(this,new SignUpModel());
+        presenter = new SignupPresentor(this,new SignUpModel());
 
     }
 
@@ -78,7 +76,6 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
 
 
         view = inflater.inflate(R.layout.fragment_siggnuppfragment, container, false);
-
 
         department = view.findViewById(R.id.spinner4);
         team = view.findViewById(R.id.spinner5);
@@ -91,11 +88,12 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         chipGroup = view.findViewById(R.id.chip_group);
         userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails =new SpinnerDetails();
-        signupPresentor.spinnerdata();
+        presenter.requestDataFromServerSpinner();
 
-//        signupPresentor.departmentSpinnerdetail();
-        signupPresentor.TeamSpinnerDetail();
-        signupPresentor.DesignationSpinnerDetail();
+//        presenter.departmentSpinnerdetail();
+////        presenter.TeamSpinnerDetail();
+       presenter.DesignationSpinnerDetail();
+
 
         //Interest in chips
         genres.add("Mobile Application Development");
@@ -132,11 +130,14 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterset(interest);
-                signupPresentor.doSignUp(signupRequestParams);
+                presenter.dosignup(signupRequestParams);
             }
         });
         return view;
     }
+
+
+
 
     private void selectImage() {
 
@@ -166,14 +167,12 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         });
         builder.show();
 
-
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 26) {
+        if (requestCode == 26 &&   resultCode!=0) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             userprofile.setImageBitmap(bitmap);
             userprofile.getLayoutParams().height = 200;
@@ -193,7 +192,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
             catch (Exception e){
                 Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
             }
-        } else if (requestCode == 27) {
+        } else if (requestCode == 27 && resultCode!=0) {
             imageUri = data.getData();
             simage = imageUri.toString();
             imageList.add(simage);
@@ -205,6 +204,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
             }
         }
     }
+
 
     @Override
     public void shownamevalidation() {
@@ -262,14 +262,13 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
 
     @Override
     public void departmentSpinner(List<String> departmentList) {
+        departmentList.add(0, "Select department...");
         final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, departmentList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
                 {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
                     return false;
                 }
                 else
@@ -298,14 +297,13 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
 
     @Override
     public void teamSpinner(List<String> TeamList) {
+        TeamList.add(0, "Select Team...");
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, TeamList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
                 {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
                     return false;
                 }
                 else
@@ -368,7 +366,13 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     }
 
 
+    @Override
+    public void onResponseFailure(Throwable t) {
+        Toast.makeText(getActivity(),
+                "Something went wrong...Error message: " + t.getMessage(),
+                Toast.LENGTH_LONG).show();
 
+    }
 }
 
 

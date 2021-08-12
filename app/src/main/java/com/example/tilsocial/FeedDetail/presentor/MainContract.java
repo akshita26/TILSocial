@@ -8,7 +8,8 @@ public interface MainContract {
 
     interface presenter{
 
-        void requestDataFromServer();
+        void requestDataFromServer(String recent);
+
 
 
     }
@@ -33,9 +34,8 @@ public interface MainContract {
             void onFailure(Throwable t);
         }
 
-        void getFeedList(OnFinishedListener onFinishedListener);
+        void getFeedList(OnFinishedListener onFinishedListener, String recent);
     }
-
 
 
 

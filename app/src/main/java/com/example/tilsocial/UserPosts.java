@@ -37,9 +37,9 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
         ModelPost modelPost = modelPosts.get(position);
         holder.name.setText( modelPost.getName());
 //        holder.title.setText(modelPost.getUtitle());
-        holder.description.setText(modelPost.getDescription());
-        holder.time.setText(modelPost.getUtime());
-        holder.like.setText("Likes "+ modelPost.getUlike());
+//        holder.description.setText(modelPost.getDescription());
+//        holder.time.setText(modelPost.getUtime());
+//        holder.like.setText("Likes "+ modelPost.getUlike());
 
 
 

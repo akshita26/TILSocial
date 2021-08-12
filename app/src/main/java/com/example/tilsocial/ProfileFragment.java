@@ -1,5 +1,6 @@
 package com.example.tilsocial;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class ProfileFragment extends Fragment {
     ChipGroup chipGroup;
     Chip chip;
     Bundle mBundle;
+    ActionBar actionBar;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -82,7 +84,7 @@ public class ProfileFragment extends Fragment {
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chipGroup.addView(chip);
         }
-        
+
         name.setText(getArguments().getString("name"));
         dept.setText(getArguments().getString("dept"));
         bio.setText(getArguments().getString("bio"));
@@ -92,17 +94,20 @@ public class ProfileFragment extends Fragment {
 
     private void loadPosts() {
 
+
         ModelPost modelPost = new ModelPost();
         modelPost.setName("User1");
-        modelPost.setDescription("MyDescription is Here");
-        modelPost.setUimage("imageurl");
-        modelPost.setUlike("20");
-        modelPost.setUtime("1 min");
-        modelPost.setUcomment("comments");
+//        modelPost.setDescription("MyDescription is Here");
+//        modelPost.setUimage("imageurl");
+//        modelPost.setUlike("20");
+//        modelPost.setUtime("1 min");
+//        modelPost.setUcomment("comments");
+//        modelPost.setUtitle("MYPOST");
         posts.add(modelPost);
         posts.add(modelPost);
         posts.add(modelPost);
         posts.add(modelPost);
+
 
     }
 }

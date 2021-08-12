@@ -15,9 +15,9 @@ public class FeedPresentor implements MainContract.presenter ,MainContract.GetFe
     }
 
     @Override
-    public void requestDataFromServer() {
+    public void requestDataFromServer(String recent) {
 
-        getFeedList.getFeedList(this);
+        getFeedList.getFeedList(this,recent);
 
     }
 

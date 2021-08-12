@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,9 +15,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tilsocial.CommentFragment;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     ActionBar actionBar;
     Integer VIEWTYPE_POSTS=1;
     Integer VIEWTYPE_INTERESTS=2;
+
 
 
     public AdapterPosts(Context context, List<ModelPost> modelPosts) {
@@ -60,9 +64,22 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             PostsHolder holder1=(PostsHolder)holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
-            holder1.description.setText(modelPost.getDescription());
-            holder1.time.setText(modelPost.getUtime());
-            holder1.like.setText("Likes " + modelPost.getUlike());
+            holder1.like.setText(modelPost.getLikesCount() + " Likes"  );
+            holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
+            holder1.time.setText(modelPost.getCreatedAt());
+            holder1.content.setText(modelPost.getContent());
+            String taggs [] = modelPost.getTags();
+            String tagg = "";
+            for(int i = 0 ; i<taggs.length; i++) {
+                tagg = tagg + "#" + taggs[i] + " ";
+            }
+            holder1.tags.setText(tagg);
+            Glide.with(context).load(modelPost.getImgurl())
+                    .placeholder(R.drawable.icprofile)
+                    .error(R.drawable.ic_error_outline)
+                    .into(holder1.imageView);
+
+//         
 
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,6 +100,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     }
 
+
     @Override
     public int getItemViewType(int position) {
         if(position == 3){
@@ -100,16 +118,22 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     class PostsHolder extends RecyclerView.ViewHolder {
 
-        TextView name, time, title, description, like, comments;
+        TextView name, content,like, comments,time,tags;
+        ImageView imageView;
+        ChipGroup chipGroup;
 
         public PostsHolder(View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.userprofilename);
-            time = itemView.findViewById(R.id.timeofpost);
-            description = itemView.findViewById(R.id.PostDescription);
+//            empid = itemView.findViewById(R.id.placeofpost);
+            content = itemView.findViewById(R.id.PostDescription);
             like = itemView.findViewById(R.id.nooflikepost);
             comments = itemView.findViewById(R.id.noofcomment);
+            imageView = itemView.findViewById(R.id.userPostimage);
+            time = itemView.findViewById(R.id.timeofpost);
+            chipGroup = itemView.findViewById(R.id.chip_groupfortags);
+            tags = itemView.findViewById(R.id.tagss);
         }
     }
 

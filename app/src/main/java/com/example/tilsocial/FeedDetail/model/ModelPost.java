@@ -2,51 +2,56 @@ package com.example.tilsocial.FeedDetail.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
+
 public class ModelPost {
 
     public ModelPost() {
     }
-    @SerializedName("id")
-    private  String id;
-
+    @SerializedName("empId")
+    private  String empId;
 
     @SerializedName("name")
     private String name;
 
-    @SerializedName("content")
-    private String description;
-
-    @SerializedName("empImgUrl")
-    private String uimage;
-
     @SerializedName("likesCount")
-    private String ulike;
+    private String likesCount;
 
     @SerializedName("commentsCount")
-    private String ucomment;
+    private String commentsCount;
+
+    @SerializedName("hasLiked")
+    private String hasLiked;
 
     @SerializedName("createdAt")
-    private String utime;
+    private String createdAt;
 
-    @Override
-    public String toString() {
-        return "ModelPost{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", uimage='" + uimage + '\'' +
-                ", ulike='" + ulike + '\'' +
-                ", ucomment='" + ucomment + '\'' +
-                ", utime='" + utime + '\'' +
-                '}';
+    @SerializedName("updatedAt")
+    private String updatedAt;
+
+    @SerializedName("content")
+    private String content;
+
+    @SerializedName("tags")
+    private String [] tags;
+
+    @SerializedName("imgurl")
+    private String imgurl;
+
+    public String getImgurl() {
+        return imgurl;
     }
 
-    public String getId() {
-        return id;
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(String empId) {
+        this.empId = empId;
     }
 
     public String getName() {
@@ -57,43 +62,74 @@ public class ModelPost {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLikesCount() {
+        return likesCount;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLikesCount(String likesCount) {
+        this.likesCount = likesCount;
     }
 
-    public String getUimage() {
-        return uimage;
+    public String getCommentsCount() {
+        return commentsCount;
     }
 
-    public void setUimage(String uimage) {
-        this.uimage = uimage;
+    public void setCommentsCount(String commentsCount) {
+        this.commentsCount = commentsCount;
     }
 
-    public String getUlike() {
-        return ulike;
+    public String getHasLiked() {
+        return hasLiked;
     }
 
-    public void setUlike(String ulike) {
-        this.ulike = ulike;
+    public void setHasLiked(String hasLiked) {
+        this.hasLiked = hasLiked;
     }
 
-    public String getUcomment() {
-        return ucomment;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setUcomment(String ucomment) {
-        this.ucomment = ucomment;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getUtime() {
-        return utime;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUtime(String utime) {
-        this.utime = utime;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
+    }
+
+    @Override
+    public String toString() {
+        return "ModelPost{" +
+                "empId='" + empId + '\'' +
+                ", name='" + name + '\'' +
+                ", likesCount='" + likesCount + '\'' +
+                ", commentsCount='" + commentsCount + '\'' +
+                ", hasLiked='" + hasLiked + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", content='" + content + '\'' +
+                ", tags=" + Arrays.toString(tags) +
+                '}';
     }
 }

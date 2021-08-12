@@ -1,10 +1,6 @@
 package com.example.tilsocial.signin.model;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-
-import androidx.transition.Visibility;
 
 import com.example.tilsocial.signin.data.SigninAPIClient;
 import com.example.tilsocial.signin.data.SigninAPIinterface;

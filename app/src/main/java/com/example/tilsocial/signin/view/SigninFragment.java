@@ -8,25 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tilsocial.DashboardActivity;
-import com.example.tilsocial.ProfileFragment;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signin.model.SignInModel;
 import com.example.tilsocial.signin.model.SigninRequestParams;
 import com.example.tilsocial.signin.model.UserData;
 import com.example.tilsocial.signin.presentor.ModeltoPresenter;
 import com.example.tilsocial.signin.presentor.SigninPresentor;
-import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.view.SignUpFragment;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.List;
 
 
 public class SigninFragment extends Fragment implements ModeltoPresenter.MainView {

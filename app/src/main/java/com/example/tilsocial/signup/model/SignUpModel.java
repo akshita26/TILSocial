@@ -4,26 +4,26 @@ import android.util.Log;
 
 import com.example.tilsocial.api.ApiClient;
 import com.example.tilsocial.api.ApiInterface;
-import com.example.tilsocial.signup.presenter.SignupPresentor;
-
-import java.util.ArrayList;
+import com.example.tilsocial.signup.api.ApiClientSpinner;
+import com.example.tilsocial.signup.api.ApiInterfaceSpinner;
+import com.example.tilsocial.signup.presenter.MainContractSignup;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignUpModel
+public class SignUpModel implements MainContractSignup.Model
 {
     private static final String TAG = "SignupPost1234";
     ApiInterface apiInterface;
-    SignupPresentor signupPresentor;
-    SpinnerDetails spinnerDetails;
+    ApiInterfaceSpinner apiInterfaceSpinner;
 
 
 
-    public void doSignup(SignupRequestParams signupRequestParams)
+
+    public void dosignup(SignupRequestParams signupRequestParams)
     {
-        signupPresentor = new SignupPresentor();
+
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<SignupRequestParams> PostCall = apiInterface.postSignUp(signupRequestParams);
         PostCall.enqueue(new Callback<SignupRequestParams>() {
@@ -46,18 +46,27 @@ public class SignUpModel
         });
     }
 
+    @Override
+    public void getSpinnerDetail(OnFinishedListener onFinishedListener) {
 
-    interface Signupmodellgetspinnerdetails {
+        apiInterfaceSpinner = ApiClientSpinner.getClient().create(ApiInterfaceSpinner.class);
+        Call<SpinnerDetails> call = apiInterfaceSpinner.getspinnerDetails();
+        call.enqueue(new Callback<SpinnerDetails>() {
+            @Override
+            public void onResponse(Call<SpinnerDetails> call, Response<SpinnerDetails> response) {
 
-        interface OnFinishedListener {
-            void onFinished(ArrayList<SpinnerDetails> noticeArrayList);
-            void onFailure(Throwable t);
-        }
+                Log.e(TAG, "onResponsesignupmodel: " +  response.body());
+                onFinishedListener.onFinished(response.body());
+            }
 
-        void getNoticeArrayList(OnFinishedListener onFinishedListener);
+            @Override
+            public void onFailure(Call<SpinnerDetails> call, Throwable t) {
+                onFinishedListener.onFailure(t);
+                Log.e(TAG, "onResponsesignupmodel: " +  t.getMessage());
+            }
+        });
+
     }
-
-
 
 
 }

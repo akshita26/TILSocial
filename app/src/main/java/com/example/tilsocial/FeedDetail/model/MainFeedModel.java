@@ -17,12 +17,14 @@ public class MainFeedModel implements MainContract.GetFeedList {
     ApiInterface apiInterface;
     private static final String TAG = "MainFeedModel";
 
+
     @Override
-    public void getFeedList(OnFinishedListener onFinishedListener) {
+    public void getFeedList(OnFinishedListener onFinishedListener, String recent) {
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<List<ModelPost>> call = apiInterface.getPost();
+
+        Call<List<ModelPost>> call = apiInterface.getPost(1,recent);
         call.enqueue(new Callback<List<ModelPost>>() {
             @Override
             public void onResponse(Call<List<ModelPost>> call, Response<List<ModelPost>> response) {

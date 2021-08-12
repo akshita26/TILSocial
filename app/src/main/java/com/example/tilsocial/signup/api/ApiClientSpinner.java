@@ -1,10 +1,9 @@
-package com.example.tilsocial.FeedDetail.api;
+package com.example.tilsocial.signup.api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
-
+public class ApiClientSpinner {
 
     private static final String BASE_URL = "https://demo7536048.mockable.io/";
     private static Retrofit retrofit = null;
@@ -18,6 +17,4 @@ public class ApiClient {
         }
         return retrofit;
     }
-
-
 }

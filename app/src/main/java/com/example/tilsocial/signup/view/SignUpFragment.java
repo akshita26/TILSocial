@@ -40,27 +40,26 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class SignUpFragment extends Fragment implements SignupPresentor.SignupView  {
+public class SignUpFragment extends Fragment implements SignupPresentor.SignupView {
 
     SignupPresentor signupPresentor;
-    Spinner department,team,designation;
+    Spinner department, team, designation;
     View view;
-    EditText employeeidd,namee,bioo;
+    EditText employeeidd, namee, bioo;
     Button signuppbtn;
     ChipGroup chipGroup;
     Chip chip;
-    ImageView add,userprofile;
+    ImageView add, userprofile;
     Uri imageUri;
     String simage;
     List<String> imageList = new ArrayList<>();
+    List<String> interestList = new ArrayList<>();
     ArrayList<String> genres = new ArrayList<>();
     SpinnerDetails spinnerDetails;
     SignupPresentor.SignupView signupView;
 
 
-
-    public SignUpFragment()
-    {
+    public SignUpFragment() {
 
     }
 
@@ -68,7 +67,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        signupPresentor = new SignupPresentor(this,new SignUpModel());
+        signupPresentor = new SignupPresentor(this, new SignUpModel());
 
     }
 
@@ -90,7 +89,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         add = view.findViewById(R.id.add);
         chipGroup = view.findViewById(R.id.chip_group);
         userprofile = view.findViewById(R.id.userprofilee);
-        spinnerDetails =new SpinnerDetails();
+        spinnerDetails = new SpinnerDetails();
         signupPresentor.spinnerdata();
 
 //        signupPresentor.departmentSpinnerdetail();
@@ -102,13 +101,28 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         genres.add("Android");
         genres.add("iOS");
         genres.add("System Design");
-        for(int i = 0 ; i<genres.size(); i++) {
-
+        for (int i = 0; i < genres.size(); i++) {
             chip = new Chip(getActivity());
             chip.setText(genres.get(i));
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chip.setCheckable(true);
             chipGroup.addView(chip);
+        }
+
+        Integer c = chipGroup.getChildCount();
+        for (int j = 0; j < c; j++) {
+            Chip chip = (Chip) chipGroup.getChildAt(j);
+            chip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (chip.isChecked()) {
+                        interestList.add(chip.getText().toString());
+                    } else {
+                        interestList.remove(chip.getText());
+                    }
+                    Toast.makeText(getActivity(), "-" + interestList, Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
         userprofile.setOnClickListener(new View.OnClickListener() {
@@ -141,31 +155,26 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     private void selectImage() {
 
 
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Add Photo!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo"))
-                {
+                if (options[item].equals("Take Photo")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, 26);
-                }
-                else if (options[item].equals("Choose from Gallery"))
-                {
+                } else if (options[item].equals("Choose from Gallery")) {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(Intent.createChooser(intent, "Select Picture"), 27);
-                }
-                else if (options[item].equals("Cancel")) {
+                } else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
         });
         builder.show();
-
 
 
     }
@@ -178,20 +187,19 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
             userprofile.setImageBitmap(bitmap);
             userprofile.getLayoutParams().height = 200;
             userprofile.getLayoutParams().width = 200;
-            try{
+            try {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
                 File mFileTemp = null;
-                mFileTemp= File.createTempFile("ab"+timeStamp,".jpg",getActivity().getCacheDir());
+                mFileTemp = File.createTempFile("ab" + timeStamp, ".jpg", getActivity().getCacheDir());
                 FileOutputStream fout;
                 fout = new FileOutputStream(mFileTemp);
                 bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
                 fout.flush();
-                imageUri=Uri.fromFile(mFileTemp);
+                imageUri = Uri.fromFile(mFileTemp);
                 simage = imageUri.toString();
                 imageList.add(simage);
-            }
-            catch (Exception e){
-                Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == 27) {
             imageUri = data.getData();
@@ -241,7 +249,7 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
 //        toast.setView(custom_view);
 //        toast.show();
 
-      Toast.makeText(getActivity(), "Department Required", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Department Required", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -263,30 +271,27 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     @Override
     public void departmentSpinner(List<String> departmentList) {
         final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, departmentList){
+                getActivity(), R.layout.spinnneritem, departmentList) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     // Disable the first item from Spinner
                     // First item will be use for hint
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -299,30 +304,27 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     @Override
     public void teamSpinner(List<String> TeamList) {
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, TeamList){
+                getActivity(), R.layout.spinnneritem, TeamList) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     // Disable the first item from Spinner
                     // First item will be use for hint
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -336,28 +338,25 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
     @Override
     public void designationSpinner(List<String> DesignationList) {
         final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, DesignationList){
+                getActivity(), R.layout.spinnneritem, DesignationList) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -366,7 +365,6 @@ public class SignUpFragment extends Fragment implements SignupPresentor.SignupVi
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         designation.setAdapter(DesignationArrayAdapter);
     }
-
 
 
 }

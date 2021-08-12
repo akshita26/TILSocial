@@ -14,6 +14,7 @@ public interface MainContractSignup {
         void requestDataFromServerSpinner();
         void departmentSpinnerdetail();
         void DesignationSpinnerDetail();
+        void TeamSpinnerDetail();
     }
 
     interface MainView {

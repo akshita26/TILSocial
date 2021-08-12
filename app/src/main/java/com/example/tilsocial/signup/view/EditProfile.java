@@ -96,10 +96,11 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             public void onClick(View v) {
 
                 String[] interest = {"Ani", "Sam", " Joe"};
+                int empidd = Integer.parseInt(empid.isEmpty() ? "0":empid);
 
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
                 signupRequestParams.setName(namee.getText().toString());
-                signupRequestParams.setEmployeeid(empid);
+                signupRequestParams.setEmployeeid(empidd);
                 signupRequestParams.setBio(bioo.getText().toString());
                 signupRequestParams.setDepartment(department.getSelectedItem().toString());
                 signupRequestParams.setTeam(team.getSelectedItem().toString());

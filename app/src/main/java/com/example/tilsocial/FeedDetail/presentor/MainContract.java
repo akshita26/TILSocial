@@ -8,7 +8,7 @@ public interface MainContract {
 
     interface presenter{
 
-        void requestDataFromServer(String recent);
+        void requestDataFromServer(int page, String sortby, int empid, String type);
 
 
 
@@ -18,7 +18,7 @@ public interface MainContract {
 
 
 
-        void setDataToRecyclerView(List<ModelPost> ModalPostList);
+        void setDataToRecyclerView(List<ModelPost> modelPostList);
 
 
         void onResponseFailure(Throwable t);
@@ -30,11 +30,11 @@ public interface MainContract {
     interface GetFeedList {
 
         interface OnFinishedListener {
-            void onFinished(List<ModelPost> ModalPostList);
+            void onFinished(List<ModelPost> modelPostList);
             void onFailure(Throwable t);
         }
 
-        void getFeedList(OnFinishedListener onFinishedListener, String recent);
+        void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String recent);
     }
 
 

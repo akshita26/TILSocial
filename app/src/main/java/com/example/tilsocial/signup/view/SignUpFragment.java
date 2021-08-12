@@ -58,6 +58,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
 
+
     public SignUpFragment()
     {
 
@@ -67,6 +68,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new SignupPresentor(this,new SignUpModel());
+
 
     }
 
@@ -88,11 +90,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         chipGroup = view.findViewById(R.id.chip_group);
         userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails =new SpinnerDetails();
-        presenter.requestDataFromServerSpinner();
-
-//        presenter.departmentSpinnerdetail();
-////        presenter.TeamSpinnerDetail();
-       presenter.DesignationSpinnerDetail();
+//        presenter.requestDataFromServerSpinner();
+        presenter.departmentSpinnerdetail();
+        presenter.TeamSpinnerDetail();
+        presenter.DesignationSpinnerDetail();
 
 
         //Interest in chips
@@ -120,10 +121,11 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             @Override
             public void onClick(View v) {
 
-                String[] interest = {"Ani", "Sam", " Joe"};
-
+                String[] interest = {"Mobile Application Development", "Android", "iOS"};
+                int empid = Integer.parseInt(employeeidd.getText().toString().isEmpty() ? "0":employeeidd.getText().toString());
+//                =Integer.parseInt(employeeidd.getText().toString());
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
-                signupRequestParams.setEmployeeid(employeeidd.getText().toString());
+                signupRequestParams.setEmployeeid(empid);
                 signupRequestParams.setName(namee.getText().toString());
                 signupRequestParams.setBio(bioo.getText().toString());
                 signupRequestParams.setDepartment(department.getSelectedItem().toString());
@@ -135,9 +137,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         });
         return view;
     }
-
-
-
 
     private void selectImage() {
 
@@ -267,7 +266,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void departmentSpinner(List<String> departmentList) {
-        departmentList.add(0, "Select department...");
+//        departmentList.add(0, "Select department...");
         final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, departmentList){
             @Override
@@ -302,7 +301,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void teamSpinner(List<String> TeamList) {
-        TeamList.add(0, "Select Team...");
+//        TeamList.add(0, "Select Team...");
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, TeamList){
             @Override

@@ -73,9 +73,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
             commentt = itemView.findViewById(R.id.commenttext);
             time = itemView.findViewById(R.id.commenttime);
 
-
-
-
         }
     }
 

@@ -32,7 +32,7 @@ public class SignUpModel implements MainContractSignup.Model
                 Log.e(TAG, "onResponse: " + response.code() );
                 if(response!=null)
                 {
-                    Log.e(TAG, "onResponseasasxa: " + response.body().getBio() );
+                    Log.e(TAG, "onResponseasasxa: " + response.body().getEmployeeid());
                 }
                 else
                 {

@@ -1,8 +1,6 @@
 package com.example.tilsocial.FeedDetail.api;
 
-import com.example.tilsocial.FeedDetail.model.ModelPost;
-
-import java.util.List;
+import com.example.tilsocial.FeedDetail.model.FeedContent;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -11,10 +9,12 @@ import retrofit2.http.Query;
 public interface ApiInterface {
 
 
-    @GET("posts")
-    Call<List<ModelPost>> getPost(
+    @GET("fetch")
+    Call<FeedContent> getPost(
+            @Query("page") Integer page,
+            @Query("sortBy") String sortBy,
             @Query("empId") Integer empId,
-            @Query("_sort") String sort
+            @Query("type") String type
     );
 
 

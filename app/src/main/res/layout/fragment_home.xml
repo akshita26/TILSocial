@@ -6,7 +6,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:openDrawer="end">
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -159,13 +158,14 @@
                         android:layout_height="match_parent"
                         android:paddingHorizontal="@dimen/spacing_large"
                         android:text="Recent"
+                        android:checked="true"
                         app:buttonTint="@color/colorPrimary" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/order_by_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:checked="true"
+
                         android:paddingHorizontal="@dimen/spacing_large"
                         android:text="Trending"
                         app:buttonTint="@color/colorPrimary" />

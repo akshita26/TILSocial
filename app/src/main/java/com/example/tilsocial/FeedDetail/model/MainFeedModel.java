@@ -6,8 +6,6 @@ import com.example.tilsocial.FeedDetail.api.ApiClient;
 import com.example.tilsocial.FeedDetail.api.ApiInterface;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,21 +15,23 @@ public class MainFeedModel implements MainContract.GetFeedList {
     ApiInterface apiInterface;
     private static final String TAG = "MainFeedModel";
 
+
     @Override
-    public void getFeedList(OnFinishedListener onFinishedListener) {
+    public void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String type) {
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-
-        Call<List<ModelPost>> call = apiInterface.getPost();
-        call.enqueue(new Callback<List<ModelPost>>() {
+//        Log.e(TAG, "recentt" + recent);
+        Call<FeedContent> call = apiInterface.getPost(page,filter,empid,type);
+        call.enqueue(new Callback<FeedContent>() {
             @Override
-            public void onResponse(Call<List<ModelPost>> call, Response<List<ModelPost>> response) {
+            public void onResponse(Call<FeedContent> call, Response<FeedContent> response) {
                 Log.e(TAG, "onResponse: " +  response.body());
-                onFinishedListener.onFinished(response.body());
+                onFinishedListener.onFinished(response.body().getModelPostList());
             }
 
             @Override
-            public void onFailure(Call<List<ModelPost>> call, Throwable t) {
+            public void onFailure(Call<FeedContent> call, Throwable t) {
+                Log.e(TAG, "faliure" +  t.getMessage());
                 onFinishedListener.onFailure(t);
             }
         });

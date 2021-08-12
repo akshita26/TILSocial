@@ -1,5 +1,6 @@
 package com.example.tilsocial.signin.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,25 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tilsocial.DashboardActivity;
-import com.example.tilsocial.ProfileFragment;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signin.model.SignInModel;
 import com.example.tilsocial.signin.model.SigninRequestParams;
 import com.example.tilsocial.signin.model.UserData;
 import com.example.tilsocial.signin.presentor.ModeltoPresenter;
 import com.example.tilsocial.signin.presentor.SigninPresentor;
-import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.view.SignUpFragment;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.List;
 
 
 public class SigninFragment extends Fragment implements ModeltoPresenter.MainView {
@@ -36,6 +32,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
     TextInputEditText editText;
 //    SigninPresentor signinPresentor;
     private ModeltoPresenter.presenter presenter;
+    private ProgressDialog mProgress;
 
     public SigninFragment() {
         // Required empty public constructor
@@ -57,6 +54,12 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         signupbtn=view.findViewById(R.id.textView3);
         signinbtn=view.findViewById(R.id.button);
 
+        mProgress = new ProgressDialog(getActivity());
+        mProgress.setTitle("Processing...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
+
         signupbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,11 +73,14 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         signinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mProgress.show();
                 SigninRequestParams signinRequestParams = new SigninRequestParams();
                 signinRequestParams.setEmployeeid(editText.getText().toString());
                 presenter.doSigninn(signinRequestParams);
+                mProgress.dismiss();
             }
         });
+
 
         return view;
     }

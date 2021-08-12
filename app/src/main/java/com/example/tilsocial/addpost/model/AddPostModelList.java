@@ -7,12 +7,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class AddPostModelList {
 
-    @SerializedName("msg")
+    @SerializedName("content")
     @Expose
-    private String msg;
+    private String content;
 
-    public String getMsg() {
-        return msg;
+    public String getContent() {
+        return content;
     }
 
 

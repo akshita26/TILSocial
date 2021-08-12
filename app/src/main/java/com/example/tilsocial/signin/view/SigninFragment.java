@@ -1,5 +1,6 @@
 package com.example.tilsocial.signin.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
     TextInputEditText editText;
 //    SigninPresentor signinPresentor;
     private ModeltoPresenter.presenter presenter;
+    private ProgressDialog mProgress;
 
     public SigninFragment() {
         // Required empty public constructor
@@ -52,6 +54,12 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         signupbtn=view.findViewById(R.id.textView3);
         signinbtn=view.findViewById(R.id.button);
 
+        mProgress = new ProgressDialog(getActivity());
+        mProgress.setTitle("Processing...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
+
         signupbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,11 +73,14 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         signinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mProgress.show();
                 SigninRequestParams signinRequestParams = new SigninRequestParams();
                 signinRequestParams.setEmployeeid(editText.getText().toString());
                 presenter.doSigninn(signinRequestParams);
+                mProgress.dismiss();
             }
         });
+
 
         return view;
     }

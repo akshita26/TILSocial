@@ -49,7 +49,7 @@ public class AddPostModel {
             public void onResponse(Call<AddPostModelList> call, Response<AddPostModelList> response) {
                 AddPostModelList list=response.body();
                 if (list!=null){
-                    Log.e("Response", "My Response-: " + response.body().getMsg() );
+                    Log.e("Response", "My Response-: " + response.body().getContent() );
                 }
                 else {
                     Log.e("Response", "My Response is null " + response.body() );

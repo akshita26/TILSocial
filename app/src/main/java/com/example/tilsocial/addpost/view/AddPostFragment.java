@@ -57,12 +57,12 @@ import java.util.Locale;
 public class AddPostFragment extends Fragment implements AddPostPresenter.AddPostView {
     Button post;
     Spinner interest_tag;
-    ImageView btncamera, btngallery, imageView;
+    ImageView btncamera, btngallery, imageView, cancelimage;
     EditText title, desc;
     ChipGroup chipGroup, chipGroup2;
     Chip chip;
     String s, simage;
-    Integer count, cinterest, isdesc = 0, isinterest = 0;
+    Integer count, cinterest, isdesc = 0, isinterest = 0, i_width=0;
     Uri imageUri;
     List<String> interest;
     List<String> imageList = new ArrayList<>();
@@ -91,6 +91,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         imageView = view.findViewById(R.id.image);
         chipGroup = view.findViewById(R.id.chip_group);
         interest_tag = view.findViewById(R.id.spinner);
+        cancelimage = view.findViewById(R.id.cancelimage);
 //        chipGroup2 = view.findViewById(R.id.chip_group2);
 
 
@@ -116,6 +117,10 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 imageView.setImageDrawable(null);
                 imageView.getLayoutParams().height = 0;
                 imageView.getLayoutParams().width = 0;
+
+                cancelimage.setImageDrawable(null);
+                cancelimage.getLayoutParams().height = 0;
+                cancelimage.getLayoutParams().width = 0;
                 String a = "";
                 for (int i = 0; i < count; i++) {
                     Chip chip = (Chip) chipGroup.getChildAt(0);
@@ -287,6 +292,8 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             imageView.setImageBitmap(bitmap);
             imageView.getLayoutParams().height = 200;
             imageView.getLayoutParams().width = 200;
+//            i_width = 200;
+//            i_width = i_width + i_width/2;
             try {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
                 File mFileTemp = null;
@@ -298,6 +305,15 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 imageUri = Uri.fromFile(mFileTemp);
                 simage = imageUri.toString();
                 imageList.add(simage);
+                cancelimage.setVisibility(View.VISIBLE);
+                cancelimage.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                cancelimage.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT);
+//                params.setMargins(i_width, 0, 0, 0);
+//                cancelimage.setLayoutParams(params);
+                cancelimage.setBackgroundResource(android.R.drawable.presence_offline);
             } catch (Exception e) {
                 Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
             }
@@ -310,8 +326,32 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 imageView.setImageURI(selectedImageUri);
                 imageView.getLayoutParams().height = 200;
                 imageView.getLayoutParams().width = 200;
+                i_width = 200;
+                i_width = i_width + i_width/2;
+                cancelimage.setVisibility(View.VISIBLE);
+                cancelimage.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                cancelimage.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT);
+//                params.setMargins(i_width, 0, 0, 0);
+//                cancelimage.setLayoutParams(params);
+                cancelimage.setBackgroundResource(android.R.drawable.presence_offline);
             }
         }
+
+        cancelimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageDrawable(null);
+                imageView.getLayoutParams().height = 0;
+                imageView.getLayoutParams().width = 0;
+
+                cancelimage.setImageDrawable(null);
+                cancelimage.getLayoutParams().height = 0;
+                cancelimage.getLayoutParams().width = 0;
+            }
+        });
     }
 
 

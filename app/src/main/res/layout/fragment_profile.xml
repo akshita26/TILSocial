@@ -27,18 +27,35 @@
                 android:layout_height="150dp"
                 android:background="@color/teal_400"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-60dp"
+                android:layout_marginRight="25dp">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_image"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_marginTop="-60dp"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/man"
                 android:background="@android:color/transparent"
                 app:civ_shadow="true"
                 app:civ_border="false"
                 app:civ_circle_color="@color/black" />
+
+                <TextView
+                    android:id="@+id/idd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:text="Id"/>
+                </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

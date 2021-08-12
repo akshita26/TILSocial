@@ -10,6 +10,7 @@ public interface MainContractSignup {
     interface presenter{
 
         void dosignup(SignupRequestParams signupRequestParams);
+        void gotoprofile(SignupRequestParams signupRequestParams);
         void requestDataFromServerSpinner();
         void departmentSpinnerdetail();
         void DesignationSpinnerDetail();
@@ -26,6 +27,7 @@ public interface MainContractSignup {
         void showteamvalidation();
         void designationvalidation();
         void nextfragment();
+        void nextfragmentprofile();
         void departmentSpinner(List<String> departmentList);
         void teamSpinner(List<String> TeamList);
         void designationSpinner(List<String> DesignationList);

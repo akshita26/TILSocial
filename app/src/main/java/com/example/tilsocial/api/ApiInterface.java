@@ -14,6 +14,4 @@ public interface ApiInterface {
     Call<SignupRequestParams> postSignUp(@Body SignupRequestParams signupRequestParams);
 
 
-
-
 }

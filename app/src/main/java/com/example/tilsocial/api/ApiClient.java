@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "https://demo1192777.mockable.io/";
+    private static final String BASE_URL = "http://til-social.herokuapp.com/tilsocialapp/profile/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {

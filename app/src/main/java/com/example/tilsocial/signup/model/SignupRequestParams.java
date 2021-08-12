@@ -2,10 +2,18 @@ package com.example.tilsocial.signup.model;
 
 public class SignupRequestParams {
 
-    String employeeid,name,bio,department,team,designation;
+
+    String name,bio,department,team,designation;
     String[] Interset;
+    Integer employeeid;
 
+    public void setEmployeeid(Integer employeeid) {
+        this.employeeid = employeeid;
+    }
 
+    public Integer getEmployeeid() {
+        return employeeid;
+    }
 
     public String[] getInterset() {
         return Interset;
@@ -55,12 +63,12 @@ public class SignupRequestParams {
         this.designation = designation;
     }
 
-    public String getEmployeeid() {
-        return employeeid;
-    }
-
-    public void setEmployeeid(String employeeid) {
-        this.employeeid = employeeid;
-    }
+//    public String getEmployeeid() {
+//        return employeeid;
+//    }
+//
+//    public void setEmployeeid(String employeeid) {
+//        this.employeeid = employeeid;
+//    }
 
 }

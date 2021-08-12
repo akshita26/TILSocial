@@ -18,13 +18,13 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
         this.model = model;
     }
 
-    private boolean validateInputs(String employeeid, String name, String bio, String deprtment, String teamm, String desgniationn) {
+    private boolean validateInputs(Integer employeeid, String name, String bio, String deprtment, String teamm, String desgniationn) {
 
         if (name.isEmpty()) {
             mainView.shownamevalidation();
             return true;
         }
-        if (employeeid.isEmpty()) {
+        if (employeeid.toString().equals("0")) {
             mainView.showgetemployeevalidation();
             return true;
         }
@@ -95,6 +95,23 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
         };
         final List<String> DesignationList = new ArrayList<>(Arrays.asList(Designation));
         mainView.designationSpinner(DesignationList);
+
+    }
+
+    @Override
+    public void TeamSpinnerDetail() {
+
+        String[] Team = new String[]{
+                "Select Team...",
+                "Team 1",
+                "Team 2",
+                "Team 3",
+                "Team 4"
+        };
+
+
+        final List<String> TeamList = new ArrayList (Arrays.asList(Team));
+        mainView.teamSpinner(TeamList);
 
     }
 

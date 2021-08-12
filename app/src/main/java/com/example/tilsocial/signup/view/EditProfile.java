@@ -1,13 +1,13 @@
 package com.example.tilsocial.signup.view;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.app.ActionBar;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.example.tilsocial.DashboardActivity;
+import com.example.tilsocial.FeedDetail.view.HomeFragment;
+import com.example.tilsocial.ProfileFragment;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
@@ -32,70 +30,55 @@ import com.example.tilsocial.signup.presenter.SignupPresentor;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-
-public class SignUpFragment extends Fragment implements MainContractSignup.MainView {
-
-
+public class EditProfile extends Fragment implements MainContractSignup.MainView{
+    ActionBar actionBar;
     Spinner department,team,designation;
-    View view;
-    EditText employeeidd,namee,bioo;
-    Button signuppbtn;
+    EditText namee,bioo;
+    Button updatebtn;
     ChipGroup chipGroup;
     Chip chip;
-    ImageView add,userprofile;
-    Uri imageUri;
-    String simage;
-    List<String> imageList = new ArrayList<>();
+    String empid;
     ArrayList<String> genres = new ArrayList<>();
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
 
-    public SignUpFragment()
-    {
 
+    public EditProfile() {
+        // Required empty public constructor
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new SignupPresentor(this,new SignUpModel());
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-        view = inflater.inflate(R.layout.fragment_siggnuppfragment, container, false);
+        View view= inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
         department = view.findViewById(R.id.spinner4);
         team = view.findViewById(R.id.spinner5);
         designation = view.findViewById(R.id.spinner6);
-        employeeidd = view.findViewById(R.id.editTextTextPersonName2);
         namee = view.findViewById(R.id.editTextTextPersonName);
-        signuppbtn = view.findViewById(R.id.buttonsignup);
+        updatebtn = view.findViewById(R.id.buttonupdate);
         bioo = view.findViewById(R.id.editTextTextPersonName3);
-        add = view.findViewById(R.id.add);
         chipGroup = view.findViewById(R.id.chip_group);
-        userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails =new SpinnerDetails();
         presenter.requestDataFromServerSpinner();
 
 //        presenter.departmentSpinnerdetail();
 ////        presenter.TeamSpinnerDetail();
-       presenter.DesignationSpinnerDetail();
+        presenter.DesignationSpinnerDetail();
 
+        empid = getArguments().getString("key");
+        Log.d("EditProfId", "onCreateView: "+empid);
 
-        //Interest in chips
+        //Interests
         genres.add("Mobile Application Development");
         genres.add("Android");
         genres.add("iOS");
@@ -108,103 +91,25 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             chip.setCheckable(true);
             chipGroup.addView(chip);
         }
-
-        userprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectImage();
-            }
-        });
-
-        signuppbtn.setOnClickListener(new View.OnClickListener() {
+        updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String[] interest = {"Ani", "Sam", " Joe"};
 
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
-                signupRequestParams.setEmployeeid(employeeidd.getText().toString());
                 signupRequestParams.setName(namee.getText().toString());
+                signupRequestParams.setEmployeeid(empid);
                 signupRequestParams.setBio(bioo.getText().toString());
                 signupRequestParams.setDepartment(department.getSelectedItem().toString());
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterset(interest);
-                presenter.dosignup(signupRequestParams);
+                presenter.gotoprofile(signupRequestParams);
             }
         });
         return view;
     }
-
-
-
-
-    private void selectImage() {
-
-
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo"))
-                {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, 26);
-                }
-                else if (options[item].equals("Choose from Gallery"))
-                {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), 27);
-                }
-                else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 26 &&   resultCode!=0) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            userprofile.setImageBitmap(bitmap);
-            userprofile.getLayoutParams().height = 200;
-            userprofile.getLayoutParams().width = 200;
-            try{
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-                File mFileTemp = null;
-                mFileTemp= File.createTempFile("ab"+timeStamp,".jpg",getActivity().getCacheDir());
-                FileOutputStream fout;
-                fout = new FileOutputStream(mFileTemp);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
-                fout.flush();
-                imageUri=Uri.fromFile(mFileTemp);
-                simage = imageUri.toString();
-                imageList.add(simage);
-            }
-            catch (Exception e){
-                Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
-            }
-        } else if (requestCode == 27 && resultCode!=0) {
-            imageUri = data.getData();
-            simage = imageUri.toString();
-            imageList.add(simage);
-            Uri selectedImageUri = data.getData();
-            if (null != selectedImageUri) {
-                userprofile.setImageURI(selectedImageUri);
-                userprofile.getLayoutParams().height = 200;
-                userprofile.getLayoutParams().width = 200;
-            }
-        }
-    }
-
 
     @Override
     public void shownamevalidation() {
@@ -214,8 +119,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void showgetemployeevalidation() {
-        employeeidd.requestFocus();
-        employeeidd.setError("FIELD CANNOT BE EMPTY");
 
     }
 
@@ -228,20 +131,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void showdepartmentvalidation() {
-
-//        Toast toast = new Toast(getActivity());
-//        toast.setDuration(Toast.LENGTH_LONG);
-//
-//        //inflate view
-//        View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
-//        ((TextView) custom_view.findViewById(R.id.message)).setText("Department Required");
-//        ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_error_outline);
-//        ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.blue_500));
-//
-//        toast.setView(custom_view);
-//        toast.show();
-
-      Toast.makeText(getActivity(), "Department Required", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Department Required", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -256,13 +146,14 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void nextfragment() {
-        Intent intent = new Intent(getActivity(), DashboardActivity.class);
-        startActivity(intent);
     }
 
     @Override
     public void nextfragmentprofile() {
-
+        HomeFragment homeFragment = new HomeFragment();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.dashboard, homeFragment);
+        ft.commit();
     }
 
     @Override
@@ -333,7 +224,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         };
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         team.setAdapter(TeamArrayAdapter);
-
     }
 
     @Override
@@ -370,18 +260,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         designation.setAdapter(DesignationArrayAdapter);
     }
 
-
     @Override
     public void onResponseFailure(Throwable t) {
         Toast.makeText(getActivity(),
                 "Something went wrong...Error message: " + t.getMessage(),
                 Toast.LENGTH_LONG).show();
-
     }
 }
-
-
-
-
-
-

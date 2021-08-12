@@ -2,20 +2,19 @@ package com.example.tilsocial;
 
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.signup.view.EditProfile;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -25,7 +24,7 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
-    TextView bio,name,dept,desig;
+    TextView bio,name,dept,desig,empid;
     RecyclerView recyclerView;
     UserPosts userPosts;
     List<ModelPost> posts;
@@ -50,6 +49,7 @@ public class ProfileFragment extends Fragment {
         desig=view.findViewById(R.id.desig);
         editprof=view.findViewById(R.id.imageView2);
         chipGroup = view.findViewById(R.id.chip_group);
+        empid=view.findViewById(R.id.idd);
        // bio.setText("Shoot your own horn. Show off your achievements, give them a little personality, tell them what problem you’ll solve. Your bio helps you build a connection right from the start.");
 
         recyclerView = view.findViewById(R.id.recyid);
@@ -63,10 +63,19 @@ public class ProfileFragment extends Fragment {
         userPosts = new UserPosts(getActivity(), posts);
         recyclerView.setAdapter(userPosts);
 
+        name.setText(getArguments().getString("name"));
+        dept.setText(getArguments().getString("dept"));
+        bio.setText(getArguments().getString("bio"));
+        desig.setText(getArguments().getString("desig"));
+        empid.setText(getArguments().getString("empid"));
+
         editprof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditProfile editProfile = new EditProfile();
+                Bundle args = new Bundle();
+                args.putString("key", empid.getText().toString());
+                editProfile.setArguments(args);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.add(R.id.dashboard, editProfile);
                 ft.addToBackStack(null);
@@ -80,15 +89,9 @@ public class ProfileFragment extends Fragment {
         for(String genre : genres) {
             chip = new Chip(getActivity());
             chip.setText(genre);
-
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chipGroup.addView(chip);
         }
-
-        name.setText(getArguments().getString("name"));
-        dept.setText(getArguments().getString("dept"));
-        bio.setText(getArguments().getString("bio"));
-        desig.setText(getArguments().getString("desig"));
         return view;
     }
 

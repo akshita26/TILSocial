@@ -31,23 +31,6 @@ public class SigninPresentor implements ModeltoPresenter.presenter, ModeltoPrese
         this.signInModel = signInModel;
     }
 
-//    public int doSignin(SigninRequestParams signinRequestParams)
-//    {
-//
-//        if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16 && signinRequestParams.getEmployeeid().startsWith("1450"))
-//        {
-//            signInModel.doSignin(signinRequestParams,context);
-//            return 1;
-//        }
-//        else
-//        {
-//            signinView.showError();
-//            return 2;
-//
-//        }
-//
-//    }
-
     @Override
     public void requestDataFromServer() {
 

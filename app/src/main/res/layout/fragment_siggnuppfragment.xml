@@ -94,9 +94,7 @@
                             android:layout_height="60dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/customspinner"
-                            android:textColor="@color/grey_3"
-
-                            />
+                            android:textColor="@color/grey_3" />
 
                         <Spinner
                             android:id="@+id/spinner5"
@@ -104,9 +102,7 @@
                             android:layout_height="60dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/customspinner"
-                            android:textColor="@color/grey_3"
-
-                            />
+                            android:textColor="@color/grey_3" />
 
                         <Spinner
                             android:id="@+id/spinner6"
@@ -114,10 +110,7 @@
                             android:layout_height="60dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/customspinner"
-                            android:textColor="@color/grey_3"
-
-                            />
-
+                            android:textColor="@color/grey_3" />
 
 
                             <LinearLayout
@@ -125,15 +118,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:padding="20dp"
-                                >
-
+                                android:padding="20dp">
 
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
                                     android:layout_weight="1" />
-
 
                                 <TextView
                                     android:id="@+id/textView5"

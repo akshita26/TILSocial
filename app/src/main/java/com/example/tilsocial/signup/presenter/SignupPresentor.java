@@ -60,6 +60,14 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
     }
 
+    @Override
+    public void gotoprofile(SignupRequestParams signupRequestParams) {
+        if (!validateInputs(signupRequestParams.getEmployeeid(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDepartment(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
+
+            model.dosignup(signupRequestParams);
+            mainView.nextfragmentprofile();
+        }
+    }
 
 
     @Override

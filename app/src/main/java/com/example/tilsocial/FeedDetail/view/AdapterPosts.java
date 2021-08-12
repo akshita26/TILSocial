@@ -28,8 +28,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     Context context;
     List<ModelPost> modelPosts;
     ActionBar actionBar;
-    Integer VIEWTYPE_POSTS=1;
-    Integer VIEWTYPE_INTERESTS=2;
+//    Integer VIEWTYPE_POSTS=1;
+//    Integer VIEWTYPE_INTERESTS=2;
 
 
 
@@ -41,26 +41,28 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if(viewType==VIEWTYPE_POSTS) {
-            view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
-            return new PostsHolder(view);
-        }
-        else{
-            view= LayoutInflater.from(context).inflate(R.layout.intersetcardview, parent, false);
-            return new InterestHolder(view);
-        }
+//        if(viewType==VIEWTYPE_POSTS) {
+//
+//        }
+//        else{
+//            view= LayoutInflater.from(context).inflate(R.layout.intersetcardview, parent, false);
+//            return new InterestHolder(view);
+//        }
+
+        view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
+        return new PostsHolder(view);
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(position == 3) {
-
-            InterestHolder holder2 = (InterestHolder) holder;
-
-        }
-        else
-        {
+//        if(position == 2) {
+//
+//            InterestHolder holder2 = (InterestHolder) holder;
+//
+//        }
+//        else
+//        {
             PostsHolder holder1=(PostsHolder)holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
@@ -96,24 +98,24 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
             });
 
-        }
+
 
     }
 
 
-    @Override
-    public int getItemViewType(int position) {
-        if(position == 3){
-            return VIEWTYPE_INTERESTS;
-        }
-        else
-            return VIEWTYPE_POSTS;
-    }
+//    @Override
+//    public int getItemViewType(int position) {
+//        if(position == 2){
+//            return VIEWTYPE_INTERESTS;
+//        }
+//        else
+//            return VIEWTYPE_POSTS;
+//    }
 
     @Override
     public int getItemCount() {
 
-        return modelPosts.size()+1;
+        return modelPosts.size();
     }
 
     class PostsHolder extends RecyclerView.ViewHolder {
@@ -137,15 +139,15 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
-    class InterestHolder extends RecyclerView.ViewHolder {
-        //
-        TextView name, time, title, description, like, comments;
-
-        public InterestHolder(View itemView) {
-            super(itemView);
-
-        }
-    }
+//    class InterestHolder extends RecyclerView.ViewHolder {
+//        //
+//        TextView name, time, title, description, like, comments;
+//
+//        public InterestHolder(View itemView) {
+//            super(itemView);
+//
+//        }
+//    }
 
 
 

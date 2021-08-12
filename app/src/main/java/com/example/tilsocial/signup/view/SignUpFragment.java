@@ -58,6 +58,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
 
+
     public SignUpFragment()
     {
 
@@ -67,6 +68,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new SignupPresentor(this,new SignUpModel());
+
 
     }
 
@@ -90,7 +92,9 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         spinnerDetails =new SpinnerDetails();
         presenter.requestDataFromServerSpinner();
 
-//        presenter.departmentSpinnerdetail();
+
+//        presenter.departmentSpinnerdetail();k\
+
 ////        presenter.TeamSpinnerDetail();
        presenter.DesignationSpinnerDetail();
 
@@ -135,9 +139,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         });
         return view;
     }
-
-
-
 
     private void selectImage() {
 

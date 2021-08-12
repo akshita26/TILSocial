@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -39,6 +38,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     RadioButton recentbtn;
     RadioButton trendingbtn;
 
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
 
     }
     @Override
@@ -63,32 +64,27 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         presenter = new FeedPresentor(this,new MainFeedModel());
-        presenter.requestDataFromServer("recent");
+        presenter.requestDataFromServer(0, "recency", 123456, "feed");
         recyclerView = view.findViewById(R.id.postrecyclerview);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        feedspinner = view.findViewById(R.id.spinnersort);
         drawer = view.findViewById(R.id.drawer_layout);
         recentbtn = view.findViewById(R.id.order_by_1);
         trendingbtn = view.findViewById(R.id.order_by_2);
 
-        String[] sortlist = {"Recent","Trending"} ;
-        ArrayAdapter spinnersort = new ArrayAdapter(getActivity(),android.R.layout.simple_spinner_item,sortlist);
-        spinnersort.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        feedspinner.setAdapter(spinnersort);
 
 
         recentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.requestDataFromServer("recent");
+                presenter.requestDataFromServer(0, "recency", 123457, "feed");
             }
         });
         trendingbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.requestDataFromServer("trending");
+                presenter.requestDataFromServer(0, "trending", 123456, "feed");
             }
         });
 
@@ -97,14 +93,15 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     }
 
     @Override
-    public void setDataToRecyclerView(List<ModelPost> ModalPostList) {
+    public void setDataToRecyclerView(List<ModelPost> modelPostList) {
 
-        adapterPosts = new AdapterPosts(getActivity(), ModalPostList);
+        adapterPosts = new AdapterPosts(getActivity(), modelPostList);
         recyclerView.setAdapter(adapterPosts);
 
         //Log.e("HomeActivityfeed", "onResponse: " +  ModalPostList.get(0).getImgurl());
 
     }
+
 
     @Override
     public void onResponseFailure(Throwable t) {

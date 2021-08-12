@@ -15,17 +15,17 @@ public class FeedPresentor implements MainContract.presenter ,MainContract.GetFe
     }
 
     @Override
-    public void requestDataFromServer(String recent) {
+    public void requestDataFromServer(int page, String filter, int empid, String type) {
 
-        getFeedList.getFeedList(this,recent);
+        getFeedList.getFeedList(this,page,filter,empid,type);
 
     }
 
     @Override
-    public void onFinished(List<ModelPost> ModalPostList) {
+    public void onFinished(List<ModelPost> modelPostList) {
 
         if(mainView != null){
-            mainView.setDataToRecyclerView(ModalPostList);
+            mainView.setDataToRecyclerView(modelPostList);
         }
 
     }

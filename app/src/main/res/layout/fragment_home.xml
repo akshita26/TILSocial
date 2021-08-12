@@ -157,15 +157,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingHorizontal="@dimen/spacing_large"
-                        android:text="Recent"
                         android:checked="true"
+                        android:text="Recent"
                         app:buttonTint="@color/colorPrimary" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/order_by_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
                         android:paddingHorizontal="@dimen/spacing_large"
                         android:text="Trending"
                         app:buttonTint="@color/colorPrimary" />

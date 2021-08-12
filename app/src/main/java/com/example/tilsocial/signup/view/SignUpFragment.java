@@ -125,10 +125,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 int empid = Integer.parseInt(employeeidd.getText().toString().isEmpty() ? "0":employeeidd.getText().toString());
 //                =Integer.parseInt(employeeidd.getText().toString());
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
-                signupRequestParams.setEmployeeid(empid);
+                signupRequestParams.setEmpId(empid);
                 signupRequestParams.setName(namee.getText().toString());
                 signupRequestParams.setBio(bioo.getText().toString());
-                signupRequestParams.setDepartment(department.getSelectedItem().toString());
+                signupRequestParams.setDept(department.getSelectedItem().toString());
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterset(interest);

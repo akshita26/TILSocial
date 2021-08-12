@@ -1,18 +1,38 @@
 package com.example.tilsocial.signup.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class SignupRequestParams {
 
-
-    String name,bio,department,team,designation;
+    @SerializedName("name")
+    String name;
+    @SerializedName("bio")
+    String bio;
+    @SerializedName("dept")
+    String dept;
+    @SerializedName("team")
+    String team;
+    @SerializedName("designation")
+    String designation;
+    @SerializedName("Interset")
     String[] Interset;
-    Integer employeeid;
+    @SerializedName("empId")
+    Integer empId;
 
-    public void setEmployeeid(Integer employeeid) {
-        this.employeeid = employeeid;
+    public String getDept() {
+        return dept;
     }
 
-    public Integer getEmployeeid() {
-        return employeeid;
+    public void setDept(String dept) {
+        this.dept = dept;
+    }
+
+    public Integer getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(Integer empId) {
+        this.empId = empId;
     }
 
     public String[] getInterset() {
@@ -39,13 +59,6 @@ public class SignupRequestParams {
         this.bio = bio;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
 
     public String getTeam() {
         return team;
@@ -63,12 +76,6 @@ public class SignupRequestParams {
         this.designation = designation;
     }
 
-//    public String getEmployeeid() {
-//        return employeeid;
-//    }
-//
-//    public void setEmployeeid(String employeeid) {
-//        this.employeeid = employeeid;
-//    }
+
 
 }

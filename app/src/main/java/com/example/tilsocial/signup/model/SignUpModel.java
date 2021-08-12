@@ -32,7 +32,7 @@ public class SignUpModel implements MainContractSignup.Model
                 Log.e(TAG, "onResponse: " + response.code() );
                 if(response!=null)
                 {
-                    Log.e(TAG, "onResponseasasxa: " + response.body().getEmployeeid());
+                    Log.e(TAG, "onResponseasasxa: " + response.body().getEmpId());
                 }
                 else
                 {
@@ -41,7 +41,7 @@ public class SignUpModel implements MainContractSignup.Model
             }
             @Override
             public void onFailure(Call<SignupRequestParams> call, Throwable t) {
-                Log.e(TAG, "onResponse: " + t.getMessage() );
+                Log.e(TAG, "onResponsesignuppfail: " + t.getMessage() );
             }
         });
     }

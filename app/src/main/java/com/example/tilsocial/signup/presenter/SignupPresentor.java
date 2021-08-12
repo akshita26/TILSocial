@@ -52,7 +52,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
     @Override
     public void dosignup(SignupRequestParams signupRequestParams) {
 
-        if (!validateInputs(signupRequestParams.getEmployeeid(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDepartment(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
+        if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
 
             model.dosignup(signupRequestParams);
             mainView.nextfragment();

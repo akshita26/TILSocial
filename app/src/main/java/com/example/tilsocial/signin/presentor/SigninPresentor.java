@@ -54,8 +54,9 @@ public class SigninPresentor implements ModeltoPresenter.presenter, ModeltoPrese
         mainView.onResponseFailure(t);
     }
 
-//    public interface SigninView {
-//        void showError();
-//    }
+    @Override
+    public void userNotExist(String error) {
+        mainView.noUserfound(error);
+    }
 
 }

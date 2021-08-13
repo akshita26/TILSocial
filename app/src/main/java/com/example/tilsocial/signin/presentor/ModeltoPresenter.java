@@ -17,12 +17,15 @@ public interface ModeltoPresenter {
         void onResponseFailure(Throwable t);
         void showError();
         void nextActivity();
+
+        void noUserfound(String error);
     }
 
     interface SignInModel {
         interface OnFinishedListener {
             void onFinished(UserData userData);
             void onFailure(Throwable t);
+            void userNotExist(String error);
         }
 
 //        void getUserData(OnFinishedListener onFinishedListener);

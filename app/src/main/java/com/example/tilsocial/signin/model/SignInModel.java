@@ -2,10 +2,14 @@ package com.example.tilsocial.signin.model;
 
 import android.app.ProgressDialog;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.tilsocial.MainActivity;
 import com.example.tilsocial.signin.data.SigninAPIClient;
 import com.example.tilsocial.signin.data.SigninAPIinterface;
 import com.example.tilsocial.signin.presentor.ModeltoPresenter;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,7 +70,10 @@ public class SignInModel implements ModeltoPresenter.SignInModel {
                 }
                 else
                 {
-                    Log.e("null1234", "onResponse: " + "nulll getting" );
+                    mProgress.dismiss();
+                    ErrorResponse errorResponse = ErrorUtils.parseError(response);
+                    Log.d("Errorhandling", "onResponse: "+errorResponse.getError());
+                    onFinishedListener.userNotExist(errorResponse.getMessage());
                 }
 
             }
@@ -75,7 +82,7 @@ public class SignInModel implements ModeltoPresenter.SignInModel {
             public void onFailure(Call<UserData> call, Throwable t) {
                 Log.e("Failure", "onResponse: " + t.getMessage() );
                 onFinishedListener.onFailure(t);
-
+                mProgress.dismiss();
             }
         });
     }

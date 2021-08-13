@@ -1,6 +1,8 @@
 package com.example.tilsocial.FeedDetail.model;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.tilsocial.FeedDetail.api.ApiClient;
 import com.example.tilsocial.FeedDetail.api.ApiInterface;
@@ -17,8 +19,9 @@ public class MainFeedModel implements MainContract.GetFeedList {
 
 
     @Override
-    public void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String type) {
+    public void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String type, ProgressBar loadingPB) {
 
+        loadingPB.setVisibility(View.VISIBLE);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 //        Log.e(TAG, "recentt" + recent);
         Call<FeedContent> call = apiInterface.getPost(page,filter,empid,type);
@@ -26,6 +29,7 @@ public class MainFeedModel implements MainContract.GetFeedList {
             @Override
             public void onResponse(Call<FeedContent> call, Response<FeedContent> response) {
                 Log.e(TAG, "onResponse: " +  response.body());
+                loadingPB.setVisibility(View.GONE);
                 onFinishedListener.onFinished(response.body().getModelPostList());
             }
 

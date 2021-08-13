@@ -2,11 +2,7 @@ package com.example.tilsocial.signup.view;
 
 import android.app.ActionBar;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.tilsocial.FeedDetail.view.HomeFragment;
-import com.example.tilsocial.ProfileFragment;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
@@ -70,7 +67,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         chipGroup = view.findViewById(R.id.chip_group);
         spinnerDetails =new SpinnerDetails();
         presenter.requestDataFromServerSpinner();
-
 //        presenter.departmentSpinnerdetail();
 ////        presenter.TeamSpinnerDetail();
         presenter.DesignationSpinnerDetail();
@@ -95,17 +91,15 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             @Override
             public void onClick(View v) {
 
-                String[] interest = {"Ani", "Sam", " Joe"};
                 int empidd = Integer.parseInt(empid.isEmpty() ? "0":empid);
-
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
                 signupRequestParams.setName(namee.getText().toString());
-                signupRequestParams.setEmployeeid(empidd);
+                signupRequestParams.setEmpId(empidd);
                 signupRequestParams.setBio(bioo.getText().toString());
-                signupRequestParams.setDepartment(department.getSelectedItem().toString());
+                signupRequestParams.setDept(department.getSelectedItem().toString());
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
-                signupRequestParams.setInterset(interest);
+                signupRequestParams.setInterests(genres);
                 presenter.gotoprofile(signupRequestParams);
             }
         });
@@ -127,7 +121,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     public void showbiovalidation() {
         bioo.requestFocus();
         bioo.setError("FIELD CANNOT BE EMPTY");
-
     }
 
     @Override

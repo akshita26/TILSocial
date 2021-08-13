@@ -17,9 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         SigninFragment signinfragment = new SigninFragment();
-
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
         ft.replace(R.id.your_placeholder, signinfragment);
         ft.commit();
 

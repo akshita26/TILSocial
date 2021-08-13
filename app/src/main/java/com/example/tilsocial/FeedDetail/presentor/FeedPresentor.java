@@ -1,5 +1,7 @@
 package com.example.tilsocial.FeedDetail.presentor;
 
+import android.widget.ProgressBar;
+
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 
 import java.util.List;
@@ -15,9 +17,9 @@ public class FeedPresentor implements MainContract.presenter ,MainContract.GetFe
     }
 
     @Override
-    public void requestDataFromServer(int page, String filter, int empid, String type) {
+    public void requestDataFromServer(int page, String filter, int empid, String type, ProgressBar loadingPB) {
 
-        getFeedList.getFeedList(this,page,filter,empid,type);
+        getFeedList.getFeedList(this,page,filter,empid,type,loadingPB);
 
     }
 

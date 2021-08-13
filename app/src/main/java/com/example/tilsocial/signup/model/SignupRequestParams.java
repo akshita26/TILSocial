@@ -2,6 +2,8 @@ package com.example.tilsocial.signup.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class SignupRequestParams {
 
     @SerializedName("name")
@@ -14,10 +16,18 @@ public class SignupRequestParams {
     String team;
     @SerializedName("designation")
     String designation;
-    @SerializedName("Interset")
-    String[] Interset;
+    @SerializedName("interests")
+    ArrayList interests;
     @SerializedName("empId")
     Integer empId;
+
+    public ArrayList getInterests() {
+        return interests;
+    }
+
+    public void setInterests(ArrayList interests) {
+        this.interests = interests;
+    }
 
     public String getDept() {
         return dept;
@@ -35,14 +45,6 @@ public class SignupRequestParams {
         this.empId = empId;
     }
 
-    public String[] getInterset() {
-        return Interset;
-    }
-
-    public void setInterset(String[] interset) {
-        Interset = interset;
-    }
-
     public String getName() {
         return name;
     }
@@ -58,7 +60,6 @@ public class SignupRequestParams {
     public void setBio(String bio) {
         this.bio = bio;
     }
-
 
     public String getTeam() {
         return team;

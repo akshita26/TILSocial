@@ -1,7 +1,9 @@
 package com.example.tilsocial.signin.view;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
 //    SigninPresentor signinPresentor;
     private ModeltoPresenter.presenter presenter;
     private ProgressDialog mProgress;
+    SharedPreferences pref;
 
     public SigninFragment() {
         // Required empty public constructor
@@ -49,7 +52,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_signin, container, false);
-
+        pref = this.getActivity().getSharedPreferences("signindetails", Context.MODE_PRIVATE);
         editText=view.findViewById(R.id.edittext);
         signupbtn=view.findViewById(R.id.textView3);
         signinbtn=view.findViewById(R.id.button);
@@ -88,6 +91,9 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
     @Override
     public void setDataToRecyclerView(UserData userData) {
         Log.d("Userdataa", "getDataa: "+userData);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("empidd",userData.getEmpId().toString());
+        editor.commit();
         Intent intent = new Intent(getActivity(), DashboardActivity.class);
         Bundle mBundle = new Bundle();
         mBundle.putString("empid",userData.getEmpId().toString());

@@ -27,6 +27,7 @@ public interface MainContractSignup {
         void showdepartmentvalidation();
         void showteamvalidation();
         void designationvalidation();
+        void showinterestvalidation();
         void nextfragment();
         void nextfragmentprofile();
         void departmentSpinner(List<String> departmentList);

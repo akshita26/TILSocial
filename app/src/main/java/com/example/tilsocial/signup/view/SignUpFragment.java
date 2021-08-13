@@ -144,7 +144,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 signupRequestParams.setDept(department.getSelectedItem().toString());
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
-                signupRequestParams.setInterests(genres);
+                signupRequestParams.setInterests((ArrayList) interestList);
                 presenter.dosignup(signupRequestParams);
                 Toast.makeText(getActivity(), "Signup Sucessfully Done", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), DashboardActivity.class);
@@ -253,6 +253,11 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     @Override
     public void designationvalidation() {
         Toast.makeText(getActivity(), "Designation Required", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showinterestvalidation() {
+        Toast.makeText(getActivity(), "Please select minimum 1 Interest", Toast.LENGTH_SHORT).show();
     }
 
     @Override

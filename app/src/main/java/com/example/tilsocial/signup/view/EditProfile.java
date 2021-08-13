@@ -1,6 +1,7 @@
 package com.example.tilsocial.signup.view;
 
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class EditProfile extends Fragment implements MainContractSignup.MainView{
@@ -37,11 +39,12 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     Button updatebtn;
     ChipGroup chipGroup;
     Chip chip;
-    String empid;
     ArrayList<String> genres = new ArrayList<>();
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
-
+    SharedPreferences sharedPreferences;
+    ArrayList interestList;
+    String dept, desig, empid, teamm;
 
     public EditProfile() {
         // Required empty public constructor
@@ -71,8 +74,18 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 ////        presenter.TeamSpinnerDetail();
         presenter.DesignationSpinnerDetail();
 
-        empid = getArguments().getString("key");
-        Log.d("EditProfId", "onCreateView: "+empid);
+//        empid = getArguments().getString("key");
+//        Log.d("EditProfId", "onCreateView: "+empid);
+        sharedPreferences= getActivity().getSharedPreferences("details",0);
+        namee.setText(sharedPreferences.getString("name",""));
+        dept =sharedPreferences.getString("dept","");
+        bioo.setText(sharedPreferences.getString("bio",""));
+        desig= sharedPreferences.getString("desig","");
+        empid =sharedPreferences.getString("empid", "");
+        teamm=sharedPreferences.getString("team","");
+
+        HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
+        ArrayList tags = new ArrayList(set);
 
         //Interests
         genres.add("Mobile Application Development");
@@ -87,6 +100,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             chip.setCheckable(true);
             chipGroup.addView(chip);
         }
+
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +153,11 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     }
 
     @Override
+    public void showinterestvalidation() {
+        Toast.makeText(getActivity(), "Please select minimum 1 interests", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void nextfragment() {
     }
 
@@ -152,36 +171,11 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void departmentSpinner(List<String> departmentList) {
-        departmentList.add(0, "Select department...");
         final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, departmentList){
-            @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if(position == 0){
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                }
-                else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
+                getActivity(),R.layout.spinnneritem, departmentList);
         DepartmentArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        int spinnerPosition = DepartmentArrayAdapter.getPosition(dept);
+        department.setSelection(spinnerPosition);
         department.setAdapter(DepartmentArrayAdapter);
     }
 
@@ -189,68 +183,21 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     public void teamSpinner(List<String> TeamList) {
         TeamList.add(0, "Select Team...");
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, TeamList){
-            @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if(position == 0){
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                }
-                else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
+                getActivity(),R.layout.spinnneritem, TeamList);
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        int spinnerPosition = TeamArrayAdapter.getPosition(teamm);
+        team.setSelection(spinnerPosition);
         team.setAdapter(TeamArrayAdapter);
     }
 
     @Override
     public void designationSpinner(List<String> DesignationList) {
+        DesignationList.add(0, "dept");
         final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, DesignationList){
-            @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if(position == 0){
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                }
-                else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
+                getActivity(),R.layout.spinnneritem, DesignationList);
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        int spinnerPosition = DesignationArrayAdapter.getPosition(desig);
+        designation.setSelection(spinnerPosition);
         designation.setAdapter(DesignationArrayAdapter);
     }
 

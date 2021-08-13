@@ -65,7 +65,8 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
         if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
 
             model.dosignup(signupRequestParams);
-            mainView.nextfragmentprofile();
+
+//            mainView.nextfragmentprofile();
         }
     }
 

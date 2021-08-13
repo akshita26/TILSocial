@@ -146,6 +146,9 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterests(genres);
                 presenter.dosignup(signupRequestParams);
+                Toast.makeText(getActivity(), "Signup Sucessfully Done", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), DashboardActivity.class);
+                startActivity(intent);
             }
         });
         return view;
@@ -254,8 +257,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void nextfragment() {
-        Intent intent = new Intent(getActivity(), DashboardActivity.class);
-        startActivity(intent);
+
     }
 
     @Override

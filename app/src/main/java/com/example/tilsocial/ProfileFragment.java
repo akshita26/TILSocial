@@ -33,6 +33,7 @@ import java.util.List;
 public class ProfileFragment extends Fragment implements MainContract.MainView {
 
     TextView bio,name,dept,desig,empid;
+    String team;
     RecyclerView recyclerView;
     UserPosts userPosts;
 //    List<ModelPost> posts;
@@ -67,6 +68,8 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
         bio.setText(sharedPreferences.getString("bio",""));
         desig.setText(sharedPreferences.getString("desig",""));
         empid.setText(sharedPreferences.getString("empid", ""));
+        team=sharedPreferences.getString("team","");
+
 
         HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
         tags = new ArrayList(set);

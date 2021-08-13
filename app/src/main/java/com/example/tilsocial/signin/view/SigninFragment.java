@@ -33,7 +33,7 @@ import java.util.Objects;
 
 public class SigninFragment extends Fragment implements ModeltoPresenter.MainView {
 
-    TextView signupbtn,tv;
+    TextView tv;
     Button signinbtn;
     TextInputEditText editText;
 //    SigninPresentor signinPresentor;
@@ -59,7 +59,6 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         View view =  inflater.inflate(R.layout.fragment_signin, container, false);
 
         editText=view.findViewById(R.id.edittext);
-        signupbtn=view.findViewById(R.id.textView3);
         signinbtn=view.findViewById(R.id.button);
         tv=view.findViewById(R.id.textview);
 
@@ -68,16 +67,6 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         mProgress.setMessage("Please wait...");
         mProgress.setCancelable(false);
         mProgress.setIndeterminate(true);
-
-        signupbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SignUpFragment SignUpFragment = new SignUpFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.your_placeholder, SignUpFragment);
-                ft.commit();
-            }
-        });
 
         signinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,19 +95,13 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         editor.putString("desig", userData.getDesignation());
         HashSet<String> set = new HashSet(userData.getInterests());
         editor.putStringSet("inter", set);
+        editor.putString("team", userData.getTeam());
         editor.commit();
 
         Intent intent = new Intent(getActivity(), DashboardActivity.class);
         startActivity(intent);
         getActivity().finish();
 
-//        Bundle mBundle = new Bundle();
-//        mBundle.putString("empid",userData.getEmpId().toString());
-//        mBundle.putString("name", userData.getName());
-//        mBundle.putString("dept", userData.getDept());
-//        mBundle.putString("bio", userData.getBio());
-//        mBundle.putString("desig", userData.getDesignation());
-//        intent.putExtras(mBundle);
     }
 
     @Override
@@ -135,5 +118,14 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
 
     @Override
     public void nextActivity() {
+    }
+
+    @Override
+    public void noUserfound(String error) {
+        Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
+        SignUpFragment SignUpFragment = new SignUpFragment();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.your_placeholder, SignUpFragment);
+        ft.commit();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.tilsocial.signup.view;
 
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class EditProfile extends Fragment implements MainContractSignup.MainView{
@@ -37,11 +39,11 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     Button updatebtn;
     ChipGroup chipGroup;
     Chip chip;
-    String empid;
     ArrayList<String> genres = new ArrayList<>();
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
-
+    SharedPreferences sharedPreferences;
+    ArrayList interestList;
 
     public EditProfile() {
         // Required empty public constructor
@@ -71,8 +73,19 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 ////        presenter.TeamSpinnerDetail();
         presenter.DesignationSpinnerDetail();
 
-        empid = getArguments().getString("key");
-        Log.d("EditProfId", "onCreateView: "+empid);
+//        empid = getArguments().getString("key");
+//        Log.d("EditProfId", "onCreateView: "+empid);
+        sharedPreferences= getActivity().getSharedPreferences("details",0);
+        namee.setText(sharedPreferences.getString("name",""));
+        String dept =sharedPreferences.getString("dept","");
+        bioo.setText(sharedPreferences.getString("bio",""));
+        String desig= sharedPreferences.getString("desig","");
+        String empid =sharedPreferences.getString("empid", "");
+
+        HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
+        ArrayList tags = new ArrayList(set);
+
+
 
         //Interests
         genres.add("Mobile Application Development");
@@ -87,6 +100,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             chip.setCheckable(true);
             chipGroup.addView(chip);
         }
+
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +150,11 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     @Override
     public void designationvalidation() {
         Toast.makeText(getActivity(), "Designation Required", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showinterestvalidation() {
+        Toast.makeText(getActivity(), "Please select minimum 1 interests", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -18,7 +18,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
         this.model = model;
     }
 
-    private boolean validateInputs(Integer employeeid, String name, String bio, String deprtment, String teamm, String desgniationn) {
+    private boolean validateInputs(Integer employeeid, String name, String bio, String deprtment, String teamm, String desgniationn, ArrayList interests) {
 
         if (name.isEmpty()) {
             mainView.shownamevalidation();
@@ -44,6 +44,10 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
             mainView.designationvalidation();
             return true;
         }
+        if(interests.isEmpty()){
+            mainView.showinterestvalidation();
+            return true;
+        }
         return false;
 
     }
@@ -52,7 +56,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
     @Override
     public void dosignup(SignupRequestParams signupRequestParams) {
 
-        if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
+        if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation(), signupRequestParams.getInterests())) {
 
             model.dosignup(signupRequestParams);
             mainView.nextfragment();
@@ -62,7 +66,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
     @Override
     public void gotoprofile(SignupRequestParams signupRequestParams) {
-        if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation())) {
+        if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation(), signupRequestParams.getInterests())) {
 
             model.dosignup(signupRequestParams);
             mainView.nextfragmentprofile();

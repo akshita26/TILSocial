@@ -26,6 +26,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -38,6 +39,7 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
     ImageView profile,editprof;
     ChipGroup chipGroup;
     Chip chip;
+    ArrayList tags;
     private MainContract.presenter presenter;
     SharedPreferences sharedPreferences;
 //    ProgressBar progressBar;
@@ -66,6 +68,9 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
         desig.setText(sharedPreferences.getString("desig",""));
         empid.setText(sharedPreferences.getString("empid", ""));
 
+        HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
+        tags = new ArrayList(set);
+
         presenter = new FeedPresentor(this,new MainFeedModel());
 
         int empidd=Integer.parseInt(empid.getText().toString());
@@ -92,11 +97,11 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
         });
 
         //Interests
-        String[] genres = {"Mobile Application Development", "Android", "iOS","System Design"};
+//        String[] genres = {"Mobile Application Development", "Android", "iOS","System Design"};
         chipGroup.removeAllViews();
-        for(String genre : genres) {
+        for(int i = 0 ; i<tags.size(); i++) {
             chip = new Chip(getActivity());
-            chip.setText(genre);
+            chip.setText(tags.get(i).toString());
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chipGroup.addView(chip);
         }

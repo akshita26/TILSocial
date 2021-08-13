@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
 
@@ -23,8 +26,6 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
 
     }
 
-
-
     public UserPosts.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
         return new UserPosts.MyHolder(view);
@@ -36,10 +37,20 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
 
         ModelPost modelPost = modelPosts.get(position);
         holder.name.setText( modelPost.getName());
-//        holder.title.setText(modelPost.getUtitle());
-//        holder.description.setText(modelPost.getDescription());
-//        holder.time.setText(modelPost.getUtime());
-//        holder.like.setText("Likes "+ modelPost.getUlike());
+        holder.like.setText(modelPost.getLikesCount() + " Likes"  );
+        holder.comments.setText(modelPost.getCommentsCount() + " Comments");
+        holder.time.setText(modelPost.getCreatedAt());
+        holder.content.setText(modelPost.getContent());
+        String taggs [] = modelPost.getTags();
+        String tagg = "";
+        for(int i = 0 ; i<taggs.length; i++) {
+            tagg = tagg + "#" + taggs[i] + " ";
+        }
+        holder.tags.setText(tagg);
+        Glide.with(context).load(modelPost.getImgurl())
+                .placeholder(R.drawable.icprofile)
+                .error(R.drawable.ic_error_outline)
+                .into(holder.imageView);
 
 
 
@@ -54,26 +65,21 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
-        //        ImageView picture, image;
-        TextView name, time, title, description, like, comments;
-//        ImageButton more;
-//        Button likebtn, comment;
-//        LinearLayout profile;
+        TextView name, content,like, comments,time,tags;
+        ImageView imageView;
+        ChipGroup chipGroup;
 
         public MyHolder( View itemView) {
             super(itemView);
-//            picture = itemView.findViewById(R.id.picturetv);
-//            image = itemView.findViewById(R.id.pimagetv);
             name = itemView.findViewById(R.id.userprofilename);
-            time = itemView.findViewById(R.id.timeofpost);
-//            more = itemView.findViewById(R.id.morebtn);
-//            title = itemView.findViewById(R.id.PostDescription);
-            description = itemView.findViewById(R.id.PostDescription);
+//            empid = itemView.findViewById(R.id.placeofpost);
+            content = itemView.findViewById(R.id.PostDescription);
             like = itemView.findViewById(R.id.nooflikepost);
             comments = itemView.findViewById(R.id.noofcomment);
-//            likebtn = itemView.findViewById(R.id.like);
-//            comment = itemView.findViewById(R.id.comment);
-//            profile = itemView.findViewById(R.id.profilelayout);
+            imageView = itemView.findViewById(R.id.userPostimage);
+            time = itemView.findViewById(R.id.timeofpost);
+            chipGroup = itemView.findViewById(R.id.chip_groupfortags);
+            tags = itemView.findViewById(R.id.tagss);
         }
     }
 }

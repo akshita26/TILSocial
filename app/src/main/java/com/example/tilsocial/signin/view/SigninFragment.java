@@ -2,6 +2,7 @@ package com.example.tilsocial.signin.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,15 +26,19 @@ import com.example.tilsocial.signin.presentor.SigninPresentor;
 import com.example.tilsocial.signup.view.SignUpFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
 
 public class SigninFragment extends Fragment implements ModeltoPresenter.MainView {
 
-    TextView signupbtn;
+    TextView signupbtn,tv;
     Button signinbtn;
     TextInputEditText editText;
 //    SigninPresentor signinPresentor;
     private ModeltoPresenter.presenter presenter;
     private ProgressDialog mProgress;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     public SigninFragment() {
         // Required empty public constructor
@@ -53,6 +59,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         editText=view.findViewById(R.id.edittext);
         signupbtn=view.findViewById(R.id.textView3);
         signinbtn=view.findViewById(R.id.button);
+        tv=view.findViewById(R.id.textview);
 
         mProgress = new ProgressDialog(getActivity());
         mProgress.setTitle("Processing...");
@@ -73,11 +80,10 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         signinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProgress.show();
+//                mProgress.show();
                 SigninRequestParams signinRequestParams = new SigninRequestParams();
                 signinRequestParams.setEmployeeid(editText.getText().toString());
-                presenter.doSigninn(signinRequestParams);
-                mProgress.dismiss();
+                presenter.doSigninn(signinRequestParams, mProgress);
             }
         });
 
@@ -88,30 +94,41 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
     @Override
     public void setDataToRecyclerView(UserData userData) {
         Log.d("Userdataa", "getDataa: "+userData);
+        sharedPreferences = getActivity().getSharedPreferences("details", 0);
+        editor = sharedPreferences.edit();
+        editor.putString("empid",userData.getEmpId().toString());
+        editor.putString("name", userData.getName());
+        editor.putString("dept", userData.getDept());
+        editor.putString("bio", userData.getBio());
+        editor.putString("desig", userData.getDesignation());
+        editor.commit();
+
         Intent intent = new Intent(getActivity(), DashboardActivity.class);
-        Bundle mBundle = new Bundle();
-        mBundle.putString("empid",userData.getEmpId().toString());
-        mBundle.putString("name", userData.getName());
-        mBundle.putString("dept", userData.getDept());
-        mBundle.putString("bio", userData.getBio());
-        mBundle.putString("desig", userData.getDesignation());
-        intent.putExtras(mBundle);
         startActivity(intent);
         getActivity().finish();
+
+//        Bundle mBundle = new Bundle();
+//        mBundle.putString("empid",userData.getEmpId().toString());
+//        mBundle.putString("name", userData.getName());
+//        mBundle.putString("dept", userData.getDept());
+//        mBundle.putString("bio", userData.getBio());
+//        mBundle.putString("desig", userData.getDesignation());
+//        intent.putExtras(mBundle);
     }
 
     @Override
     public void onResponseFailure(Throwable t) {
-
+        tv.setText("User not exist");
+        tv.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showError() {
-
+        tv.setVisibility(View.VISIBLE);
+        tv.setText("Incorrect user id");
     }
 
     @Override
     public void nextActivity() {
-
     }
 }

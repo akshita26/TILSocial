@@ -1,5 +1,6 @@
 package com.example.tilsocial.signin.model;
 
+import android.app.ProgressDialog;
 import android.util.Log;
 
 import com.example.tilsocial.signin.data.SigninAPIClient;
@@ -46,7 +47,7 @@ public class SignInModel implements ModeltoPresenter.SignInModel {
 //
 //    }
     @Override
-    public void doSignin(SigninRequestParams signinRequestParams, OnFinishedListener onFinishedListener) {
+    public void doSignin(SigninRequestParams signinRequestParams, OnFinishedListener onFinishedListener, ProgressDialog mProgress) {
         apiInterface = SigninAPIClient.getClient().create(SigninAPIinterface.class);
 
         int EmployeeId=Integer.parseInt(signinRequestParams.getEmployeeid());
@@ -58,6 +59,7 @@ public class SignInModel implements ModeltoPresenter.SignInModel {
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 if(response.isSuccessful())
                 {
+//                    mProgress.dismiss();
                     Log.e("Employeeid", "onResponse: " + response.body().getEmpId());
                     Log.e("Employeename", "onResponse: " + response.body().getName());
                     onFinishedListener.onFinished(response.body());
@@ -72,6 +74,7 @@ public class SignInModel implements ModeltoPresenter.SignInModel {
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
                 Log.e("Failure", "onResponse: " + t.getMessage() );
+                onFinishedListener.onFailure(t);
 
             }
         });

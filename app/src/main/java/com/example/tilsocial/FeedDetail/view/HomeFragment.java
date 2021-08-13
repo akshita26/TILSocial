@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         recentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.requestDataFromServer(0, "recency", 123457, "feed");
+                presenter.requestDataFromServer(1, "recency", 123457, "feed");
             }
         });
         trendingbtn.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +95,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     @Override
     public void setDataToRecyclerView(List<ModelPost> modelPostList) {
 
-        adapterPosts = new AdapterPosts(getActivity(), modelPostList);
+        adapterPosts = new AdapterPosts(getActivity());
+        adapterPosts.addtopost(modelPostList);
         recyclerView.setAdapter(adapterPosts);
 
         //Log.e("HomeActivityfeed", "onResponse: " +  ModalPostList.get(0).getImgurl());

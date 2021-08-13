@@ -1,19 +1,25 @@
 package com.example.tilsocial;
 
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
+import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.signup.view.EditProfile;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -22,17 +28,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements MainContract.MainView {
 
     TextView bio,name,dept,desig,empid;
     RecyclerView recyclerView;
     UserPosts userPosts;
-    List<ModelPost> posts;
+//    List<ModelPost> posts;
     ImageView profile,editprof;
     ChipGroup chipGroup;
     Chip chip;
-    Bundle mBundle;
-    ActionBar actionBar;
+    private MainContract.presenter presenter;
+    SharedPreferences sharedPreferences;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -50,24 +56,24 @@ public class ProfileFragment extends Fragment {
         editprof=view.findViewById(R.id.imageView2);
         chipGroup = view.findViewById(R.id.chip_group);
         empid=view.findViewById(R.id.idd);
-       // bio.setText("Shoot your own horn. Show off your achievements, give them a little personality, tell them what problem you’ll solve. Your bio helps you build a connection right from the start.");
 
+        sharedPreferences= getActivity().getSharedPreferences("details",0);
+        name.setText(sharedPreferences.getString("name",""));
+        dept.setText(sharedPreferences.getString("dept",""));
+        bio.setText(sharedPreferences.getString("bio",""));
+        desig.setText(sharedPreferences.getString("desig",""));
+        empid.setText(sharedPreferences.getString("empid", ""));
+
+        presenter = new FeedPresentor(this,new MainFeedModel());
+
+        int empidd=Integer.parseInt(empid.getText().toString());
+        Log.d("1234", "onCreateView: "+empidd);
+        presenter.requestDataFromServer(0, "recency",12345, "self");
         recyclerView = view.findViewById(R.id.recyid);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-        posts = new ArrayList<>();
-        loadPosts();
-        userPosts = new UserPosts(getActivity(), posts);
-        recyclerView.setAdapter(userPosts);
 
-        name.setText(getArguments().getString("name"));
-        dept.setText(getArguments().getString("dept"));
-        bio.setText(getArguments().getString("bio"));
-        desig.setText(getArguments().getString("desig"));
-        empid.setText(getArguments().getString("empid"));
 
         editprof.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,22 +101,18 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void loadPosts() {
 
+    @Override
+    public void setDataToRecyclerView(List<ModelPost> modelPostList) {
+//        posts = new ArrayList<>();
+        userPosts = new UserPosts(getActivity(), modelPostList);
+        recyclerView.setAdapter(userPosts);
+    }
 
-        ModelPost modelPost = new ModelPost();
-        modelPost.setName("User1");
-//        modelPost.setDescription("MyDescription is Here");
-//        modelPost.setUimage("imageurl");
-//        modelPost.setUlike("20");
-//        modelPost.setUtime("1 min");
-//        modelPost.setUcomment("comments");
-//        modelPost.setUtitle("MYPOST");
-        posts.add(modelPost);
-        posts.add(modelPost);
-        posts.add(modelPost);
-        posts.add(modelPost);
-
-
+    @Override
+    public void onResponseFailure(Throwable t) {
+        Toast.makeText(getActivity(),
+                "Something went wrong...Error message: " + t.getMessage(),
+                Toast.LENGTH_LONG).show();
     }
 }

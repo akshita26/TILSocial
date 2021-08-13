@@ -1,5 +1,7 @@
 package com.example.tilsocial.FeedDetail.presentor;
 
+import android.widget.ProgressBar;
+
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 
 import java.util.List;
@@ -8,7 +10,7 @@ public interface MainContract {
 
     interface presenter{
 
-        void requestDataFromServer(int page, String sortby, int empid, String type);
+        void requestDataFromServer(int page, String sortby, int empid, String type, ProgressBar loadingPB);
 
 
 
@@ -34,7 +36,7 @@ public interface MainContract {
             void onFailure(Throwable t);
         }
 
-        void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String recent);
+        void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String recent, ProgressBar loadingPB);
     }
 
 

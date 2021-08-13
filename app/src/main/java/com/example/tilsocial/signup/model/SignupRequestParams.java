@@ -1,26 +1,48 @@
 package com.example.tilsocial.signup.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+
 public class SignupRequestParams {
 
+    @SerializedName("name")
+    String name;
+    @SerializedName("bio")
+    String bio;
+    @SerializedName("dept")
+    String dept;
+    @SerializedName("team")
+    String team;
+    @SerializedName("designation")
+    String designation;
+    @SerializedName("interests")
+    ArrayList interests;
+    @SerializedName("empId")
+    Integer empId;
 
-    String name,bio,department,team,designation;
-    String[] Interset;
-    Integer employeeid;
-
-    public void setEmployeeid(Integer employeeid) {
-        this.employeeid = employeeid;
+    public ArrayList getInterests() {
+        return interests;
     }
 
-    public Integer getEmployeeid() {
-        return employeeid;
+    public void setInterests(ArrayList interests) {
+        this.interests = interests;
     }
 
-    public String[] getInterset() {
-        return Interset;
+    public String getDept() {
+        return dept;
     }
 
-    public void setInterset(String[] interset) {
-        Interset = interset;
+    public void setDept(String dept) {
+        this.dept = dept;
+    }
+
+    public Integer getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(Integer empId) {
+        this.empId = empId;
     }
 
     public String getName() {
@@ -39,14 +61,6 @@ public class SignupRequestParams {
         this.bio = bio;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
     public String getTeam() {
         return team;
     }
@@ -63,12 +77,6 @@ public class SignupRequestParams {
         this.designation = designation;
     }
 
-//    public String getEmployeeid() {
-//        return employeeid;
-//    }
-//
-//    public void setEmployeeid(String employeeid) {
-//        this.employeeid = employeeid;
-//    }
+
 
 }

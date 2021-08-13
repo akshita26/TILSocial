@@ -33,9 +33,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
 
-    public AdapterPosts(Context context, List<ModelPost> modelPosts) {
+    public AdapterPosts(Context context) {
         this.context = context;
-        this.modelPosts = modelPosts;
 
     }
 
@@ -100,8 +99,19 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
 
+
     }
 
+    public void addtopost(List<ModelPost> modelPostList){
+        if(modelPosts==null){
+            modelPosts=modelPostList;
+            notifyDataSetChanged();
+        }
+        else{
+            modelPosts.addAll(modelPostList);
+            notifyDataSetChanged();
+        }
+    }
 
 //    @Override
 //    public int getItemViewType(int position) {

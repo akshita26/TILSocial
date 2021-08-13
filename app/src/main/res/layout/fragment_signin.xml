@@ -48,6 +48,14 @@
                     android:inputType="number"
                     android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Incorrect id"
+                android:visibility="gone"
+                android:textSize="10sp"
+                android:textColor="@color/red_400"/>
 
             <Button
                 android:id="@+id/button"

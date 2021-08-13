@@ -1,19 +1,14 @@
 package com.example.tilsocial.signin.presentor;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 
-import com.example.tilsocial.FeedDetail.model.ModelPost;
-import com.example.tilsocial.FeedDetail.presentor.MainContract;
-import com.example.tilsocial.UserPosts;
 import com.example.tilsocial.signin.model.SigninRequestParams;
 import com.example.tilsocial.signin.model.UserData;
-
-import java.util.List;
 
 public interface ModeltoPresenter {
     interface presenter{
         void requestDataFromServer();
-        void doSigninn(SigninRequestParams signinRequestParams);
+        void doSigninn(SigninRequestParams signinRequestParams, ProgressDialog mProgress);
 
 
     }
@@ -31,7 +26,7 @@ public interface ModeltoPresenter {
         }
 
 //        void getUserData(OnFinishedListener onFinishedListener);
-        void doSignin(SigninRequestParams signinRequestParams, OnFinishedListener onFinishedListener);
+        void doSignin(SigninRequestParams signinRequestParams, OnFinishedListener onFinishedListener, ProgressDialog mProgress);
     }
 
 }

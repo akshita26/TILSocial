@@ -1,17 +1,9 @@
 package com.example.tilsocial.signin.presentor;
 
-import android.content.Context;
-import android.content.Intent;
+import android.app.ProgressDialog;
 
-import androidx.fragment.app.FragmentActivity;
-
-import com.example.tilsocial.DashboardActivity;
-import com.example.tilsocial.signin.model.SignInModel;
 import com.example.tilsocial.signin.model.SigninRequestParams;
 import com.example.tilsocial.signin.model.UserData;
-import com.example.tilsocial.signup.model.SignupRequestParams;
-
-import java.util.List;
 
 public class SigninPresentor implements ModeltoPresenter.presenter, ModeltoPresenter.SignInModel.OnFinishedListener {
 
@@ -37,10 +29,10 @@ public class SigninPresentor implements ModeltoPresenter.presenter, ModeltoPrese
     }
 
     @Override
-    public void doSigninn(SigninRequestParams signinRequestParams) {
+    public void doSigninn(SigninRequestParams signinRequestParams, ProgressDialog mProgress) {
         if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16)
         {
-            signInModel.doSignin(signinRequestParams, this);
+            signInModel.doSignin(signinRequestParams, this,mProgress);
             mainView.nextActivity();
         }
         else
@@ -59,7 +51,7 @@ public class SigninPresentor implements ModeltoPresenter.presenter, ModeltoPrese
 
     @Override
     public void onFailure(Throwable t) {
-
+        mainView.onResponseFailure(t);
     }
 
 //    public interface SigninView {

@@ -2,6 +2,8 @@ package com.example.tilsocial.signin.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class UserData {
     @SerializedName("empId")
     Integer empId;
@@ -15,23 +17,11 @@ public class UserData {
     String team;
     @SerializedName("designation")
     String designation;
-//    @SerializedName("interests")
-//    String interests;
+    @SerializedName("interests")
+    ArrayList interests;
 
     public Integer getEmpId() {
         return empId;
-    }
-
-    @Override
-    public String toString() {
-        return "UserData{" +
-                "empId=" + empId +
-                ", name='" + name + '\'' +
-                ", dept='" + dept + '\'' +
-                ", bio='" + bio + '\'' +
-                ", team='" + team + '\'' +
-                ", designation='" + designation + '\'' +
-                '}';
     }
 
     public void setEmpId(Integer empId) {
@@ -77,12 +67,25 @@ public class UserData {
     public void setDesignation(String designation) {
         this.designation = designation;
     }
-//
-//    public String getInterests() {
-//        return interests;
-//    }
-//
-//    public void setInterests(String interests) {
-//        this.interests = interests;
-//    }
+
+    public ArrayList getInterests() {
+        return interests;
+    }
+
+    public void setInterests(ArrayList interests) {
+        this.interests = interests;
+    }
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "empId=" + empId +
+                ", name='" + name + '\'' +
+                ", dept='" + dept + '\'' +
+                ", bio='" + bio + '\'' +
+                ", team='" + team + '\'' +
+                ", designation='" + designation + '\'' +
+                ", interests=" + interests +
+                '}';
+    }
 }

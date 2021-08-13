@@ -1,5 +1,8 @@
 package com.example.tilsocial.FeedDetail.view;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -7,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,6 +27,7 @@ import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
+import com.example.tilsocial.MainActivity;
 import com.example.tilsocial.R;
 
 import java.util.List;
@@ -37,6 +42,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     private DrawerLayout drawer;
     RadioButton recentbtn;
     RadioButton trendingbtn;
+    private ProgressBar loadingPB;
+    SharedPreferences prf;
+    String empid;
 
 
     public HomeFragment() {
@@ -47,7 +55,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
+        prf = this.getActivity().getSharedPreferences("details", Context.MODE_PRIVATE);
+        empid = prf.getString("empid",null);
+//        Toast.makeText(getActivity(), "employeeidis" + empid, Toast.LENGTH_SHORT).show();
 
     }
     @Override
@@ -63,8 +73,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         // Inflate the layout for this fragment
 
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        loadingPB = view.findViewById(R.id.idPBLoading);
         presenter = new FeedPresentor(this,new MainFeedModel());
-        presenter.requestDataFromServer(0, "recency", 123456, "feed");
+        presenter.requestDataFromServer(0, "recency", 123456, "feed",loadingPB);
         recyclerView = view.findViewById(R.id.postrecyclerview);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -75,27 +86,27 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
 
 
+
         recentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.requestDataFromServer(0, "recency", 123457, "feed");
+                presenter.requestDataFromServer(0, "recency", 123457, "feed",loadingPB);
             }
         });
         trendingbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.requestDataFromServer(0, "trending", 123456, "feed");
+                presenter.requestDataFromServer(0, "trending", 123456, "feed",loadingPB);
             }
         });
-
-
         return view;
     }
 
     @Override
     public void setDataToRecyclerView(List<ModelPost> modelPostList) {
 
-        adapterPosts = new AdapterPosts(getActivity(), modelPostList);
+        adapterPosts = new AdapterPosts(getActivity());
+        adapterPosts.addtopost(modelPostList);
         recyclerView.setAdapter(adapterPosts);
 
         //Log.e("HomeActivityfeed", "onResponse: " +  ModalPostList.get(0).getImgurl());
@@ -114,9 +125,21 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             requireActivity().onBackPressed();
-        } else if (item.getItemId() == R.id.action_filter ) {
+        } else if (item.getItemId() == R.id.action_filter) {
             drawer.openDrawer(GravityCompat.END);
-        } else {
+        } else if (item.getItemId() == R.id.logoutuser)
+        {
+            SharedPreferences.Editor editor = prf.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+
+            Toast.makeText(getActivity(), "Logout Done", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
             Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);

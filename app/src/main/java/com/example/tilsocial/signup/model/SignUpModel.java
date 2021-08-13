@@ -18,21 +18,18 @@ public class SignUpModel implements MainContractSignup.Model
     ApiInterface apiInterface;
     ApiInterfaceSpinner apiInterfaceSpinner;
 
-
-
-
     public void dosignup(SignupRequestParams signupRequestParams)
     {
-
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<SignupRequestParams> PostCall = apiInterface.postSignUp(signupRequestParams);
-        PostCall.enqueue(new Callback<SignupRequestParams>() {
+        Call<String> PostCall = apiInterface.postSignUp(signupRequestParams);
+        PostCall.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<SignupRequestParams> call, Response<SignupRequestParams> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
+
                 Log.e(TAG, "onResponse: " + response.code() );
                 if(response!=null)
                 {
-                    Log.e(TAG, "onResponseasasxa: " + response.body().getEmployeeid());
+                    Log.e(TAG, "onResponseasasxa: " + response.body());
                 }
                 else
                 {
@@ -40,8 +37,8 @@ public class SignUpModel implements MainContractSignup.Model
                 }
             }
             @Override
-            public void onFailure(Call<SignupRequestParams> call, Throwable t) {
-                Log.e(TAG, "onResponse: " + t.getMessage() );
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e(TAG, "onResponsesignuppfail: " + t.getMessage() );
             }
         });
     }

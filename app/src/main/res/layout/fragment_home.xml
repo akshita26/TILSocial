@@ -65,6 +65,13 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
+                <ProgressBar
+                    android:id="@+id/idPBLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/postrecyclerview"
@@ -157,15 +164,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingHorizontal="@dimen/spacing_large"
-                        android:text="Recent"
                         android:checked="true"
+                        android:text="Recent"
                         app:buttonTint="@color/colorPrimary" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:id="@+id/order_by_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
                         android:paddingHorizontal="@dimen/spacing_large"
                         android:text="Trending"
                         app:buttonTint="@color/colorPrimary" />

@@ -1,6 +1,7 @@
 package com.example.tilsocial.signin.view;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -80,7 +81,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         signinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mProgress.show();
+                mProgress.show();
                 SigninRequestParams signinRequestParams = new SigninRequestParams();
                 signinRequestParams.setEmployeeid(editText.getText().toString());
                 presenter.doSigninn(signinRequestParams, mProgress);

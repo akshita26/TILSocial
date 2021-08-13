@@ -15,6 +15,7 @@ public interface MainContractSignup {
         void departmentSpinnerdetail();
         void DesignationSpinnerDetail();
         void TeamSpinnerDetail();
+
     }
 
     interface MainView {
@@ -32,6 +33,7 @@ public interface MainContractSignup {
         void teamSpinner(List<String> TeamList);
         void designationSpinner(List<String> DesignationList);
         void onResponseFailure(Throwable t);
+
 
 
 

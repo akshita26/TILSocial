@@ -59,10 +59,10 @@ public class SignInModel implements ModeltoPresenter.SignInModel {
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 if(response.isSuccessful())
                 {
-//                    mProgress.dismiss();
                     Log.e("Employeeid", "onResponse: " + response.body().getEmpId());
                     Log.e("Employeename", "onResponse: " + response.body().getName());
                     onFinishedListener.onFinished(response.body());
+                    mProgress.dismiss();
                 }
                 else
                 {

@@ -70,17 +70,13 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         super.onCreate(savedInstanceState);
         presenter = new SignupPresentor(this,new SignUpModel());
 
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         view = inflater.inflate(R.layout.fragment_siggnuppfragment, container, false);
-
-
         department = view.findViewById(R.id.spinner4);
         team = view.findViewById(R.id.spinner5);
         designation = view.findViewById(R.id.spinner6);
@@ -131,6 +127,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         userprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 selectImage();
             }
         });
@@ -139,17 +136,15 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             @Override
             public void onClick(View v) {
 
-                String[] interest = {"Mobile Application Development", "Android", "iOS"};
                 int empid = Integer.parseInt(employeeidd.getText().toString().isEmpty() ? "0":employeeidd.getText().toString());
-//                =Integer.parseInt(employeeidd.getText().toString());
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
-                signupRequestParams.setEmployeeid(empid);
+                signupRequestParams.setEmpId(empid);
                 signupRequestParams.setName(namee.getText().toString());
                 signupRequestParams.setBio(bioo.getText().toString());
-                signupRequestParams.setDepartment(department.getSelectedItem().toString());
+                signupRequestParams.setDept(department.getSelectedItem().toString());
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
-                signupRequestParams.setInterset(interest);
+                signupRequestParams.setInterests(genres);
                 presenter.dosignup(signupRequestParams);
             }
         });
@@ -157,7 +152,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     }
 
     private void selectImage() {
-
 
         final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -245,20 +239,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void showdepartmentvalidation() {
-
-//        Toast toast = new Toast(getActivity());
-//        toast.setDuration(Toast.LENGTH_LONG);
-//
-//        //inflate view
-//        View custom_view = getLayoutInflater().inflate(R.layout.toast_icon_text, null);
-//        ((TextView) custom_view.findViewById(R.id.message)).setText("Department Required");
-//        ((ImageView) custom_view.findViewById(R.id.icon)).setImageResource(R.drawable.ic_error_outline);
-//        ((CardView) custom_view.findViewById(R.id.parent_view)).setCardBackgroundColor(getResources().getColor(R.color.blue_500));
-//
-//        toast.setView(custom_view);
-//        toast.show();
-
-      Toast.makeText(getActivity(), "Department Required", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Department Required", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -386,7 +367,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
         designation.setAdapter(DesignationArrayAdapter);
     }
-
 
     @Override
     public void onResponseFailure(Throwable t) {

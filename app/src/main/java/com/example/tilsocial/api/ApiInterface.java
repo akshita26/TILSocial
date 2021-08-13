@@ -11,7 +11,7 @@ public interface ApiInterface {
 
 
     @POST("save")
-    Call<SignupRequestParams> postSignUp(@Body SignupRequestParams signupRequestParams);
+    Call<String> postSignUp(@Body SignupRequestParams signupRequestParams);
 
 
 }

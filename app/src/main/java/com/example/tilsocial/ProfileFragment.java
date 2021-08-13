@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
     Chip chip;
     private MainContract.presenter presenter;
     SharedPreferences sharedPreferences;
+//    ProgressBar progressBar;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -68,7 +70,7 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
 
         int empidd=Integer.parseInt(empid.getText().toString());
         Log.d("1234", "onCreateView: "+empidd);
-        presenter.requestDataFromServer(0, "recency",12345, "self");
+//        presenter.requestDataFromServer(0, "recency",12345, "self",);
         recyclerView = view.findViewById(R.id.recyid);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

@@ -15,7 +15,11 @@
     <color name="grey_80">#37474F</color>
     <color name="grey_3">#f7f7f7</color>
 
-
+    <color name="grey">#E9EAEE</color>
+    <color name="yellow">#F8BA0F</color>
+    <color name="goodgrey">#535353</color>
+    <color name="blue">#293859</color>
+    <color name="lightgrey">#EEEEEE</color>
 
     <color name="overlay_dark_5">#0C000000</color>
     <color name="overlay_dark_10">#1A000000</color>

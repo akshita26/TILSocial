@@ -43,7 +43,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
     SharedPreferences sharedPreferences;
-    ArrayList interestList;
+    ArrayList interestList= new ArrayList();
     String dept, desig, empid, teamm;
 
     public EditProfile() {
@@ -99,6 +99,29 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chip.setCheckable(true);
             chipGroup.addView(chip);
+        }
+
+        for(int j=0;j<tags.size();j++){
+            if(genres.contains(tags.get(j))){
+                chip.setChecked(true);
+                interestList.add(chip.getText().toString());
+            }
+        }
+
+        Integer c = chipGroup.getChildCount();
+        for (int j = 0; j < c; j++) {
+            Chip chip = (Chip) chipGroup.getChildAt(j);
+            chip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (chip.isChecked()) {
+                        interestList.add(chip.getText().toString());
+                    } else {
+                        interestList.remove(chip.getText());
+                    }
+                    Toast.makeText(getActivity(), "" + interestList, Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
         updatebtn.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +188,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     public void nextfragmentprofile() {
         HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.dashboard, homeFragment);
+        ft.replace(R.id.dashboard, homeFragment);
         ft.commit();
     }
 
@@ -181,7 +204,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void teamSpinner(List<String> TeamList) {
-        TeamList.add(0, "Select Team...");
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, TeamList);
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
@@ -192,7 +214,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void designationSpinner(List<String> DesignationList) {
-        DesignationList.add(0, "dept");
         final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, DesignationList);
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);

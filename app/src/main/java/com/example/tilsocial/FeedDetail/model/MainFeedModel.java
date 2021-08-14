@@ -40,9 +40,25 @@ public class MainFeedModel implements MainContract.GetFeedList {
             }
         });
 
+    }
 
+    @Override
+    public void getUserfeed(OnFinishedListener onFinishedListener, int page, String filter, int empid, String type) {
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+//        Log.e(TAG, "recentt" + recent);
+        Call<FeedContent> call = apiInterface.getPost(page,filter,empid,type);
+        call.enqueue(new Callback<FeedContent>() {
+            @Override
+            public void onResponse(Call<FeedContent> call, Response<FeedContent> response) {
+                Log.e(TAG, "onResponse: " +  response.body());
+                onFinishedListener.onFinished(response.body().getModelPostList());
+            }
 
-
-        //make a retrofit call here
+            @Override
+            public void onFailure(Call<FeedContent> call, Throwable t) {
+                Log.e(TAG, "faliure" +  t.getMessage());
+                onFinishedListener.onFailure(t);
+            }
+        });
     }
 }

@@ -109,8 +109,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         adapterPosts.addtopost(modelPostList);
         recyclerView.setAdapter(adapterPosts);
 
-        //Log.e("HomeActivityfeed", "onResponse: " +  ModalPostList.get(0).getImgurl());
-
     }
 
 

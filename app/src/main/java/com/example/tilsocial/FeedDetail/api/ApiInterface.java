@@ -17,6 +17,5 @@ public interface ApiInterface {
             @Query("type") String type
     );
 
-
 //    Call<List<ModelPost>> getPost(Map<String, String> parameters);
 }

@@ -1,6 +1,5 @@
 package com.example.tilsocial;
 
-import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
@@ -113,7 +112,7 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
 
 
     @Override
-    public void setDataToRecyclerView(List<ModelPost> modelPostList) {
+    public void setDataToRecyclerView(List<ModelPost> modelPostList, FeedContent feedContent) {
 //        posts = new ArrayList<>();
         userPosts = new UserPosts(getActivity(), modelPostList);
         recyclerView.setAdapter(userPosts);

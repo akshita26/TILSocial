@@ -8,6 +8,8 @@ public class FeedContent {
 
     @SerializedName("content")
     List<ModelPost> modelPostList;
+    @SerializedName("pageable")
+    PageDetails pageDetails;
 
     public List<ModelPost> getModelPostList() {
         return modelPostList;
@@ -17,10 +19,19 @@ public class FeedContent {
         this.modelPostList = modelPostList;
     }
 
+    public PageDetails getPageDetails() {
+        return pageDetails;
+    }
+
+    public void setPageDetails(PageDetails pageDetails) {
+        this.pageDetails = pageDetails;
+    }
+
     @Override
     public String toString() {
         return "FeedContent{" +
                 "modelPostList=" + modelPostList +
+                ", pageDetails=" + pageDetails +
                 '}';
     }
 }

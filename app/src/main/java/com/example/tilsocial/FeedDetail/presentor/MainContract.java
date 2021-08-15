@@ -2,6 +2,7 @@ package com.example.tilsocial.FeedDetail.presentor;
 
 import android.widget.ProgressBar;
 
+import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface MainContract {
 
 
 
-        void setDataToRecyclerView(List<ModelPost> modelPostList);
+        void setDataToRecyclerView(List<ModelPost> modelPostList,FeedContent feedContent);
 
 
         void onResponseFailure(Throwable t);
@@ -32,7 +33,7 @@ public interface MainContract {
     interface GetFeedList {
 
         interface OnFinishedListener {
-            void onFinished(List<ModelPost> modelPostList);
+            void onFinished(List<ModelPost> modelPostList, FeedContent feedContent);
             void onFailure(Throwable t);
         }
 

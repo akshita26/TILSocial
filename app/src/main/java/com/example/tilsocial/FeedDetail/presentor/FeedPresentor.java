@@ -2,6 +2,7 @@ package com.example.tilsocial.FeedDetail.presentor;
 
 import android.widget.ProgressBar;
 
+import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 
 import java.util.List;
@@ -24,10 +25,10 @@ public class FeedPresentor implements MainContract.presenter ,MainContract.GetFe
     }
 
     @Override
-    public void onFinished(List<ModelPost> modelPostList) {
+    public void onFinished(List<ModelPost> modelPostList, FeedContent feedContent) {
 
         if(mainView != null){
-            mainView.setDataToRecyclerView(modelPostList);
+            mainView.setDataToRecyclerView(modelPostList,feedContent);
         }
 
     }

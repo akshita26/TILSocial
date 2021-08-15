@@ -20,7 +20,6 @@ public interface MainContract {
 
         void setDataToRecyclerView(List<ModelPost> modelPostList);
 
-
         void onResponseFailure(Throwable t);
     }
 

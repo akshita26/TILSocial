@@ -2,8 +2,8 @@ package com.example.tilsocial.signup.model;
 
 import android.util.Log;
 
-import com.example.tilsocial.api.ApiClient;
-import com.example.tilsocial.api.ApiInterface;
+import com.example.tilsocial.signup.signupApi.ApiClient;
+import com.example.tilsocial.signup.signupApi.ApiInterface;
 import com.example.tilsocial.signup.api.ApiClientSpinner;
 import com.example.tilsocial.signup.api.ApiInterfaceSpinner;
 import com.example.tilsocial.signup.presenter.MainContractSignup;

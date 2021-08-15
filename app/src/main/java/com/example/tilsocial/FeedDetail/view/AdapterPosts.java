@@ -1,6 +1,7 @@
 package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.tilsocial.CommentFragment;
+import com.example.tilsocial.comments.view.CommentFragment;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.google.android.material.chip.ChipGroup;
@@ -28,6 +29,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     Context context;
     List<ModelPost> modelPosts;
     ActionBar actionBar;
+    String postId;
 //    Integer VIEWTYPE_POSTS=1;
 //    Integer VIEWTYPE_INTERESTS=2;
 
@@ -65,6 +67,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             PostsHolder holder1=(PostsHolder)holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
+            postId=modelPost.getPostId();
             holder1.like.setText(modelPost.getLikesCount() + " Likes"  );
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
             holder1.time.setText(modelPost.getCreatedAt());
@@ -90,6 +93,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     actionBar.setDisplayHomeAsUpEnabled(true);
                     actionBar.setTitle("Comment");
                     CommentFragment commentFragment = new CommentFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("postid", postId);
+                    commentFragment.setArguments(bundle);
                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.dashboard, commentFragment);

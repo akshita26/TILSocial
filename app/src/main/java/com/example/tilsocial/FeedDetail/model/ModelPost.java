@@ -38,6 +38,9 @@ public class ModelPost {
     @SerializedName("imgurl")
     private String imgurl;
 
+    @SerializedName("postId")
+    private  String postId;
+
     public String getImgurl() {
         return imgurl;
     }
@@ -118,6 +121,14 @@ public class ModelPost {
         this.tags = tags;
     }
 
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
     @Override
     public String toString() {
         return "ModelPost{" +
@@ -130,6 +141,8 @@ public class ModelPost {
                 ", updatedAt='" + updatedAt + '\'' +
                 ", content='" + content + '\'' +
                 ", tags=" + Arrays.toString(tags) +
+                ", imgurl='" + imgurl + '\'' +
+                ", postId='" + postId + '\'' +
                 '}';
     }
 }

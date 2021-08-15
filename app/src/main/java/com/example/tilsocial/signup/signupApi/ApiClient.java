@@ -1,4 +1,4 @@
-package com.example.tilsocial.api;
+package com.example.tilsocial.signup.signupApi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

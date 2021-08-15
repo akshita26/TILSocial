@@ -10,6 +10,7 @@
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/drawable/ic_notifications_white_24dp.xml" value="0.21302083333333333" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/activity_main.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_add_post.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_comment.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_edit_profile.xml" value="0.25" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_profile.xml" value="0.196875" />
@@ -18,6 +19,7 @@
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_user_profile.xml" value="0.22" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/notselected_interests.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/profile_main.xml" value="0.2" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/row_comment.xml" value="0.20052083333333334" />
         <entry key="..\:/Android_/ws/TILSocial/app/src/main/res/layout/fragment_add_post.xml" value="0.20416666666666666" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/drawable/button_shape.xml" value="0.18333333333333332" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/drawable/feedcustomspinner.xml" value="0.18229166666666666" />

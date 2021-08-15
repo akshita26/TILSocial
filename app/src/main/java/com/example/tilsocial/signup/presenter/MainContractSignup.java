@@ -15,6 +15,7 @@ public interface MainContractSignup {
         void departmentSpinnerdetail();
         void DesignationSpinnerDetail();
         void TeamSpinnerDetail();
+        void getsignupdetails(SignupRequestParams signupRequestParams);
 
     }
 
@@ -34,10 +35,7 @@ public interface MainContractSignup {
         void teamSpinner(List<String> TeamList);
         void designationSpinner(List<String> DesignationList);
         void onResponseFailure(Throwable t);
-
-
-
-
+        void SetSignupdata(SignupRequestParams signupRequestParams);
     }
 
     /**
@@ -48,9 +46,10 @@ public interface MainContractSignup {
 
         interface OnFinishedListener {
             void onFinished(SpinnerDetails spinnerDetails);
+            void OnFinishedSignupdata(SignupRequestParams signupRequestParams);
             void onFailure(Throwable t);
         }
-        void dosignup(SignupRequestParams signupRequestParams);
+        void dosignup(SignupRequestParams signupRequestParams, OnFinishedListener onFinishedListener);
         void getSpinnerDetail(OnFinishedListener onFinishedListener);
     }
 

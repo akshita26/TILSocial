@@ -21,7 +21,7 @@ public class ModelPost {
     private String commentsCount;
 
     @SerializedName("hasLiked")
-    private String hasLiked;
+    private Boolean hasLiked;
 
     @SerializedName("createdAt")
     private String createdAt;
@@ -34,16 +34,26 @@ public class ModelPost {
 
     @SerializedName("tags")
     private String [] tags;
+    @SerializedName("images")
+    private String [] images;
 
-    @SerializedName("imgurl")
-    private String imgurl;
+    @SerializedName("postId")
+    private String postId;
 
-    public String getImgurl() {
-        return imgurl;
+    public String[] getImages() {
+        return images;
     }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
+    public void setImages(String[] images) {
+        this.images = images;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 
     public String getEmpId() {
@@ -78,11 +88,11 @@ public class ModelPost {
         this.commentsCount = commentsCount;
     }
 
-    public String getHasLiked() {
+    public Boolean getHasLiked() {
         return hasLiked;
     }
 
-    public void setHasLiked(String hasLiked) {
+    public void setHasLiked(Boolean hasLiked) {
         this.hasLiked = hasLiked;
     }
 
@@ -130,6 +140,8 @@ public class ModelPost {
                 ", updatedAt='" + updatedAt + '\'' +
                 ", content='" + content + '\'' +
                 ", tags=" + Arrays.toString(tags) +
+                ", images='" + images + '\'' +
+                ", postId='" + postId + '\'' +
                 '}';
     }
 }

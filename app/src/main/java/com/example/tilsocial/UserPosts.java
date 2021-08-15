@@ -47,14 +47,10 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
             tagg = tagg + "#" + taggs[i] + " ";
         }
         holder.tags.setText(tagg);
-        Glide.with(context).load(modelPost.getImgurl())
+        Glide.with(context).load(modelPost.getImages())
                 .placeholder(R.drawable.icprofile)
                 .error(R.drawable.ic_error_outline)
                 .into(holder.imageView);
-
-
-
-
 
     }
 

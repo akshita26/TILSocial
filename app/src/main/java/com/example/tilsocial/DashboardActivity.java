@@ -13,7 +13,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DashboardActivity extends AppCompatActivity {
 
-
     ActionBar actionBar;
     BottomNavigationView navigationView;
 
@@ -36,8 +35,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
-
-
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -58,24 +55,11 @@ public class DashboardActivity extends AppCompatActivity {
                     fragmentTransaction1.replace(R.id.dashboard, fragment1);
                     fragmentTransaction1.setReorderingAllowed(true);
                     fragmentTransaction1.commit();
-
                     return true;
 
                 case R.id.nav_profile:
                     actionBar.setTitle("Profile");
-//                    String empid = getIntent().getStringExtra("empid");
-//                    String name = getIntent().getStringExtra("name");
-//                    String bio = getIntent().getStringExtra("bio");
-//                    String dept = getIntent().getStringExtra("dept");
-//                    String desig = getIntent().getStringExtra("desig");
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString("empid",empid);
-//                    bundle.putString("name",name);
-//                    bundle.putString("dept",dept);
-//                    bundle.putString("bio",bio);
-//                    bundle.putString("desig",desig);
-                    ProfileFragment fragment2 = new ProfileFragment();
-//                    fragment2.setArguments(bundle);
+                    UserProfile fragment2 = new UserProfile();
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction2.replace(R.id.dashboard, fragment2, "");
                     fragmentTransaction2.commit();

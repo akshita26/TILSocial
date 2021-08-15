@@ -1,7 +1,6 @@
 package com.example.tilsocial.signin.view;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,7 +27,6 @@ import com.example.tilsocial.signup.view.SignUpFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.HashSet;
-import java.util.Objects;
 
 
 public class SigninFragment extends Fragment implements ModeltoPresenter.MainView {
@@ -106,6 +104,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
 
     @Override
     public void onResponseFailure(Throwable t) {
+        Log.e("Signin", "onResponse: " +  t.getMessage());
         tv.setText("User not exist");
         tv.setVisibility(View.VISIBLE);
     }

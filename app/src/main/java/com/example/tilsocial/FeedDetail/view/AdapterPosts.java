@@ -1,6 +1,7 @@
 package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +17,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.tilsocial.CommentFragment;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -56,18 +58,25 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             holder1.name.setText(modelPost.getName());
             holder1.like.setText(modelPost.getLikesCount() + " Likes"  );
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
-            holder1.time.setText(modelPost.getCreatedAt());
             holder1.content.setText(modelPost.getContent());
+            Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+            try {
+                calendar.setTimeInMillis(Long.parseLong(modelPost.getCreatedAt()));
+            } catch(Exception ex) {
+            ex.printStackTrace();
+            }
+            String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+            holder1.time.setText(timedate);
             String taggs [] = modelPost.getTags();
             String tagg = "";
             for(int i = 0 ; i<taggs.length; i++) {
                 tagg = tagg + "#" + taggs[i] + " ";
             }
             holder1.tags.setText(tagg);
-            Glide.with(context).load(modelPost.getImgurl())
-                    .placeholder(R.drawable.icprofile)
-                    .error(R.drawable.ic_error_outline)
-                    .into(holder1.imageView);
+//            Glide.with(context).load(modelPost.getImages())
+//                    .placeholder(R.drawable.icprofile)
+//                    .error(R.drawable.ic_error_outline)
+//                    .into(holder1.imageView);
 
 
             holder1.comments.setOnClickListener(new View.OnClickListener() {

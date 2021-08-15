@@ -18,7 +18,7 @@ public class SignUpModel implements MainContractSignup.Model
     ApiInterface apiInterface;
     ApiInterfaceSpinner apiInterfaceSpinner;
 
-    public void dosignup(SignupRequestParams signupRequestParams)
+    public void dosignup(SignupRequestParams signupRequestParams, OnFinishedListener onFinishedListener)
     {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<SignupRequestParams> PostCall = apiInterface.postSignUp(signupRequestParams);
@@ -29,6 +29,7 @@ public class SignUpModel implements MainContractSignup.Model
                 Log.e(TAG, "onResponse: " + response.code() );
                 if(response!=null)
                 {
+                    onFinishedListener.OnFinishedSignupdata(response.body());
 
                     Log.e(TAG, "onResponseasasxa: " + response.body().getEmpId());
                 }
@@ -40,9 +41,12 @@ public class SignUpModel implements MainContractSignup.Model
             @Override
             public void onFailure(Call<SignupRequestParams> call, Throwable t) {
                 Log.e(TAG, "onResponsesignuppfail: " + t.getMessage() );
+                onFinishedListener.onFailure(t);
             }
         });
     }
+
+
 
     @Override
     public void getSpinnerDetail(OnFinishedListener onFinishedListener) {

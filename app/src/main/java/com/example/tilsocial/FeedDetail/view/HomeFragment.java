@@ -17,7 +17,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -162,9 +161,14 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             requireActivity().onBackPressed();
-        } else if (item.getItemId() == R.id.action_filter) {
-            drawer.openDrawer(GravityCompat.END);
-        } else if (item.getItemId() == R.id.logoutuser)
+        } else if (item.getItemId() == R.id.recent) {
+            Toast.makeText(getActivity(), "Recent", Toast.LENGTH_SHORT).show();
+//            drawer.openDrawer(GravityCompat.END);
+        } else if(item.getItemId() == R.id.Trending)
+        {
+            Toast.makeText(getActivity(), "Trending", Toast.LENGTH_SHORT).show();
+        }
+        else if (item.getItemId() == R.id.logoutuser)
         {
             SharedPreferences.Editor editor = prf.edit();
             editor.clear();

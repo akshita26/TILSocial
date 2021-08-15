@@ -25,6 +25,11 @@ public class FeedPresentor implements MainContract.presenter ,MainContract.GetFe
     }
 
     @Override
+    public void requestUserPost(int page, String sortby, int empid, String type) {
+        getFeedList.getUserfeed(this,page,sortby,empid,type);
+    }
+
+    @Override
     public void onFinished(List<ModelPost> modelPostList, FeedContent feedContent) {
 
         if(mainView != null){

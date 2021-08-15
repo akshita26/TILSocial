@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,9 @@ import com.example.tilsocial.signup.presenter.MainContractSignup;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -58,6 +62,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     ArrayList<String> genres = new ArrayList<>();
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
+    FirebaseFirestore db;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    String imageurll;
 
 
     public SignUpFragment()
@@ -77,6 +85,9 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_siggnuppfragment, container, false);
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         department = view.findViewById(R.id.spinner4);
         team = view.findViewById(R.id.spinner5);
         designation = view.findViewById(R.id.spinner6);
@@ -166,6 +177,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, 26);
+
+
                 }
                 else if (options[item].equals("Choose from Gallery"))
                 {
@@ -173,6 +186,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(Intent.createChooser(intent, "Select Picture"), 27);
+
                 }
                 else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
@@ -189,8 +203,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         if (requestCode == 26 &&   resultCode!=0) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             userprofile.setImageBitmap(bitmap);
-            userprofile.getLayoutParams().height = 200;
-            userprofile.getLayoutParams().width = 200;
+            userprofile.getLayoutParams().height = 300;
+            userprofile.getLayoutParams().width = 300;
             try{
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
                 File mFileTemp = null;
@@ -213,11 +227,12 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             Uri selectedImageUri = data.getData();
             if (null != selectedImageUri) {
                 userprofile.setImageURI(selectedImageUri);
-                userprofile.getLayoutParams().height = 200;
-                userprofile.getLayoutParams().width = 200;
+                userprofile.getLayoutParams().height = 300;
+                userprofile.getLayoutParams().width = 300;
             }
         }
     }
+
 
 
     @Override
@@ -382,6 +397,23 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 Toast.LENGTH_LONG).show();
 
     }
+
+    @Override
+    public void SetSignupdata(SignupRequestParams signupRequestParams) {
+
+        Log.e("Signupp","data"+signupRequestParams);
+
+    }
+
+
+
+
+
+
+
+
+
+
 }
 
 

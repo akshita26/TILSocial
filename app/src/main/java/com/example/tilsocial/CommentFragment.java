@@ -1,14 +1,14 @@
 package com.example.tilsocial;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,12 @@ public class CommentFragment extends Fragment {
 
     }
 
- //comment adding
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    //comment adding
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,11 +48,11 @@ public class CommentFragment extends Fragment {
         recyclerViewcomment.setAdapter(commentAdapter);
         return view;
 
+
     }
 
+
     private void loadComments() {
-
-
         CommentModel commentModel = new CommentModel();
         commentModel.setUsername("Manpreet");
         commentModel.setComment("Good Job");
@@ -56,7 +61,6 @@ public class CommentFragment extends Fragment {
         commentss.add(commentModel);
         commentss.add(commentModel);
 
-
-
     }
+
 }

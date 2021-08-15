@@ -2,9 +2,7 @@ package com.example.tilsocial.signup.view;
 
 import android.app.ActionBar;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -43,7 +40,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
     SharedPreferences sharedPreferences;
-    ArrayList interestList;
+    ArrayList interestList= new ArrayList();
     String dept, desig, empid, teamm;
 
     public EditProfile() {
@@ -99,6 +96,29 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chip.setCheckable(true);
             chipGroup.addView(chip);
+        }
+
+        for(int j=0;j<tags.size();j++){
+            if(genres.contains(tags.get(j))){
+                chip.setChecked(true);
+                interestList.add(chip.getText().toString());
+            }
+        }
+
+        Integer c = chipGroup.getChildCount();
+        for (int j = 0; j < c; j++) {
+            Chip chip = (Chip) chipGroup.getChildAt(j);
+            chip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (chip.isChecked()) {
+                        interestList.add(chip.getText().toString());
+                    } else {
+                        interestList.remove(chip.getText());
+                    }
+                    Toast.makeText(getActivity(), "" + interestList, Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
         updatebtn.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +185,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     public void nextfragmentprofile() {
         HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.dashboard, homeFragment);
+        ft.replace(R.id.dashboard, homeFragment);
         ft.commit();
     }
 
@@ -181,7 +201,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void teamSpinner(List<String> TeamList) {
-        TeamList.add(0, "Select Team...");
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, TeamList);
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
@@ -192,7 +211,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void designationSpinner(List<String> DesignationList) {
-        DesignationList.add(0, "dept");
         final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
                 getActivity(),R.layout.spinnneritem, DesignationList);
         DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
@@ -206,5 +224,10 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         Toast.makeText(getActivity(),
                 "Something went wrong...Error message: " + t.getMessage(),
                 Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void SetSignupdata(SignupRequestParams signupRequestParams) {
+
     }
 }

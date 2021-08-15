@@ -10,10 +10,8 @@ import java.util.List;
 public interface MainContract {
 
     interface presenter{
-
         void requestDataFromServer(int page, String sortby, int empid, String type, ProgressBar loadingPB);
-
-
+        void requestUserPost(int page, String sortby, int empid, String type);
 
     }
 
@@ -38,6 +36,7 @@ public interface MainContract {
         }
 
         void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String recent, ProgressBar loadingPB);
+        void getUserfeed(OnFinishedListener onFinishedListener, int page, String filter, int empid, String recent);
     }
 
 

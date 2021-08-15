@@ -3,17 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_filter"
-        android:icon="@drawable/ic_filter_alt"
-        android:orderInCategory="100"
-        android:title="Filter"
-        app:showAsAction="always" />
+        android:id="@+id/recent"
+        android:title="Recent"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/Trending"
+        android:title="Trending"
+        app:showAsAction="never">
+    </item>
 
     <item
         android:id="@+id/logoutuser"
         android:title="Logout"
         app:showAsAction="never">
-
     </item>
 
+
 </menu>
+    <!--        android:id="@+id/action_filter"-->

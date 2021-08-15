@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,38 +29,68 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+public class UserProfile extends Fragment implements MainContract.MainView  {
 
-public class ProfileFragment extends Fragment implements MainContract.MainView {
-
-    TextView bio,name,dept,desig,empid;
-    String team;
+    LinearLayout personalinfo, activity;
+    TextView personalinfobtn, activitybtn;
+    TextView bio,name,dept,desig,empid, editprof, team;
     RecyclerView recyclerView;
     UserPosts userPosts;
-//    List<ModelPost> posts;
-    ImageView profile,editprof;
+    //    List<ModelPost> posts;
+    ImageView profile;
     ChipGroup chipGroup;
     Chip chip;
     ArrayList tags;
     private MainContract.presenter presenter;
     SharedPreferences sharedPreferences;
-//    ProgressBar progressBar;
 
-    public ProfileFragment() {
+    public UserProfile() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+
+        personalinfo = view.findViewById(R.id.personalinfo);
+        activity = view.findViewById(R.id.review);
+        personalinfobtn = view.findViewById(R.id.personalinfobtn);
+        activitybtn = view.findViewById(R.id.reviewbtn);
+        personalinfo.setVisibility(View.VISIBLE);
+        activity.setVisibility(View.GONE);
+
+        personalinfobtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                personalinfo.setVisibility(View.VISIBLE);
+                activity.setVisibility(View.GONE);
+                personalinfobtn.setTextColor(getResources().getColor(R.color.blue));
+                activitybtn.setTextColor(getResources().getColor(R.color.grey));
+            }
+        });
+
+        activitybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                personalinfo.setVisibility(View.GONE);
+                activity.setVisibility(View.VISIBLE);
+                personalinfobtn.setTextColor(getResources().getColor(R.color.grey));
+                activitybtn.setTextColor(getResources().getColor(R.color.blue));
+            }
+        });
+
         name=view.findViewById(R.id.textView);
         dept=view.findViewById(R.id.textView4);
         bio=view.findViewById(R.id.bio);
         profile=view.findViewById(R.id.profile_image);
         desig=view.findViewById(R.id.desig);
-        editprof=view.findViewById(R.id.imageView2);
+        editprof=view.findViewById(R.id.editprof);
         chipGroup = view.findViewById(R.id.chip_group);
         empid=view.findViewById(R.id.idd);
+        team=view.findViewById(R.id.team);
 
         sharedPreferences= getActivity().getSharedPreferences("details",0);
         name.setText(sharedPreferences.getString("name",""));
@@ -67,7 +98,7 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
         bio.setText(sharedPreferences.getString("bio",""));
         desig.setText(sharedPreferences.getString("desig",""));
         empid.setText(sharedPreferences.getString("empid", ""));
-        team=sharedPreferences.getString("team","");
+        team.setText(sharedPreferences.getString("team",""));
 
 
         HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
@@ -77,7 +108,7 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
 
         int empidd=Integer.parseInt(empid.getText().toString());
         Log.d("1234", "onCreateView: "+empidd);
-//        presenter.requestDataFromServer(0, "recency",12345, "self",);
+        presenter.requestUserPost(0, "recency",12345, "self");
         recyclerView = view.findViewById(R.id.recyid);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -107,13 +138,11 @@ public class ProfileFragment extends Fragment implements MainContract.MainView {
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chipGroup.addView(chip);
         }
-        return view;
-    }
 
+        return view;   }
 
     @Override
     public void setDataToRecyclerView(List<ModelPost> modelPostList, FeedContent feedContent) {
-//        posts = new ArrayList<>();
         userPosts = new UserPosts(getActivity(), modelPostList);
         recyclerView.setAdapter(userPosts);
     }

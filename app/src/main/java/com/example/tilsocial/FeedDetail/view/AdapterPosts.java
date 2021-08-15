@@ -1,6 +1,7 @@
 package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +18,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tilsocial.CommentFragment;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
+import com.example.tilsocial.comments.view.CommentFragment;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.Calendar;
@@ -31,6 +32,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     Context context;
     List<ModelPost> modelPosts;
     ActionBar actionBar;
+    String postId;
+//    Integer VIEWTYPE_POSTS=1;
+//    Integer VIEWTYPE_INTERESTS=2;
 
 
 
@@ -44,6 +48,13 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
+//        if(viewType==VIEWTYPE_POSTS) {
+//
+//        }
+//        else{
+//            view= LayoutInflater.from(context).inflate(R.layout.intersetcardview, parent, false);
+//            return new InterestHolder(view);
+//        }
 
         view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
         return new PostsHolder(view);
@@ -52,10 +63,17 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+//        if(position == 2) {
+//
+//            InterestHolder holder2 = (InterestHolder) holder;
+//
+//        }
+//        else
+//        {
             PostsHolder holder1=(PostsHolder)holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
+            postId=modelPost.getPostId();
             holder1.like.setText(modelPost.getLikesCount() + " Likes"  );
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
             holder1.content.setText(modelPost.getContent());
@@ -78,6 +96,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 //                    .error(R.drawable.ic_error_outline)
 //                    .into(holder1.imageView);
 
+//         
 
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -87,6 +106,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     actionBar.setDisplayHomeAsUpEnabled(true);
                     actionBar.setTitle("Comment");
                     CommentFragment commentFragment = new CommentFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("postid", postId);
+                    commentFragment.setArguments(bundle);
                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.dashboard, commentFragment);
@@ -110,6 +132,14 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
+//    @Override
+//    public int getItemViewType(int position) {
+//        if(position == 2){
+//            return VIEWTYPE_INTERESTS;
+//        }
+//        else
+//            return VIEWTYPE_POSTS;
+//    }
 
     @Override
     public int getItemCount() {
@@ -143,6 +173,15 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
+//    class InterestHolder extends RecyclerView.ViewHolder {
+//        //
+//        TextView name, time, title, description, like, comments;
+//
+//        public InterestHolder(View itemView) {
+//            super(itemView);
+//
+//        }
+//    }
 
 
 

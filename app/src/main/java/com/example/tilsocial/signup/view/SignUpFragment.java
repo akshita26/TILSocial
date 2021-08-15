@@ -1,6 +1,9 @@
 package com.example.tilsocial.signup.view;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -30,12 +34,16 @@ import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.example.tilsocial.signup.presenter.MainContractSignup;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -43,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 
 public class SignUpFragment extends Fragment implements MainContractSignup.MainView {
@@ -51,21 +60,22 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     Spinner department,team,designation;
     View view;
     EditText employeeidd,namee,bioo;
-    Button signuppbtn;
+    Button signuppbtn,upload;
     ChipGroup chipGroup;
     Chip chip;
     ImageView add,userprofile;
     Uri imageUri;
+    Uri selectedImage;
     String simage;
     List<String> imageList = new ArrayList<>();
     List<String> interestList = new ArrayList<>();
     ArrayList<String> genres = new ArrayList<>();
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
-    FirebaseFirestore db;
+
     FirebaseStorage storage;
     StorageReference storageReference;
-    String imageurll;
+
 
 
     public SignUpFragment()
@@ -85,9 +95,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_siggnuppfragment, container, false);
-        db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
         department = view.findViewById(R.id.spinner4);
         team = view.findViewById(R.id.spinner5);
         designation = view.findViewById(R.id.spinner6);
@@ -99,11 +106,14 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         chipGroup = view.findViewById(R.id.chip_group);
         userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails =new SpinnerDetails();
+        upload=view.findViewById(R.id.button3);
 //        presenter.requestDataFromServerSpinner();
         presenter.departmentSpinnerdetail();
         presenter.TeamSpinnerDetail();
         presenter.DesignationSpinnerDetail();
 
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         //Interest in chips
         genres.add("Mobile Application Development");
@@ -157,9 +167,13 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterests((ArrayList) interestList);
                 presenter.dosignup(signupRequestParams);
-                Toast.makeText(getActivity(), "Signup Sucessfully Done", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                startActivity(intent);
+            }
+        });
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage();
             }
         });
         return view;
@@ -176,17 +190,14 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 if (options[item].equals("Take Photo"))
                 {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, 26);
-
-
+                    startActivityForResult(intent, 0);
                 }
                 else if (options[item].equals("Choose from Gallery"))
                 {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), 27);
-
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
                 }
                 else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
@@ -197,39 +208,91 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 26 &&   resultCode!=0) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            userprofile.setImageBitmap(bitmap);
-            userprofile.getLayoutParams().height = 300;
-            userprofile.getLayoutParams().width = 300;
-            try{
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-                File mFileTemp = null;
-                mFileTemp= File.createTempFile("ab"+timeStamp,".jpg",getActivity().getCacheDir());
-                FileOutputStream fout;
-                fout = new FileOutputStream(mFileTemp);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
-                fout.flush();
-                imageUri=Uri.fromFile(mFileTemp);
-                simage = imageUri.toString();
-                imageList.add(simage);
-            }
-            catch (Exception e){
-                Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
-            }
-        } else if (requestCode == 27 && resultCode!=0) {
-            imageUri = data.getData();
-            simage = imageUri.toString();
-            imageList.add(simage);
-            Uri selectedImageUri = data.getData();
-            if (null != selectedImageUri) {
-                userprofile.setImageURI(selectedImageUri);
-                userprofile.getLayoutParams().height = 300;
-                userprofile.getLayoutParams().width = 300;
-            }
+    public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch(requestCode) {
+            case 0:
+
+                if(resultCode == RESULT_OK){
+                    Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    userprofile.setImageBitmap(photo);
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                    String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), photo, "Title", null);
+                    selectedImage=Uri.parse(path);
+                }
+
+                break;
+            case 1:
+                if(resultCode == RESULT_OK){
+                    selectedImage = imageReturnedIntent.getData();
+                    userprofile.setImageURI(selectedImage);
+                }
+                break;
+        }
+    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 26 &&   resultCode!=0) {
+//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//            userprofile.setImageBitmap(bitmap);
+//            userprofile.getLayoutParams().height = 200;
+//            userprofile.getLayoutParams().width = 200;
+//            try{
+//                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+//                File mFileTemp = null;
+//                mFileTemp= File.createTempFile("ab"+timeStamp,".jpg",getActivity().getCacheDir());
+//                FileOutputStream fout;
+//                fout = new FileOutputStream(mFileTemp);
+//                bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
+//                fout.flush();
+//                imageUri=Uri.fromFile(mFileTemp);
+//                simage = imageUri.toString();
+//                Log.d("TAGImage", "onActivityResult: "+simage);
+//                imageList.add(simage);
+//                uploadImage();
+//            }
+//            catch (Exception e){
+//                Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
+//            }
+//        } else if (requestCode == 27 && resultCode!=0) {
+//            imageUri = data.getData();
+//            simage = imageUri.toString();
+//            imageList.add(simage);
+//            Uri selectedImageUri = data.getData();
+//
+//            if (null != selectedImageUri) {
+//                userprofile.setImageURI(selectedImageUri);
+//                userprofile.getLayoutParams().height = 200;
+//                userprofile.getLayoutParams().width = 200;
+//            }
+//            uploadImage();
+//        }
+//    }
+
+    public void uploadImage() {
+        if (selectedImage != null) {
+
+            StorageReference ref = storageReference.child("UserProfile/" + UUID.randomUUID().toString());
+
+            ref.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                {
+                    Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e)
+                        {
+                            Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d("TAG", "onFailure: "+e.getMessage());
+                        }
+                    });
         }
     }
 
@@ -277,7 +340,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void nextfragment() {
-
+        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+        startActivity(intent);
     }
 
     @Override

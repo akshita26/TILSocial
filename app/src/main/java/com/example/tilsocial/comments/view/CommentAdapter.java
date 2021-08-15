@@ -1,7 +1,8 @@
-package com.example.tilsocial;
+package com.example.tilsocial.comments.view;
 
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,12 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tilsocial.R;
+import com.example.tilsocial.comments.model.CommentModel;
+
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder>{
 
@@ -18,14 +24,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
     Context context;
     List<CommentModel> commentss;
 
-
     public CommentAdapter(Context context, List<CommentModel> commentss) {
         this.context = context;
         this.commentss = commentss;
 
     }
-
-
 
     public CommentAdapter.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.row_comment, parent, false);
@@ -38,17 +41,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
         CommentModel commentModel = commentss.get(position);
 
-        holder.commentuser.setText(commentModel.getUsername());
+        holder.commentuser.setText(commentModel.getName());
         holder.commentt.setText(commentModel.getComment());
-        holder.time.setText(commentModel.getTime());
-//        holder.name.setText( modelPost.getName());
-////        holder.title.setText(modelPost.getUtitle());
-//        holder.description.setText(modelPost.getDescription());
-//        holder.time.setText(modelPost.getUtime());
-//        holder.like.setText("Likes "+ modelPost.getUlike());
 
-
-
+        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+        try {
+            calendar.setTimeInMillis(Long.parseLong(commentModel.getCreatedAt()));
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+        holder.time.setText(timedate);
 
 
     }

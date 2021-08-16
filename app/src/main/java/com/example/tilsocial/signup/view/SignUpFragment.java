@@ -216,10 +216,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 if(resultCode == RESULT_OK){
                     Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     userprofile.setImageBitmap(photo);
-                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-                    String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), photo, "Title", null);
-                    selectedImage=Uri.parse(path);
                 }
 
                 break;
@@ -232,45 +228,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         }
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 26 &&   resultCode!=0) {
-//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-//            userprofile.setImageBitmap(bitmap);
-//            userprofile.getLayoutParams().height = 200;
-//            userprofile.getLayoutParams().width = 200;
-//            try{
-//                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-//                File mFileTemp = null;
-//                mFileTemp= File.createTempFile("ab"+timeStamp,".jpg",getActivity().getCacheDir());
-//                FileOutputStream fout;
-//                fout = new FileOutputStream(mFileTemp);
-//                bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
-//                fout.flush();
-//                imageUri=Uri.fromFile(mFileTemp);
-//                simage = imageUri.toString();
-//                Log.d("TAGImage", "onActivityResult: "+simage);
-//                imageList.add(simage);
-//                uploadImage();
-//            }
-//            catch (Exception e){
-//                Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
-//            }
-//        } else if (requestCode == 27 && resultCode!=0) {
-//            imageUri = data.getData();
-//            simage = imageUri.toString();
-//            imageList.add(simage);
-//            Uri selectedImageUri = data.getData();
-//
-//            if (null != selectedImageUri) {
-//                userprofile.setImageURI(selectedImageUri);
-//                userprofile.getLayoutParams().height = 200;
-//                userprofile.getLayoutParams().width = 200;
-//            }
-//            uploadImage();
-//        }
-//    }
 
     public void uploadImage() {
         if (selectedImage != null) {

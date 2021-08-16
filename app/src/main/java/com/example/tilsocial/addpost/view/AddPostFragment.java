@@ -65,6 +65,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     Integer count, cinterest, isdesc = 0, isinterest = 0, i_width=0;
     Uri imageUri;
     List<String> interest;
+    String[] interestList;
     List<String> imageList = new ArrayList<>();
     AddPostPresenter addPostPresenter;
 
@@ -98,11 +99,13 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                interestList=new String[]{};
+                interestList=interest.toArray(interestList);
                 AddPostRequestParams addPostRequestParams = new AddPostRequestParams();
 //                addPostRequestParams.setTitle(title.getText().toString());
-                addPostRequestParams.setDescription(desc.getText().toString());
-                addPostRequestParams.setImage(imageList);
-                addPostRequestParams.setHashtag(interest);
+                addPostRequestParams.setContent(desc.getText().toString());
+                addPostRequestParams.setImages(imageList);
+                addPostRequestParams.setTags(interestList);
                 try {
                     addPostPresenter.doPost(addPostRequestParams);
                 } catch (JSONException e) {

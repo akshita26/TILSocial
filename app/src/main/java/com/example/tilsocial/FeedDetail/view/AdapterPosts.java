@@ -71,9 +71,10 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             holder1.content.setText(modelPost.getContent());
             String taggs [] = modelPost.getTags();
             String tagg = "";
-            for(int i = 0 ; i<taggs.length; i++) {
-                tagg = tagg + "#" + taggs[i] + " ";
-            }
+            if(taggs!=null)
+                for(int i = 0 ; i<taggs.length; i++) {
+                    tagg = tagg + "#" + taggs[i] + " ";
+                }
             holder1.tags.setText(tagg);
             Glide.with(context).load(modelPost.getImgurl())
                     .placeholder(R.drawable.icprofile)

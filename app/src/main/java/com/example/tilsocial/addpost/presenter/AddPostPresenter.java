@@ -33,7 +33,7 @@ public class AddPostPresenter {
     }
 
     public void doPost(AddPostRequestParams addPostRequestParams) throws JSONException {
-        if (addPostRequestParams.getDescription().length() < 200) {
+        if (addPostRequestParams.getContent().length() < 200) {
             addPostModel.doPost(addPostRequestParams);
 
         } else {

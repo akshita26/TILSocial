@@ -1,5 +1,11 @@
 package com.example.tilsocial.addpost.model;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
+import java.util.Dictionary;
+
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -8,7 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public class AddPostAPI {
-    private static final String url="https://demo1192777.mockable.io/";
+    private static final String url="https://til-social.herokuapp.com/tilsocialapp/post/";
     public static PostService postService=null;
     public static PostService getService(){
         if(postService==null){
@@ -22,7 +28,7 @@ public class AddPostAPI {
     }
 
     public interface PostService{
-        @POST("addpost")
-        Call<AddPostModelList> getPostList(@Body String body);
+        @POST("save")
+        Call<AddPostModelList> getPostList(@Body AddPostRequestParams body);
     }
 }

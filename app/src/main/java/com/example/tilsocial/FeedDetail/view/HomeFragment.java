@@ -13,11 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,22 +36,21 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
     RecyclerView recyclerView;
     AdapterPosts adapterPosts;
-    Spinner feedspinner;
     private MainContract.presenter presenter;
-    private DrawerLayout drawer;
     private ProgressBar loadingPB;
     SharedPreferences prf;
     String empid;
     LinearLayoutManager manager;
     Boolean isScrolling = false;
-    Boolean islastpage = false;
     int currentItems, totalItems, scrollOutItems;
     int pageno = 0;
-    List<ModelPost> mypost ;
     List<ModelPost> modelPosts;
     int flag = 0;
     int pagesize = 5;
     int lastpage = 1;
+    Boolean isloading = false;
+    Boolean islastpage = false;
+    int totalpages ;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -81,14 +78,15 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                              Bundle savedInstanceState) {
 
           View view =  inflater.inflate(R.layout.fragment_home, container, false);
-          loadingPB = view.findViewById(R.id.idPBLoading);
-          mypost = new ArrayList<>();
           presenter = new FeedPresentor(this,new MainFeedModel());
+          loadingPB = view.findViewById(R.id.preogressbar);
           recyclerView = view.findViewById(R.id.postrecyclerview);
+          modelPosts = new ArrayList<>();
+          loadfeeddata();
           manager = new LinearLayoutManager(getActivity());
           recyclerView.setLayoutManager(manager);
-//          recyclerView.setAdapter(adapterPosts);
-
+          adapterPosts = new AdapterPosts(getActivity(),modelPosts);
+          recyclerView.setAdapter(adapterPosts);
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -99,6 +97,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                 {
                     isScrolling = true;
                 }
+
             }
 
             @Override
@@ -109,43 +108,45 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                 scrollOutItems = manager.findFirstVisibleItemPosition();
                 Log.e("HomeActivityfeed12323", "onResponse: " +   "curr" + currentItems  + "/" + totalItems + "/"  + scrollOutItems);
 
-                if(isScrolling && (currentItems + scrollOutItems >= totalItems) && scrollOutItems>=0&&totalItems>pagesize&&pageno!=lastpage )
+                if(!isloading && !islastpage&& isScrolling)
                 {
-                        pageno = pageno + 1 ;
-                   //
-                        Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
-                        presenter.requestDataFromServer(pageno, "recency", 123456, "feed",loadingPB);
-
+                    isScrolling =false;
+                    if((currentItems + scrollOutItems >= totalItems) && scrollOutItems >=0 && totalItems>=pagesize&& pageno!=totalpages)
+                    {
+                        pageno++;
+                        loadfeeddata();
+                    }
                 }
+
             }
         });
-        presenter.requestDataFromServer(pageno, "recency", 123456, "feed",loadingPB);
+
         return view;
+    }
+
+    private void loadfeeddata() {
+
+        Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
+        presenter.requestDataFromServer(pageno, "recency", 123456, "feed",loadingPB);
+
     }
 
     @Override
     public void setDataToRecyclerView(List<ModelPost> modelPostListt, FeedContent feedContent) {
-
-
-        if(flag == 0)
+        totalpages = feedContent.getTotalPages()-1;
+        isloading = true;
+        modelPosts.addAll(modelPostListt);
+        adapterPosts.notifyDataSetChanged();
+        isloading = false;
+        Log.e("size", "onResponse: " + modelPosts.size());
+        if(modelPosts.size()>0)
         {
-            loadingPB.setVisibility(View.VISIBLE);
-            adapterPosts = new AdapterPosts(getActivity(),modelPosts);
-            mypost.addAll(modelPostListt);
-            Log.e("myposttflag0", "onResponse: " +   mypost.size() );
-            adapterPosts.addtopost(mypost);
-            recyclerView.setAdapter(adapterPosts);
-            flag = 1;
+            islastpage = modelPosts.size()<pagesize;
         }
         else
         {
-
-            mypost.addAll(modelPostListt);
-            Log.e("myposttflag1", "onResponse: " +   mypost.size() );
-            adapterPosts.addtopost(mypost);
+            islastpage = true;
         }
-
-
 
     }
 
@@ -176,7 +177,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             getActivity().finish();
-
             Toast.makeText(getActivity(), "Logout Done", Toast.LENGTH_SHORT).show();
         }
         else

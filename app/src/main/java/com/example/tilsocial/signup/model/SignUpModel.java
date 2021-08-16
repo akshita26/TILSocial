@@ -31,7 +31,7 @@ public class SignUpModel implements MainContractSignup.Model
                 {
                     onFinishedListener.OnFinishedSignupdata(response.body());
 
-                    Log.e(TAG, "onResponseasasxa: " + response.body().getEmpId());
+                    Log.e(TAG, "onResponseasasxa: " + response.body());
                 }
                 else
                 {

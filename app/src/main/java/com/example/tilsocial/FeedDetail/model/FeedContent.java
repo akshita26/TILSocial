@@ -10,6 +10,16 @@ public class FeedContent {
     List<ModelPost> modelPostList;
     @SerializedName("pageable")
     PageDetails pageDetails;
+    @SerializedName("totalPages")
+    int totalPages;
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
 
     public List<ModelPost> getModelPostList() {
         return modelPostList;

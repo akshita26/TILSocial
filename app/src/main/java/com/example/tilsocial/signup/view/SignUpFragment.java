@@ -3,7 +3,6 @@ package com.example.tilsocial.signup.view;
 import static android.app.Activity.RESULT_OK;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -39,18 +38,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 
@@ -232,50 +225,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         }
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 26 &&   resultCode!=0) {
-//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-//            userprofile.setImageBitmap(bitmap);
-//            userprofile.getLayoutParams().height = 200;
-//            userprofile.getLayoutParams().width = 200;
-//            try{
-//                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-//                File mFileTemp = null;
-//                mFileTemp= File.createTempFile("ab"+timeStamp,".jpg",getActivity().getCacheDir());
-//                FileOutputStream fout;
-//                fout = new FileOutputStream(mFileTemp);
-//                bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
-//                fout.flush();
-//                imageUri=Uri.fromFile(mFileTemp);
-//                simage = imageUri.toString();
-//                Log.d("TAGImage", "onActivityResult: "+simage);
-//                imageList.add(simage);
-//                uploadImage();
-//            }
-//            catch (Exception e){
-//                Toast.makeText(getActivity(),""+e,Toast.LENGTH_LONG).show();
-//            }
-//        } else if (requestCode == 27 && resultCode!=0) {
-//            imageUri = data.getData();
-//            simage = imageUri.toString();
-//            imageList.add(simage);
-//            Uri selectedImageUri = data.getData();
-//
-//            if (null != selectedImageUri) {
-//                userprofile.setImageURI(selectedImageUri);
-//                userprofile.getLayoutParams().height = 200;
-//                userprofile.getLayoutParams().width = 200;
-//            }
-//            uploadImage();
-//        }
-//    }
-
     public void uploadImage() {
         if (selectedImage != null) {
 
-            StorageReference ref = storageReference.child("UserProfile/" + UUID.randomUUID().toString());
+            StorageReference ref = storageReference.child("UserProfile/"+UUID.randomUUID().toString());
 
             ref.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 

@@ -3,7 +3,6 @@ package com.example.tilsocial.FeedDetail.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +32,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     List<ModelPost> modelPosts;
     ActionBar actionBar;
     String postId;
-//    Integer VIEWTYPE_POSTS=1;
-//    Integer VIEWTYPE_INTERESTS=2;
-
 
 
     public AdapterPosts(Context context,List<ModelPost> modelPosts) {
@@ -48,13 +44,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-//        if(viewType==VIEWTYPE_POSTS) {
-//
-//        }
-//        else{
-//            view= LayoutInflater.from(context).inflate(R.layout.intersetcardview, parent, false);
-//            return new InterestHolder(view);
-//        }
 
         view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
         return new PostsHolder(view);
@@ -63,13 +52,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//        if(position == 2) {
-//
-//            InterestHolder holder2 = (InterestHolder) holder;
-//
-//        }
-//        else
-//        {
+
             PostsHolder holder1=(PostsHolder)holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
@@ -121,33 +104,21 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     }
 
-    public void addtopost(List<ModelPost> modelPostList){
-        if(modelPosts==null){
-            modelPosts=modelPostList;
-            notifyDataSetChanged();
-        }
-        else{
-            modelPosts.addAll(modelPostList);
-            notifyDataSetChanged();
-        }
-    }
-
-//    @Override
-//    public int getItemViewType(int position) {
-//        if(position == 2){
-//            return VIEWTYPE_INTERESTS;
+//    public void addtopost(List<ModelPost> modelPostList){
+//        if(modelPosts==null){
+//            modelPosts=modelPostList;
+//            notifyDataSetChanged();
 //        }
-//        else
-//            return VIEWTYPE_POSTS;
+//        else{
+//            modelPosts.addAll(modelPostList);
+//            notifyDataSetChanged();
+//        }
 //    }
+
 
     @Override
     public int getItemCount() {
 
-        Log.e("Adaptor", "onResponse: " +  modelPosts.size());
-        if (modelPosts == null)
-            return 0;
-        else
             return modelPosts.size();
 
     }
@@ -172,19 +143,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tags = itemView.findViewById(R.id.tagss);
         }
     }
-
-//    class InterestHolder extends RecyclerView.ViewHolder {
-//        //
-//        TextView name, time, title, description, like, comments;
-//
-//        public InterestHolder(View itemView) {
-//            super(itemView);
-//
-//        }
-//    }
-
-
-
 
 }
 

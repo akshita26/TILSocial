@@ -20,7 +20,7 @@ public class MainFeedModel implements MainContract.GetFeedList {
     @Override
     public void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String type, ProgressBar loadingPB) {
 
-//        loadingPB.setVisibility(View.VISIBLE);
+//       loadingPB.setVisibility(View.VISIBLE);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 //        Log.e(TAG, "recentt" + recent);
         Call<FeedContent> call = apiInterface.getPost(page,filter,empid,type);
@@ -28,7 +28,7 @@ public class MainFeedModel implements MainContract.GetFeedList {
             @Override
             public void onResponse(Call<FeedContent> call, Response<FeedContent> response) {
                 Log.e(TAG, "onResponse: " +  response.body());
-                //loadingPB.setVisibility(View.GONE);
+//               loadingPB.setVisibility(View.GONE);
                 FeedContent feedContent = response.body();
                 onFinishedListener.onFinished(response.body().getModelPostList(),feedContent);
             }

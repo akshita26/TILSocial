@@ -150,8 +150,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         }
 
     }
-
-
     @Override
     public void onResponseFailure(Throwable t) {
         Toast.makeText(getActivity(),
@@ -164,6 +162,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         if (item.getItemId() == android.R.id.home) {
             requireActivity().onBackPressed();
         } else if (item.getItemId() == R.id.recent) {
+
             Toast.makeText(getActivity(), "Recent", Toast.LENGTH_SHORT).show();
 //            drawer.openDrawer(GravityCompat.END);
         } else if(item.getItemId() == R.id.Trending)

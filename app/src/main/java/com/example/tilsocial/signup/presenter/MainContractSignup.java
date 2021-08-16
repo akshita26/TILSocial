@@ -1,5 +1,9 @@
 package com.example.tilsocial.signup.presenter;
 
+import android.net.Uri;
+
+import androidx.fragment.app.FragmentActivity;
+
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 
@@ -17,6 +21,7 @@ public interface MainContractSignup {
         void TeamSpinnerDetail();
         void getsignupdetails(SignupRequestParams signupRequestParams);
 
+        void uploadFb(FragmentActivity activity, Uri imageUri);
     }
 
     interface MainView {
@@ -36,6 +41,7 @@ public interface MainContractSignup {
         void designationSpinner(List<String> DesignationList);
         void onResponseFailure(Throwable t);
         void SetSignupdata(SignupRequestParams signupRequestParams);
+        void extractFb(String s);
     }
 
     /**

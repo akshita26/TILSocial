@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
@@ -43,6 +44,8 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
     ArrayList tags;
     private MainContract.presenter presenter;
     SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferencessignup;
+
 
     public UserProfile() {
         // Required empty public constructor
@@ -93,19 +96,30 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         team=view.findViewById(R.id.team);
 
         sharedPreferences= getActivity().getSharedPreferences("details",0);
-        name.setText(sharedPreferences.getString("name",""));
-        dept.setText(sharedPreferences.getString("dept",""));
-        bio.setText(sharedPreferences.getString("bio",""));
-        desig.setText(sharedPreferences.getString("desig",""));
-        empid.setText(sharedPreferences.getString("empid", ""));
-        team.setText(sharedPreferences.getString("team",""));
+
+            name.setText(sharedPreferences.getString("name",""));
+            dept.setText(sharedPreferences.getString("dept",""));
+            bio.setText(sharedPreferences.getString("bio",""));
+            desig.setText(sharedPreferences.getString("desig",""));
+            empid.setText(sharedPreferences.getString("empid", ""));
+            team.setText(sharedPreferences.getString("team",""));
+            Log.d("Imgggg", "onCreateView: "+sharedPreferences.getString("imgurl",""));
+
+            Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+                    .placeholder(R.drawable.icprofile)
+                    .error(R.drawable.ic_error_outline)
+                    .into(profile);
+
+            HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
+            tags = new ArrayList(set);
 
 
-        HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
-        tags = new ArrayList(set);
+
+
+
+
 
         presenter = new FeedPresentor(this,new MainFeedModel());
-
         int empidd=Integer.parseInt(empid.getText().toString());
         Log.d("1234", "onCreateView: "+empidd);
         presenter.requestUserPost(0, "recency",12345, "self");

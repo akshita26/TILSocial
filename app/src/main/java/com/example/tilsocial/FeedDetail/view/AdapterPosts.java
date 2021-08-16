@@ -66,11 +66,16 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
             holder1.time.setText(timedate);
             String taggs [] = modelPost.getTags();
-            String tagg = "";
-            for(int i = 0 ; i<taggs.length; i++) {
-                tagg = tagg + "#" + taggs[i] + " ";
+            if(taggs==null){
+                holder1.tags.setText("Empty");
             }
-            holder1.tags.setText(tagg);
+            else {
+                String tagg = "";
+                for (int i = 0; i < taggs.length; i++) {
+                    tagg = tagg + "#" + taggs[i] + " ";
+                }
+                holder1.tags.setText(tagg);
+            }
 //            Glide.with(context).load(modelPost.getImages())
 //                    .placeholder(R.drawable.icprofile)
 //                    .error(R.drawable.ic_error_outline)

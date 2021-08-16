@@ -1,27 +1,14 @@
 package com.example.tilsocial.addpost.view;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.Selection;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +17,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.tilsocial.R;
 import com.example.tilsocial.addpost.model.AddPostModel;
@@ -41,7 +30,6 @@ import com.example.tilsocial.addpost.model.AddPostRequestParams;
 import com.example.tilsocial.addpost.presenter.AddPostPresenter;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.resources.TextAppearance;
 
 import org.json.JSONException;
 
@@ -61,7 +49,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     EditText title, desc;
     ChipGroup chipGroup, chipGroup2;
     Chip chip;
-    String s, simage;
+    String s, simage="awq";
     Integer count, cinterest, isdesc = 0, isinterest = 0, i_width=0;
     Uri imageUri;
     List<String> interest;
@@ -98,7 +86,6 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 AddPostRequestParams addPostRequestParams = new AddPostRequestParams();
 //                addPostRequestParams.setTitle(title.getText().toString());
                 addPostRequestParams.setDescription(desc.getText().toString());
@@ -303,24 +290,21 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 bitmap.compress(Bitmap.CompressFormat.PNG, 70, fout);
                 fout.flush();
                 imageUri = Uri.fromFile(mFileTemp);
-                simage = imageUri.toString();
-                imageList.add(simage);
+               // simage = imageUri.toString();
+                 addPostPresenter.uploadFb(getActivity(),imageUri);
+//                imageList.add(simage);
                 cancelimage.setVisibility(View.VISIBLE);
                 cancelimage.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 cancelimage.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
-//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT);
-//                params.setMargins(i_width, 0, 0, 0);
-//                cancelimage.setLayoutParams(params);
                 cancelimage.setBackgroundResource(android.R.drawable.presence_offline);
             } catch (Exception e) {
                 Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == 27 && resultCode != 0) {
             imageUri = data.getData();
-            simage = imageUri.toString();
-            imageList.add(simage);
+           // simage = imageUri.toString();
+            addPostPresenter.uploadFb(getActivity(),imageUri);
+//            imageList.add(simage);
             Uri selectedImageUri = data.getData();
             if (null != selectedImageUri) {
                 imageView.setImageURI(selectedImageUri);
@@ -331,11 +315,6 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 cancelimage.setVisibility(View.VISIBLE);
                 cancelimage.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
                 cancelimage.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
-//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT);
-//                params.setMargins(i_width, 0, 0, 0);
-//                cancelimage.setLayoutParams(params);
                 cancelimage.setBackgroundResource(android.R.drawable.presence_offline);
             }
         }
@@ -346,7 +325,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 imageView.setImageDrawable(null);
                 imageView.getLayoutParams().height = 0;
                 imageView.getLayoutParams().width = 0;
-
+                imageList.clear();
                 cancelimage.setImageDrawable(null);
                 cancelimage.getLayoutParams().height = 0;
                 cancelimage.getLayoutParams().width = 0;
@@ -358,5 +337,10 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     @Override
     public void showError() {
         Toast.makeText(getActivity(), "Required Fields", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void extractFb(String uri) {
+        imageList.add(uri);
     }
 }

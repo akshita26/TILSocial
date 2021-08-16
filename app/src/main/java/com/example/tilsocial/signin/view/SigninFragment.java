@@ -94,6 +94,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         HashSet<String> set = new HashSet(userData.getInterests());
         editor.putStringSet("inter", set);
         editor.putString("team", userData.getTeam());
+        editor.putString("imgurl",userData.getImgUrl());
         editor.commit();
 
         Intent intent = new Intent(getActivity(), DashboardActivity.class);

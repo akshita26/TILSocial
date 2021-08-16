@@ -49,6 +49,7 @@ public class AddPostModel {
             public void onResponse(Call<AddPostModelList> call, Response<AddPostModelList> response) {
                 AddPostModelList list=response.body();
                 if (list!=null){
+                    Log.e("Response", "Image Body-: " + imageList );
                     Log.e("Response", "My Response-: " + response.body().getContent() );
                 }
                 else {

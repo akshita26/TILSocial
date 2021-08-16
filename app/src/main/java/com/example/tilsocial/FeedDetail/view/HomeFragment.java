@@ -127,8 +127,16 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     private void loadfeeddata() {
 
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
-        Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
         presenter.requestDataFromServer(pageno, "recency", 123456, "feed",loadingPB);
+
+    }
+
+    private void loadfeeddatatrending() {
+
+        Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
+        //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
+        presenter.requestDataFromServer(pageno, "trending", 123456, "feed",loadingPB);
 
     }
 
@@ -162,11 +170,18 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         if (item.getItemId() == android.R.id.home) {
             requireActivity().onBackPressed();
         } else if (item.getItemId() == R.id.recent) {
+            modelPosts.clear();
+            pageno = 0;
+            loadfeeddata();
+//            adapterPosts.notifyDataSetChanged();
 
             Toast.makeText(getActivity(), "Recent", Toast.LENGTH_SHORT).show();
 //            drawer.openDrawer(GravityCompat.END);
         } else if(item.getItemId() == R.id.Trending)
         {
+            modelPosts.clear();
+            pageno = 0;
+            loadfeeddatatrending();
             Toast.makeText(getActivity(), "Trending", Toast.LENGTH_SHORT).show();
         }
         else if (item.getItemId() == R.id.logoutuser)

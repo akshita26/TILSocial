@@ -9,7 +9,7 @@ public class UserData {
     Integer empId;
     @SerializedName("name")
     String name;
-    @SerializedName("dept")
+    @SerializedName("department")
     String dept;
     @SerializedName("bio")
     String bio;
@@ -19,6 +19,9 @@ public class UserData {
     String designation;
     @SerializedName("interests")
     ArrayList interests;
+
+    @SerializedName("imgUrl")
+    String imgUrl;
 
     public Integer getEmpId() {
         return empId;
@@ -76,6 +79,14 @@ public class UserData {
         this.interests = interests;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     @Override
     public String toString() {
         return "UserData{" +
@@ -86,6 +97,7 @@ public class UserData {
                 ", team='" + team + '\'' +
                 ", designation='" + designation + '\'' +
                 ", interests=" + interests +
+                ", imgUrl='" + imgUrl + '\'' +
                 '}';
     }
 }

@@ -3,6 +3,7 @@ package com.example.tilsocial.signup.view;
 import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +41,13 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
     SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferencessignup;
     ArrayList interestList= new ArrayList();
     String dept, desig, empid, teamm;
 
+
     public EditProfile() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -73,16 +76,20 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
 //        empid = getArguments().getString("key");
 //        Log.d("EditProfId", "onCreateView: "+empid);
-        sharedPreferences= getActivity().getSharedPreferences("details",0);
-        namee.setText(sharedPreferences.getString("name",""));
-        dept =sharedPreferences.getString("dept","");
-        bioo.setText(sharedPreferences.getString("bio",""));
-        desig= sharedPreferences.getString("desig","");
-        empid =sharedPreferences.getString("empid", "");
-        teamm=sharedPreferences.getString("team","");
 
-        HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
-        ArrayList tags = new ArrayList(set);
+        sharedPreferences= getActivity().getSharedPreferences("details",0);
+
+            namee.setText(sharedPreferences.getString("name",""));
+            dept =sharedPreferences.getString("dept","");
+            bioo.setText(sharedPreferences.getString("bio",""));
+            desig= sharedPreferences.getString("desig","");
+            empid =sharedPreferences.getString("empid", "");
+            teamm=sharedPreferences.getString("team","");
+            HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
+            ArrayList tags = new ArrayList(set);
+            Log.e("editprofilee", "onResponse133: " + tags.toString());
+
+
 
         //Interests
         genres.add("Mobile Application Development");
@@ -98,12 +105,12 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             chipGroup.addView(chip);
         }
 
-        for(int j=0;j<tags.size();j++){
-            if(genres.contains(tags.get(j))){
-                chip.setChecked(true);
-                interestList.add(chip.getText().toString());
-            }
-        }
+//        for(int k=0;k<tags.size();k++){
+//            if(genres.contains(tags.get(k))) {
+//                chip.setChecked(true);
+//            }
+//        }
+
 
         Integer c = chipGroup.getChildCount();
         for (int j = 0; j < c; j++) {
@@ -228,6 +235,11 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void SetSignupdata(SignupRequestParams signupRequestParams) {
+
+    }
+
+    @Override
+    public void extractFb(String s) {
 
     }
 }

@@ -10,7 +10,7 @@ public class SignupRequestParams {
     String name;
     @SerializedName("bio")
     String bio;
-    @SerializedName("dept")
+    @SerializedName("department")
     String dept;
     @SerializedName("team")
     String team;
@@ -20,6 +20,8 @@ public class SignupRequestParams {
     ArrayList interests;
     @SerializedName("empId")
     Integer empId;
+    @SerializedName("imgUrl")
+    String imgUrl;
 
     public ArrayList getInterests() {
         return interests;
@@ -77,6 +79,25 @@ public class SignupRequestParams {
         this.designation = designation;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
 
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
+    @Override
+    public String toString() {
+        return "SignupRequestParams{" +
+                "name='" + name + '\'' +
+                ", bio='" + bio + '\'' +
+                ", dept='" + dept + '\'' +
+                ", team='" + team + '\'' +
+                ", designation='" + designation + '\'' +
+                ", interests=" + interests +
+                ", empId=" + empId +
+                ", imgUrl='" + imgUrl + '\'' +
+                '}';
+    }
 }

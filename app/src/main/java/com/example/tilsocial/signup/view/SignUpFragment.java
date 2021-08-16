@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -41,9 +42,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -59,7 +65,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     ImageView add,userprofile;
     Uri imageUri;
     Uri selectedImage;
-    String simage;
+    String imageurl;
     List<String> imageList = new ArrayList<>();
     List<String> interestList = new ArrayList<>();
     ArrayList<String> genres = new ArrayList<>();
@@ -68,6 +74,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     FirebaseStorage storage;
     StorageReference storageReference;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
 
@@ -159,6 +167,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterests((ArrayList) interestList);
+                signupRequestParams.setImgUrl(imageurl);
                 presenter.dosignup(signupRequestParams);
             }
         });
@@ -209,10 +218,19 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 if(resultCode == RESULT_OK){
                     Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     userprofile.setImageBitmap(photo);
-                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-                    String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), photo, "Title", null);
-                    selectedImage=Uri.parse(path);
+                    try {
+                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+                        File mFileTemp = null;
+                        mFileTemp = File.createTempFile("ab" + timeStamp, ".jpg", getActivity().getCacheDir());
+                        FileOutputStream fout;
+                        fout = new FileOutputStream(mFileTemp);
+                        photo.compress(Bitmap.CompressFormat.PNG, 70, fout);
+                        fout.flush();
+                        imageUri = Uri.fromFile(mFileTemp);
+                        presenter.uploadFb(getActivity(),imageUri);
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 break;
@@ -220,6 +238,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 if(resultCode == RESULT_OK){
                     selectedImage = imageReturnedIntent.getData();
                     userprofile.setImageURI(selectedImage);
+                    presenter.uploadFb(getActivity(),selectedImage);
                 }
                 break;
         }
@@ -228,7 +247,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     public void uploadImage() {
         if (selectedImage != null) {
 
-            StorageReference ref = storageReference.child("UserProfile/"+UUID.randomUUID().toString());
+            StorageReference ref = storageReference.child("UserProfile/" + UUID.randomUUID().toString());
 
             ref.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
@@ -237,12 +256,11 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 {
                     Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
                 }
-            })
-                    .addOnFailureListener(new OnFailureListener() {
+            }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e)
                         {
-                            Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Failed1234 " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Log.d("TAG", "onFailure: "+e.getMessage());
                         }
                     });
@@ -419,16 +437,26 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     public void SetSignupdata(SignupRequestParams signupRequestParams) {
 
         Log.e("Signupp","data"+signupRequestParams);
+        sharedPreferences = getActivity().getSharedPreferences("details", 0);
+        editor = sharedPreferences.edit();
+        editor.putString("empid",signupRequestParams.getEmpId().toString());
+        editor.putString("name", signupRequestParams.getName());
+        editor.putString("dept", signupRequestParams.getDept());
+        editor.putString("bio", signupRequestParams.getBio());
+        editor.putString("desig", signupRequestParams.getDesignation());
+        HashSet<String> set = new HashSet(signupRequestParams.getInterests());
+        editor.putStringSet("inter", set);
+        editor.putString("team", signupRequestParams.getTeam());
+        editor.putString("imgurl",signupRequestParams.getImgUrl());
+        editor.commit();
+
 
     }
 
-
-
-
-
-
-
-
+    @Override
+    public void extractFb(String s) {
+        imageurl=s;
+    }
 
 
 }

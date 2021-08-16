@@ -1,21 +1,90 @@
 package com.example.tilsocial.signup.presenter;
 
 
+import android.app.ProgressDialog;
+import android.net.Uri;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class SignupPresentor implements MainContractSignup.presenter ,MainContractSignup.Model.OnFinishedListener {
 
     private MainContractSignup.MainView mainView;
     private MainContractSignup.Model model;
+    private static FirebaseStorage storage = FirebaseStorage.getInstance();
+    private static StorageReference storageReference= storage.getReference();
+    private static String pathUri;
 
     public SignupPresentor(MainContractSignup.MainView mainView, MainContractSignup.Model model) {
         this.mainView = mainView;
         this.model = model;
+    }
+
+    public void uploadFb(FragmentActivity context, Uri filePath) {
+        if (filePath != null) {
+            // Code for showing progressDialog while uploading
+            ProgressDialog progressDialog = new ProgressDialog(context);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            // Defining the child of storageReference
+            String path = UUID.randomUUID().toString();
+            StorageReference ref = storageReference.child("UserProfile/"+path);
+            // adding listeners on upload
+            // or failure of image
+            ref.putFile(filePath)
+                    .addOnSuccessListener(
+                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(context, "Image Uploaded to FB!!",
+                                            Toast.LENGTH_SHORT).show();
+                                    pathUri="https://firebasestorage.googleapis.com/v0/b/til-social-22075.appspot.com/o/UserProfile%2F"+path+"?alt=media&token=6de96f73-e7f2-4ba5-aef3-6d315edb5c27";
+                                    mainView.extractFb(pathUri);
+                                }
+                            })
+
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            // Error, Image not uploaded
+                            progressDialog.dismiss();
+                            Toast.makeText(context, "Failed Upload to FB" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(
+                                UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress
+                                    = (100.0
+                                    * taskSnapshot.getBytesTransferred()
+                                    / taskSnapshot.getTotalByteCount());
+                            progressDialog.setMessage(
+                                    "Uploaded "
+                                            + (int) progress + "%");
+                        }
+                    });
+
+        }
     }
 
     private boolean validateInputs(Integer employeeid, String name, String bio, String deprtment, String teamm, String desgniationn, ArrayList interests) {

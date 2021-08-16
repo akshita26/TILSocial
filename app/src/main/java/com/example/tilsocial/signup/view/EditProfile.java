@@ -230,4 +230,9 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     public void SetSignupdata(SignupRequestParams signupRequestParams) {
 
     }
+
+    @Override
+    public void extractFb(String s) {
+
+    }
 }

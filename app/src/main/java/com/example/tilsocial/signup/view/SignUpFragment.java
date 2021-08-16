@@ -66,7 +66,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     ImageView add,userprofile;
     Uri imageUri;
     Uri selectedImage;
-    String simage;
+    String imageurl;
     List<String> imageList = new ArrayList<>();
     List<String> interestList = new ArrayList<>();
     ArrayList<String> genres = new ArrayList<>();
@@ -166,6 +166,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterests((ArrayList) interestList);
+                signupRequestParams.setImgUrl(imageurl);
                 presenter.dosignup(signupRequestParams);
             }
         });
@@ -216,6 +217,20 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 if(resultCode == RESULT_OK){
                     Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     userprofile.setImageBitmap(photo);
+                    try {
+                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+                        File mFileTemp = null;
+                        mFileTemp = File.createTempFile("ab" + timeStamp, ".jpg", getActivity().getCacheDir());
+                        FileOutputStream fout;
+                        fout = new FileOutputStream(mFileTemp);
+                        photo.compress(Bitmap.CompressFormat.PNG, 70, fout);
+                        fout.flush();
+                        imageUri = Uri.fromFile(mFileTemp);
+                        // simage = imageUri.toString();
+                        presenter.uploadFb(getActivity(),imageUri);
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 break;
@@ -223,6 +238,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 if(resultCode == RESULT_OK){
                     selectedImage = imageReturnedIntent.getData();
                     userprofile.setImageURI(selectedImage);
+                    presenter.uploadFb(getActivity(),selectedImage);
                 }
                 break;
         }
@@ -426,13 +442,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     }
 
-
-
-
-
-
-
-
+    @Override
+    public void extractFb(String s) {
+        imageurl=s;
+    }
 
 
 }

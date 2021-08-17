@@ -136,7 +136,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
             mainView.designationvalidation();
             return true;
         }
-        if(interests.size()<3){
+        if(interests.isEmpty()){
             mainView.showinterestvalidation();
             return true;
         }

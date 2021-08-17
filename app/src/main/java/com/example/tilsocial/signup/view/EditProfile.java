@@ -126,7 +126,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
                 signupRequestParams.setDept(department.getSelectedItem().toString());
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
-                signupRequestParams.setInterests(genres);
+                signupRequestParams.setInterests((ArrayList) interestList);
                 presenter.gotoprofile(signupRequestParams);
             }
         });
@@ -259,7 +259,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void showinterestvalidation() {
-        Toast.makeText(getActivity(), "Please select minimum 3 interests", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Please select minimum 1 interests", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -293,7 +293,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void showinterestvalidation() {
-        Toast.makeText(getActivity(), "Please select minimum 3 Interest", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Please select minimum 1 Interest", Toast.LENGTH_SHORT).show();
     }
 
     @Override

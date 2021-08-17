@@ -48,23 +48,16 @@
 
                         <com.mikhaellopez.circularimageview.CircularImageView
                             android:id="@+id/userprofilee"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
                             android:src="@drawable/profile"
-                            app:civ_border_color="#FF018786"
-                            app:civ_border_width="4dp"
+                            app:civ_border_color="@color/basic"
+                            app:civ_border_width="1dp"
                             app:civ_shadow="true"
                             app:civ_shadow_radius="10dp"
-                            app:civ_shadow_color="#FF018786"
+                            app:civ_shadow_color="@color/basic"
                             android:layout_gravity="center"
                            />
-
-                        <Button
-                            android:visibility="gone"
-                            android:id="@+id/button3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Button" />
 
                         <EditText
                             android:id="@+id/editTextTextPersonName"
@@ -103,7 +96,7 @@
                             android:layout_marginBottom="3dp"/>
 
                         <Spinner
-                            android:id="@+id/spinner5"
+                            android:id="@+id/spinner4"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginBottom="20dp"
@@ -117,7 +110,7 @@
                             android:layout_marginBottom="3dp"/>
 
                         <Spinner
-                            android:id="@+id/spinner4"
+                            android:id="@+id/spinner5"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginBottom="20dp"
@@ -173,16 +166,13 @@
 
                             </LinearLayout>
 
-
-
-
                         <Button
                             android:id="@+id/buttonsignup"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="30dp"
-                            android:backgroundTint="#FF018786"
+                            android:backgroundTint="@color/basic"
                             android:text="Sign up"
                             android:textStyle="bold"
                             />

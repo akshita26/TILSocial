@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface CommentAPIInterface {
-    @GET("{postId}")
+    @GET("fetch/{postId}")
     Call<List<CommentModel>> getcomment(@Path("postId") String postId);
 }
+

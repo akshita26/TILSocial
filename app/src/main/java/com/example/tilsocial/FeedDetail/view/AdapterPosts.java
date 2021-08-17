@@ -1,6 +1,8 @@
 package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -32,7 +34,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     Context context;
     List<ModelPost> modelPosts;
     ActionBar actionBar;
-    String postId;
+    String postId,empId;
 
 
     public AdapterPosts(Context context,List<ModelPost> modelPosts) {
@@ -69,6 +71,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
             postId=modelPost.getPostId();
+            empId=modelPost.getEmpId();
             holder1.like.setText(modelPost.getLikesCount() + " Likes"  );
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
             holder1.content.setText(modelPost.getContent());
@@ -109,14 +112,13 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
 
-//         
+//
 
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
-                    actionBar.setDisplayHomeAsUpEnabled(true);
                     actionBar.setTitle("Comment");
                     CommentFragment commentFragment = new CommentFragment();
                     Bundle bundle=new Bundle();
@@ -126,6 +128,19 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.dashboard, commentFragment);
                     fragmentTransaction.commit();
+                }
+            });
+
+            holder1.share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, modelPost.getContent());
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, modelPost.getImages().get(0));
+                    shareIntent.setType("image/*");
+                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    context.startActivity(Intent.createChooser(shareIntent, "Share post..."));
                 }
             });
 
@@ -163,7 +178,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     class PostsHolder extends RecyclerView.ViewHolder {
 
         TextView name, content,like, comments,time,tags;
-        ImageView imageView;
+        ImageView imageView,share;
         ChipGroup chipGroup;
 
         public PostsHolder(View itemView) {
@@ -178,6 +193,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             time = itemView.findViewById(R.id.timeofpost);
             chipGroup = itemView.findViewById(R.id.chip_groupfortags);
             tags = itemView.findViewById(R.id.tagss);
+            share=itemView.findViewById(R.id.sharebtn);
         }
     }
 

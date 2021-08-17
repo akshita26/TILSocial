@@ -61,7 +61,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     Spinner department, team, designation;
     View view;
     EditText employeeidd, namee, bioo;
-    Button signuppbtn, upload;
+    Button signuppbtn;
     ChipGroup chipGroup;
     Chip chip;
     ImageView add, userprofile;
@@ -107,7 +107,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         chipGroup = view.findViewById(R.id.chip_group);
         userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails = new SpinnerDetails();
-        upload = view.findViewById(R.id.button3);
         presenter.requestDataFromServerSpinner();
 
         storage = FirebaseStorage.getInstance();
@@ -140,12 +139,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             }
         });
 
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadImage();
-            }
-        });
         return view;
     }
 

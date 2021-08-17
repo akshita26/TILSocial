@@ -160,7 +160,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                     post.setEnabled(b);
                     if(b) {
                         post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
-                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.teal_600)));
+                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.basic)));
                     }
                     else{
                         post.setTextColor(getResources().getColor(R.color.white));
@@ -254,7 +254,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                         if (isdesc == 1 && isinterest >= 1) {
                             post.setEnabled(true);
                             post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
-                            post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.teal_600)));
+                            post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.basic)));
                         }
                     }
                     else{

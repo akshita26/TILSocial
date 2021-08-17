@@ -8,7 +8,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:background="@color/teal_400"/>
+        android:background="@color/basic"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
@@ -35,8 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="#FF018786"
-                app:hintTextColor="#FF018786"
+                app:boxStrokeColor="@color/basic"
+                app:hintTextColor="@color/basic"
                 android:focusable="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -63,8 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                app:backgroundTint="@null"
-                android:background="@drawable/clrgrad"
+                app:backgroundTint="@color/basic"
                 android:textStyle="bold"
                 android:text="Sign In"/>
 

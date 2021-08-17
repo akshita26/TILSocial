@@ -192,16 +192,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
             loadfeeddatatrending();
             Toast.makeText(getActivity(), "Trending", Toast.LENGTH_SHORT).show();
         }
-        else if (item.getItemId() == R.id.logoutuser)
-        {
-            SharedPreferences.Editor editor = prf.edit();
-            editor.clear();
-            editor.commit();
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-            Toast.makeText(getActivity(), "Logout Done", Toast.LENGTH_SHORT).show();
-        }
         else
         {
             Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();

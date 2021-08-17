@@ -2,14 +2,17 @@ package com.example.tilsocial.comments.view;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.model.CommentModel;
 
@@ -23,6 +26,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
     Context context;
     List<CommentModel> commentss;
+    SharedPreferences sharedPreferences;
 
     public CommentAdapter(Context context, List<CommentModel> commentss) {
         this.context = context;
@@ -44,6 +48,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
         holder.commentuser.setText(commentModel.getName());
         holder.commentt.setText(commentModel.getComment());
 
+        sharedPreferences= context.getSharedPreferences("details",0);
+        Glide.with(context).load(sharedPreferences.getString("imgurl",""))
+                .error(R.drawable.ic_error_outline)
+                .into(holder.userimg);
+
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         try {
             calendar.setTimeInMillis(Long.parseLong(commentModel.getCreatedAt()));
@@ -64,9 +73,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
     class MyHolder extends RecyclerView.ViewHolder {
         //        ImageView picture, image;
-        TextView commentuser;
-        TextView commentt;
-        TextView time;
+        TextView commentuser, commentt, time;
+        ImageView userimg;
 
 
         public MyHolder( View itemView) {
@@ -75,6 +83,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
             commentuser = itemView.findViewById(R.id.commentname);
             commentt = itemView.findViewById(R.id.commenttext);
             time = itemView.findViewById(R.id.commenttime);
+            userimg=itemView.findViewById(R.id.loadcomment);
 
         }
     }

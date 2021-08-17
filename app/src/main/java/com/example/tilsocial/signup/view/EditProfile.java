@@ -1,8 +1,16 @@
 package com.example.tilsocial.signup.view;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,15 +37,21 @@ import com.example.tilsocial.signup.presenter.SignupPresentor;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class EditProfile extends Fragment implements MainContractSignup.MainView{
     ActionBar actionBar;
     Spinner department,team,designation;
+    ImageView userprofile;
     EditText namee,bioo;
     Button updatebtn;
     ChipGroup chipGroup;
@@ -47,6 +62,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     SharedPreferences sharedPreferences;
     ArrayList interestList= new ArrayList();
     String dept, desig, empid, teamm;
+    Uri imageUri, selectedImage;
 
 
     public EditProfile() {
@@ -71,14 +87,10 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         updatebtn = view.findViewById(R.id.buttonupdate);
         bioo = view.findViewById(R.id.editTextTextPersonName3);
         chipGroup = view.findViewById(R.id.chip_group);
+        userprofile = view.findViewById(R.id.user);
         spinnerDetails =new SpinnerDetails();
         presenter.requestDataFromServerSpinner();
-//        presenter.departmentSpinnerdetail();
-////        presenter.TeamSpinnerDetail();
-//        presenter.DesignationSpinnerDetail();
 
-//        empid = getArguments().getString("key");
-//        Log.d("EditProfId", "onCreateView: "+empid);
 
         sharedPreferences= getActivity().getSharedPreferences("details",0);
 
@@ -92,7 +104,13 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             ArrayList tags = new ArrayList(set);
             Log.e("editprofilee", "onResponse133: " + tags.toString());
 
+        userprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                selectImage();
+            }
+        });
 
 
 
@@ -145,6 +163,65 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             });
         }
 
+    }
+
+    private void selectImage() {
+
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 0);
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch (requestCode) {
+            case 0:
+
+                if (resultCode == RESULT_OK) {
+                    Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    userprofile.setImageBitmap(photo);
+                    try {
+                        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+                        File mFileTemp = null;
+                        mFileTemp = File.createTempFile("ab" + timeStamp, ".jpg", getActivity().getCacheDir());
+                        FileOutputStream fout;
+                        fout = new FileOutputStream(mFileTemp);
+                        photo.compress(Bitmap.CompressFormat.PNG, 70, fout);
+                        fout.flush();
+                        imageUri = Uri.fromFile(mFileTemp);
+                        presenter.uploadFb(getActivity(), imageUri);
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                break;
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    selectedImage = imageReturnedIntent.getData();
+                    userprofile.setImageURI(selectedImage);
+                    presenter.uploadFb(getActivity(), selectedImage);
+                }
+                break;
+        }
     }
 
 

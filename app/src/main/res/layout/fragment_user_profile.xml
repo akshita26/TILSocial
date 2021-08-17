@@ -63,11 +63,17 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <ImageView
+                    <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/profile_image"
-                        android:layout_width="150dp"
-                        android:layout_height="90dp"
-                        android:src="@drawable/profile" />
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/profile"
+                        app:civ_border_color="@color/basic"
+                        app:civ_border_width="1dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_radius="10dp"
+                        app:civ_shadow_color="@color/basic"
+                        android:layout_gravity="center" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -79,7 +85,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
                             android:fontFamily="@font/proximanovaregular"
                             android:text="Name"
                             android:textColor="#424242"
@@ -155,7 +160,7 @@
                         android:padding="13dp"
                         android:text="User Activity"
                         android:textAllCaps="true"
-                        android:textColor="@color/lightgrey"
+                        android:textColor="@color/blue_grey_400"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 

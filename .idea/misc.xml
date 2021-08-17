@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/drawable/btn_rounded_primary.xml" value="0.21302083333333333" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/drawable/clrgrad.xml" value="0.19739583333333333" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/activity_main.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/feedcardview.xml" value="0.196875" />

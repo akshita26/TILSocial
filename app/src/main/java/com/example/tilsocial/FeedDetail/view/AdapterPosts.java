@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.view.CommentFragment;
@@ -76,12 +77,12 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-//            Glide.with(context).load(modelPost.getImages())
-//                    .placeholder(R.drawable.icprofile)
-//                    .error(R.drawable.ic_error_outline)
-//                    .into(holder1.imageView);
+            Glide.with(context).load(modelPost.getImages())
+                    .placeholder(R.drawable.icprofile)
+                    .error(R.drawable.ic_error_outline)
+                    .into(holder1.imageView);
 
-//         
+
 
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override

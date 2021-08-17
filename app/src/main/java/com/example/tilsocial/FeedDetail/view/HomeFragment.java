@@ -136,7 +136,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
-        presenter.requestDataFromServer(pageno, "trending", 123456, "feed",loadingPB);
+        presenter.requestDataFromServer(pageno, "trending", 1234, "feed",loadingPB);
 
     }
 

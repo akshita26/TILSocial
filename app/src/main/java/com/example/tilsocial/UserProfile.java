@@ -141,7 +141,6 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
             Log.d("Imgggg", "onCreateView: "+sharedPreferences.getString("imgurl",""));
 
             Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
-                    .placeholder(R.drawable.icprofile)
                     .error(R.drawable.ic_error_outline)
                     .into(profile);
 
@@ -151,7 +150,7 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         presenter = new FeedPresentor(this,new MainFeedModel());
         int empidd=Integer.parseInt(empid.getText().toString());
         Log.d("1234", "onCreateView: "+empidd);
-        presenter.requestUserPost(0, "recency",12345, "self");
+        presenter.requestUserPost(0, "recency",empidd, "self");
         recyclerView = view.findViewById(R.id.recyid);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.tilsocial.signup.model.Departments;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -19,7 +20,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +31,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
     private  FirebaseStorage storage = FirebaseStorage.getInstance();
     private  StorageReference storageReference= storage.getReference();
     private  String pathUri;
+    HashMap<String, List<Departments>> map  = new HashMap<>();
 
     public SignupPresentor(MainContractSignup.MainView mainView, MainContractSignup.Model model) {
         this.mainView = mainView;
@@ -89,6 +91,25 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
         }
     }
 
+    @Override
+    public void onFinished(SpinnerDetails spinnerDetails) {
+
+        if(mainView != null){
+
+
+            for(int i=0;i<spinnerDetails.getTeamslist().size();i++)
+            {
+                map.put(spinnerDetails.getTeamslist().get(i).getTeamm(),spinnerDetails.getTeamslist().get(i).getDepartmentsList());
+            }
+            Log.e("Signuppresentor134", "onResponse: " +  map.size());
+            mainView.gettagsdata(spinnerDetails.getTagslist());
+            mainView.getspinnerdata(map);
+
+
+        }
+    }
+
+
     private boolean validateInputs(Integer employeeid, String name, String bio, String deprtment, String teamm, String desgniationn, ArrayList interests) {
 
         if (name.isEmpty()) {
@@ -115,7 +136,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
             mainView.designationvalidation();
             return true;
         }
-        if(interests.isEmpty()){
+        if(interests.size()<3){
             mainView.showinterestvalidation();
             return true;
         }
@@ -154,81 +175,15 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
     }
 
     @Override
-    public void departmentSpinnerdetail() {
-        String[] Department = new String[]{
-                "Select department...",
-                "department 1",
-                "department 2",
-                "department 3",
-                "department 3"
-        };
-        final List<String> departmentList = new ArrayList<>(Arrays.asList(Department));
-        mainView.departmentSpinner(departmentList);
-
-    }
-
-
-    @Override
-    public void DesignationSpinnerDetail() {
-        String[] Designation = new String[]{
-                "Select Designation...",
-                "Designation 1",
-                "Designation 2",
-                "Designation 3",
-                "Designation 3"
-        };
-        final List<String> DesignationList = new ArrayList<>(Arrays.asList(Designation));
-        mainView.designationSpinner(DesignationList);
-
-    }
-
-    @Override
-    public void TeamSpinnerDetail() {
-
-        String[] Team = new String[]{
-                "Select Team...",
-                "Team 1",
-                "Team 2",
-                "Team 3",
-                "Team 4"
-        };
-
-
-        final List<String> TeamList = new ArrayList (Arrays.asList(Team));
-        mainView.teamSpinner(TeamList);
-
-    }
-
-    @Override
     public void getsignupdetails(SignupRequestParams signupRequestParams) {
+
         if(mainView != null){
             mainView.SetSignupdata( signupRequestParams);
         }
     }
 
-    @Override
-    public void onFinished(SpinnerDetails spinnerDetails) {
-
-        if(mainView != null){
-
-            final List<String> TeamList = new ArrayList (Arrays.asList(spinnerDetails.getTeam()));
-            mainView.teamSpinner(TeamList);
-
-            String[] Departmentt = new String[spinnerDetails.getDepartmentList().size()];
-
-            for(int i = 0 ;i<spinnerDetails.getDepartmentList().size();i++)
-            {
-                Departmentt[i] = spinnerDetails.getDepartmentList().get(i).getName();
-
-            }
-            final List<String> departmentList = new ArrayList<>(Arrays.asList(Departmentt));
-            mainView.departmentSpinner(departmentList);
 
 
-
-        }
-
-    }
 
     @Override
     public void OnFinishedSignupdata(SignupRequestParams signupRequestParams) {

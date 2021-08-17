@@ -8,6 +8,7 @@ public class CommentModel {
     Integer empId;
     String comment;
     String createdAt;
+    String empImgUrl;
 
     public CommentModel()
     {
@@ -71,6 +72,14 @@ public class CommentModel {
         this.createdAt = createdAt;
     }
 
+    public String getEmpImgUrl() {
+        return empImgUrl;
+    }
+
+    public void setEmpImgUrl(String empImgUrl) {
+        this.empImgUrl = empImgUrl;
+    }
+
     @Override
     public String toString() {
         return "CommentModel{" +
@@ -80,6 +89,7 @@ public class CommentModel {
                 ", empId=" + empId +
                 ", comment='" + comment + '\'' +
                 ", createdAt='" + createdAt + '\'' +
+                ", empImgUrl='" + empImgUrl + '\'' +
                 '}';
     }
 }

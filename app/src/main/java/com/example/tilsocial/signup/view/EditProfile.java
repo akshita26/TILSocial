@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,10 +26,9 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.view.HomeFragment;
 import com.example.tilsocial.R;
-import com.example.tilsocial.UserProfile;
+import com.example.tilsocial.signup.model.Departments;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
@@ -42,13 +42,16 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class EditProfile extends Fragment implements MainContractSignup.MainView{
     ActionBar actionBar;
     Spinner department,team,designation;
+    ImageView userprofile;
     EditText namee,bioo;
     Button updatebtn;
     ChipGroup chipGroup;
@@ -57,10 +60,8 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
     SharedPreferences sharedPreferences;
-    SharedPreferences sharedPreferencessignup;
     ArrayList interestList= new ArrayList();
-    String dept, desig, empid, teamm, imageurl;;
-    ImageView userprofile;
+    String dept, desig, empid, teamm;
     Uri imageUri, selectedImage;
 
 
@@ -86,15 +87,10 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         updatebtn = view.findViewById(R.id.buttonupdate);
         bioo = view.findViewById(R.id.editTextTextPersonName3);
         chipGroup = view.findViewById(R.id.chip_group);
-        userprofile=view.findViewById(R.id.user);
+        userprofile = view.findViewById(R.id.user);
         spinnerDetails =new SpinnerDetails();
         presenter.requestDataFromServerSpinner();
-//        presenter.departmentSpinnerdetail();
-////        presenter.TeamSpinnerDetail();
-        presenter.DesignationSpinnerDetail();
 
-//        empid = getArguments().getString("key");
-//        Log.d("EditProfId", "onCreateView: "+empid);
 
         sharedPreferences= getActivity().getSharedPreferences("details",0);
 
@@ -104,36 +100,51 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             desig= sharedPreferences.getString("desig","");
             empid =sharedPreferences.getString("empid", "");
             teamm=sharedPreferences.getString("team","");
-
-            Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
-                .error(R.drawable.ic_error_outline)
-                .into(userprofile);
-
             HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
             ArrayList tags = new ArrayList(set);
             Log.e("editprofilee", "onResponse133: " + tags.toString());
 
+        userprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                selectImage();
+            }
+        });
+
+
+
+        updatebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int empidd = Integer.parseInt(empid.isEmpty() ? "0":empid);
+                SignupRequestParams signupRequestParams = new SignupRequestParams();
+                signupRequestParams.setName(namee.getText().toString());
+                signupRequestParams.setEmpId(empidd);
+                signupRequestParams.setBio(bioo.getText().toString());
+                signupRequestParams.setDept(department.getSelectedItem().toString());
+                signupRequestParams.setTeam(team.getSelectedItem().toString());
+                signupRequestParams.setDesignation(designation.getSelectedItem().toString());
+                signupRequestParams.setInterests(genres);
+                presenter.gotoprofile(signupRequestParams);
+            }
+        });
+        return view;
+    }
+
+    @Override
+    public void gettagsdata(List<String> tagss) {
 
         //Interests
-        genres.add("Mobile Application Development");
-        genres.add("Android");
-        genres.add("iOS");
-        genres.add("System Design");
-        for(int i = 0 ; i<genres.size(); i++) {
+        for(int i = 0 ; i<tagss.size(); i++) {
 
             chip = new Chip(getActivity());
-            chip.setText(genres.get(i));
+            chip.setText(tagss.get(i));
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chip.setCheckable(true);
             chipGroup.addView(chip);
         }
-
-//        for(int k=0;k<tags.size();k++){
-//            if(genres.contains(tags.get(k))) {
-//                chip.setChecked(true);
-//            }
-//        }
 
 
         Integer c = chipGroup.getChildCount();
@@ -152,60 +163,25 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             });
         }
 
-        userprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                selectImage();
-            }
-        });
-
-        updatebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int empidd = Integer.parseInt(empid.isEmpty() ? "0":empid);
-                SignupRequestParams signupRequestParams = new SignupRequestParams();
-                signupRequestParams.setName(namee.getText().toString());
-                signupRequestParams.setEmpId(empidd);
-                signupRequestParams.setBio(bioo.getText().toString());
-                signupRequestParams.setDept(department.getSelectedItem().toString());
-                signupRequestParams.setTeam(team.getSelectedItem().toString());
-                signupRequestParams.setDesignation(designation.getSelectedItem().toString());
-                signupRequestParams.setInterests(genres);
-                signupRequestParams.setImgUrl(imageurl);
-                presenter.gotoprofile(signupRequestParams);
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                UserProfile userProfile=new UserProfile();
-                ft.replace(R.id.dashboard, userProfile);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
-        return view;
     }
 
     private void selectImage() {
 
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Add Photo!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo"))
-                {
+                if (options[item].equals("Take Photo")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, 0);
-                }
-                else if (options[item].equals("Choose from Gallery"))
-                {
+                } else if (options[item].equals("Choose from Gallery")) {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
-                }
-                else if (options[item].equals("Cancel")) {
+                } else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
@@ -216,10 +192,10 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        switch(requestCode) {
+        switch (requestCode) {
             case 0:
 
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     userprofile.setImageBitmap(photo);
                     try {
@@ -231,7 +207,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
                         photo.compress(Bitmap.CompressFormat.PNG, 70, fout);
                         fout.flush();
                         imageUri = Uri.fromFile(mFileTemp);
-                        presenter.uploadFb(getActivity(),imageUri);
+                        presenter.uploadFb(getActivity(), imageUri);
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
                     }
@@ -239,14 +215,15 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
                 break;
             case 1:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     selectedImage = imageReturnedIntent.getData();
                     userprofile.setImageURI(selectedImage);
-                    presenter.uploadFb(getActivity(),selectedImage);
+                    presenter.uploadFb(getActivity(), selectedImage);
                 }
                 break;
         }
     }
+
 
     @Override
     public void shownamevalidation() {
@@ -282,7 +259,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void showinterestvalidation() {
-        Toast.makeText(getActivity(), "Please select minimum 1 interests", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Please select minimum 3 interests", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -291,37 +268,10 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void nextfragmentprofile() {
-
-    }
-
-    @Override
-    public void departmentSpinner(List<String> departmentList) {
-        final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, departmentList);
-        DepartmentArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-        int spinnerPosition = DepartmentArrayAdapter.getPosition(dept);
-        department.setSelection(spinnerPosition);
-        department.setAdapter(DepartmentArrayAdapter);
-    }
-
-    @Override
-    public void teamSpinner(List<String> TeamList) {
-        final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, TeamList);
-        TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-        int spinnerPosition = TeamArrayAdapter.getPosition(teamm);
-        team.setSelection(spinnerPosition);
-        team.setAdapter(TeamArrayAdapter);
-    }
-
-    @Override
-    public void designationSpinner(List<String> DesignationList) {
-        final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, DesignationList);
-        DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-        int spinnerPosition = DesignationArrayAdapter.getPosition(desig);
-        designation.setSelection(spinnerPosition);
-        designation.setAdapter(DesignationArrayAdapter);
+        HomeFragment homeFragment = new HomeFragment();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.dashboard, homeFragment);
+        ft.commit();
     }
 
     @Override
@@ -338,6 +288,77 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void extractFb(String s) {
-        imageurl=s;
+
     }
+
+    @Override
+    public void getspinnerdata(HashMap<String, List<Departments>> map) {
+
+
+        List<String> TeamList = new ArrayList<>();
+        HashMap<String,List<String>> map2 = new HashMap<>();
+        Log.e("Signuppresentor", "onResponse: " + map.size());
+        for (Map.Entry<String, List<Departments>> set :
+                map.entrySet()) {
+            TeamList.add(set.getKey());
+        }
+
+
+        Log.e("Signuppresentor", "onResponse: " + TeamList.toString());
+
+        final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinnneritem, TeamList);
+        TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        team.setAdapter(TeamArrayAdapter);
+        team.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                List<Departments> DepartmentList = new ArrayList();
+                Log.e("Signuppresentorparent", "onResponse: " + parent.getItemAtPosition(position));
+                DepartmentList = map.get(parent.getItemAtPosition(position));
+                List<String> departmentlist = new ArrayList<>();
+                for (int i = 0; i < DepartmentList.size(); i++) {
+                    departmentlist.add(DepartmentList.get(i).getName());
+                    Log.e("Signuppresentorparentt", "onResponse: " + DepartmentList.get(i).getDesignationslist().toString());
+                    map2.put(DepartmentList.get(i).getName(),DepartmentList.get(i).getDesignationslist());
+                }
+                Log.e("Signuppresentormap2size", "onResponse: " + map2.size());
+
+                final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
+                        getActivity(), R.layout.spinnneritem, departmentlist);
+                DepartmentArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+                department.setAdapter(DepartmentArrayAdapter);
+
+                department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
+                                getActivity(), R.layout.spinnneritem,   map2.get(parent.getItemAtPosition(position)));
+                        DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+                        designation.setAdapter(DesignationArrayAdapter);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+    }
+
+
+
 }

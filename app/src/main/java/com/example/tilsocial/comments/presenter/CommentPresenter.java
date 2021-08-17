@@ -1,7 +1,5 @@
 package com.example.tilsocial.comments.presenter;
 
-import android.util.Log;
-
 import com.example.tilsocial.comments.model.CommentModel;
 import com.example.tilsocial.comments.model.PostComment;
 
@@ -44,7 +42,7 @@ public class CommentPresenter implements MainContractComment.presenter, MainCont
     }
 
     @Override
-    public void OnFinishedSaveComment(PostComment body) {
+    public void OnFinishedSaveComment(CommentModel body) {
         if(mainView != null){
             mainView.SetNewComment(body);
         }

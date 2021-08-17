@@ -15,11 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.API.CommentAPIInterface;
 import com.example.tilsocial.comments.model.CommentModel;
 import com.example.tilsocial.comments.model.ModelComment;
 import com.example.tilsocial.comments.model.PostComment;
+import com.example.tilsocial.comments.model.PostCommentResponse;
 import com.example.tilsocial.comments.presenter.CommentPresenter;
 import com.example.tilsocial.comments.presenter.MainContractComment;
 
@@ -35,7 +37,7 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
     CommentAPIInterface apiInterface;
     private MainContractComment.presenter presenter;
     String postId, empId;
-    ImageView sendcomment;
+    ImageView sendcomment,commentimg;
     EditText newcomment;
     SharedPreferences sharedPreferences;
 
@@ -56,6 +58,7 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         presenter = new CommentPresenter(this,new ModelComment());
         sendcomment=view.findViewById(R.id.sendcomment);
         newcomment=view.findViewById(R.id.editTextTextPersonName4);
+        commentimg=view.findViewById(R.id.commentimge);
         recyclerViewcomment = view.findViewById(R.id.commentrecyclerview);
         recyclerViewcomment.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -64,6 +67,10 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         postId= bundle.getString("postid");
         sharedPreferences= getActivity().getSharedPreferences("details",0);
         empId= sharedPreferences.getString("empid", "");
+        Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+                .error(R.drawable.ic_error_outline)
+                .into(commentimg);
+
         Log.d("posttag", "onCreateView: "+postId);
         commentss = new ArrayList<>();
         loadComments();
@@ -82,8 +89,8 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
                 int empid = Integer.parseInt(empId);
                 postComment.setEmpId(empid);
                 presenter.postcomment(postComment);
-                loadComments();
-                commentss.clear();
+//                loadComments();
+//                commentss.clear();
                 newcomment.setText("");
             }
         });
@@ -109,8 +116,9 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
     }
 
     @Override
-    public void SetNewComment(PostComment body) {
+    public void SetNewComment(CommentModel body) {
         Log.d("TAG", "SetNewComment: "+body.toString());
-        Toast.makeText(getActivity(), "Comment Posted", Toast.LENGTH_SHORT).show();
+        commentss.add(body);
+        commentAdapter.notifyDataSetChanged();
     }
 }

@@ -3,6 +3,7 @@ package com.example.tilsocial.FeedDetail.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ModelPost {
 
@@ -35,16 +36,16 @@ public class ModelPost {
     @SerializedName("tags")
     private String [] tags;
     @SerializedName("images")
-    private String [] images;
+    private List<String> images;
 
     @SerializedName("postId")
     private String postId;
 
-    public String[] getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(String[] images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 
@@ -135,12 +136,12 @@ public class ModelPost {
                 ", name='" + name + '\'' +
                 ", likesCount='" + likesCount + '\'' +
                 ", commentsCount='" + commentsCount + '\'' +
-                ", hasLiked='" + hasLiked + '\'' +
+                ", hasLiked=" + hasLiked +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
                 ", content='" + content + '\'' +
                 ", tags=" + Arrays.toString(tags) +
-                ", images='" + images + '\'' +
+                ", images=" + images +
                 ", postId='" + postId + '\'' +
                 '}';
     }

@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://til-social.herokuapp.com/tilsocialapp/profile/";
+    private static final String BASE_URL = "http://til-social.herokuapp.com/tilsocialapp/";
     private static Retrofit retrofit = null;
 
 

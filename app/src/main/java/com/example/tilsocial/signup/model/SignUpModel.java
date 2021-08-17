@@ -2,11 +2,10 @@ package com.example.tilsocial.signup.model;
 
 import android.util.Log;
 
-import com.example.tilsocial.signup.signupApi.ApiClient;
-import com.example.tilsocial.signup.signupApi.ApiInterface;
-import com.example.tilsocial.signup.api.ApiClientSpinner;
 import com.example.tilsocial.signup.api.ApiInterfaceSpinner;
 import com.example.tilsocial.signup.presenter.MainContractSignup;
+import com.example.tilsocial.signup.signupApi.ApiClient;
+import com.example.tilsocial.signup.signupApi.ApiInterface;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,8 +50,8 @@ public class SignUpModel implements MainContractSignup.Model
     @Override
     public void getSpinnerDetail(OnFinishedListener onFinishedListener) {
 
-        apiInterfaceSpinner = ApiClientSpinner.getClient().create(ApiInterfaceSpinner.class);
-        Call<SpinnerDetails> call = apiInterfaceSpinner.getspinnerDetails();
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<SpinnerDetails> call = apiInterface.getspinnerDetails();
         call.enqueue(new Callback<SpinnerDetails>() {
             @Override
             public void onResponse(Call<SpinnerDetails> call, Response<SpinnerDetails> response) {

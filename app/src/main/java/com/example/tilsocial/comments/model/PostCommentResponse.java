@@ -1,12 +1,21 @@
 package com.example.tilsocial.comments.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class PostCommentResponse {
+    @SerializedName("commentId")
     String commentId;
+    @SerializedName("postId")
     String postId;
+    @SerializedName("name")
     String name;
+    @SerializedName("empId")
     Integer empId;
+    @SerializedName("comment")
     String comment;
+    @SerializedName("empImgUrl")
     String empImgUrl;
+    @SerializedName("createdAt")
     String createdAt;
 
     public String getCommentId() {

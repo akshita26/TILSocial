@@ -95,7 +95,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     CommentFragment commentFragment = new CommentFragment();
                     Bundle bundle=new Bundle();
                     bundle.putString("postid", postId);
-                    bundle.putString("empid",empId);
                     commentFragment.setArguments(bundle);
                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

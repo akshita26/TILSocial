@@ -37,6 +37,7 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
     String postId, empId;
     ImageView sendcomment;
     EditText newcomment;
+    SharedPreferences sharedPreferences;
 
     public CommentFragment() {
 
@@ -61,12 +62,15 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         recyclerViewcomment.setLayoutManager(layoutManager);
         Bundle bundle=this.getArguments();
         postId= bundle.getString("postid");
-        empId= bundle.getString("empid");
+        sharedPreferences= getActivity().getSharedPreferences("details",0);
+        empId= sharedPreferences.getString("empid", "");
         Log.d("posttag", "onCreateView: "+postId);
         commentss = new ArrayList<>();
         loadComments();
         commentAdapter = new CommentAdapter(getActivity(), commentss);
         recyclerViewcomment.setAdapter(commentAdapter);
+        Log.d("postemp", "onClick: "+postId+" "+empId);
+
 
         sendcomment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,9 +78,13 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
                 PostComment postComment=new PostComment();
                 postComment.setComment(newcomment.getText().toString());
                 postComment.setPostId(postId);
+                Log.d("postemp", "onClick: "+postId+" "+empId);
                 int empid = Integer.parseInt(empId);
                 postComment.setEmpId(empid);
                 presenter.postcomment(postComment);
+                loadComments();
+                commentss.clear();
+                newcomment.setText("");
             }
         });
         return view;
@@ -102,6 +110,7 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
 
     @Override
     public void SetNewComment(PostComment body) {
+        Log.d("TAG", "SetNewComment: "+body.toString());
         Toast.makeText(getActivity(), "Comment Posted", Toast.LENGTH_SHORT).show();
     }
 }

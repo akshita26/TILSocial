@@ -22,14 +22,14 @@ public class ModelComment implements MainContractComment.Model {
 
     @Override
     public void postcomment(PostComment postComment, OnFinishedListener onFinishedListener) {
-        saveCommentAPI=CommentAPIClient.saveComment().create(SaveCommentAPI.class);
-        Call<PostComment> PostCall= saveCommentAPI.postcommnt(postComment);
-        PostCall.enqueue(new Callback<PostComment>() {
+        saveCommentAPI=CommentAPIClient.getClient().create(SaveCommentAPI.class);
+        Call<PostCommentResponse> PostCall= saveCommentAPI.postcommntresponse(postComment);
+        PostCall.enqueue(new Callback<PostCommentResponse>() {
             @Override
-            public void onResponse(Call<PostComment> call, Response<PostComment> response) {
+            public void onResponse(Call<PostCommentResponse> call, Response<PostCommentResponse> response) {
                 if(response!=null)
                 {
-                    onFinishedListener.OnFinishedSaveComment(response.body());
+//                    onFinishedListener.OnFinishedSaveComment(response.body());
                     Log.e("NewCommnt", "Comment: " + response.body());
                 }
                 else
@@ -38,7 +38,7 @@ public class ModelComment implements MainContractComment.Model {
                 }
             }
             @Override
-            public void onFailure(Call<PostComment> call, Throwable t) {
+            public void onFailure(Call<PostCommentResponse> call, Throwable t) {
                 Log.e("TAG", "onResponsesignuppfail: " + t.getMessage() );
                 onFinishedListener.onFailure(t);
             }

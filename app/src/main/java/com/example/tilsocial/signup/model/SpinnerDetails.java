@@ -2,48 +2,36 @@ package com.example.tilsocial.signup.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class SpinnerDetails {
 
-    @SerializedName("team")
-    String [] team;
-    @SerializedName("interest")
-    List<Interset> intersetList;
-    @SerializedName("department")
-    List<Department> departmentList;
+   @SerializedName("tags")
+    List<String> tagslist;
+   @SerializedName("teams")
+    List<Team> teamslist;
 
-    public String[] getTeam() {
-        return team;
+    public List<String> getTagslist() {
+        return tagslist;
     }
 
-    public void setTeam(String[] team) {
-        this.team = team;
+    public void setTagslist(List<String> tagslist) {
+        this.tagslist = tagslist;
     }
 
-    public List<Interset> getIntersetList() {
-        return intersetList;
+    public List<Team> getTeamslist() {
+        return teamslist;
     }
 
-    public void setIntersetList(List<Interset> intersetList) {
-        this.intersetList = intersetList;
-    }
-
-    public List<Department> getDepartmentList() {
-        return departmentList;
-    }
-
-    public void setDepartmentList(List<Department> departmentList) {
-        this.departmentList = departmentList;
+    public void setTeamslist(List<Team> teamslist) {
+        this.teamslist = teamslist;
     }
 
     @Override
     public String toString() {
         return "SpinnerDetails{" +
-                "team=" + Arrays.toString(team) +
-                ", intersetList=" + intersetList +
-                ", departmentList=" + departmentList +
+                "tagslist=" + tagslist +
+                ", teamslist=" + teamslist +
                 '}';
     }
 }

@@ -4,9 +4,11 @@ import android.net.Uri;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.tilsocial.signup.model.Departments;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface MainContractSignup {
@@ -16,12 +18,9 @@ public interface MainContractSignup {
         void dosignup(SignupRequestParams signupRequestParams);
         void gotoprofile(SignupRequestParams signupRequestParams);
         void requestDataFromServerSpinner();
-        void departmentSpinnerdetail();
-        void DesignationSpinnerDetail();
-        void TeamSpinnerDetail();
         void getsignupdetails(SignupRequestParams signupRequestParams);
-
         void uploadFb(FragmentActivity activity, Uri imageUri);
+
     }
 
     interface MainView {
@@ -36,12 +35,11 @@ public interface MainContractSignup {
         void showinterestvalidation();
         void nextfragment();
         void nextfragmentprofile();
-        void departmentSpinner(List<String> departmentList);
-        void teamSpinner(List<String> TeamList);
-        void designationSpinner(List<String> DesignationList);
         void onResponseFailure(Throwable t);
         void SetSignupdata(SignupRequestParams signupRequestParams);
         void extractFb(String s);
+        void getspinnerdata(HashMap<String,List<Departments>> map);
+        void gettagsdata(List<String> tagss);
     }
 
     /**

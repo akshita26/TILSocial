@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tilsocial.FeedDetail.view.HomeFragment;
 import com.example.tilsocial.R;
+import com.example.tilsocial.signup.model.Departments;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
@@ -27,8 +29,10 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class EditProfile extends Fragment implements MainContractSignup.MainView{
     ActionBar actionBar;
@@ -72,7 +76,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         presenter.requestDataFromServerSpinner();
 //        presenter.departmentSpinnerdetail();
 ////        presenter.TeamSpinnerDetail();
-        presenter.DesignationSpinnerDetail();
+//        presenter.DesignationSpinnerDetail();
 
 //        empid = getArguments().getString("key");
 //        Log.d("EditProfId", "onCreateView: "+empid);
@@ -91,42 +95,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
 
 
-        //Interests
-        genres.add("Mobile Application Development");
-        genres.add("Android");
-        genres.add("iOS");
-        genres.add("System Design");
-        for(int i = 0 ; i<genres.size(); i++) {
 
-            chip = new Chip(getActivity());
-            chip.setText(genres.get(i));
-            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
-            chip.setCheckable(true);
-            chipGroup.addView(chip);
-        }
-
-//        for(int k=0;k<tags.size();k++){
-//            if(genres.contains(tags.get(k))) {
-//                chip.setChecked(true);
-//            }
-//        }
-
-
-        Integer c = chipGroup.getChildCount();
-        for (int j = 0; j < c; j++) {
-            Chip chip = (Chip) chipGroup.getChildAt(j);
-            chip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (chip.isChecked()) {
-                        interestList.add(chip.getText().toString());
-                    } else {
-                        interestList.remove(chip.getText());
-                    }
-                    Toast.makeText(getActivity(), "" + interestList, Toast.LENGTH_LONG).show();
-                }
-            });
-        }
 
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +115,39 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         });
         return view;
     }
+
+    @Override
+    public void gettagsdata(List<String> tagss) {
+
+        //Interests
+        for(int i = 0 ; i<tagss.size(); i++) {
+
+            chip = new Chip(getActivity());
+            chip.setText(tagss.get(i));
+            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+            chip.setCheckable(true);
+            chipGroup.addView(chip);
+        }
+
+
+        Integer c = chipGroup.getChildCount();
+        for (int j = 0; j < c; j++) {
+            Chip chip = (Chip) chipGroup.getChildAt(j);
+            chip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (chip.isChecked()) {
+                        interestList.add(chip.getText().toString());
+                    } else {
+                        interestList.remove(chip.getText());
+                    }
+                    Toast.makeText(getActivity(), "" + interestList, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+    }
+
 
     @Override
     public void shownamevalidation() {
@@ -181,7 +183,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void showinterestvalidation() {
-        Toast.makeText(getActivity(), "Please select minimum 1 interests", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Please select minimum 3 interests", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -194,36 +196,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.dashboard, homeFragment);
         ft.commit();
-    }
-
-    @Override
-    public void departmentSpinner(List<String> departmentList) {
-        final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, departmentList);
-        DepartmentArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-        int spinnerPosition = DepartmentArrayAdapter.getPosition(dept);
-        department.setSelection(spinnerPosition);
-        department.setAdapter(DepartmentArrayAdapter);
-    }
-
-    @Override
-    public void teamSpinner(List<String> TeamList) {
-        final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, TeamList);
-        TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-        int spinnerPosition = TeamArrayAdapter.getPosition(teamm);
-        team.setSelection(spinnerPosition);
-        team.setAdapter(TeamArrayAdapter);
-    }
-
-    @Override
-    public void designationSpinner(List<String> DesignationList) {
-        final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinnneritem, DesignationList);
-        DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-        int spinnerPosition = DesignationArrayAdapter.getPosition(desig);
-        designation.setSelection(spinnerPosition);
-        designation.setAdapter(DesignationArrayAdapter);
     }
 
     @Override
@@ -242,4 +214,75 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     public void extractFb(String s) {
 
     }
+
+    @Override
+    public void getspinnerdata(HashMap<String, List<Departments>> map) {
+
+
+        List<String> TeamList = new ArrayList<>();
+        HashMap<String,List<String>> map2 = new HashMap<>();
+        Log.e("Signuppresentor", "onResponse: " + map.size());
+        for (Map.Entry<String, List<Departments>> set :
+                map.entrySet()) {
+            TeamList.add(set.getKey());
+        }
+
+
+        Log.e("Signuppresentor", "onResponse: " + TeamList.toString());
+
+        final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinnneritem, TeamList);
+        TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+        team.setAdapter(TeamArrayAdapter);
+        team.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                List<Departments> DepartmentList = new ArrayList();
+                Log.e("Signuppresentorparent", "onResponse: " + parent.getItemAtPosition(position));
+                DepartmentList = map.get(parent.getItemAtPosition(position));
+                List<String> departmentlist = new ArrayList<>();
+                for (int i = 0; i < DepartmentList.size(); i++) {
+                    departmentlist.add(DepartmentList.get(i).getName());
+                    Log.e("Signuppresentorparentt", "onResponse: " + DepartmentList.get(i).getDesignationslist().toString());
+                    map2.put(DepartmentList.get(i).getName(),DepartmentList.get(i).getDesignationslist());
+                }
+                Log.e("Signuppresentormap2size", "onResponse: " + map2.size());
+
+                final ArrayAdapter<String> DepartmentArrayAdapter = new ArrayAdapter<String>(
+                        getActivity(), R.layout.spinnneritem, departmentlist);
+                DepartmentArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+                department.setAdapter(DepartmentArrayAdapter);
+
+                department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        final ArrayAdapter<String> DesignationArrayAdapter = new ArrayAdapter<String>(
+                                getActivity(), R.layout.spinnneritem,   map2.get(parent.getItemAtPosition(position)));
+                        DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+                        designation.setAdapter(DesignationArrayAdapter);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+    }
+
+
+
 }

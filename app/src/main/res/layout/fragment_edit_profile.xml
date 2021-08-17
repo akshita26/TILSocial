@@ -69,6 +69,27 @@
                             android:hint="Bio"
                             android:inputType="textMultiLine"
                             android:maxLines="20" />
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Team"
+                            android:layout_marginBottom="3dp"/>
+                        <Spinner
+                            android:id="@+id/spinner5"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/customspinner"
+                            android:textColor="@color/grey_3"
+                            />
+                        <TextView
+                            android:id="@+id/depptt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Department"
+                            android:layout_marginBottom="3dp"/>
+
 
                         <Spinner
                             android:id="@+id/spinner4"
@@ -79,17 +100,12 @@
                             android:textColor="@color/grey_3"
 
                             />
-
-                        <Spinner
-                            android:id="@+id/spinner5"
+                        <TextView
+                            android:id="@+id/designationn"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_marginBottom="20dp"
-                            android:background="@drawable/customspinner"
-                            android:textColor="@color/grey_3"
-
-                            />
-
+                            android:layout_height="wrap_content"
+                            android:text="Designation"
+                            android:layout_marginBottom="3dp"/>
                         <Spinner
                             android:id="@+id/spinner6"
                             android:layout_width="match_parent"

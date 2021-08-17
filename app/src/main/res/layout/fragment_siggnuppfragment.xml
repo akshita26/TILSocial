@@ -60,6 +60,7 @@
                            />
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/button3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -94,13 +95,12 @@
                             android:layout_marginBottom="20dp"
                             android:maxLines="20"/>
 
-                        <Spinner
-                            android:id="@+id/spinner4"
+                        <TextView
+                            android:id="@+id/textView2"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_marginBottom="20dp"
-                            android:background="@drawable/customspinner"
-                            android:textColor="@color/grey_3" />
+                            android:layout_height="wrap_content"
+                            android:text="Team"
+                            android:layout_marginBottom="3dp"/>
 
                         <Spinner
                             android:id="@+id/spinner5"
@@ -109,6 +109,31 @@
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/customspinner"
                             android:textColor="@color/grey_3" />
+                        <TextView
+                            android:id="@+id/depart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Department"
+                            android:layout_marginBottom="3dp"/>
+
+                        <Spinner
+                            android:id="@+id/spinner4"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/customspinner"
+                            android:textColor="@color/grey_3" />
+
+                        <TextView
+                            android:id="@+id/desigationn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Designation"
+                            android:layout_marginBottom="3dp"/>
+
+
+
+
 
                         <Spinner
                             android:id="@+id/spinner6"

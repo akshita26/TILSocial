@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-    <item
-        android:id="@+id/action_filter1"
-        android:icon="@drawable/ic_filter_alt"
-        android:orderInCategory="100"
-        android:title="Recent"
-         />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_filter2"
-        android:icon="@drawable/ic_filter_alt"
-        android:orderInCategory="100"
-        android:title="Trending"
-        />
+        android:id="@+id/logoutuser"
+        android:title="Logout"
+        app:showAsAction="always">
+    </item>
 
 
 </menu>

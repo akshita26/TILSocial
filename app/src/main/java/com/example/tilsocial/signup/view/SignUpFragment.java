@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -47,6 +48,7 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -73,6 +75,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     FirebaseStorage storage;
     StorageReference storageReference;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
 
@@ -104,7 +108,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         chipGroup = view.findViewById(R.id.chip_group);
         userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails =new SpinnerDetails();
-        upload=view.findViewById(R.id.button3);
 //        presenter.requestDataFromServerSpinner();
         presenter.departmentSpinnerdetail();
         presenter.TeamSpinnerDetail();
@@ -169,12 +172,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             }
         });
 
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadImage();
-            }
-        });
         return view;
     }
 
@@ -224,7 +221,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                         photo.compress(Bitmap.CompressFormat.PNG, 70, fout);
                         fout.flush();
                         imageUri = Uri.fromFile(mFileTemp);
-                        // simage = imageUri.toString();
                         presenter.uploadFb(getActivity(),imageUri);
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "" + e, Toast.LENGTH_LONG).show();
@@ -241,33 +237,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 break;
         }
     }
-
-
-    public void uploadImage() {
-        if (selectedImage != null) {
-
-            StorageReference ref = storageReference.child("UserProfile/" + UUID.randomUUID().toString());
-
-            ref.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-                {
-                    Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-                }
-            })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
-                            Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            Log.d("TAG", "onFailure: "+e.getMessage());
-                        }
-                    });
-        }
-    }
-
-
 
     @Override
     public void shownamevalidation() {
@@ -437,6 +406,19 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     public void SetSignupdata(SignupRequestParams signupRequestParams) {
 
         Log.e("Signupp","data"+signupRequestParams);
+        sharedPreferences = getActivity().getSharedPreferences("details", 0);
+        editor = sharedPreferences.edit();
+        editor.putString("empid",signupRequestParams.getEmpId().toString());
+        editor.putString("name", signupRequestParams.getName());
+        editor.putString("dept", signupRequestParams.getDept());
+        editor.putString("bio", signupRequestParams.getBio());
+        editor.putString("desig", signupRequestParams.getDesignation());
+        HashSet<String> set = new HashSet(signupRequestParams.getInterests());
+        editor.putStringSet("inter", set);
+        editor.putString("team", signupRequestParams.getTeam());
+        editor.putString("imgurl",signupRequestParams.getImgUrl());
+        editor.commit();
+
 
     }
 

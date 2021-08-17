@@ -33,7 +33,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     Context context;
     List<ModelPost> modelPosts;
     ActionBar actionBar;
-    String postId;
+    String postId,empId;
 
 
     public AdapterPosts(Context context,List<ModelPost> modelPosts) {
@@ -41,9 +41,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.modelPosts = modelPosts;
 
     }
-
-
-
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
 
@@ -59,6 +56,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
             postId=modelPost.getPostId();
+            empId=modelPost.getEmpId();
             holder1.like.setText(modelPost.getLikesCount() + " Likes"  );
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
             holder1.content.setText(modelPost.getContent());
@@ -97,6 +95,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     CommentFragment commentFragment = new CommentFragment();
                     Bundle bundle=new Bundle();
                     bundle.putString("postid", postId);
+                    bundle.putString("empid",empId);
                     commentFragment.setArguments(bundle);
                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

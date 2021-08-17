@@ -1,9 +1,14 @@
 package com.example.tilsocial;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +44,7 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
     TextView bio,name,dept,desig,empid, editprof, team;
     RecyclerView recyclerView;
     UserPosts userPosts;
+
     //    List<ModelPost> posts;
     ImageView profile;
     ChipGroup chipGroup;
@@ -44,9 +52,38 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
     ArrayList tags;
     private MainContract.presenter presenter;
     SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferencessignup;
+
 
     public UserProfile() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.my_menu2, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.logoutuser)
+        {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+            Toast.makeText(getActivity(), "Logout Done", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -94,24 +131,24 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         team=view.findViewById(R.id.team);
 
         sharedPreferences= getActivity().getSharedPreferences("details",0);
-        name.setText(sharedPreferences.getString("name",""));
-        dept.setText(sharedPreferences.getString("dept",""));
-        bio.setText(sharedPreferences.getString("bio",""));
-        desig.setText(sharedPreferences.getString("desig",""));
-        empid.setText(sharedPreferences.getString("empid", ""));
-        team.setText(sharedPreferences.getString("team",""));
-        Log.d("Imgggg", "onCreateView: "+sharedPreferences.getString("imgurl",""));
 
-        Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+            name.setText(sharedPreferences.getString("name",""));
+            dept.setText(sharedPreferences.getString("dept",""));
+            bio.setText(sharedPreferences.getString("bio",""));
+            desig.setText(sharedPreferences.getString("desig",""));
+            empid.setText(sharedPreferences.getString("empid", ""));
+            team.setText(sharedPreferences.getString("team",""));
+            Log.d("Imgggg", "onCreateView: "+sharedPreferences.getString("imgurl",""));
+
+            Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
                     .placeholder(R.drawable.icprofile)
                     .error(R.drawable.ic_error_outline)
                     .into(profile);
 
-        HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
-        tags = new ArrayList(set);
+            HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
+            tags = new ArrayList(set);
 
         presenter = new FeedPresentor(this,new MainFeedModel());
-
         int empidd=Integer.parseInt(empid.getText().toString());
         Log.d("1234", "onCreateView: "+empidd);
         presenter.requestUserPost(0, "recency",12345, "self");
@@ -129,7 +166,7 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
                 args.putString("key", empid.getText().toString());
                 editProfile.setArguments(args);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.add(R.id.dashboard, editProfile);
+                ft.replace(R.id.dashboard, editProfile);
                 ft.addToBackStack(null);
                 ft.commit();
             }

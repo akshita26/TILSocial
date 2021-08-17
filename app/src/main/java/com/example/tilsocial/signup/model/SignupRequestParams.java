@@ -86,4 +86,18 @@ public class SignupRequestParams {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
+    @Override
+    public String toString() {
+        return "SignupRequestParams{" +
+                "name='" + name + '\'' +
+                ", bio='" + bio + '\'' +
+                ", dept='" + dept + '\'' +
+                ", team='" + team + '\'' +
+                ", designation='" + designation + '\'' +
+                ", interests=" + interests +
+                ", empId=" + empId +
+                ", imgUrl='" + imgUrl + '\'' +
+                '}';
+    }
 }

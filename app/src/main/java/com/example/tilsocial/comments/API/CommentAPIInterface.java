@@ -12,3 +12,4 @@ public interface CommentAPIInterface {
     @GET("{postId}")
     Call<List<CommentModel>> getcomment(@Path("postId") String postId);
 }
+

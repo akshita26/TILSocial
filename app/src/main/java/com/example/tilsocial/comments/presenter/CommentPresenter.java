@@ -3,6 +3,7 @@ package com.example.tilsocial.comments.presenter;
 import android.util.Log;
 
 import com.example.tilsocial.comments.model.CommentModel;
+import com.example.tilsocial.comments.model.PostComment;
 
 import java.util.List;
 
@@ -22,6 +23,11 @@ public class CommentPresenter implements MainContractComment.presenter, MainCont
     }
 
     @Override
+    public void postcomment(PostComment postComment) {
+        model.postcomment(postComment,this);
+    }
+
+    @Override
     public void onFinished(List<CommentModel> commentModelList) {
         if(mainView != null){
             mainView.setDataToRecyclerViewComment(commentModelList);
@@ -34,6 +40,13 @@ public class CommentPresenter implements MainContractComment.presenter, MainCont
         if(mainView != null){
             mainView.onResponseFailure(t);
 
+        }
+    }
+
+    @Override
+    public void OnFinishedSaveComment(PostComment body) {
+        if(mainView != null){
+            mainView.SetNewComment(body);
         }
     }
 }

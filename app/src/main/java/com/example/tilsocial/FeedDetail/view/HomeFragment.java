@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     private MainContract.presenter presenter;
     private ProgressBar loadingPB;
     SharedPreferences prf;
+    Integer empidinterger;
     String empid;
     LinearLayoutManager manager;
     Boolean isScrolling = false;
@@ -62,6 +63,10 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         setHasOptionsMenu(true);
         prf = this.getActivity().getSharedPreferences("details", Context.MODE_PRIVATE);
         empid = prf.getString("empid",null);
+        empidinterger = Integer.parseInt(empid);
+
+
+
 
 //        Toast.makeText(getActivity(), "employeeidis" + empid, Toast.LENGTH_SHORT).show();
 
@@ -128,7 +133,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
-        presenter.requestDataFromServer(pageno, "recency", 123456, "feed",loadingPB);
+        presenter.requestDataFromServer(pageno, "recency", empidinterger, "feed",loadingPB);
 
     }
 
@@ -136,12 +141,15 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
-        presenter.requestDataFromServer(pageno, "trending", 1234, "feed",loadingPB);
+        presenter.requestDataFromServer(pageno, "trending", empidinterger, "feed",loadingPB);
 
     }
 
     @Override
     public void setDataToRecyclerView(List<ModelPost> modelPostListt, FeedContent feedContent) {
+        Log.e("HomeActivityfeedlistt", "onResponse: " +  modelPostListt.toString());
+        Log.e("HomeActivityfeedpagenoo", "onResponse: " +  feedContent.getTotalPages());
+
         totalpages = feedContent.getTotalPages()-1;
         isloading = true;
         modelPosts.addAll(modelPostListt);

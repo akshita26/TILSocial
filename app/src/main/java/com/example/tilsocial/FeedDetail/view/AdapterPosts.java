@@ -40,8 +40,16 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.modelPosts = modelPosts;
 
     }
+
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
+//        if(viewType==VIEWTYPE_POSTS) {
+//
+//        }
+//        else{
+//            view= LayoutInflater.from(context).inflate(R.layout.intersetcardview, parent, false);
+//            return new InterestHolder(view);
+//        }
 
         view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
         return new PostsHolder(view);
@@ -50,7 +58,13 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+//        if(position == 2) {
+//
+//            InterestHolder holder2 = (InterestHolder) holder;
+//
+//        }
+//        else
+//        {
             PostsHolder holder1=(PostsHolder)holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
@@ -77,12 +91,25 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-            Glide.with(context).load(modelPost.getImages())
-                    .placeholder(R.drawable.icprofile)
-                    .error(R.drawable.ic_error_outline)
-                    .into(holder1.imageView);
+           if(modelPost.getImages().isEmpty())
+           {
+               holder1.imageView.setVisibility(View.GONE);
+           }
+           else
+           {
+               Glide.with(context).load(modelPost.getImages().get(0))
+                       .placeholder(R.drawable.icprofile)
+                       .error(R.drawable.ic_error_outline)
+                       .into(holder1.imageView);
+
+           }
 
 
+
+
+
+
+//         
 
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -118,11 +145,18 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 //        }
 //    }
 
-
     @Override
     public int getItemCount() {
-
+        if(modelPosts.size()==0)
+        {
+            return 0;
+        }
+        else
+        {
             return modelPosts.size();
+        }
+
+
 
     }
 

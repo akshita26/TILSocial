@@ -45,7 +45,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     SpinnerDetails spinnerDetails;
     MainContractSignup.presenter presenter;
     SharedPreferences sharedPreferences;
-    SharedPreferences sharedPreferencessignup;
     ArrayList interestList= new ArrayList();
     String dept, desig, empid, teamm;
 

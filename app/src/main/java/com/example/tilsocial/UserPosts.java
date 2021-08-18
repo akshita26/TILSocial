@@ -41,13 +41,17 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
         holder.comments.setText(modelPost.getCommentsCount() + " Comments");
         holder.time.setText(modelPost.getCreatedAt());
         holder.content.setText(modelPost.getContent());
+        Glide.with(context).load(modelPost.getEmpImgUrl())
+                .placeholder(R.drawable.icprofile)
+                .error(R.drawable.ic_error_outline)
+                .into(holder.userprof);
         String taggs [] = modelPost.getTags();
         String tagg = "";
         for(int i = 0 ; i<taggs.length; i++) {
             tagg = tagg + "#" + taggs[i] + " ";
         }
         holder.tags.setText(tagg);
-        Glide.with(context).load(modelPost.getImages())
+        Glide.with(context).load(modelPost.getImages().get(0))
                 .placeholder(R.drawable.icprofile)
                 .error(R.drawable.ic_error_outline)
                 .into(holder.imageView);
@@ -62,7 +66,7 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
 
     class MyHolder extends RecyclerView.ViewHolder {
         TextView name, content,like, comments,time,tags;
-        ImageView imageView;
+        ImageView imageView, userprof;
         ChipGroup chipGroup;
 
         public MyHolder( View itemView) {
@@ -73,6 +77,7 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
             like = itemView.findViewById(R.id.nooflikepost);
             comments = itemView.findViewById(R.id.noofcomment);
             imageView = itemView.findViewById(R.id.userPostimage);
+            userprof=itemView.findViewById(R.id.userprofileimg);
             time = itemView.findViewById(R.id.timeofpost);
             chipGroup = itemView.findViewById(R.id.chip_groupfortags);
             tags = itemView.findViewById(R.id.tagss);

@@ -1,5 +1,6 @@
 package com.example.tilsocial.addpost.model;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -9,8 +10,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddPostModel {
+    SharedPreferences sharedPreferences;
+    String empid;
+    Integer empidinteger;
     public  void doPost(AddPostRequestParams addPostRequestParams) throws JSONException {
-        addPostRequestParams.setEmpId(7303);
+//        sharedPreferences=context.getSharedPreferences("details",0);
+//
+//        empid=sharedPreferences.getString("empid", "");
+//        empidinteger = Integer.parseInt(empid);
+//        addPostRequestParams.setEmpId(7303);
 
         //retrofit call
         Call<AddPostModelList> addPostModelList=AddPostAPI.getService().getPostList(addPostRequestParams);

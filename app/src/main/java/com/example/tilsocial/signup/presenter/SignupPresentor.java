@@ -151,7 +151,8 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
         if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation(), signupRequestParams.getInterests())) {
 
             model.dosignup(signupRequestParams,this);
-            mainView.nextfragment();
+            Log.d("signupdata", "onClick: "+signupRequestParams.toString());
+
         }
 
     }
@@ -174,22 +175,14 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
     }
 
-    @Override
-    public void getsignupdetails(SignupRequestParams signupRequestParams) {
-
-        if(mainView != null){
-            mainView.SetSignupdata( signupRequestParams);
-        }
-    }
-
-
-
 
     @Override
     public void OnFinishedSignupdata(SignupRequestParams signupRequestParams) {
 
         if(mainView != null){
+            Log.d("signupdataonfinished", "onClick: "+signupRequestParams.toString());
             mainView.SetSignupdata(signupRequestParams);
+            mainView.nextfragment();
         }
 
     }

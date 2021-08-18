@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,10 +72,16 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
             postId=modelPost.getPostId();
+            Log.d("postidd", "onBindViewHolder: "+postId);
             empId=modelPost.getEmpId();
             holder1.like.setText(modelPost.getLikesCount() + " Likes"  );
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
+            Log.d("checkimg", "onBindViewHolder: "+modelPost.getEmpImgUrl());
             holder1.content.setText(modelPost.getContent());
+             Glide.with(context).load(modelPost.getEmpImgUrl())
+                       .placeholder(R.drawable.icprofile)
+                       .error(R.drawable.ic_error_outline)
+                       .into(holder1.userprof);
             Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
             try {
                 calendar.setTimeInMillis(Long.parseLong(modelPost.getCreatedAt()));
@@ -94,35 +101,30 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-           if(modelPost.getImages().isEmpty())
-           {
-               holder1.imageView.setVisibility(View.GONE);
-           }
-           else
-           {
-               Glide.with(context).load(modelPost.getImages().get(0))
-                       .placeholder(R.drawable.icprofile)
-                       .error(R.drawable.ic_error_outline)
-                       .into(holder1.imageView);
+//           if(modelPost.getImages().isEmpty())
+//           {
+//               holder1.imageView.setVisibility(View.GONE);
+//           }
+//           else
+//           {
+//               Glide.with(context).load(modelPost.getImages().get(0))
+//                       .placeholder(R.drawable.icprofile)
+//                       .error(R.drawable.ic_error_outline)
+//                       .into(holder1.imageView);
 
-           }
+//           }
 
-
-
-
-
-
-//
 
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    String postid;
+                    postid=modelPost.getPostId();
                     actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
                     actionBar.setTitle("Comment");
                     CommentFragment commentFragment = new CommentFragment();
                     Bundle bundle=new Bundle();
-                    bundle.putString("postid", postId);
+                    bundle.putString("postid", postid);
                     commentFragment.setArguments(bundle);
                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -178,7 +180,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     class PostsHolder extends RecyclerView.ViewHolder {
 
         TextView name, content,like, comments,time,tags;
-        ImageView imageView,share;
+        ImageView imageView,share, userprof;
         ChipGroup chipGroup;
 
         public PostsHolder(View itemView) {
@@ -190,6 +192,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             like = itemView.findViewById(R.id.nooflikepost);
             comments = itemView.findViewById(R.id.noofcomment);
             imageView = itemView.findViewById(R.id.userPostimage);
+            userprof=itemView.findViewById(R.id.userprofileimg);
             time = itemView.findViewById(R.id.timeofpost);
             chipGroup = itemView.findViewById(R.id.chip_groupfortags);
             tags = itemView.findViewById(R.id.tagss);

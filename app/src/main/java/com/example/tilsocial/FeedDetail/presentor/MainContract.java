@@ -17,8 +17,6 @@ public interface MainContract {
 
     interface MainView {
 
-
-
         void setDataToRecyclerView(List<ModelPost> modelPostList,FeedContent feedContent);
 
         void onResponseFailure(Throwable t);

@@ -61,7 +61,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     Spinner department, team, designation;
     View view;
     EditText employeeidd, namee, bioo;
-    Button signuppbtn, upload;
+    Button signuppbtn;
     ChipGroup chipGroup;
     Chip chip;
     ImageView add, userprofile;
@@ -76,8 +76,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     FirebaseStorage storage;
     StorageReference storageReference;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences, preferences;
+    SharedPreferences.Editor editor, editr;
 
 
     public SignUpFragment() {
@@ -107,7 +107,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         chipGroup = view.findViewById(R.id.chip_group);
         userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails = new SpinnerDetails();
-        upload = view.findViewById(R.id.button3);
         presenter.requestDataFromServerSpinner();
 
         storage = FirebaseStorage.getInstance();
@@ -140,21 +139,18 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             }
         });
 
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadImage();
-            }
-        });
         return view;
     }
 
 
     @Override
     public void gettagsdata(List<String> tagss) {
-
+        preferences = getActivity().getSharedPreferences("tags", 0);
+        editr = preferences.edit();
+        HashSet<String> set = new HashSet(tagss);
+        editr.putStringSet("interests", set);
+        editr.commit();
         for (int i = 0; i < tagss.size(); i++) {
-
             chip = new Chip(getActivity());
             chip.setText(tagss.get(i));
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
@@ -173,7 +169,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                     } else {
                         interestList.remove(chip.getText());
                     }
-                    Toast.makeText(getActivity(), "-" + interestList, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "-" + interestList, Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -241,27 +237,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         }
     }
 
-    public void uploadImage() {
-        if (selectedImage != null) {
-
-            StorageReference ref = storageReference.child("UserProfile/" + UUID.randomUUID().toString());
-
-            ref.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "Failed1234 " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.d("TAG", "onFailure: " + e.getMessage());
-                }
-            });
-        }
-    }
-
 
     @Override
     public void shownamevalidation() {
@@ -300,7 +275,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void showinterestvalidation() {
-        Toast.makeText(getActivity(), "Please select minimum 3 Interest", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Please select minimum 1 Interest", Toast.LENGTH_SHORT).show();
     }
 
     @Override

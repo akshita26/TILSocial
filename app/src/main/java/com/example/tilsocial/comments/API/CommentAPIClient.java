@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CommentAPIClient {
-    private static final String BASE_URL = "http://til-social.herokuapp.com/tilsocialapp/comment/fetch/";
+    private static final String BASE_URL = "http://til-social.herokuapp.com/tilsocialapp/comment/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
@@ -16,4 +16,5 @@ public class CommentAPIClient {
         }
         return retrofit;
     }
+
 }

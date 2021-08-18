@@ -4,7 +4,7 @@
 <!--    <item android:color="@android:color/white" android:state_checked="true" />-->
 <!--    <item android:color="@android:color/white" android:state_checked="false" />-->
     <item
-        android:color="@color/teal_300"
+        android:color="@color/basic_light"
         android:state_checked="true"/>
     <item android:color="@color/grey_20"/>
 </selector>

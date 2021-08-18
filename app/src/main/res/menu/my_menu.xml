@@ -14,12 +14,6 @@
         app:showAsAction="never">
     </item>
 
-    <item
-        android:id="@+id/logoutuser"
-        android:title="Logout"
-        app:showAsAction="never">
-    </item>
-
 
 </menu>
     <!--        android:id="@+id/action_filter"-->

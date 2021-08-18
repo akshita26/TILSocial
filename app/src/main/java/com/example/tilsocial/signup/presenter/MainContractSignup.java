@@ -18,7 +18,6 @@ public interface MainContractSignup {
         void dosignup(SignupRequestParams signupRequestParams);
         void gotoprofile(SignupRequestParams signupRequestParams);
         void requestDataFromServerSpinner();
-        void getsignupdetails(SignupRequestParams signupRequestParams);
         void uploadFb(FragmentActivity activity, Uri imageUri);
 
     }

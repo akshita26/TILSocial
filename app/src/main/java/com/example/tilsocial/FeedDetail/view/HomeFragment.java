@@ -27,6 +27,7 @@ import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.MainActivity;
 import com.example.tilsocial.R;
+import com.example.tilsocial.signup.presenter.MainContractSignup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,11 +62,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        prf = this.getActivity().getSharedPreferences("details", Context.MODE_PRIVATE);
-        empid = prf.getString("empid",null);
-        empidinterger = Integer.parseInt(empid);
-
-
 
 
 //        Toast.makeText(getActivity(), "employeeidis" + empid, Toast.LENGTH_SHORT).show();
@@ -83,8 +79,13 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                              Bundle savedInstanceState) {
 
           View view =  inflater.inflate(R.layout.fragment_home, container, false);
-          presenter = new FeedPresentor(this,new MainFeedModel());
-          loadingPB = view.findViewById(R.id.preogressbar);
+
+        prf = getActivity().getSharedPreferences("details", 0);
+        empid = prf.getString("empid","");
+        empidinterger = Integer.parseInt(empid);
+        presenter = new FeedPresentor(this,new MainFeedModel());
+
+        loadingPB = view.findViewById(R.id.preogressbar);
           recyclerView = view.findViewById(R.id.postrecyclerview);
           modelPosts = new ArrayList<>();
           loadfeeddata();
@@ -92,7 +93,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
           recyclerView.setLayoutManager(manager);
           adapterPosts = new AdapterPosts(getActivity(),modelPosts);
           recyclerView.setAdapter(adapterPosts);
-
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -191,16 +191,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
             pageno = 0;
             loadfeeddatatrending();
             Toast.makeText(getActivity(), "Trending", Toast.LENGTH_SHORT).show();
-        }
-        else if (item.getItemId() == R.id.logoutuser)
-        {
-            SharedPreferences.Editor editor = prf.edit();
-            editor.clear();
-            editor.commit();
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-            Toast.makeText(getActivity(), "Logout Done", Toast.LENGTH_SHORT).show();
         }
         else
         {

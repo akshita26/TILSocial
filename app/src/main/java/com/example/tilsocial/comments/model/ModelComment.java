@@ -4,7 +4,10 @@ import android.util.Log;
 
 import com.example.tilsocial.comments.API.CommentAPIClient;
 import com.example.tilsocial.comments.API.CommentAPIInterface;
+import com.example.tilsocial.comments.API.SaveCommentAPI;
+import com.example.tilsocial.comments.presenter.CommentPresenter;
 import com.example.tilsocial.comments.presenter.MainContractComment;
+import com.example.tilsocial.signup.model.SignupRequestParams;
 
 import java.util.List;
 
@@ -14,7 +17,33 @@ import retrofit2.Response;
 
 public class ModelComment implements MainContractComment.Model {
     CommentAPIInterface apiInterface;
+    SaveCommentAPI saveCommentAPI;
 
+
+    @Override
+    public void postcomment(PostComment postComment, OnFinishedListener onFinishedListener) {
+        saveCommentAPI=CommentAPIClient.getClient().create(SaveCommentAPI.class);
+        Call<CommentModel> PostCall= saveCommentAPI.postcommntresponse(postComment);
+        PostCall.enqueue(new Callback<CommentModel>() {
+            @Override
+            public void onResponse(Call<CommentModel> call, Response<CommentModel> response) {
+                if(response!=null)
+                {
+                    onFinishedListener.OnFinishedSaveComment(response.body());
+                    Log.e("NewCommnt", "Comment: " + response.body());
+                }
+                else
+                {
+                    Log.e("null1234", "onResponse: " + "nulll getting" );
+                }
+            }
+            @Override
+            public void onFailure(Call<CommentModel> call, Throwable t) {
+                Log.e("TAG", "onResponsesignuppfail: " + t.getMessage() );
+                onFinishedListener.onFailure(t);
+            }
+        });
+    }
 
     @Override
     public void getComments(OnFinishedListener onFinishedListener, String postId) {

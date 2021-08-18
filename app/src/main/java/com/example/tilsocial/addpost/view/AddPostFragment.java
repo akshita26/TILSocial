@@ -1,6 +1,7 @@
 package com.example.tilsocial.addpost.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import com.example.tilsocial.R;
 import com.example.tilsocial.addpost.model.AddPostModel;
 import com.example.tilsocial.addpost.model.AddPostRequestParams;
 import com.example.tilsocial.addpost.presenter.AddPostPresenter;
+import com.example.tilsocial.signup.presenter.MainContractSignup;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -39,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,13 +53,16 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     EditText title, desc;
     ChipGroup chipGroup, chipGroup2;
     Chip chip;
-    String s, simage="awq";
     Integer count, cinterest, isdesc = 0, isinterest = 0, i_width=0;
     Uri imageUri;
     List<String> interest;
     String[] interestList;
     List<String> imageList = new ArrayList<>();
     AddPostPresenter addPostPresenter;
+    SharedPreferences sharedPreferences,preferences;
+    String empid;
+    Integer empidinteger;
+    ArrayList tags;
 
     public AddPostFragment() {
         // Required empty public constructor
@@ -81,8 +88,13 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         chipGroup = view.findViewById(R.id.chip_group);
         interest_tag = view.findViewById(R.id.spinner);
         cancelimage = view.findViewById(R.id.cancelimage);
-//        chipGroup2 = view.findViewById(R.id.chip_group2);
 
+        preferences= getActivity().getSharedPreferences("tags",0);
+
+        HashSet set = (HashSet<String>) preferences.getStringSet("interests", null);
+        Log.d("Interestsss", "onCreateView: "+set);
+        tags = new ArrayList(set);
+        Log.d("tagsss", "onCreateView: "+tags);
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +106,10 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 addPostRequestParams.setContent(desc.getText().toString());
                 addPostRequestParams.setImages(imageList);
                 addPostRequestParams.setTags(interestList);
+                sharedPreferences=getActivity().getSharedPreferences("details",0);
+                empid=sharedPreferences.getString("empid", "");
+                empidinteger = Integer.parseInt(empid);
+                addPostRequestParams.setEmpId(empidinteger);
                 try {
                     addPostPresenter.doPost(addPostRequestParams);
                 } catch (JSONException e) {
@@ -159,7 +175,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                     post.setEnabled(b);
                     if(b) {
                         post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
-                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.teal_600)));
+                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.basic)));
                     }
                     else{
                         post.setTextColor(getResources().getColor(R.color.white));
@@ -176,45 +192,21 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         });
 
 //        Interest Tag selection
-        String[] Interests = new String[]{
-                "Select Interest...",
-                "Interest 1",
-                "Interest 2",
-                "Interest 3",
-                "Interest 4"
-        };
-
-        final List<String> InterestList = new ArrayList<>(Arrays.asList(Interests));
+//        String[] Interests = new String[]{
+//                "Select Interest...",
+//                "Interest 1",
+//                "Interest 2",
+//                "Interest 3",
+//                "Interest 4"
+//        };
+//
+//        final List<String> InterestList = new ArrayList<>(Arrays.asList(Interests));
 
         // Initializing an ArrayAdapter
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-                getActivity(), R.layout.spinnneritem, InterestList) {
-            @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
+                getActivity(), R.layout.spinnneritem, tags);
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
+
         interest_tag.setAdapter(TeamArrayAdapter);
 
         interest = new ArrayList<>();
@@ -230,7 +222,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                         chip.setCloseIconVisible(true);
                         chipGroup.addView(chip);
 
-                        interest_tag.setSelection(0);
+                        interest_tag.setSelection(i);
 
                         cinterest = chipGroup.getChildCount();
                         for (int j = 0; j < cinterest; j++) {
@@ -253,7 +245,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                         if (isdesc == 1 && isinterest >= 1) {
                             post.setEnabled(true);
                             post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
-                            post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.teal_600)));
+                            post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.basic)));
                         }
                     }
                     else{

@@ -147,9 +147,9 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
     @Override
     public void dosignup(SignupRequestParams signupRequestParams) {
-
+        Log.e("checking data", "onResponse: " + signupRequestParams.toString());
         if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation(), signupRequestParams.getInterests())) {
-
+            Log.e("checking data", "onResponse: " + signupRequestParams.toString());
             model.dosignup(signupRequestParams,this);
             mainView.nextfragment();
         }

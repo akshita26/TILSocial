@@ -27,11 +27,12 @@ public class MainFeedModel implements MainContract.GetFeedList {
         call.enqueue(new Callback<FeedContent>() {
             @Override
             public void onResponse(Call<FeedContent> call, Response<FeedContent> response) {
-                if(response!=null)
+                if(response.body()!=null)
                 {
                     Log.e(TAG, "onResponse: " +  response.body());
 //               loadingPB.setVisibility(View.GONE);
                     FeedContent feedContent = response.body();
+
                     onFinishedListener.onFinished(response.body().getModelPostList(),feedContent);
 
                 }

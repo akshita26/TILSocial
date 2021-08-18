@@ -41,6 +41,17 @@ public class ModelPost {
     @SerializedName("postId")
     private String postId;
 
+    @SerializedName("empImgUrl")
+    private String empImgUrl;
+
+    public String getEmpImgUrl() {
+        return empImgUrl;
+    }
+
+    public void setEmpImgUrl(String empImgUrl) {
+        this.empImgUrl = empImgUrl;
+    }
+
     public List<String> getImages() {
         return images;
     }

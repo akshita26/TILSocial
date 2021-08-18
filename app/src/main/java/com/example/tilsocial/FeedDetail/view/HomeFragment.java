@@ -1,7 +1,5 @@
 package com.example.tilsocial.FeedDetail.view;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +23,6 @@ import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
-import com.example.tilsocial.MainActivity;
 import com.example.tilsocial.R;
 
 import java.util.ArrayList;
@@ -52,6 +49,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     Boolean isloading = false;
     Boolean islastpage = false;
     int totalpages ;
+    SharedPreferences sharedPreferences;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -61,8 +59,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        prf = this.getActivity().getSharedPreferences("details", Context.MODE_PRIVATE);
-        empid = prf.getString("empid",null);
+        sharedPreferences= getActivity().getSharedPreferences("details",0);
+        Log.e("HomeActivityfeedempid", "onResponse: " + sharedPreferences.getString("empid",null)  );
+        empid = sharedPreferences.getString("empid",null);
         empidinterger = Integer.parseInt(empid);
 
 
@@ -83,7 +82,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                              Bundle savedInstanceState) {
 
           View view =  inflater.inflate(R.layout.fragment_home, container, false);
-          presenter = new FeedPresentor(this,new MainFeedModel());
+
+
+        presenter = new FeedPresentor(this,new MainFeedModel());
           loadingPB = view.findViewById(R.id.preogressbar);
           recyclerView = view.findViewById(R.id.postrecyclerview);
           modelPosts = new ArrayList<>();
@@ -132,6 +133,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     private void loadfeeddata() {
 
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
+        Log.e("HomeActivityfeed13empid", "onResponse: " + empidinterger);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
         presenter.requestDataFromServer(pageno, "recency", empidinterger, "feed",loadingPB);
 

@@ -2,7 +2,6 @@ package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -94,18 +93,13 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-           if(modelPost.getImages().isEmpty())
-           {
-               holder1.imageView.setVisibility(View.GONE);
-           }
-           else
-           {
+
                Glide.with(context).load(modelPost.getImages().get(0))
                        .placeholder(R.drawable.icprofile)
                        .error(R.drawable.ic_error_outline)
                        .into(holder1.imageView);
 
-           }
+
 
 
 
@@ -117,12 +111,12 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    String postid = modelPost.getPostId();
                     actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
                     actionBar.setTitle("Comment");
                     CommentFragment commentFragment = new CommentFragment();
                     Bundle bundle=new Bundle();
-                    bundle.putString("postid", postId);
+                    bundle.putString("postid", postid);
                     commentFragment.setArguments(bundle);
                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

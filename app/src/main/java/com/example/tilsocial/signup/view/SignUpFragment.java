@@ -125,8 +125,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             @Override
             public void onClick(View v) {
 
+                //Toast.makeText(getActivity(), "clicked ", Toast.LENGTH_SHORT).show();
                 int empid = Integer.parseInt(employeeidd.getText().toString().isEmpty() ? "0" : employeeidd.getText().toString());
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
+               // Log.e("checking data3242", "onResponse: " +namee.getText().toString());
                 signupRequestParams.setEmpId(empid);
                 signupRequestParams.setName(namee.getText().toString());
                 signupRequestParams.setBio(bioo.getText().toString());
@@ -135,7 +137,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterests((ArrayList) interestList);
                 signupRequestParams.setImgUrl(imageurl);
-                presenter.dosignup(signupRequestParams);
+                Log.e("checking data3242", "onResponse: " + signupRequestParams.toString());
+                //presenter.dosignup(signupRequestParams);
             }
         });
 
@@ -318,7 +321,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     @Override
     public void SetSignupdata(SignupRequestParams signupRequestParams) {
 
-        Log.e("Signupp", "data" + signupRequestParams);
+        Log.e("Signuppdataa", "data" + signupRequestParams);
         sharedPreferences = getActivity().getSharedPreferences("details", 0);
         editor = sharedPreferences.edit();
         editor.putString("empid", signupRequestParams.getEmpId().toString());
@@ -337,6 +340,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void extractFb(String s) {
+        Log.e("Signupimagee", "onResponse: " + s);
         imageurl = s;
     }
 

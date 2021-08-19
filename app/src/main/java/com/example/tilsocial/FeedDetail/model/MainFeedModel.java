@@ -1,6 +1,7 @@
 package com.example.tilsocial.FeedDetail.model;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.tilsocial.FeedDetail.api.ApiClient;
@@ -22,7 +23,7 @@ public class MainFeedModel implements MainContract.GetFeedList {
     @Override
     public void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String type, ProgressBar loadingPB) {
 
-//       loadingPB.setVisibility(View.VISIBLE);
+     loadingPB.setVisibility(View.VISIBLE);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 //        Log.e(TAG, "recentt" + recent);
         Call<FeedContent> call = apiInterface.getPost(page,filter,empid,type);
@@ -31,12 +32,14 @@ public class MainFeedModel implements MainContract.GetFeedList {
             public void onResponse(Call<FeedContent> call, Response<FeedContent> response) {
                 if(response.isSuccessful()){
                 Log.e(TAG, "onResponse: " +  response.body());
-//               loadingPB.setVisibility(View.GONE);
+               loadingPB.setVisibility(View.GONE);
                 FeedContent feedContent = response.body();
                 onFinishedListener.onFinished(response.body().getModelPostList(),feedContent);}
                 else{
-                    ErrorResponse errorResponse= ErrorUtils.parseError(response);
-                    Log.d("Error", "onResponse: "+errorResponse.getError());
+                    ErrorResponse errorResponse = ErrorUtils.parseError(response);
+                    Log.d("Errorhandling", "onResponse: "+errorResponse.getError());
+
+                    Log.d(TAG, "onResponse: errorrrr ");
                 }
             }
 

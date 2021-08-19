@@ -2,7 +2,6 @@ package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -24,8 +23,10 @@ import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.view.CommentFragment;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -36,6 +37,12 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     List<ModelPost> modelPosts;
     ActionBar actionBar;
     String postId,empId;
+    private static int POST_VIEW = 0;
+    private static int  INTEREST_VIEW = 1;
+    List<String> tagss = new ArrayList<>();
+    int flag =0;
+
+
 
 
     public AdapterPosts(Context context,List<ModelPost> modelPosts) {
@@ -46,75 +53,76 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-//        if(viewType==VIEWTYPE_POSTS) {
-//
-//        }
-//        else{
-//            view= LayoutInflater.from(context).inflate(R.layout.intersetcardview, parent, false);
-//            return new InterestHolder(view);
-//        }
+        tagss.add("interset1");
+        tagss.add("interset2");
+        tagss.add("interset3");
 
-        view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
-        return new PostsHolder(view);
+        if(viewType==POST_VIEW) {
+
+            view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
+            return new PostsHolder(view);
+        }
+        else{
+            view= LayoutInflater.from(context).inflate(R.layout.intersetrow, parent, false);
+            return new Interestholder(view);
+        }
+
+
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//        if(position == 2) {
-//
-//            InterestHolder holder2 = (InterestHolder) holder;
-//
-//        }
-//        else
-//        {
-            PostsHolder holder1=(PostsHolder)holder;
+
+        if (getItemViewType(position) == POST_VIEW ) {
+
+            PostsHolder holder1 = (PostsHolder) holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
-            postId=modelPost.getPostId();
-            Log.d("postidd", "onBindViewHolder: "+postId);
-            empId=modelPost.getEmpId();
-            holder1.like.setText(modelPost.getLikesCount() + " Likes"  );
+            postId = modelPost.getPostId();
+            Log.d("postidd", "onBindViewHolder: " + postId);
+            empId = modelPost.getEmpId();
+            holder1.like.setText(modelPost.getLikesCount() + " Likes");
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
-            Log.d("checkimg", "onBindViewHolder: "+modelPost.getEmpImgUrl());
+            Log.d("checkimg", "onBindViewHolder: " + modelPost.getEmpImgUrl());
             holder1.content.setText(modelPost.getContent());
-             Glide.with(context).load(modelPost.getEmpImgUrl())
-                       .placeholder(R.drawable.icprofile)
-                       .error(R.drawable.ic_error_outline)
-                       .into(holder1.userprof);
+            Glide.with(context).load(modelPost.getEmpImgUrl())
+                    .placeholder(R.drawable.icprofile)
+                    .error(R.drawable.ic_error_outline)
+                    .into(holder1.userprof);
             Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
             try {
                 calendar.setTimeInMillis(Long.parseLong(modelPost.getCreatedAt()));
-            } catch(Exception ex) {
-            ex.printStackTrace();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
             String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
             holder1.time.setText(timedate);
-            String taggs [] = modelPost.getTags();
-            if(taggs==null){
+            String taggs[] = modelPost.getTags();
+            if (taggs == null) {
                 holder1.tags.setText("Empty");
-            }
-            else {
+            } else {
                 String tagg = "";
                 for (int i = 0; i < taggs.length; i++) {
                     tagg = tagg + "#" + taggs[i] + " ";
                 }
                 holder1.tags.setText(tagg);
             }
-           if(modelPost.getImages()==null || modelPost.getImages().get(0).isEmpty())
-           {
-               holder1.imageView.setVisibility(View.GONE);
-           }
-           else
-           {
-               Glide.with(context).load(modelPost.getImages().get(0))
-                       .placeholder(R.drawable.icprofile)
-                       .error(R.drawable.ic_error_outline)
-                       .into(holder1.imageView);
-
-           }
-
-
+            if(modelPost.getImages()==null || modelPost.getImages().get(0).isEmpty())
+            {
+                holder1.imageView.setVisibility(View.GONE);
+            }
+            else
+            {
+                Glide.with(context).load(modelPost.getImages().get(0))
+                        .placeholder(R.drawable.noimageeee)
+                        .error(R.drawable.noimageeee)
+                        .into(holder1.imageView);
+            }
+//               Glide.with(context).load(modelPost.getImages().get(0))
+//                       .placeholder(R.drawable.icprofile)
+//                       .error(R.drawable.ic_error_outline)
+//                       .into(holder1.imageView);
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -149,18 +157,34 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
 
+        } else {
+
+                Interestholder holder2 = (Interestholder) holder;
+                for (int i = 0; i < tagss.size(); i++) {
+
+                    holder2.chip = new Chip(context);
+                    Log.d("intersets", "onBindViewHolder: "+ tagss.get(i));
+                    holder2.chip.setText(tagss.get(i));
+                    holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                    holder2.chip.setCheckable(true);
+                    holder2.chipGroup.addView(holder2.chip);
+                }
+        }
+
+
     }
 
-//    public void addtopost(List<ModelPost> modelPostList){
-//        if(modelPosts==null){
-//            modelPosts=modelPostList;
-//            notifyDataSetChanged();
-//        }
-//        else{
-//            modelPosts.addAll(modelPostList);
-//            notifyDataSetChanged();
-//        }
-//    }
+    @Override
+    public int getItemViewType(int position) {
+
+        if (position == 2 ) {
+
+            return INTEREST_VIEW;
+
+        } else {
+            return POST_VIEW;
+        }
+    }
 
     @Override
     public int getItemCount() {
@@ -197,6 +221,19 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             chipGroup = itemView.findViewById(R.id.chip_groupfortags);
             tags = itemView.findViewById(R.id.tagss);
             share=itemView.findViewById(R.id.sharebtn);
+        }
+    }
+
+    class Interestholder extends RecyclerView.ViewHolder{
+
+        ChipGroup chipGroup;
+        Chip chip;
+
+
+        public Interestholder(@NonNull View itemView) {
+            super(itemView);
+
+            chipGroup = itemView.findViewById(R.id.intersetshow);
         }
     }
 

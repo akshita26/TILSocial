@@ -26,16 +26,11 @@ public class SignUpModel implements MainContractSignup.Model
             public void onResponse(Call<SignupRequestParams> call, Response<SignupRequestParams> response) {
 
                 Log.e(TAG, "onResponse: " + response.code() );
-                if(response!=null)
-                {
+
                     onFinishedListener.OnFinishedSignupdata(response.body());
 
                     Log.e(TAG, "onResponseasasxa: " + response.body());
-                }
-                else
-                {
-                    Log.e("null1234", "onResponse: " + "nulll getting" );
-                }
+
             }
             @Override
             public void onFailure(Call<SignupRequestParams> call, Throwable t) {
@@ -56,8 +51,12 @@ public class SignUpModel implements MainContractSignup.Model
             @Override
             public void onResponse(Call<SpinnerDetails> call, Response<SpinnerDetails> response) {
 
-                Log.e(TAG, "onResponsesignupmodel: " +  response.body());
-                onFinishedListener.onFinished(response.body());
+                Log.e(TAG, "onResponsesignupmodel3433: " +  response.body());
+
+
+                    onFinishedListener.onFinished(response.body());
+
+
             }
 
             @Override

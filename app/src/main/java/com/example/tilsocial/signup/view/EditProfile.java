@@ -165,6 +165,8 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     }
 
+
+
     private void selectImage() {
 
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
@@ -260,6 +262,10 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     @Override
     public void showinterestvalidation() {
         Toast.makeText(getActivity(), "Please select minimum 1 interests", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void validationonprofilepic() {
+        Toast.makeText(getActivity(), "Please Upload profile pic", Toast.LENGTH_SHORT).show();
     }
 
     @Override

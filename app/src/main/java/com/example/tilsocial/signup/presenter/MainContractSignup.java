@@ -39,6 +39,7 @@ public interface MainContractSignup {
         void extractFb(String s);
         void getspinnerdata(HashMap<String,List<Departments>> map);
         void gettagsdata(List<String> tagss);
+        void validationonprofilepic();
     }
 
     /**

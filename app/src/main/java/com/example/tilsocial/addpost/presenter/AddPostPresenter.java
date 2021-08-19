@@ -50,7 +50,7 @@ public class AddPostPresenter {
 
             // Defining the child of storageReference
             String path = UUID.randomUUID().toString();
-            StorageReference ref = storageReference.child(path);
+            StorageReference ref = storageReference.child("Feed/"+path);
             // adding listeners on upload
             // or failure of image
             ref.putFile(filePath)
@@ -60,12 +60,10 @@ public class AddPostPresenter {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                    // Image uploaded successfully
-                                    // Dismiss dialog
                                     progressDialog.dismiss();
                                     Toast.makeText(context, "Image Uploaded to FB!!",
                                             Toast.LENGTH_SHORT).show();
-                                    pathUri="https://firebasestorage.googleapis.com/v0/b/til-social-22075.appspot.com/o/"+path+"?alt=media&token=3371995e-6d03-4ea3-ad30-fa78aaa59ce7";
+                                    pathUri="https://firebasestorage.googleapis.com/v0/b/til-social-22075.appspot.com/o/Feed%2F"+path+"?alt=media";
                                     addPostView.extractFb(pathUri);
                                 }
                             })

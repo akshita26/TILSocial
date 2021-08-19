@@ -93,7 +93,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         editor.putStringSet("inter", set);
         editor.putString("team", userData.getTeam());
         editor.putString("imgurl",userData.getImgUrl());
-        Log.d("profilepicture", "setDataToRecyclerView: "+userData.getImgUrl());
+        Log.d("profilepicture", "setDataToRecyclerView: "+userData.getInterests());
         editor.commit();
 
         Intent intent = new Intent(getActivity(), DashboardActivity.class);

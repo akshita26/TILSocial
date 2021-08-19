@@ -102,6 +102,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             teamm=sharedPreferences.getString("team","");
             HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
             ArrayList tags = new ArrayList(set);
+
             Log.e("editprofilee", "onResponse133: " + tags.toString());
 
         userprofile.setOnClickListener(new View.OnClickListener() {

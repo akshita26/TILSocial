@@ -1,5 +1,6 @@
 package com.example.tilsocial.FeedDetail.model;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -10,6 +11,8 @@ import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.signin.model.ErrorResponse;
 import com.example.tilsocial.signin.model.ErrorUtils;
 import com.example.tilsocial.signup.model.SpinnerDetails;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,6 +76,35 @@ public class MainFeedModel implements MainContract.GetFeedList {
             }
         });
     }
+
+    @Override
+    public void settaggdata(OnFinishedListener onFinishedListener, Integer empidinterger, List<String> interestList, Context context) {
+        Log.e(TAG, "onResponsesignupmodel34333546: " +   empidinterger);
+        Log.e(TAG, "onResponsesignupmodel34333546: " +   interestList.toString());
+        TagDetails tagDetails = new TagDetails();
+        tagDetails.setEmpId(empidinterger);
+        tagDetails.setTagglist(interestList);
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<TagDetails> call = apiInterface.settagssdetails(tagDetails);
+        call.enqueue(new Callback<TagDetails>() {
+            @Override
+            public void onResponse(Call<TagDetails> call, Response<TagDetails> response) {
+
+                Log.e(TAG, "onResponsesignupmodelcheck: " +  response.body());
+                onFinishedListener.onFinishedgettag(response.body(),context);
+
+
+            }
+
+            @Override
+            public void onFailure(Call<TagDetails> call, Throwable t) {
+                onFinishedListener.onFailure(t);
+                Log.e(TAG, "onResponsesignupmodel: " +  t.getMessage());
+            }
+        });
+
+    }
+
     public void gettagsdetails(OnFinishedListener onFinishedListener)
     {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -82,8 +114,6 @@ public class MainFeedModel implements MainContract.GetFeedList {
             public void onResponse(Call<SpinnerDetails> call, Response<SpinnerDetails> response) {
 
                 Log.e(TAG, "onResponsesignupmodel3433: " +  response.body());
-
-
                 onFinishedListener.onFinishedtag(response.body());
 
 

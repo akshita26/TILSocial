@@ -27,8 +27,10 @@ import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.FeedDetail.model.TagDetails;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
+import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.example.tilsocial.signup.view.EditProfile;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -195,4 +197,16 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
                 "Something went wrong...Error message: " + t.getMessage(),
                 Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void settagssdata(SpinnerDetails spinnerDetails) {
+
+    }
+
+    @Override
+    public void gettingtagss(TagDetails tagDetails, Context context) {
+
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.tilsocial.FeedDetail.view;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,18 +17,23 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.FeedDetail.model.TagDetails;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -53,12 +59,19 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     int totalpages ;
     LinearLayout nopost;
     List<String > taggs = new ArrayList<>();
+    SharedPreferences sharedPreferences;
+    ArrayList intersett = new ArrayList();
+    Context context;
+
+
+
 
 
 
     public HomeFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,10 +96,15 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
           View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
           prf = getActivity().getSharedPreferences("details", 0);
+          context = getActivity();
           empid = prf.getString("empid","");
+          HashSet set = (HashSet<String>) prf.getStringSet("inter", null);
+          ArrayList tags = new ArrayList(set);
+          intersett.addAll(tags);
+          Log.e("editprofileehome", "onResponse133: " + tags.toString());
           empidinterger = Integer.parseInt(empid);
           presenter = new FeedPresentor(this,new MainFeedModel());
-
+          presenter.gettagg();
           loadingPB = view.findViewById(R.id.preogressbar);
           nopost = view.findViewById(R.id.noresultt);
           recyclerView = view.findViewById(R.id.postrecyclerview);
@@ -94,7 +112,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
           loadfeeddata();
           manager = new LinearLayoutManager(getActivity());
           recyclerView.setLayoutManager(manager);
-          adapterPosts = new AdapterPosts(getActivity(),modelPosts,taggs);
+          adapterPosts = new AdapterPosts(getActivity(),modelPosts,taggs, intersett,empidinterger);
           recyclerView.setAdapter(adapterPosts);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -192,12 +210,30 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     @Override
     public void settagssdata(SpinnerDetails spinnerDetails) {
 
-        Log.e("HomeActivityfeed13", "onResponse: " + spinnerDetails.getTagslist());
+        Log.e("HomeActivityfeedtag", "onResponse: " + spinnerDetails.getTagslist());
 
-//        taggs.add(spinnerDetails.getTagslist());
+
+        taggs.addAll(spinnerDetails.getTagslist());
+
+
 
     }
 
+    @Override
+    public void gettingtagss(TagDetails tagDetails, Context context) {
+
+        Log.e("contextcheck", "onResponse: " + context);
+        prf = context.getSharedPreferences("details", 0);
+        SharedPreferences.Editor editor = prf.edit();
+        HashSet<String> set = new HashSet(tagDetails.getTagglist());
+        editor.putStringSet("inter", set);
+        editor.commit();
+
+
+
+        Log.e("HomeActivityfeedtag464", "onResponse: " + tagDetails.getTagglist());
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -225,4 +261,10 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     }
 
 
+    public void callsaveinterset(List<String> interestList, int empidd, Context context) {
+        Log.e("HomeActivityfeedtag3535", "onResponse: " + interestList.toString());
+        Log.e("empidcheck", "onResponse: " + empidd);
+        presenter = new FeedPresentor(this,new MainFeedModel());
+        presenter.setnewtagss(empidd,interestList,context);
+    }
 }

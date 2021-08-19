@@ -133,7 +133,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 signupRequestParams.setInterests((ArrayList) interestList);
                 signupRequestParams.setImgUrl(imageurl);
                 Log.e("checking data3242", "onResponse: " + signupRequestParams.toString());
-                //presenter.dosignup(signupRequestParams);
+                presenter.dosignup(signupRequestParams);
             }
         });
 

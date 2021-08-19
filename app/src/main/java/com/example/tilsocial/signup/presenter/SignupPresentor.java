@@ -96,7 +96,6 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
         if(mainView != null){
 
-
             for(int i=0;i<spinnerDetails.getTeamslist().size();i++)
             {
                 map.put(spinnerDetails.getTeamslist().get(i).getTeamm(),spinnerDetails.getTeamslist().get(i).getDepartmentsList());

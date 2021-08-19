@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.view.HomeFragment;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.Departments;
@@ -103,6 +104,10 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
             ArrayList tags = new ArrayList(set);
             Log.e("editprofilee", "onResponse133: " + tags.toString());
+
+        Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+                .error(R.drawable.ic_error_outline)
+                .into(userprofile);
 
         userprofile.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -140,17 +140,18 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-            if(modelPost.getImages()==null || modelPost.getImages().get(0).isEmpty())
-            {
-                holder1.imageView.setVisibility(View.GONE);
-            }
-            else
-            {
+//            if(modelPost.getImages()==null || modelPost.getImages().get(0).isEmpty())
+//            {
+//                holder1.imageView.setVisibility(View.GONE);
+//            }
+//            else
+//            {
                 Glide.with(context).load(modelPost.getImages().get(0))
                         .placeholder(R.drawable.noimageeee)
                         .error(R.drawable.noimageeee)
                         .into(holder1.imageView);
-            }
+            Log.d("FeedImggg", "onBindViewHolder: "+modelPost.getImages().get(0));
+//            }
 //               Glide.with(context).load(modelPost.getImages().get(0))
 //                       .placeholder(R.drawable.icprofile)
 //                       .error(R.drawable.ic_error_outline)

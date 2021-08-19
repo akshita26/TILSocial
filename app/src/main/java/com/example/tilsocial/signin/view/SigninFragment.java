@@ -82,8 +82,6 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
 
     @Override
     public void setDataToRecyclerView(UserData userData) {
-        Log.d("Userdataa", "getDataa: "+userData);
-        Log.d("Interests", "setDataToRecyclerView: "+userData.getInterests());
         sharedPreferences = getActivity().getSharedPreferences("details", 0);
         editor = sharedPreferences.edit();
         editor.putString("empid",userData.getEmpId().toString());
@@ -95,6 +93,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         editor.putStringSet("inter", set);
         editor.putString("team", userData.getTeam());
         editor.putString("imgurl",userData.getImgUrl());
+        Log.d("profilepicture", "setDataToRecyclerView: "+userData.getImgUrl());
         editor.commit();
 
         Intent intent = new Intent(getActivity(), DashboardActivity.class);

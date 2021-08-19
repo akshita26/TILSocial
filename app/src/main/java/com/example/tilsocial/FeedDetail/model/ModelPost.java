@@ -44,14 +44,6 @@ public class ModelPost {
     @SerializedName("empImgUrl")
     private String empImgUrl;
 
-    public String getEmpImgUrl() {
-        return empImgUrl;
-    }
-
-    public void setEmpImgUrl(String empImgUrl) {
-        this.empImgUrl = empImgUrl;
-    }
-
     public List<String> getImages() {
         return images;
     }
@@ -140,6 +132,14 @@ public class ModelPost {
         this.tags = tags;
     }
 
+    public String getEmpImgUrl() {
+        return empImgUrl;
+    }
+
+    public void setEmpImgUrl(String empImgUrl) {
+        this.empImgUrl = empImgUrl;
+    }
+
     @Override
     public String toString() {
         return "ModelPost{" +
@@ -154,6 +154,7 @@ public class ModelPost {
                 ", tags=" + Arrays.toString(tags) +
                 ", images=" + images +
                 ", postId='" + postId + '\'' +
+                ", empImgUrl='" + empImgUrl + '\'' +
                 '}';
     }
 }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -49,7 +50,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     Boolean isloading = false;
     Boolean islastpage = false;
     int totalpages ;
-    SharedPreferences sharedPreferences;
+    LinearLayout nopost;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,12 +61,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        sharedPreferences= getActivity().getSharedPreferences("details",0);
-        Log.e("HomeActivityfeedempid", "onResponse: " + sharedPreferences.getString("empid",null)  );
-        empid = sharedPreferences.getString("empid",null);
-        empidinterger = Integer.parseInt(empid);
-
-
 
 
 //        Toast.makeText(getActivity(), "employeeidis" + empid, Toast.LENGTH_SHORT).show();
@@ -83,9 +79,13 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
           View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
-
+        prf = getActivity().getSharedPreferences("details", 0);
+        empid = prf.getString("empid","");
+        empidinterger = Integer.parseInt(empid);
         presenter = new FeedPresentor(this,new MainFeedModel());
+
           loadingPB = view.findViewById(R.id.preogressbar);
+          nopost = view.findViewById(R.id.noresultt);
           recyclerView = view.findViewById(R.id.postrecyclerview);
           modelPosts = new ArrayList<>();
           loadfeeddata();
@@ -93,7 +93,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
           recyclerView.setLayoutManager(manager);
           adapterPosts = new AdapterPosts(getActivity(),modelPosts);
           recyclerView.setAdapter(adapterPosts);
-
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -132,8 +131,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
     private void loadfeeddata() {
 
+
+
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
-        Log.e("HomeActivityfeed13empid", "onResponse: " + empidinterger);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
         presenter.requestDataFromServer(pageno, "recency", empidinterger, "feed",loadingPB);
 
@@ -151,21 +151,31 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void setDataToRecyclerView(List<ModelPost> modelPostListt, FeedContent feedContent) {
         Log.e("HomeActivityfeedlistt", "onResponse: " +  modelPostListt.toString());
         Log.e("HomeActivityfeedpagenoo", "onResponse: " +  feedContent.getTotalPages());
-
-        totalpages = feedContent.getTotalPages()-1;
-        isloading = true;
-        modelPosts.addAll(modelPostListt);
-        adapterPosts.notifyDataSetChanged();
-        isloading = false;
-        Log.e("size", "onResponse: " + modelPosts.size());
-        if(modelPosts.size()>0)
+        if(modelPostListt.size() == 0 && pageno == 0)
         {
-            islastpage = modelPosts.size()<pagesize;
+            nopost.setVisibility(View.VISIBLE);
         }
         else
         {
-            islastpage = true;
+
+            totalpages = feedContent.getTotalPages()-1;
+            isloading = true;
+            modelPosts.addAll(modelPostListt);
+            adapterPosts.notifyDataSetChanged();
+            isloading = false;
+            Log.e("size", "onResponse: " + modelPosts.size());
+            if(modelPosts.size()>0)
+            {
+                islastpage = modelPosts.size()<pagesize;
+            }
+            else
+            {
+                islastpage = true;
+            }
+
+
         }
+
 
     }
     @Override

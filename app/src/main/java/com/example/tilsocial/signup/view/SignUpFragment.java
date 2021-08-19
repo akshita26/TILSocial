@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -34,13 +33,10 @@ import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.example.tilsocial.signup.presenter.MainContractSignup;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,7 +48,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 
 public class SignUpFragment extends Fragment implements MainContractSignup.MainView {
@@ -76,8 +71,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     FirebaseStorage storage;
     StorageReference storageReference;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences, preferences;
+    SharedPreferences.Editor editor, editr;
 
 
     public SignUpFragment() {
@@ -148,9 +143,12 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void gettagsdata(List<String> tagss) {
-
+        preferences = getActivity().getSharedPreferences("tags", 0);
+        editr = preferences.edit();
+        HashSet<String> set = new HashSet(tagss);
+        editr.putStringSet("interests", set);
+        editr.commit();
         for (int i = 0; i < tagss.size(); i++) {
-
             chip = new Chip(getActivity());
             chip.setText(tagss.get(i));
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
@@ -169,7 +167,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                     } else {
                         interestList.remove(chip.getText());
                     }
-                    Toast.makeText(getActivity(), "-" + interestList, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "-" + interestList, Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -177,6 +175,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
 
     }
+
+
 
     private void selectImage() {
 
@@ -237,27 +237,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         }
     }
 
-    public void uploadImage() {
-        if (selectedImage != null) {
-
-            StorageReference ref = storageReference.child("UserProfile/" + UUID.randomUUID().toString());
-
-            ref.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "Failed1234 " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.d("TAG", "onFailure: " + e.getMessage());
-                }
-            });
-        }
-    }
-
 
     @Override
     public void shownamevalidation() {
@@ -298,6 +277,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     public void showinterestvalidation() {
         Toast.makeText(getActivity(), "Please select minimum 1 Interest", Toast.LENGTH_SHORT).show();
     }
+    @Override
+    public void validationonprofilepic() {
+        Toast.makeText(getActivity(), "Please upload profilepic", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void nextfragment() {
@@ -317,6 +300,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 Toast.LENGTH_LONG).show();
 
     }
+
 
     @Override
     public void SetSignupdata(SignupRequestParams signupRequestParams) {

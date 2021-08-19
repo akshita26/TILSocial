@@ -1,11 +1,14 @@
 package com.example.tilsocial.FeedDetail.model;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.tilsocial.FeedDetail.api.ApiClient;
 import com.example.tilsocial.FeedDetail.api.ApiInterface;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
+import com.example.tilsocial.signin.model.ErrorResponse;
+import com.example.tilsocial.signin.model.ErrorUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,23 +23,24 @@ public class MainFeedModel implements MainContract.GetFeedList {
     @Override
     public void getFeedList(OnFinishedListener onFinishedListener, int page, String filter, int empid, String type, ProgressBar loadingPB) {
 
-//       loadingPB.setVisibility(View.VISIBLE);
+     loadingPB.setVisibility(View.VISIBLE);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 //        Log.e(TAG, "recentt" + recent);
         Call<FeedContent> call = apiInterface.getPost(page,filter,empid,type);
         call.enqueue(new Callback<FeedContent>() {
             @Override
             public void onResponse(Call<FeedContent> call, Response<FeedContent> response) {
-                if(response.body()!=null)
-                {
-                    Log.e(TAG, "onResponse: " +  response.body());
-//               loadingPB.setVisibility(View.GONE);
-                    FeedContent feedContent = response.body();
+                if(response.isSuccessful()){
+                Log.e(TAG, "onResponse: " +  response.body());
+               loadingPB.setVisibility(View.GONE);
+                FeedContent feedContent = response.body();
+                onFinishedListener.onFinished(response.body().getModelPostList(),feedContent);}
+                else{
+                    ErrorResponse errorResponse = ErrorUtils.parseError(response);
+                    Log.d("Errorhandling", "onResponse: "+errorResponse.getError());
 
-                    onFinishedListener.onFinished(response.body().getModelPostList(),feedContent);
-
+                    Log.d(TAG, "onResponse: errorrrr ");
                 }
-
             }
 
             @Override
@@ -68,4 +72,5 @@ public class MainFeedModel implements MainContract.GetFeedList {
             }
         });
     }
+
 }

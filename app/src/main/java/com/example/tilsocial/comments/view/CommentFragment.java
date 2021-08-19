@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,7 +21,6 @@ import com.example.tilsocial.comments.API.CommentAPIInterface;
 import com.example.tilsocial.comments.model.CommentModel;
 import com.example.tilsocial.comments.model.ModelComment;
 import com.example.tilsocial.comments.model.PostComment;
-import com.example.tilsocial.comments.model.PostCommentResponse;
 import com.example.tilsocial.comments.presenter.CommentPresenter;
 import com.example.tilsocial.comments.presenter.MainContractComment;
 
@@ -40,6 +39,7 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
     ImageView sendcomment,commentimg;
     EditText newcomment;
     SharedPreferences sharedPreferences;
+    LinearLayout nocomment;
 
     public CommentFragment() {
 
@@ -58,6 +58,7 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         presenter = new CommentPresenter(this,new ModelComment());
         sendcomment=view.findViewById(R.id.sendcomment);
         newcomment=view.findViewById(R.id.editTextTextPersonName4);
+        nocomment = view.findViewById(R.id.nocommentt);
         commentimg=view.findViewById(R.id.commentimge);
         recyclerViewcomment = view.findViewById(R.id.commentrecyclerview);
         recyclerViewcomment.setHasFixedSize(true);
@@ -104,9 +105,23 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
 
     @Override
     public void setDataToRecyclerViewComment(List<CommentModel> commentModelList) {
+        if(commentModelList.size()==0)
+        {
+            nocomment.setVisibility(View.VISIBLE);
+        }
+        else
+        {
 
-        commentss.addAll(commentModelList);
-        commentAdapter.notifyDataSetChanged();
+            nocomment.setVisibility(View.GONE);
+            commentss.addAll(commentModelList);
+            commentAdapter.notifyDataSetChanged();
+
+
+        }
+
+
+
+
 //        Log.d("TAG", "setDataToRecyclerViewComment: "+commentModelList);
     }
 
@@ -118,6 +133,7 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
     @Override
     public void SetNewComment(CommentModel body) {
         Log.d("TAG", "SetNewComment: "+body.toString());
+        nocomment.setVisibility(View.GONE);
         commentss.add(body);
         commentAdapter.notifyDataSetChanged();
     }

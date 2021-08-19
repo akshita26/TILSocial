@@ -65,7 +65,7 @@ public class AddPostPresenter {
                                     progressDialog.dismiss();
                                     Toast.makeText(context, "Image Uploaded to FB!!",
                                             Toast.LENGTH_SHORT).show();
-                                    pathUri="https://firebasestorage.googleapis.com/v0/b/movie-24e29.appspot.com/o/"+path+"?alt=media&token=1af7e8bd-66a5-43a4-8435-b983df1a40dd";
+                                    pathUri="https://firebasestorage.googleapis.com/v0/b/til-social-22075.appspot.com/o/Feed%2F"+path+"?alt=media&token=8398b6e1-c8de-4d1d-96f4-a65c05de4727";
                                     addPostView.extractFb(pathUri);
                                 }
                             })
@@ -102,5 +102,6 @@ public class AddPostPresenter {
     public interface AddPostView {
         void showError();
         void extractFb(String s);
+
     }
 }

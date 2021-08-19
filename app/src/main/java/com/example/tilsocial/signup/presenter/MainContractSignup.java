@@ -18,7 +18,6 @@ public interface MainContractSignup {
         void dosignup(SignupRequestParams signupRequestParams);
         void gotoprofile(SignupRequestParams signupRequestParams);
         void requestDataFromServerSpinner();
-        void getsignupdetails(SignupRequestParams signupRequestParams);
         void uploadFb(FragmentActivity activity, Uri imageUri);
 
     }
@@ -40,6 +39,7 @@ public interface MainContractSignup {
         void extractFb(String s);
         void getspinnerdata(HashMap<String,List<Departments>> map);
         void gettagsdata(List<String> tagss);
+        void validationonprofilepic();
     }
 
     /**

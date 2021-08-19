@@ -190,10 +190,13 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
 //        Interest Tag selection
         String[] Interests = new String[]{
                 "Select Interest...",
-                "Interest 1",
-                "Interest 2",
-                "Interest 3",
-                "Interest 4"
+                "React",
+                "Spring",
+                "Python",
+                "SQL",
+                "Android",
+                "Frontend",
+                "Backend"
         };
 
         final List<String> InterestList = new ArrayList<>(Arrays.asList(Interests));

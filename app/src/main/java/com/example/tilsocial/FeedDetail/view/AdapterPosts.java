@@ -2,6 +2,10 @@ package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Path;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -12,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
@@ -20,16 +25,31 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
+import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.view.CommentFragment;
+import com.example.tilsocial.likes.model.LikeModel;
+import com.example.tilsocial.likes.model.PostLike;
+import com.example.tilsocial.likes.presenter.LikePresenter;
+import com.example.tilsocial.likes.view.LikeView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -40,8 +60,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static int POST_VIEW = 0;
     private static int  INTEREST_VIEW = 1;
     List<String> tagss = new ArrayList<>();
-    int flag =0;
-
+    LikeView likeView;
 
 
 
@@ -71,6 +90,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
@@ -82,7 +102,52 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             postId = modelPost.getPostId();
             Log.d("postidd", "onBindViewHolder: " + postId);
             empId = modelPost.getEmpId();
-            holder1.like.setText(modelPost.getLikesCount() + " Likes");
+            likeView=new LikeView(new LikePresenter(new LikeModel()));
+            holder1.like.setText(modelPost.getLikesCount()+ " Likes");
+            holder1.likeimage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!modelPost.getHasLiked()) {
+                        Log.e("LikePosteeeee", "falseeeeeee: " );
+                        holder1.likeimage.setColorFilter(Color.rgb(0, 0, 255));
+                        PostLike postLike=new PostLike();
+                        postLike.setPostId(postId);
+                        postLike.setEmpId(empId);
+                        postLike.setHasLiked(true);
+                        Log.e("LikePosteeeee", "falseeeeeee: "+postId );
+                        Log.e("LikePosteeeee", "falseeeeeee: "+empId );
+                        likeView.postlike(postLike);
+                        try {
+                            modelPost.setHasLiked(true);
+                        }
+                        catch (Exception e){
+                            Log.e("LikePosteeee", "Bug in like api " );
+                            Log.e("LikePosteeee", " "+e );
+                        }
+                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())+1+ " Likes");
+                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount())+1));
+                    }
+                    else{
+                        Log.e("LikePosteeee", "trueeeeeeeeeeeee: " );
+                        holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
+                        PostLike postLike=new PostLike();
+                        postLike.setPostId(postId);
+                        postLike.setEmpId(empId);
+                        try {
+                            modelPost.setHasLiked(false);
+                        }
+                        catch (Exception e){
+                            Log.e("LikePosteeee", "Bug in like api " );
+                            Log.e("LikePosteeee", " "+e );
+                        }
+                        likeView.postlike(postLike);
+                        modelPost.setHasLiked(false);
+                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())-1+ " Likes");
+                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount())-1));
+                    }
+
+                }
+            });
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
             Log.d("checkimg", "onBindViewHolder: " + modelPost.getEmpImgUrl());
             holder1.content.setText(modelPost.getContent());
@@ -90,13 +155,34 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     .placeholder(R.drawable.icprofile)
                     .error(R.drawable.ic_error_outline)
                     .into(holder1.userprof);
+            String datetime= modelPost.getCreatedAt();
+            Log.d("datetime", "onBindViewHolder: "+datetime);
+
+
             Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+            Log.d("Datetime_calender", "onBindViewHolder: "+calendar);
             try {
                 calendar.setTimeInMillis(Long.parseLong(modelPost.getCreatedAt()));
+                Log.d("Datetime_calender2", "onBindViewHolder: "+calendar);
+
             } catch (Exception ex) {
                 ex.printStackTrace();
+                Log.d("Datetime_calender3", "onBindViewHolder: "+calendar);
+
             }
             String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+//            Log.d("datetime_format", "onBindViewHolder: "+timedate);
+
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.S",Locale.ENGLISH)
+//                    .withZone(ZoneId.of("Etc/UTC"));
+//
+//            ZonedDateTime zdtUtc = ZonedDateTime.parse(datetime, formatter);
+//
+//            ZonedDateTime zdtInd = zdtUtc.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+//
+//            DateTimeFormatter dtfOutput = DateTimeFormatter.ofPattern("MM-dd-uuuu hh:mm:ss a", Locale.ENGLISH);
+//
+//            Log.d("datetimeformatted", "onBindViewHolder: "+zdtInd.format(dtfOutput));
             holder1.time.setText(timedate);
             String taggs[] = modelPost.getTags();
             if (taggs == null) {
@@ -204,7 +290,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     class PostsHolder extends RecyclerView.ViewHolder {
 
         TextView name, content,like, comments,time,tags;
-        ImageView imageView,share, userprof;
+        ImageView imageView,share, userprof, likeimage;
         ChipGroup chipGroup;
 
         public PostsHolder(View itemView) {
@@ -214,6 +300,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 //            empid = itemView.findViewById(R.id.placeofpost);
             content = itemView.findViewById(R.id.PostDescription);
             like = itemView.findViewById(R.id.nooflikepost);
+            likeimage = itemView.findViewById(R.id.likeimagepost);
             comments = itemView.findViewById(R.id.noofcomment);
             imageView = itemView.findViewById(R.id.userPostimage);
             userprof=itemView.findViewById(R.id.userprofileimg);

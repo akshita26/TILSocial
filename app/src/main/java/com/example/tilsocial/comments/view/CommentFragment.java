@@ -111,7 +111,6 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         }
         else
         {
-
             nocomment.setVisibility(View.GONE);
             commentss.addAll(commentModelList);
             commentAdapter.notifyDataSetChanged();

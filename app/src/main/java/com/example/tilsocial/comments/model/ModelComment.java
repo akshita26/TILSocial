@@ -19,7 +19,6 @@ public class ModelComment implements MainContractComment.Model {
     CommentAPIInterface apiInterface;
     SaveCommentAPI saveCommentAPI;
 
-
     @Override
     public void postcomment(PostComment postComment, OnFinishedListener onFinishedListener) {
         saveCommentAPI=CommentAPIClient.getClient().create(SaveCommentAPI.class);

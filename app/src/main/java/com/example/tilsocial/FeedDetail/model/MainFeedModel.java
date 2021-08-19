@@ -6,6 +6,8 @@ import android.widget.ProgressBar;
 import com.example.tilsocial.FeedDetail.api.ApiClient;
 import com.example.tilsocial.FeedDetail.api.ApiInterface;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
+import com.example.tilsocial.signin.model.ErrorResponse;
+import com.example.tilsocial.signin.model.ErrorUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,13 +29,15 @@ public class MainFeedModel implements MainContract.GetFeedList {
         call.enqueue(new Callback<FeedContent>() {
             @Override
             public void onResponse(Call<FeedContent> call, Response<FeedContent> response) {
-                if(response!=null){
+                if(response.isSuccessful()){
                 Log.e(TAG, "onResponse: " +  response.body());
 //               loadingPB.setVisibility(View.GONE);
                 FeedContent feedContent = response.body();
                 onFinishedListener.onFinished(response.body().getModelPostList(),feedContent);}
                 else{
+                    ErrorResponse errorResponse= ErrorUtils.parseError(response);
                     Log.d(TAG, "onResponse: errorrrr ");
+
                 }
             }
 

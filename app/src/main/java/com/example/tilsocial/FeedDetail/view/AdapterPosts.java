@@ -26,7 +26,6 @@ import com.example.tilsocial.comments.view.CommentFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -39,23 +38,22 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     String postId,empId;
     private static int POST_VIEW = 0;
     private static int  INTEREST_VIEW = 1;
-    List<String> tagss = new ArrayList<>();
     int flag =0;
+    List<String> taggs;
 
 
 
 
-    public AdapterPosts(Context context,List<ModelPost> modelPosts) {
+    public AdapterPosts(Context context,List<ModelPost> modelPosts,List<String> taggs) {
         this.context = context;
         this.modelPosts = modelPosts;
+        this.taggs = taggs;
 
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        tagss.add("interset1");
-        tagss.add("interset2");
-        tagss.add("interset3");
+
 
         if(viewType==POST_VIEW) {
 
@@ -74,6 +72,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
+
+        Log.d("postionn", "onBindViewHolder: "+ position);
         if (getItemViewType(position) == POST_VIEW ) {
 
             PostsHolder holder1 = (PostsHolder) holder;
@@ -160,15 +160,16 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         } else {
 
                 Interestholder holder2 = (Interestholder) holder;
-                for (int i = 0; i < tagss.size(); i++) {
 
-                    holder2.chip = new Chip(context);
-                    Log.d("intersets", "onBindViewHolder: "+ tagss.get(i));
-                    holder2.chip.setText(tagss.get(i));
-                    holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
-                    holder2.chip.setCheckable(true);
-                    holder2.chipGroup.addView(holder2.chip);
-                }
+                    for (int i = 0; i < taggs.size(); i++) {
+                        holder2.chip = new Chip(context);
+                        Log.d("intersets", "onBindViewHolder: " + taggs.get(i));
+                        holder2.chip.setText(taggs.get(i));
+                        holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                        holder2.chip.setCheckable(true);
+                        holder2.chipGroup.addView(holder2.chip);
+                    }
+
         }
 
 

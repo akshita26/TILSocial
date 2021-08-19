@@ -25,6 +25,7 @@ import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.R;
+import com.example.tilsocial.signup.model.SpinnerDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     Boolean islastpage = false;
     int totalpages ;
     LinearLayout nopost;
+    List<String > taggs = new ArrayList<>();
+
 
 
     public HomeFragment() {
@@ -79,10 +82,10 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
           View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
-        prf = getActivity().getSharedPreferences("details", 0);
-        empid = prf.getString("empid","");
-        empidinterger = Integer.parseInt(empid);
-        presenter = new FeedPresentor(this,new MainFeedModel());
+          prf = getActivity().getSharedPreferences("details", 0);
+          empid = prf.getString("empid","");
+          empidinterger = Integer.parseInt(empid);
+          presenter = new FeedPresentor(this,new MainFeedModel());
 
           loadingPB = view.findViewById(R.id.preogressbar);
           nopost = view.findViewById(R.id.noresultt);
@@ -91,7 +94,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
           loadfeeddata();
           manager = new LinearLayoutManager(getActivity());
           recyclerView.setLayoutManager(manager);
-          adapterPosts = new AdapterPosts(getActivity(),modelPosts);
+          adapterPosts = new AdapterPosts(getActivity(),modelPosts,taggs);
           recyclerView.setAdapter(adapterPosts);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -185,6 +188,16 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                 Toast.LENGTH_LONG).show();
 
     }
+
+    @Override
+    public void settagssdata(SpinnerDetails spinnerDetails) {
+
+        Log.e("HomeActivityfeed13", "onResponse: " + spinnerDetails.getTagslist());
+
+//        taggs.add(spinnerDetails.getTagslist());
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

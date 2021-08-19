@@ -9,6 +9,7 @@ import com.example.tilsocial.FeedDetail.api.ApiInterface;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.signin.model.ErrorResponse;
 import com.example.tilsocial.signin.model.ErrorUtils;
+import com.example.tilsocial.signup.model.SpinnerDetails;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,5 +73,31 @@ public class MainFeedModel implements MainContract.GetFeedList {
             }
         });
     }
+    public void gettagsdetails(OnFinishedListener onFinishedListener)
+    {
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<SpinnerDetails> call = apiInterface.gettagsdetails();
+        call.enqueue(new Callback<SpinnerDetails>() {
+            @Override
+            public void onResponse(Call<SpinnerDetails> call, Response<SpinnerDetails> response) {
+
+                Log.e(TAG, "onResponsesignupmodel3433: " +  response.body());
+
+
+                onFinishedListener.onFinishedtag(response.body());
+
+
+            }
+
+            @Override
+            public void onFailure(Call<SpinnerDetails> call, Throwable t) {
+                onFinishedListener.onFailure(t);
+                Log.e(TAG, "onResponsesignupmodel: " +  t.getMessage());
+            }
+        });
+
+    }
 
 }
+
+

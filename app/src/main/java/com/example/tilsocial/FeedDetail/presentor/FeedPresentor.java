@@ -4,6 +4,7 @@ import android.widget.ProgressBar;
 
 import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.signup.model.SpinnerDetails;
 
 import java.util.List;
 
@@ -34,6 +35,15 @@ public class FeedPresentor implements MainContract.presenter ,MainContract.GetFe
 
         if(mainView != null){
             mainView.setDataToRecyclerView(modelPostList,feedContent);
+        }
+
+    }
+
+    @Override
+    public void onFinishedtag(SpinnerDetails spinnerDetails) {
+
+        if(mainView != null){
+            mainView.settagssdata(spinnerDetails);
         }
 
     }

@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:scrollbars="none">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp">
-
-            <com.google.android.material.chip.ChipGroup
+          <com.google.android.material.chip.ChipGroup
                 android:id="@+id/intersetshow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -21,5 +15,5 @@
                 app:singleSelection="false">
 
             </com.google.android.material.chip.ChipGroup>
-        </LinearLayout>
+
     </HorizontalScrollView>

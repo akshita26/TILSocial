@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -34,13 +33,10 @@ import com.example.tilsocial.signup.model.SignupRequestParams;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.example.tilsocial.signup.presenter.MainContractSignup;
 import com.example.tilsocial.signup.presenter.SignupPresentor;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,7 +48,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 
 public class SignUpFragment extends Fragment implements MainContractSignup.MainView {
@@ -125,8 +120,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             @Override
             public void onClick(View v) {
 
+                //Toast.makeText(getActivity(), "clicked ", Toast.LENGTH_SHORT).show();
                 int empid = Integer.parseInt(employeeidd.getText().toString().isEmpty() ? "0" : employeeidd.getText().toString());
                 SignupRequestParams signupRequestParams = new SignupRequestParams();
+               // Log.e("checking data3242", "onResponse: " +namee.getText().toString());
                 signupRequestParams.setEmpId(empid);
                 signupRequestParams.setName(namee.getText().toString());
                 signupRequestParams.setBio(bioo.getText().toString());
@@ -135,6 +132,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterests((ArrayList) interestList);
                 signupRequestParams.setImgUrl(imageurl);
+                Log.e("checking data3242", "onResponse: " + signupRequestParams.toString());
                 presenter.dosignup(signupRequestParams);
             }
         });
@@ -177,6 +175,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
 
     }
+
+
 
     private void selectImage() {
 
@@ -277,6 +277,10 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     public void showinterestvalidation() {
         Toast.makeText(getActivity(), "Please select minimum 1 Interest", Toast.LENGTH_SHORT).show();
     }
+    @Override
+    public void validationonprofilepic() {
+        Toast.makeText(getActivity(), "Please upload profilepic", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void nextfragment() {
@@ -297,10 +301,11 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     }
 
+
     @Override
     public void SetSignupdata(SignupRequestParams signupRequestParams) {
 
-        Log.e("Signupp", "data" + signupRequestParams);
+        Log.e("Signuppdataa", "data" + signupRequestParams);
         sharedPreferences = getActivity().getSharedPreferences("details", 0);
         editor = sharedPreferences.edit();
         editor.putString("empid", signupRequestParams.getEmpId().toString());
@@ -319,6 +324,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     @Override
     public void extractFb(String s) {
+        Log.e("Signupimagee", "onResponse: " + s);
         imageurl = s;
     }
 

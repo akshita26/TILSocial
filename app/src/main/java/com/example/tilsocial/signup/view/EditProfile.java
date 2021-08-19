@@ -158,12 +158,14 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
                     } else {
                         interestList.remove(chip.getText());
                     }
-                    Toast.makeText(getActivity(), "" + interestList, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "" + interestList, Toast.LENGTH_LONG).show();
                 }
             });
         }
 
     }
+
+
 
     private void selectImage() {
 
@@ -260,6 +262,10 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     @Override
     public void showinterestvalidation() {
         Toast.makeText(getActivity(), "Please select minimum 1 interests", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void validationonprofilepic() {
+        Toast.makeText(getActivity(), "Please Upload profile pic", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.example.tilsocial.signup.model;
 
 import android.util.Log;
 
+import com.example.tilsocial.signin.model.ErrorResponse;
+import com.example.tilsocial.signin.model.ErrorUtils;
 import com.example.tilsocial.signup.api.ApiInterfaceSpinner;
 import com.example.tilsocial.signup.presenter.MainContractSignup;
 import com.example.tilsocial.signup.signupApi.ApiClient;
@@ -24,18 +26,20 @@ public class SignUpModel implements MainContractSignup.Model
         PostCall.enqueue(new Callback<SignupRequestParams>() {
             @Override
             public void onResponse(Call<SignupRequestParams> call, Response<SignupRequestParams> response) {
-
+   if(response.isSuccessful()){
                 Log.e(TAG, "onResponse: " + response.code() );
-                if(response!=null)
-                {
+
                     onFinishedListener.OnFinishedSignupdata(response.body());
 
-                    Log.e(TAG, "onResponseasasxa: " + response.body());
-                }
-                else
-                {
-                    Log.e("null1234", "onResponse: " + "nulll getting" );
-                }
+                    Log.e(TAG, "onResponseasasxa: " + response.body());}
+   else {
+
+       ErrorResponse errorResponse = ErrorUtils.parseError(response);
+       Log.d("Errorhandling", "onResponse: " + errorResponse.getError());
+
+       Log.d(TAG, "onResponse: errorrrr ");
+   }
+
             }
             @Override
             public void onFailure(Call<SignupRequestParams> call, Throwable t) {
@@ -55,9 +59,22 @@ public class SignUpModel implements MainContractSignup.Model
         call.enqueue(new Callback<SpinnerDetails>() {
             @Override
             public void onResponse(Call<SpinnerDetails> call, Response<SpinnerDetails> response) {
+                if(response.isSuccessful()){
 
-                Log.e(TAG, "onResponsesignupmodel: " +  response.body());
-                onFinishedListener.onFinished(response.body());
+                Log.e(TAG, "onResponsesignupmodel3433: " +  response.body());
+
+
+                    onFinishedListener.onFinished(response.body());}
+                else {
+
+
+                    ErrorResponse errorResponse = ErrorUtils.parseError(response);
+                    Log.d("Errorhandling", "onResponse: " + errorResponse.getError());
+
+                    Log.d(TAG, "onResponse: errorrrr ");
+                }
+
+
             }
 
             @Override

@@ -1,7 +1,5 @@
 package com.example.tilsocial.FeedDetail.view;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,9 +24,7 @@ import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
-import com.example.tilsocial.MainActivity;
 import com.example.tilsocial.R;
-import com.example.tilsocial.signup.presenter.MainContractSignup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +50,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     Boolean isloading = false;
     Boolean islastpage = false;
     int totalpages ;
+    LinearLayout nopost;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -85,7 +84,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         empidinterger = Integer.parseInt(empid);
         presenter = new FeedPresentor(this,new MainFeedModel());
 
-        loadingPB = view.findViewById(R.id.preogressbar);
+          loadingPB = view.findViewById(R.id.preogressbar);
+          nopost = view.findViewById(R.id.noresultt);
           recyclerView = view.findViewById(R.id.postrecyclerview);
           modelPosts = new ArrayList<>();
           loadfeeddata();
@@ -131,6 +131,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
     private void loadfeeddata() {
 
+
+
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
         presenter.requestDataFromServer(pageno, "recency", empidinterger, "feed",loadingPB);
@@ -149,21 +151,31 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void setDataToRecyclerView(List<ModelPost> modelPostListt, FeedContent feedContent) {
         Log.e("HomeActivityfeedlistt", "onResponse: " +  modelPostListt.toString());
         Log.e("HomeActivityfeedpagenoo", "onResponse: " +  feedContent.getTotalPages());
-
-        totalpages = feedContent.getTotalPages()-1;
-        isloading = true;
-        modelPosts.addAll(modelPostListt);
-        adapterPosts.notifyDataSetChanged();
-        isloading = false;
-        Log.e("size", "onResponse: " + modelPosts.size());
-        if(modelPosts.size()>0)
+        if(modelPostListt.size() == 0 && pageno == 0)
         {
-            islastpage = modelPosts.size()<pagesize;
+            nopost.setVisibility(View.VISIBLE);
         }
         else
         {
-            islastpage = true;
+
+            totalpages = feedContent.getTotalPages()-1;
+            isloading = true;
+            modelPosts.addAll(modelPostListt);
+            adapterPosts.notifyDataSetChanged();
+            isloading = false;
+            Log.e("size", "onResponse: " + modelPosts.size());
+            if(modelPosts.size()>0)
+            {
+                islastpage = modelPosts.size()<pagesize;
+            }
+            else
+            {
+                islastpage = true;
+            }
+
+
         }
+
 
     }
     @Override

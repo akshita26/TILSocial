@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -30,7 +28,6 @@ import com.example.tilsocial.R;
 import com.example.tilsocial.addpost.model.AddPostModel;
 import com.example.tilsocial.addpost.model.AddPostRequestParams;
 import com.example.tilsocial.addpost.presenter.AddPostPresenter;
-import com.example.tilsocial.signup.presenter.MainContractSignup;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -42,7 +39,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -91,10 +87,10 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
 
         preferences= getActivity().getSharedPreferences("tags",0);
 
-        HashSet set = (HashSet<String>) preferences.getStringSet("interests", null);
-        Log.d("Interestsss", "onCreateView: "+set);
-        tags = new ArrayList(set);
-        Log.d("tagsss", "onCreateView: "+tags);
+//        HashSet set = (HashSet<String>) preferences.getStringSet("interests", null);
+//        Log.d("Interestsss", "onCreateView: "+set);
+//        tags = new ArrayList(set);
+//        Log.d("tagsss", "onCreateView: "+tags);
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,19 +188,19 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         });
 
 //        Interest Tag selection
-//        String[] Interests = new String[]{
-//                "Select Interest...",
-//                "Interest 1",
-//                "Interest 2",
-//                "Interest 3",
-//                "Interest 4"
-//        };
-//
-//        final List<String> InterestList = new ArrayList<>(Arrays.asList(Interests));
+        String[] Interests = new String[]{
+                "Select Interest...",
+                "Interest 1",
+                "Interest 2",
+                "Interest 3",
+                "Interest 4"
+        };
+
+        final List<String> InterestList = new ArrayList<>(Arrays.asList(Interests));
 
         // Initializing an ArrayAdapter
         final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-                getActivity(), R.layout.spinnneritem, tags);
+                getActivity(), R.layout.spinnneritem, Interests);
         TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
 
         interest_tag.setAdapter(TeamArrayAdapter);
@@ -336,6 +332,8 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
 
     @Override
     public void extractFb(String uri) {
+
+        Log.e("imagechecking", "onResponse: " +  uri);
         imageList.add(uri);
     }
 }

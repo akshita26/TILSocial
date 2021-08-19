@@ -60,8 +60,6 @@ public class AddPostPresenter {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                    // Image uploaded successfully
-                                    // Dismiss dialog
                                     progressDialog.dismiss();
                                     Toast.makeText(context, "Image Uploaded to FB!!",
                                             Toast.LENGTH_SHORT).show();

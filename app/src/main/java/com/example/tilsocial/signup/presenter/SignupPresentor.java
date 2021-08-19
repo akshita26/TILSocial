@@ -59,7 +59,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
                                     progressDialog.dismiss();
                                     Toast.makeText(context, "Image Uploaded !!",
                                             Toast.LENGTH_SHORT).show();
-                                    pathUri="https://firebasestorage.googleapis.com/v0/b/til-social-22075.appspot.com/o/UserProfile%2F"+path+"?alt=media&token=c1d8b478-5902-48f2-89bb-026fc7870101";
+                                    pathUri="https://firebasestorage.googleapis.com/v0/b/til-social-22075.appspot.com/o/UserProfile%2F"+path+"?alt=media";
                                     mainView.extractFb(pathUri);
                                 }
                             })
@@ -110,7 +110,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
     }
 
 
-    private boolean validateInputs(Integer employeeid, String name, String bio, String deprtment, String teamm, String desgniationn, ArrayList interests) {
+    private boolean validateInputs(Integer employeeid, String name, String bio, String deprtment, String teamm, String desgniationn, ArrayList interests,String empimg) {
 
         if (name.isEmpty()) {
             mainView.shownamevalidation();
@@ -140,6 +140,11 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
             mainView.showinterestvalidation();
             return true;
         }
+        if(empimg==null || empimg.isEmpty())
+        {
+            mainView.validationonprofilepic();
+            return  true;
+        }
         return false;
 
     }
@@ -147,9 +152,9 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
     @Override
     public void dosignup(SignupRequestParams signupRequestParams) {
-
-        if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation(), signupRequestParams.getInterests())) {
-
+        Log.e("checking data", "onResponse: " + signupRequestParams.toString());
+        if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation(), signupRequestParams.getInterests(),signupRequestParams.getImgUrl())) {
+            Log.e("checking data", "onResponse: " + signupRequestParams.toString());
             model.dosignup(signupRequestParams,this);
             Log.d("signupdata", "onClick: "+signupRequestParams.toString());
 
@@ -159,7 +164,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
     @Override
     public void gotoprofile(SignupRequestParams signupRequestParams) {
-        if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation(), signupRequestParams.getInterests())) {
+        if (!validateInputs(signupRequestParams.getEmpId(), signupRequestParams.getName(), signupRequestParams.getBio(), signupRequestParams.getDept(), signupRequestParams.getTeam(), signupRequestParams.getDesignation(), signupRequestParams.getInterests(),signupRequestParams.getImgUrl())) {
 
             model.dosignup(signupRequestParams,this);
 

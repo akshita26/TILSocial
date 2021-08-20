@@ -3,6 +3,7 @@ package com.example.tilsocial.FeedDetail.view;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -61,6 +62,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     SharedPreferences sharedPreferences;
     ArrayList intersett = new ArrayList();
     Context context;
+    Parcelable recyclerViewState;
+    HomeFragment fragment1;
 
 
 
@@ -81,6 +84,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 //        Toast.makeText(getActivity(), "employeeidis" + empid, Toast.LENGTH_SHORT).show();
 
     }
+
+
+
     @Override
     public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater) {
         inflater.inflate(R.menu.my_menu, menu);
@@ -92,7 +98,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-          View view =  inflater.inflate(R.layout.fragment_home, container, false);
+           View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
           prf = getActivity().getSharedPreferences("details", 0);
           context = getActivity();
@@ -118,9 +124,11 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+
                 if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
                 {
                     isScrolling = true;
+                    //recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
                 }
 
             }
@@ -150,13 +158,13 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         return view;
     }
 
-    private void loadfeeddata() {
+    public void loadfeeddata() {
 
 
-        if(pageno == 0)
-        {
-         loadingPB.setVisibility(View.VISIBLE);
-        }
+//        if(pageno == 0)
+//        {
+//         loadingPB.setVisibility(View.VISIBLE);
+//        }
 
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
@@ -185,10 +193,13 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         {
 
             totalpages = feedContent.getTotalPages()-1;
-            loadingPB.setVisibility(View.GONE);
+            //loadingPB.setVisibility(View.GONE);
             isloading = true;
+
+
             modelPosts.addAll(modelPostListt);
             adapterPosts.notifyDataSetChanged();
+            //recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             isloading = false;
             Log.e("size", "onResponse: " + modelPosts.size());
             if(modelPosts.size()>0)
@@ -278,4 +289,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         presenter = new FeedPresentor(this,new MainFeedModel());
         presenter.setnewtagss(empidd,interestList,context);
     }
+
+
 }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tilsocial.FeedDetail.view.AdapterPosts;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.API.CommentAPIInterface;
 import com.example.tilsocial.comments.model.CommentModel;
@@ -40,6 +41,9 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
     EditText newcomment;
     SharedPreferences sharedPreferences;
     LinearLayout nocomment;
+    String commentcnt;
+    int commnetposition;
+    AdapterPosts adapterPosts;
 
     public CommentFragment() {
 
@@ -66,6 +70,8 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         recyclerViewcomment.setLayoutManager(layoutManager);
         Bundle bundle=this.getArguments();
         postId= bundle.getString("postid");
+        commentcnt = bundle.getString("comments");
+        commnetposition = bundle.getInt("commentposition");
         sharedPreferences= getActivity().getSharedPreferences("details",0);
         empId= sharedPreferences.getString("empid", "");
         Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
@@ -105,12 +111,20 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
 
     @Override
     public void setDataToRecyclerViewComment(List<CommentModel> commentModelList) {
+
+
+
         if(commentModelList.size()==0)
         {
             nocomment.setVisibility(View.VISIBLE);
         }
         else
         {
+            Log.d("position", "onClick: "+commentcnt+" "+commnetposition);
+
+
+
+            //Log.d("positioncontext", "onClick: "+ getActivity());
             nocomment.setVisibility(View.GONE);
             commentss.addAll(commentModelList);
             commentAdapter.notifyDataSetChanged();

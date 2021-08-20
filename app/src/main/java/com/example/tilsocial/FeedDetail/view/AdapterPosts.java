@@ -1,5 +1,6 @@
 package com.example.tilsocial.FeedDetail.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -49,7 +50,11 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     int empidinterger;
 
 
-    public AdapterPosts(Context context,List<ModelPost> modelPosts,List<String> taggs,ArrayList intersett,int empidinterger) {
+    public AdapterPosts(Context context) {
+        this.context = context;
+    }
+
+    public AdapterPosts(Context context, List<ModelPost> modelPosts, List<String> taggs, ArrayList intersett, int empidinterger) {
         this.context = context;
         this.modelPosts = modelPosts;
         this.taggs = taggs;
@@ -80,7 +85,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
 
         Log.d("postionn", "onBindViewHolder: "+ position);
@@ -116,9 +121,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 Log.d("Datetime_calender3", "onBindViewHolder: "+calendar);
 
             }
-            String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+           String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 //            Log.d("datetime_format", "onBindViewHolder: "+timedate);
-
+//
 //            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.S",Locale.ENGLISH)
 //                    .withZone(ZoneId.of("Etc/UTC"));
 //
@@ -140,18 +145,26 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-//            if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
-//            {
-//                holder1.imageView.setVisibility(View.GONE);
-//            }
-//            else
-//            {
-//                Glide.with(context).load(modelPost.getImages().get(0))
-//                        .placeholder(R.drawable.icprofile)
-//                        .error(R.drawable.ic_error_outline)
-//                        .into(holder1.imageView);
-//
-//            }
+            if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
+            {
+                holder1.imageView.setVisibility(View.GONE);
+            }
+            else
+            {
+                try{
+                    Glide.with(context).load(modelPost.getImages().get(0))
+                            .placeholder(R.drawable.noimageeee)
+                            .error(R.drawable.noimageeee)
+                            .into(holder1.imageView);
+
+                }
+                catch (Exception e) {
+
+                }
+
+
+
+            }
 
           //  Log.d("imagecheckk", "onBindViewHolder: " +modelPost.getImages().get(0) );
             Log.d("contextcheck", "onBindViewHolder: " +context);
@@ -165,15 +178,31 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
                     actionBar.setTitle("Comment");
                     CommentFragment commentFragment = new CommentFragment();
-                    Bundle bundle=new Bundle();
-                    bundle.putString("postid", postid);
-                    commentFragment.setArguments(bundle);
-                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.dashboard, commentFragment);
-                    fragmentTransaction.commit();
+                     Bundle bundle=new Bundle();
+                     bundle.putString("postid", postid);
+                     bundle.putString("comments", modelPost.getCommentsCount());
+                     bundle.putInt("commentposition",position);
+                     commentFragment.setArguments(bundle);
+
+
+                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                     // fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
+                     fragmentTransaction.add(R.id.dashboard, commentFragment);
+                     fragmentTransaction.addToBackStack(null);
+                     fragmentTransaction.commit();
+                    //int commentcount = Integer.parseInt(modelPost.getCommentsCount()) + 1;
+//                       modelPost.setCommentsCount("90");
+//                       holder1.comments.setText("5");
+                     notifyItemChanged(position);
+
+                   // Log.d("commentcountt", "onBindViewHolder: " +modelPosts.get(position).getCommentsCount());
+
                 }
             });
+
+
+
 
             holder1.share.setOnClickListener(new View.OnClickListener() {
                 @Override

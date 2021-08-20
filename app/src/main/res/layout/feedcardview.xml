@@ -133,6 +133,7 @@
                         app:srcCompat="@drawable/ic_thumb_up"
                         app:tint="@color/grey_80" />
 
+
                     <TextView
                         android:id="@+id/nooflikepost"
                         android:layout_width="wrap_content"

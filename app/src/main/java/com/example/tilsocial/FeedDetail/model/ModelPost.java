@@ -2,13 +2,28 @@ package com.example.tilsocial.FeedDetail.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class ModelPost {
+public class ModelPost implements Serializable {
 
-    public ModelPost() {
+
+    public ModelPost(String empId, String name, String likesCount, String commentsCount, Boolean hasLiked, String createdAt, String updatedAt, String content, String[] tags, List<String> images, String postId, String empImgUrl) {
+        this.empId = empId;
+        this.name = name;
+        this.likesCount = likesCount;
+        this.commentsCount = commentsCount;
+        this.hasLiked = hasLiked;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.content = content;
+        this.tags = tags;
+        this.images = images;
+        this.postId = postId;
+        this.empImgUrl = empImgUrl;
     }
+
     @SerializedName("empId")
     private  String empId;
 
@@ -97,6 +112,7 @@ public class ModelPost {
     }
 
     public void setHasLiked(Boolean hasLiked) {
+
         this.hasLiked = hasLiked;
     }
 

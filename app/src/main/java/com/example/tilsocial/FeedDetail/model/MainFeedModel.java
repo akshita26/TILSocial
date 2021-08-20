@@ -31,7 +31,7 @@ public class MainFeedModel implements MainContract.GetFeedList {
             @Override
             public void onResponse(Call<FeedContent> call, Response<FeedContent> response) {
                 if(response.isSuccessful()){
-                Log.e(TAG, "onResponse: " +  response.body());
+                Log.e(TAG, "onTTT: " +  response.body());
                loadingPB.setVisibility(View.GONE);
                 FeedContent feedContent = response.body();
                 onFinishedListener.onFinished(response.body().getModelPostList(),feedContent);}

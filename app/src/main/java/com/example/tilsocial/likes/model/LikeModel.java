@@ -32,10 +32,11 @@ public class LikeModel implements MainContractLike.Model {
                     {
                         Log.e("LikePost", "empId: " + response.body().getEmpId());
                         Log.e("LikePost", "postId: " + response.body().getPostId());
+                        Log.e("LikePost", "name: " + response.body().getName());
                         Log.e("LikePost", "likeCount: " + response.body().getLikesCount());
                         Log.e("LikePost", "hasLiked: " + response.body().getHasLiked());
-                        postLike.setHasLiked(response.body().getHasLiked());
-                        postLike.setLikesCount(response.body().getLikesCount());
+//                        postLike.setHasLiked(response.body().getHasLiked());
+//                        postLike.setLikesCount(response.body().getLikesCount());
                         Log.e("awwwwww", "1- " + postLike);
 //                        likePresenter.likeresponse(postLike);
                     }

@@ -2,9 +2,9 @@ package com.example.tilsocial.likes.model;
 
 public class PostLike {
     String postId;
-    Boolean hasLiked;
+//    Boolean hasLiked;
     String empId;
-    private Integer likesCount;
+//    private Integer likesCount;
 
     public String getPostId() {
         return postId;
@@ -14,13 +14,13 @@ public class PostLike {
         this.postId = postId;
     }
 
-    public Boolean getHasLiked() {
-        return hasLiked;
-    }
+//    public Boolean getHasLiked() {
+//        return hasLiked;
+//    }
 
-    public void setHasLiked(Boolean hasLiked) {
-        this.hasLiked = hasLiked;
-    }
+//    public void setHasLiked(Boolean hasLiked) {
+//        this.hasLiked = hasLiked;
+//    }
 
     public String getEmpId() {
         return empId;
@@ -29,20 +29,20 @@ public class PostLike {
     public void setEmpId(String empId) {
         this.empId = empId;
     }
-    public Integer getLikesCount() {
-        return likesCount;
-    }
+//    public Integer getLikesCount() {
+//        return likesCount;
+//    }
 
-    public void setLikesCount(Integer likesCount) {
-        this.likesCount = likesCount;
-    }
+//    public void setLikesCount(Integer likesCount) {
+//        this.likesCount = likesCount;
+//    }
 
     @Override
     public String toString() {
         return "PostLike{" +
                 "postId='" + postId + '\'' +
-                ", hasLiked='" + hasLiked + '\'' +
-                ", likesCount='" + likesCount + '\'' +
+//                ", hasLiked='" + hasLiked + '\'' +
+//                ", likesCount='" + likesCount + '\'' +
                 ", empId=" + empId +
                 '}';
     }

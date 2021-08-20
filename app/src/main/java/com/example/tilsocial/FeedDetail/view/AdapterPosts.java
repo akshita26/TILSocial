@@ -102,7 +102,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             holder1.name.setText(modelPost.getName());
           //  postId = modelPost.getPostId();
             Log.d("postidd", "onBindViewHolder: " + postId);
-            empId = modelPost.getEmpId();
+           // empId = modelPost.getEmpId();
             likeView=new LikeView(new LikePresenter(new LikeModel()));
             holder1.like.setText(modelPost.getLikesCount()+ " Likes");
             Log.d("modelpostt", "Liked: " + modelPost.getHasLiked());
@@ -124,6 +124,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         PostLike postLike=new PostLike();
                         postId = modelPost.getPostId();
                         postLike.setPostId(postId);
+                        empId = modelPost.getEmpId();
                         postLike.setEmpId(empId);
 //                        postLike.setHasLiked(true);
                         modelPost.setHasLiked(true);
@@ -138,7 +139,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         Log.e("LikePosteeee", "trueeeeeeeeeeeee: " );
                         holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
                         PostLike postLike=new PostLike();
+                        postId = modelPost.getPostId();
                         postLike.setPostId(postId);
+                        empId = modelPost.getEmpId();
                         postLike.setEmpId(empId);
                         likeView.postlike(postLike);
                         modelPost.setHasLiked(false);
@@ -195,16 +198,19 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-            if(modelPost.getImages()==null || modelPost.getImages().get(0).isEmpty())
+            if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
             {
                 holder1.imageView.setVisibility(View.GONE);
             }
-            else
-            {
-                Glide.with(context).load(modelPost.getImages().get(0))
-                        .placeholder(R.drawable.noimageeee)
-                        .error(R.drawable.noimageeee)
-                        .into(holder1.imageView);
+            else {
+                try {
+                    Glide.with(context).load(modelPost.getImages().get(0))
+                            .placeholder(R.drawable.noimageeee)
+                            .error(R.drawable.noimageeee)
+                            .into(holder1.imageView);
+                } catch (Exception e) {
+
+                }
             }
 //               Glide.with(context).load(modelPost.getImages().get(0))
 //                       .placeholder(R.drawable.icprofile)

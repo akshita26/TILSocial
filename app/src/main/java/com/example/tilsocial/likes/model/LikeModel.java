@@ -21,6 +21,7 @@ public class LikeModel implements MainContractLike.Model {
     LikePresenter likePresenter=new LikePresenter(this);
     @Override
     public void postlike(PostLike postLike) {
+        Log.e("postliiiiii", "reeeee: " + postLike.empId + " "+ postLike.postId);
         likeAPI= LikeAPIClient.getClient().create(LikeAPI.class);
         Call<LikeModelResponse> PostCall= likeAPI.postlikeresponse(postLike);
         PostCall.enqueue(new Callback<LikeModelResponse>() {

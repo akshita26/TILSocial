@@ -3,9 +3,10 @@ package com.example.tilsocial.likes.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class LikeModelResponse {
+public class LikeModelResponse implements Serializable {
     @SerializedName("postId")
     @Expose
     private String postId;

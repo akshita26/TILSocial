@@ -2,6 +2,7 @@ package com.example.tilsocial.FeedDetail.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
@@ -27,10 +29,18 @@ import com.example.tilsocial.comments.view.CommentFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -76,6 +86,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
@@ -97,13 +108,34 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     .placeholder(R.drawable.icprofile)
                     .error(R.drawable.ic_error_outline)
                     .into(holder1.userprof);
+            String datetime= modelPost.getCreatedAt();
+            Log.d("datetime", "onBindViewHolder: "+datetime);
+
+
             Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+            Log.d("Datetime_calender", "onBindViewHolder: "+calendar);
             try {
                 calendar.setTimeInMillis(Long.parseLong(modelPost.getCreatedAt()));
+                Log.d("Datetime_calender2", "onBindViewHolder: "+calendar);
+
             } catch (Exception ex) {
                 ex.printStackTrace();
+                Log.d("Datetime_calender3", "onBindViewHolder: "+calendar);
+
             }
             String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+//            Log.d("datetime_format", "onBindViewHolder: "+timedate);
+
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.S",Locale.ENGLISH)
+//                    .withZone(ZoneId.of("Etc/UTC"));
+//
+//            ZonedDateTime zdtUtc = ZonedDateTime.parse(datetime, formatter);
+//
+//            ZonedDateTime zdtInd = zdtUtc.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+//
+//            DateTimeFormatter dtfOutput = DateTimeFormatter.ofPattern("MM-dd-uuuu hh:mm:ss a", Locale.ENGLISH);
+//
+//            Log.d("datetimeformatted", "onBindViewHolder: "+zdtInd.format(dtfOutput));
             holder1.time.setText(timedate);
             String taggs[] = modelPost.getTags();
             if (taggs == null) {

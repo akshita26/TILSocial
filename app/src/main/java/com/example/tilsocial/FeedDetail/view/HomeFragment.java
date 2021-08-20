@@ -153,7 +153,11 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     private void loadfeeddata() {
 
 
-        loadingPB.setVisibility(View.VISIBLE);
+        if(pageno == 0)
+        {
+         loadingPB.setVisibility(View.VISIBLE);
+        }
+
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
         presenter.requestDataFromServer(pageno, "recency", empidinterger, "feed",loadingPB);

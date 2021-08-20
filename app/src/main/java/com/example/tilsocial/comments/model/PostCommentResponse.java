@@ -17,6 +17,16 @@ public class PostCommentResponse {
     String empImgUrl;
     @SerializedName("createdAt")
     String createdAt;
+    @SerializedName("designation")
+    String designation;
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
 
     public String getCommentId() {
         return commentId;
@@ -84,6 +94,7 @@ public class PostCommentResponse {
                 ", comment='" + comment + '\'' +
                 ", empImgUrl='" + empImgUrl + '\'' +
                 ", createdAt='" + createdAt + '\'' +
+                ", designation='" + designation + '\'' +
                 '}';
     }
 }

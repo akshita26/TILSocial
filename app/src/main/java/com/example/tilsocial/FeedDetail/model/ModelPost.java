@@ -43,6 +43,16 @@ public class ModelPost {
 
     @SerializedName("empImgUrl")
     private String empImgUrl;
+    @SerializedName("designation")
+    private String designation;
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
 
     public List<String> getImages() {
         return images;
@@ -155,6 +165,7 @@ public class ModelPost {
                 ", images=" + images +
                 ", postId='" + postId + '\'' +
                 ", empImgUrl='" + empImgUrl + '\'' +
+                ", designation='" + designation + '\'' +
                 '}';
     }
 }

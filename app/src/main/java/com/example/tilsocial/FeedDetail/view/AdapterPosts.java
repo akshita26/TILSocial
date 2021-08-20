@@ -29,18 +29,10 @@ import com.example.tilsocial.comments.view.CommentFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -97,6 +89,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             PostsHolder holder1 = (PostsHolder) holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
+            holder1.desgination.setText(modelPost.getDesignation());
             postId = modelPost.getPostId();
             Log.d("postidd", "onBindViewHolder: " + postId);
             empId = modelPost.getEmpId();
@@ -105,8 +98,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             Log.d("checkimg", "onBindViewHolder: " + modelPost.getEmpImgUrl());
             holder1.content.setText(modelPost.getContent());
             Glide.with(context).load(modelPost.getEmpImgUrl())
-                    .placeholder(R.drawable.icprofile)
-                    .error(R.drawable.ic_error_outline)
+                    .placeholder(R.drawable.profile)
+                    .error(R.drawable.profile)
                     .into(holder1.userprof);
             String datetime= modelPost.getCreatedAt();
             Log.d("datetime", "onBindViewHolder: "+datetime);
@@ -147,20 +140,20 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-            if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
-            {
-                holder1.imageView.setVisibility(View.GONE);
-            }
-            else
-            {
-                Glide.with(context).load(modelPost.getImages().get(0))
-                        .placeholder(R.drawable.icprofile)
-                        .error(R.drawable.ic_error_outline)
-                        .into(holder1.imageView);
+//            if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
+//            {
+//                holder1.imageView.setVisibility(View.GONE);
+//            }
+//            else
+//            {
+//                Glide.with(context).load(modelPost.getImages().get(0))
+//                        .placeholder(R.drawable.icprofile)
+//                        .error(R.drawable.ic_error_outline)
+//                        .into(holder1.imageView);
+//
+//            }
 
-            }
-
-            Log.d("imagecheckk", "onBindViewHolder: " +modelPost.getImages().get(0) );
+          //  Log.d("imagecheckk", "onBindViewHolder: " +modelPost.getImages().get(0) );
             Log.d("contextcheck", "onBindViewHolder: " +context);
 
 
@@ -211,6 +204,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             holder2.chip.setCheckable(true);
                             holder2.chip.setChecked(true);
                             holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                            holder2.chip.setElevation(5F);
                             holder2.chipGroup.addView(holder2.chip);
 
                         }
@@ -221,6 +215,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             holder2.chip.setText(taggs.get(j));
                             holder2.chip.setCheckable(true);
                             holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                            holder2.chip.setElevation(5F);
                             holder2.chipGroup.addView(holder2.chip);
                         }
 
@@ -296,7 +291,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     class PostsHolder extends RecyclerView.ViewHolder {
 
-        TextView name, content,like, comments,time,tags;
+        TextView name, content,like, comments,time,tags,desgination;
         ImageView imageView,share, userprof;
         ChipGroup chipGroup;
 
@@ -304,6 +299,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             super(itemView);
 
             name = itemView.findViewById(R.id.userprofilename);
+            desgination = itemView.findViewById(R.id.Designation);
 //            empid = itemView.findViewById(R.id.placeofpost);
             content = itemView.findViewById(R.id.PostDescription);
             like = itemView.findViewById(R.id.nooflikepost);

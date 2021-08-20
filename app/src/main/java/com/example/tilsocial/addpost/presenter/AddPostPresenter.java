@@ -20,7 +20,7 @@ import org.json.JSONException;
 
 import java.util.UUID;
 
-public class AddPostPresenter {
+public class AddPostPresenter  {
     AddPostModel addPostModel;
     AddPostView addPostView;
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -97,8 +97,12 @@ public class AddPostPresenter {
         }
     }
 
+
+
+
     public interface AddPostView {
         void showError();
         void extractFb(String s);
     }
+
 }

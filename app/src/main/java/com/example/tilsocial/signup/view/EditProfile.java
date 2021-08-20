@@ -88,7 +88,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         updatebtn = view.findViewById(R.id.buttonupdate);
         bioo = view.findViewById(R.id.editTextTextPersonName3);
         chipGroup = view.findViewById(R.id.chip_group);
-        userprofile = view.findViewById(R.id.user);
+        userprofile = view.findViewById(R.id.userr);
         spinnerDetails =new SpinnerDetails();
         presenter.requestDataFromServerSpinner();
 

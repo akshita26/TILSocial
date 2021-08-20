@@ -38,7 +38,7 @@
 
 
                         <com.mikhaellopez.circularimageview.CircularImageView
-                            android:id="@+id/user"
+                            android:id="@+id/userr"
                             android:layout_width="140dp"
                             android:layout_height="140dp"
                             android:layout_gravity="center"

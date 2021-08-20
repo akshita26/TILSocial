@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,23 +50,27 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     String postId,empId;
     private static int POST_VIEW = 0;
     private static int  INTEREST_VIEW = 1;
-    List<String> tagss = new ArrayList<>();
     int flag =0;
+    List<String> taggs;
+    ArrayList intersett ;
+    List<String> interestList = new ArrayList<>();
+    int empidinterger;
 
 
-
-
-    public AdapterPosts(Context context,List<ModelPost> modelPosts) {
+    public AdapterPosts(Context context,List<ModelPost> modelPosts,List<String> taggs,ArrayList intersett,int empidinterger) {
         this.context = context;
         this.modelPosts = modelPosts;
+        this.taggs = taggs;
+        this.intersett = intersett;
+        this.empidinterger = empidinterger;
+
+
 
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        tagss.add("interset1");
-        tagss.add("interset2");
-        tagss.add("interset3");
+
 
         if(viewType==POST_VIEW) {
 
@@ -73,7 +78,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             return new PostsHolder(view);
         }
         else{
-            view= LayoutInflater.from(context).inflate(R.layout.intersetrow, parent, false);
+            view= LayoutInflater.from(context).inflate(R.layout.taggss, parent, false);
             return new Interestholder(view);
         }
 
@@ -81,10 +86,11 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
+
+        Log.d("postionn", "onBindViewHolder: "+ position);
         if (getItemViewType(position) == POST_VIEW ) {
 
             PostsHolder holder1 = (PostsHolder) holder;
@@ -98,9 +104,11 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             Log.d("checkimg", "onBindViewHolder: " + modelPost.getEmpImgUrl());
             holder1.content.setText(modelPost.getContent());
             Glide.with(context).load(modelPost.getEmpImgUrl())
-                    .placeholder(R.drawable.icprofile)
+                    .placeholder(R.drawable.profile)
                     .error(R.drawable.ic_error_outline)
                     .into(holder1.userprof);
+
+
             String datetime= modelPost.getCreatedAt();
             Log.d("datetime", "onBindViewHolder: "+datetime);
 
@@ -140,23 +148,22 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-//            if(modelPost.getImages()==null || modelPost.getImages().get(0).isEmpty())
-//            {
-//                holder1.imageView.setVisibility(View.GONE);
-//            }
-//            else
-//            {
+            if(modelPost.getImages().get(0)==null || modelPost.getImages().get(0).isEmpty())
+            {
+                holder1.imageView.setVisibility(View.GONE);
+            }
+            else
+            {
                 Glide.with(context).load(modelPost.getImages().get(0))
                         .placeholder(R.drawable.noimageeee)
                         .error(R.drawable.noimageeee)
                         .into(holder1.imageView);
-            Log.d("FeedImggg", "onBindViewHolder: "+modelPost.getImages().get(0));
-//            }
+            }
 //               Glide.with(context).load(modelPost.getImages().get(0))
 //                       .placeholder(R.drawable.icprofile)
 //                       .error(R.drawable.ic_error_outline)
 //                       .into(holder1.imageView);
-            holder1.comments.setOnClickListener(new View.OnClickListener() {
+            holder1.commentimg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String postid;
@@ -170,6 +177,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.dashboard, commentFragment);
+                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }
             });
@@ -193,15 +201,64 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         } else {
 
                 Interestholder holder2 = (Interestholder) holder;
-                for (int i = 0; i < tagss.size(); i++) {
+                  for(int j =0 ;j<taggs.size();j++)
+                    {
+                        if(intersett.contains(taggs.get(j)))
+                        {
+                            holder2.chip = new Chip(context);
+                           // Log.d("intersets", "onBindViewHolder: " + taggs.get(i));
+                            holder2.chip.setText(taggs.get(j));
+                            holder2.chip.setCheckable(true);
+                            holder2.chip.setChecked(true);
+                            holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                            holder2.chipGroup.addView(holder2.chip);
 
-                    holder2.chip = new Chip(context);
-                    Log.d("intersets", "onBindViewHolder: "+ tagss.get(i));
-                    holder2.chip.setText(tagss.get(i));
-                    holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
-                    holder2.chip.setCheckable(true);
-                    holder2.chipGroup.addView(holder2.chip);
+                        }
+                        else
+                        {
+                            holder2.chip = new Chip(context);
+                            // Log.d("intersets", "onBindViewHolder: " + taggs.get(i));
+                            holder2.chip.setText(taggs.get(j));
+                            holder2.chip.setCheckable(true);
+                            holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                            holder2.chipGroup.addView(holder2.chip);
+                        }
+
+                    }
+
+                  interestList.addAll(intersett);
+
+            Integer c = holder2.chipGroup.getChildCount();
+            for (int j = 0; j < c; j++) {
+                Chip chip = (Chip) holder2.chipGroup.getChildAt(j);
+                chip.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (chip.isChecked()) {
+                            interestList.add(chip.getText().toString());
+                        } else {
+                            interestList.remove(chip.getText());
+                        }
+                        Log.d("intersetslistchecking", "onBindViewHolder: " + interestList.toString());
+                     //Toast.makeText(context, "-" + interestList, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            Log.d("empidchecking", "onBindViewHolder: " + empidinterger);
+
+            holder2.applybtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    HomeFragment homeFragment = new HomeFragment();
+                    homeFragment.callsaveinterset(interestList,empidinterger,context);
+
+
                 }
+            });
+
+
+
         }
 
 
@@ -237,7 +294,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     class PostsHolder extends RecyclerView.ViewHolder {
 
         TextView name, content,like, comments,time,tags;
-        ImageView imageView,share, userprof;
+        ImageView imageView,share, userprof,commentimg;
         ChipGroup chipGroup;
 
         public PostsHolder(View itemView) {
@@ -248,6 +305,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             content = itemView.findViewById(R.id.PostDescription);
             like = itemView.findViewById(R.id.nooflikepost);
             comments = itemView.findViewById(R.id.noofcomment);
+            commentimg=itemView.findViewById(R.id.commentimgbtn);
             imageView = itemView.findViewById(R.id.userPostimage);
             userprof=itemView.findViewById(R.id.userprofileimg);
             time = itemView.findViewById(R.id.timeofpost);
@@ -261,12 +319,14 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         ChipGroup chipGroup;
         Chip chip;
+        Button applybtn;
 
 
         public Interestholder(@NonNull View itemView) {
             super(itemView);
 
             chipGroup = itemView.findViewById(R.id.intersetshow);
+            applybtn = itemView.findViewById(R.id.applytagss);
         }
     }
 

@@ -103,11 +103,13 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             teamm=sharedPreferences.getString("team","");
             HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
             ArrayList tags = new ArrayList(set);
+
             Log.e("editprofilee", "onResponse133: " + tags.toString());
 
-        Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
-                .error(R.drawable.ic_error_outline)
-                .into(userprofile);
+            Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+                    .placeholder(R.drawable.profile)
+                    .error(R.drawable.ic_error_outline)
+                    .into(userprofile);
 
         userprofile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,10 +270,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     public void showinterestvalidation() {
         Toast.makeText(getActivity(), "Please select minimum 1 interests", Toast.LENGTH_SHORT).show();
     }
-    @Override
-    public void validationonprofilepic() {
-        Toast.makeText(getActivity(), "Please Upload profile pic", Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     public void nextfragment() {
@@ -304,7 +303,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void getspinnerdata(HashMap<String, List<Departments>> map) {
-
 
         List<String> TeamList = new ArrayList<>();
         HashMap<String,List<String>> map2 = new HashMap<>();

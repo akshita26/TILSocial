@@ -27,8 +27,10 @@ import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.FeedDetail.model.TagDetails;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
+import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.example.tilsocial.signup.view.EditProfile;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -46,7 +48,7 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
     UserPosts userPosts;
 
     //    List<ModelPost> posts;
-    ImageView profile;
+    ImageView profilee;
     ChipGroup chipGroup;
     Chip chip;
     ArrayList tags;
@@ -123,7 +125,7 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         name=view.findViewById(R.id.textView);
         dept=view.findViewById(R.id.textView4);
         bio=view.findViewById(R.id.bio);
-        profile=view.findViewById(R.id.profile_image);
+        profilee=view.findViewById(R.id.profile_image);
         desig=view.findViewById(R.id.desig);
         editprof=view.findViewById(R.id.editprof);
         chipGroup = view.findViewById(R.id.chip_group);
@@ -138,12 +140,19 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
             desig.setText(sharedPreferences.getString("desig",""));
             empid.setText(sharedPreferences.getString("empid", ""));
             team.setText(sharedPreferences.getString("team",""));
-            Log.d("Imgggg", "onCreateView: "+sharedPreferences.getString("imgurl",""));
 
             Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+                    .placeholder(R.drawable.profile)
                     .error(R.drawable.ic_error_outline)
-                    .into(profile);
+                    .into(profilee);
 
+            if(sharedPreferences.getString("imgurl","")==null){
+                Glide.with(getActivity()).load(R.drawable.man)
+                        .placeholder(R.drawable.man)
+                        .error(R.drawable.ic_error_outline)
+                        .into(profilee);
+            }
+        Log.d("Checkuserprof", "onCreateView: "+sharedPreferences.getString("imgurl",""));
             HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
             tags = new ArrayList(set);
 
@@ -195,4 +204,16 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
                 "Something went wrong...Error message: " + t.getMessage(),
                 Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void settagssdata(SpinnerDetails spinnerDetails) {
+
+    }
+
+    @Override
+    public void gettingtagss(TagDetails tagDetails, Context context) {
+
+    }
+
+
 }

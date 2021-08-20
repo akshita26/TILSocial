@@ -3,6 +3,7 @@ package com.example.tilsocial.FeedDetail.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -27,6 +28,10 @@ import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.view.CommentFragment;
+import com.example.tilsocial.likes.model.LikeModel;
+import com.example.tilsocial.likes.model.PostLike;
+import com.example.tilsocial.likes.presenter.LikePresenter;
+import com.example.tilsocial.likes.view.LikeView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -43,16 +48,14 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     String postId,empId;
     private static int POST_VIEW = 0;
     private static int  INTEREST_VIEW = 1;
+    List<String> tagss = new ArrayList<>();
+    LikeView likeView;
     int flag =0;
     List<String> taggs;
     ArrayList intersett ;
     List<String> interestList = new ArrayList<>();
     int empidinterger;
 
-
-    public AdapterPosts(Context context) {
-        this.context = context;
-    }
 
     public AdapterPosts(Context context, List<ModelPost> modelPosts, List<String> taggs, ArrayList intersett, int empidinterger) {
         this.context = context;
@@ -67,7 +70,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-
 
         if(viewType==POST_VIEW) {
 
@@ -95,10 +97,59 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
             holder1.desgination.setText(modelPost.getDesignation());
-            postId = modelPost.getPostId();
+            modelPost.setHasLiked(modelPost.getHasLiked());
             Log.d("postidd", "onBindViewHolder: " + postId);
-            empId = modelPost.getEmpId();
             holder1.like.setText(modelPost.getLikesCount() + " Likes");
+            Log.d("postidd", "onBindViewHolder: " + postId);
+            likeView=new LikeView(new LikePresenter(new LikeModel()));
+            holder1.like.setText(modelPost.getLikesCount()+ " Likes");
+            Log.d("modelpostt", "Liked: " + modelPost.getHasLiked());
+            if(modelPost.getHasLiked()==true) {
+                holder1.likeimage.setColorFilter(Color.rgb(0, 0, 255));
+
+
+            }
+            else{
+                holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
+            }
+
+            holder1.likeimage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(modelPost.getHasLiked()==false) {
+                        Log.e("LikePosteeeee", "falseeeeeee: " );
+                        holder1.likeimage.setColorFilter(Color.rgb(0, 0, 255));
+                        PostLike postLike=new PostLike();
+                        postId = modelPost.getPostId();
+                        postLike.setPostId(postId);
+                        //empId = modelPost.getEmpId();
+                        postLike.setEmpId(empidinterger);
+//                        postLike.setHasLiked(true);
+                        modelPost.setHasLiked(true);
+                        Log.e("LikePosteeeee", "falseeeeeee: "+postId );
+                        Log.e("LikePosteeeee", "falseeeeeee: "+empId );
+                        likeView.postlike(postLike);
+                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())+1+ " Likes");
+                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount())+1));
+                        notifyItemChanged(position);
+                    }
+                    else{
+                        Log.e("LikePosteeee", "trueeeeeeeeeeeee: " );
+                        holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
+                        PostLike postLike=new PostLike();
+                        postId = modelPost.getPostId();
+                        postLike.setPostId(postId);
+                        //empId = modelPost.getEmpId();
+                        postLike.setEmpId(empidinterger);
+                        likeView.postlike(postLike);
+                        modelPost.setHasLiked(false);
+                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())-1+ " Likes");
+                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount())-1));
+                        notifyItemChanged(position);
+                    }
+
+                }
+            });
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
             Log.d("checkimg", "onBindViewHolder: " + modelPost.getEmpImgUrl());
             holder1.content.setText(modelPost.getContent());
@@ -165,11 +216,10 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
             }
-
-          //  Log.d("imagecheckk", "onBindViewHolder: " +modelPost.getImages().get(0) );
-            Log.d("contextcheck", "onBindViewHolder: " +context);
-
-
+//               Glide.with(context).load(modelPost.getImages().get(0))
+//                       .placeholder(R.drawable.icprofile)
+//                       .error(R.drawable.ic_error_outline)
+//                       .into(holder1.imageView);
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -200,9 +250,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
                 }
             });
-
-
-
 
             holder1.share.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -318,10 +365,18 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     }
 
+    Boolean hasLiked;
+    Integer likesCount;
+
+    public void likeresponse(PostLike postLike) {
+//        hasLiked=postLike.getHasLiked();
+//        likesCount=postLike.getLikesCount();
+    }
+
     class PostsHolder extends RecyclerView.ViewHolder {
 
         TextView name, content,like, comments,time,tags,desgination;
-        ImageView imageView,share, userprof;
+        ImageView imageView,share, userprof,likeimage ;
         ChipGroup chipGroup;
 
         public PostsHolder(View itemView) {
@@ -332,6 +387,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 //            empid = itemView.findViewById(R.id.placeofpost);
             content = itemView.findViewById(R.id.PostDescription);
             like = itemView.findViewById(R.id.nooflikepost);
+            likeimage = itemView.findViewById(R.id.likeimagepost);
             comments = itemView.findViewById(R.id.noofcomment);
             imageView = itemView.findViewById(R.id.userPostimage);
             userprof=itemView.findViewById(R.id.userprofileimg);

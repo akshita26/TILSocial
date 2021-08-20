@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1046381332394",
+    "project_id": "til-social-22075",
+    "storage_bucket": "til-social-22075.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046381332394:android:a02fb6f1c05e8d0ecc0dd3",
+        "android_client_info": {
+          "package_name": "com.example.tilsocial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046381332394-ifnchem8pn0ge6he7kugnmhrugcbs737.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7EtSLceHzIL9RQbRXiv6CudrCIMIA8Hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046381332394-ifnchem8pn0ge6he7kugnmhrugcbs737.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

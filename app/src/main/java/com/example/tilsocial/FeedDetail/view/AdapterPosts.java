@@ -115,21 +115,23 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-//            if(modelPost.getImages().get(0)==null || modelPost.getImages().get(0).isEmpty())
-//            {
-//                holder1.imageView.setVisibility(View.GONE);
-//            }
-//            else
-//            {
-//                Glide.with(context).load(modelPost.getImages().get(0))
-//                        .placeholder(R.drawable.noimageeee)
-//                        .error(R.drawable.noimageeee)
-//                        .into(holder1.imageView);
-//            }
-//               Glide.with(context).load(modelPost.getImages().get(0))
-//                       .placeholder(R.drawable.icprofile)
-//                       .error(R.drawable.ic_error_outline)
-//                       .into(holder1.imageView);
+            if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
+            {
+                holder1.imageView.setVisibility(View.GONE);
+            }
+            else
+            {
+                Glide.with(context).load(modelPost.getImages().get(0))
+                        .placeholder(R.drawable.icprofile)
+                        .error(R.drawable.ic_error_outline)
+                        .into(holder1.imageView);
+
+            }
+
+            Log.d("imagecheckk", "onBindViewHolder: " +modelPost.getImages().get(0) );
+            Log.d("contextcheck", "onBindViewHolder: " +context);
+
+
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -221,6 +223,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
 
+
+
                 }
             });
 
@@ -245,7 +249,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        if(modelPosts.size()==0)
+        if(modelPosts.size() == 0)
         {
             return 0;
         }

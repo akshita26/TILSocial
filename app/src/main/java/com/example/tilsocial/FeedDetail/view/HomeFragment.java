@@ -18,7 +18,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -137,8 +136,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                 if(!isloading && !islastpage&& isScrolling)
                 {
                     isScrolling =false;
-                    if((currentItems + scrollOutItems >= totalItems) && scrollOutItems >=0 && totalItems>=pagesize&& pageno!=totalpages)
+                    if((currentItems + scrollOutItems >= totalItems) && scrollOutItems >=0 && totalItems>=pagesize&&pageno!=totalpages)
                     {
+                        //
                         pageno++;
                         loadfeeddata();
                     }
@@ -153,10 +153,11 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     private void loadfeeddata() {
 
 
-
+        loadingPB.setVisibility(View.VISIBLE);
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
         presenter.requestDataFromServer(pageno, "recency", empidinterger, "feed",loadingPB);
+
 
     }
 
@@ -180,6 +181,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         {
 
             totalpages = feedContent.getTotalPages()-1;
+            loadingPB.setVisibility(View.GONE);
             isloading = true;
             modelPosts.addAll(modelPostListt);
             adapterPosts.notifyDataSetChanged();
@@ -228,6 +230,11 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         HashSet<String> set = new HashSet(tagDetails.getTagglist());
         editor.putStringSet("inter", set);
         editor.commit();
+
+        HomeFragment fragment = new HomeFragment();
+        FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.dashboard, fragment, "");
+        fragmentTransaction.commit();
 
 
 

@@ -159,7 +159,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
                     } else {
                         interestList.remove(chip.getText());
                     }
-                    Toast.makeText(getActivity(), "" + interestList, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), "" + interestList, Toast.LENGTH_LONG).show();
                 }
             });
         }

@@ -59,7 +59,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
                                     progressDialog.dismiss();
                                     Toast.makeText(context, "Image Uploaded !!",
                                             Toast.LENGTH_SHORT).show();
-                                    pathUri="https://firebasestorage.googleapis.com/v0/b/til-social-22075.appspot.com/o/UserProfile%2F"+path+"?alt=media&token=c1d8b478-5902-48f2-89bb-026fc7870101";
+                                    pathUri="https://firebasestorage.googleapis.com/v0/b/til-social-22075.appspot.com/o/UserProfile%2F"+path+"?alt=media";
                                     mainView.extractFb(pathUri);
                                 }
                             })

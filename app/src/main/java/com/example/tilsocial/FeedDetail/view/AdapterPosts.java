@@ -148,17 +148,23 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-//            if(modelPost.getImages().get(0)==null || modelPost.getImages().get(0).isEmpty())
-//            {
-//                holder1.imageView.setVisibility(View.GONE);
-//            }
-//            else
-//            {
-//                Glide.with(context).load(modelPost.getImages().get(0))
-//                        .placeholder(R.drawable.noimageeee)
-//                        .error(R.drawable.noimageeee)
-//                        .into(holder1.imageView);
-//            }
+            if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
+            {
+                holder1.imageView.setVisibility(View.GONE);
+            }
+            else
+            {
+                try{
+                Glide.with(context).load(modelPost.getImages().get(0))
+                        .placeholder(R.drawable.noimageeee)
+                        .error(R.drawable.noimageeee)
+                        .into(holder1.imageView);
+                }
+                catch (Exception e){
+
+                }
+
+            }
 //               Glide.with(context).load(modelPost.getImages().get(0))
 //                       .placeholder(R.drawable.icprofile)
 //                       .error(R.drawable.ic_error_outline)

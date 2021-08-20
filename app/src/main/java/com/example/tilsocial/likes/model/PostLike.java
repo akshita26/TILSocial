@@ -4,6 +4,7 @@ public class PostLike {
     String postId;
     Boolean hasLiked;
     String empId;
+    private Integer likesCount;
 
     public String getPostId() {
         return postId;
@@ -28,12 +29,20 @@ public class PostLike {
     public void setEmpId(String empId) {
         this.empId = empId;
     }
+    public Integer getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(Integer likesCount) {
+        this.likesCount = likesCount;
+    }
 
     @Override
     public String toString() {
-        return "PostComment{" +
+        return "PostLike{" +
                 "postId='" + postId + '\'' +
                 ", hasLiked='" + hasLiked + '\'' +
+                ", likesCount='" + likesCount + '\'' +
                 ", empId=" + empId +
                 '}';
     }

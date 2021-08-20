@@ -113,17 +113,11 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         PostLike postLike=new PostLike();
                         postLike.setPostId(postId);
                         postLike.setEmpId(empId);
-                        postLike.setHasLiked(true);
+//                        postLike.setHasLiked(true);
+                        modelPost.setHasLiked(true);
                         Log.e("LikePosteeeee", "falseeeeeee: "+postId );
                         Log.e("LikePosteeeee", "falseeeeeee: "+empId );
                         likeView.postlike(postLike);
-                        try {
-                            modelPost.setHasLiked(true);
-                        }
-                        catch (Exception e){
-                            Log.e("LikePosteeee", "Bug in like api " );
-                            Log.e("LikePosteeee", " "+e );
-                        }
                         holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())+1+ " Likes");
                         modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount())+1));
                     }
@@ -133,13 +127,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         PostLike postLike=new PostLike();
                         postLike.setPostId(postId);
                         postLike.setEmpId(empId);
-                        try {
-                            modelPost.setHasLiked(false);
-                        }
-                        catch (Exception e){
-                            Log.e("LikePosteeee", "Bug in like api " );
-                            Log.e("LikePosteeee", " "+e );
-                        }
                         likeView.postlike(postLike);
                         modelPost.setHasLiked(false);
                         holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())-1+ " Likes");
@@ -285,6 +272,14 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
 
+    }
+
+    Boolean hasLiked;
+    Integer likesCount;
+
+    public void likeresponse(PostLike postLike) {
+        hasLiked=postLike.getHasLiked();
+        likesCount=postLike.getLikesCount();
     }
 
     class PostsHolder extends RecyclerView.ViewHolder {

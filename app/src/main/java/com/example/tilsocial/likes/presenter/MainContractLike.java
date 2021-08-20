@@ -10,11 +10,15 @@ import java.util.List;
 public interface MainContractLike {
     interface presenter {
         void postlike(PostLike postLike);
+
+        void likeresponse(PostLike postLike);
     }
 
     interface MainView {
         void onResponseFailure(Throwable t);
         void postlike(PostLike postLike);
+
+        void likeresponse(PostLike postLike);
     }
 
     interface Model {

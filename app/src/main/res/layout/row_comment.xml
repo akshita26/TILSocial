@@ -28,7 +28,6 @@
             android:src="@drawable/profile" />
 
 
-
         <TextView
             android:id="@+id/commentname"
             android:layout_width="match_parent"
@@ -40,10 +39,20 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/commenttext"
+            android:id="@+id/designationn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/commentname"
+            android:layout_toEndOf="@id/loadcomment"
+            android:layout_toRightOf="@id/loadcomment"
+            android:text="Designation"
+            android:textColor="@color/grey_40" />
+
+        <TextView
+            android:id="@+id/commenttext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/designationn"
             android:layout_toEndOf="@id/loadcomment"
             android:layout_toRightOf="@id/loadcomment"
             android:text="Actual Comment"

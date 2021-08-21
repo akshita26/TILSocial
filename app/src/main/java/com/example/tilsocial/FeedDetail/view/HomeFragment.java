@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,6 +65,10 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     SharedPreferences sharedPreferences;
     ArrayList intersett = new ArrayList();
     Context context;
+    Parcelable recyclerViewState;
+    HomeFragment fragment1;
+
+
     ActionBar actionBar;
 
 
@@ -93,7 +97,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-          View view =  inflater.inflate(R.layout.fragment_home, container, false);
+           View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
           prf = getActivity().getSharedPreferences("details", 0);
           context = getActivity();
@@ -229,6 +233,11 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         editor.putStringSet("inter", set);
         editor.commit();
 
+        HomeFragment fragment = new HomeFragment();
+        FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.dashboard, fragment, "");
+        fragmentTransaction.commit();
+
 
 
         Log.e("HomeActivityfeedtag464", "onResponse: " + tagDetails.getTagglist());
@@ -273,4 +282,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         super.onResume();
         ((DashboardActivity) getActivity()).setActionBarTitle("Home");
     }
+
+
 }

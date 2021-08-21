@@ -9,7 +9,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddPostModel {
+public class AddPostModel  {
     SharedPreferences sharedPreferences;
     String empid;
     Integer empidinteger;
@@ -32,6 +32,8 @@ public class AddPostModel {
                     Log.e("name", "name-: " + response.body().getName() );
                     Log.e("Response", "hasLiked-: " + response.body().getHasLiked());
                     Log.e("Response", "EmpId-: " + response.body().getEmpId() );
+
+//                    onFinishedListener.onFinished( list);
 //                    Log.e("Response", "CreatedAt-: " + response.body().getCreatedAt());
 //                    Log.e("Response", "Tags: " + response.body().getTags()[0]);
 //                    Log.e("Response", "=-: " + response.body().Details());
@@ -51,4 +53,5 @@ public class AddPostModel {
         });
 
     }
+
 }

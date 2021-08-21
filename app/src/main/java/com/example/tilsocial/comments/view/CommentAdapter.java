@@ -47,6 +47,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
         holder.commentuser.setText(commentModel.getName());
         holder.commentt.setText(commentModel.getComment());
+        holder.designation.setText(commentModel.getDesignation());
 
         sharedPreferences= context.getSharedPreferences("details",0);
         Glide.with(context).load(sharedPreferences.getString("imgurl",""))
@@ -73,7 +74,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
     class MyHolder extends RecyclerView.ViewHolder {
         //        ImageView picture, image;
-        TextView commentuser, commentt, time;
+        TextView commentuser, commentt, time,designation;
         ImageView userimg;
 
 
@@ -84,6 +85,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
             commentt = itemView.findViewById(R.id.commenttext);
             time = itemView.findViewById(R.id.commenttime);
             userimg=itemView.findViewById(R.id.loadcomment);
+            designation = itemView.findViewById(R.id.designationn);
 
         }
     }

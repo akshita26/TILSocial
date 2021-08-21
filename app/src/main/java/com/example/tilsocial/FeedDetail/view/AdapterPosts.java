@@ -1,7 +1,9 @@
 package com.example.tilsocial.FeedDetail.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -26,15 +28,13 @@ import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.view.CommentFragment;
+import com.example.tilsocial.likes.model.LikeModel;
+import com.example.tilsocial.likes.model.PostLike;
+import com.example.tilsocial.likes.presenter.LikePresenter;
+import com.example.tilsocial.likes.view.LikeView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,6 +50,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     String postId,empId;
     private static int POST_VIEW = 0;
     private static int  INTEREST_VIEW = 1;
+    List<String> tagss = new ArrayList<>();
+    LikeView likeView;
     int flag =0;
     List<String> taggs;
     ArrayList intersett ;
@@ -57,7 +59,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     int empidinterger;
 
 
-    public AdapterPosts(Context context,List<ModelPost> modelPosts,List<String> taggs,ArrayList intersett,int empidinterger) {
+    public AdapterPosts(Context context, List<ModelPost> modelPosts, List<String> taggs, ArrayList intersett, int empidinterger) {
         this.context = context;
         this.modelPosts = modelPosts;
         this.taggs = taggs;
@@ -70,7 +72,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-
 
         if(viewType==POST_VIEW) {
 
@@ -86,8 +87,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
 
         Log.d("postionn", "onBindViewHolder: "+ position);
@@ -96,19 +98,67 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             PostsHolder holder1 = (PostsHolder) holder;
             ModelPost modelPost = modelPosts.get(position);
             holder1.name.setText(modelPost.getName());
-            postId = modelPost.getPostId();
+            holder1.desgination.setText(modelPost.getDesignation());
+            modelPost.setHasLiked(modelPost.getHasLiked());
             Log.d("postidd", "onBindViewHolder: " + postId);
-            empId = modelPost.getEmpId();
             holder1.like.setText(modelPost.getLikesCount() + " Likes");
+            Log.d("postidd", "onBindViewHolder: " + postId);
+            likeView=new LikeView(new LikePresenter(new LikeModel()));
+            holder1.like.setText(modelPost.getLikesCount()+ " Likes");
+            Log.d("modelpostt", "Liked: " + modelPost.getHasLiked());
+            if(modelPost.getHasLiked()==true) {
+                holder1.likeimage.setColorFilter(Color.rgb(0, 0, 255));
+
+
+            }
+            else{
+                holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
+            }
+
+            holder1.likeimage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(modelPost.getHasLiked()==false) {
+                        Log.e("LikePosteeeee", "falseeeeeee: " );
+                        holder1.likeimage.setColorFilter(Color.rgb(0, 0, 255));
+                        PostLike postLike=new PostLike();
+                        postId = modelPost.getPostId();
+                        postLike.setPostId(postId);
+                        //empId = modelPost.getEmpId();
+                        postLike.setEmpId(empidinterger);
+//                        postLike.setHasLiked(true);
+                        modelPost.setHasLiked(true);
+                        Log.e("LikePosteeeee", "falseeeeeee: "+postId );
+                        Log.e("LikePosteeeee", "falseeeeeee: "+empId );
+                        likeView.postlike(postLike);
+                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())+1+ " Likes");
+                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount())+1));
+                        notifyItemChanged(position);
+                    }
+                    else{
+                        Log.e("LikePosteeee", "trueeeeeeeeeeeee: " );
+                        holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
+                        PostLike postLike=new PostLike();
+                        postId = modelPost.getPostId();
+                        postLike.setPostId(postId);
+                        //empId = modelPost.getEmpId();
+                        postLike.setEmpId(empidinterger);
+                        likeView.postlike(postLike);
+                        modelPost.setHasLiked(false);
+                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())-1+ " Likes");
+                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount())-1));
+                        notifyItemChanged(position);
+                    }
+
+                }
+            });
             holder1.comments.setText(modelPost.getCommentsCount() + " Comments");
             Log.d("checkimg", "onBindViewHolder: " + modelPost.getEmpImgUrl());
             holder1.content.setText(modelPost.getContent());
             Glide.with(context).load(modelPost.getEmpImgUrl())
                     .placeholder(R.drawable.profile)
-                    .error(R.drawable.ic_error_outline)
+                    .error(R.drawable.profile)
                     .into(holder1.userprof);
-
-
             String datetime= modelPost.getCreatedAt();
             Log.d("datetime", "onBindViewHolder: "+datetime);
 
@@ -155,14 +205,17 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             else
             {
                 try{
-                Glide.with(context).load(modelPost.getImages().get(0))
-                        .placeholder(R.drawable.noimageeee)
-                        .error(R.drawable.noimageeee)
-                        .into(holder1.imageView);
-                }
-                catch (Exception e){
+                    Glide.with(context).load(modelPost.getImages().get(0))
+                            .placeholder(R.drawable.noimageeee)
+                            .error(R.drawable.noimageeee)
+                            .into(holder1.imageView);
 
                 }
+                catch (Exception e) {
+
+                }
+
+
 
             }
 //               Glide.with(context).load(modelPost.getImages().get(0))
@@ -177,14 +230,26 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
                     actionBar.setTitle("Comment");
                     CommentFragment commentFragment = new CommentFragment();
-                    Bundle bundle=new Bundle();
-                    bundle.putString("postid", postid);
-                    commentFragment.setArguments(bundle);
-                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.dashboard, commentFragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                     Bundle bundle=new Bundle();
+                     bundle.putString("postid", postid);
+                     bundle.putString("comments", modelPost.getCommentsCount());
+                     bundle.putInt("commentposition",position);
+                     commentFragment.setArguments(bundle);
+
+
+                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                     // fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
+                     fragmentTransaction.add(R.id.dashboard, commentFragment);
+                     fragmentTransaction.addToBackStack(null);
+                     fragmentTransaction.commit();
+                    //int commentcount = Integer.parseInt(modelPost.getCommentsCount()) + 1;
+//                       modelPost.setCommentsCount("90");
+//                       holder1.comments.setText("5");
+                     notifyItemChanged(position);
+
+                   // Log.d("commentcountt", "onBindViewHolder: " +modelPosts.get(position).getCommentsCount());
+
                 }
             });
 
@@ -217,6 +282,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             holder2.chip.setCheckable(true);
                             holder2.chip.setChecked(true);
                             holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                            holder2.chip.setElevation(5F);
                             holder2.chipGroup.addView(holder2.chip);
 
                         }
@@ -260,6 +326,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     homeFragment.callsaveinterset(interestList,empidinterger,context);
 
 
+
                 }
             });
 
@@ -297,19 +364,29 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     }
 
+    Boolean hasLiked;
+    Integer likesCount;
+
+    public void likeresponse(PostLike postLike) {
+//        hasLiked=postLike.getHasLiked();
+//        likesCount=postLike.getLikesCount();
+    }
+
     class PostsHolder extends RecyclerView.ViewHolder {
 
-        TextView name, content,like, comments,time,tags;
-        ImageView imageView,share, userprof,commentimg;
+        TextView name, content,like, comments,time,tags, desgination;
+        ImageView imageView,share, userprof,commentimg, likeimage;
         ChipGroup chipGroup;
 
         public PostsHolder(View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.userprofilename);
+            desgination = itemView.findViewById(R.id.Designation);
 //            empid = itemView.findViewById(R.id.placeofpost);
             content = itemView.findViewById(R.id.PostDescription);
             like = itemView.findViewById(R.id.nooflikepost);
+            likeimage = itemView.findViewById(R.id.likeimagepost);
             comments = itemView.findViewById(R.id.noofcomment);
             commentimg=itemView.findViewById(R.id.commentimgbtn);
             imageView = itemView.findViewById(R.id.userPostimage);

@@ -1,70 +1,54 @@
-package com.example.tilsocial.FeedDetail.model;
+package com.example.tilsocial.likes.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
-public class ModelPost implements Serializable {
-
-
-    public ModelPost() {
-
-    }
-
-    @SerializedName("empId")
-    private  String empId;
-
-    @SerializedName("name")
-    private String name;
-
-    @SerializedName("likesCount")
-    private String likesCount;
-
-    @SerializedName("commentsCount")
-    private String commentsCount;
-
-    @SerializedName("hasLiked")
-     Boolean hasLiked;
-
-    @SerializedName("createdAt")
-    private String createdAt;
-
-    @SerializedName("updatedAt")
-    private String updatedAt;
-
-    @SerializedName("content")
-    private String content;
-
-    @SerializedName("tags")
-    private String [] tags;
-    @SerializedName("images")
-    private List<String> images;
-
+public class LikeModelResponse implements Serializable {
     @SerializedName("postId")
+    @Expose
     private String postId;
-
-    @SerializedName("empImgUrl")
-    private String empImgUrl;
+    @SerializedName("empId")
+    @Expose
+    private String empId;
+    @SerializedName("name")
+    @Expose
+    private String name;
     @SerializedName("designation")
+    @Expose
     private String designation;
-
-    public String getDesignation() {
-        return designation;
-    }
-
-    public void setDesignation(String designation) {
-        this.designation = designation;
-    }
-
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
+    @SerializedName("likesCount")
+    @Expose
+    private Integer likesCount;
+    @SerializedName("commentsCount")
+    @Expose
+    private Integer commentsCount;
+    @SerializedName("hasLiked")
+    @Expose
+    private Boolean hasLiked;
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
+    @SerializedName("updatedAt")
+    @Expose
+    private String updatedAt;
+    @SerializedName("content")
+    @Expose
+    private String content;
+    @SerializedName("empImgUrl")
+    @Expose
+    private String empImgUrl;
+    @SerializedName("tags")
+    @Expose
+    private String[] tags = null;
+    @SerializedName("images")
+    @Expose
+    private List<String> images = null;
+    @SerializedName("videos")
+    @Expose
+    private List<String> videos = null;
 
     public String getPostId() {
         return postId;
@@ -90,19 +74,27 @@ public class ModelPost implements Serializable {
         this.name = name;
     }
 
-    public String getLikesCount() {
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public Integer getLikesCount() {
         return likesCount;
     }
 
-    public void setLikesCount(String likesCount) {
+    public void setLikesCount(Integer likesCount) {
         this.likesCount = likesCount;
     }
 
-    public String getCommentsCount() {
+    public Integer getCommentsCount() {
         return commentsCount;
     }
 
-    public void setCommentsCount(String commentsCount) {
+    public void setCommentsCount(Integer commentsCount) {
         this.commentsCount = commentsCount;
     }
 
@@ -111,7 +103,6 @@ public class ModelPost implements Serializable {
     }
 
     public void setHasLiked(Boolean hasLiked) {
-
         this.hasLiked = hasLiked;
     }
 
@@ -139,14 +130,6 @@ public class ModelPost implements Serializable {
         this.content = content;
     }
 
-    public String[] getTags() {
-        return tags;
-    }
-
-    public void setTags(String[] tags) {
-        this.tags = tags;
-    }
-
     public String getEmpImgUrl() {
         return empImgUrl;
     }
@@ -155,22 +138,45 @@ public class ModelPost implements Serializable {
         this.empImgUrl = empImgUrl;
     }
 
-    @Override
-    public String toString() {
-        return "ModelPost{" +
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public List<String> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<String> videos) {
+        this.videos = videos;
+    }
+
+    public String Details(){
+        return "LikePost{" +
                 "empId='" + empId + '\'' +
+                "postId='" + postId + '\'' +
                 ", name='" + name + '\'' +
                 ", likesCount='" + likesCount + '\'' +
+                ", designation='" + designation + '\'' +
                 ", commentsCount='" + commentsCount + '\'' +
-                ", hasLiked=" + hasLiked +
+                ", hasLiked='" + hasLiked + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
                 ", content='" + content + '\'' +
-                ", tags=" + Arrays.toString(tags) +
-                ", images=" + images +
-                ", postId='" + postId + '\'' +
-                ", empImgUrl='" + empImgUrl + '\'' +
-                ", designation='" + designation + '\'' +
+                ", images='" + images + '\'' +
+                ", videos='" + videos + '\'' +
+                ", tags=" + tags +
                 '}';
     }
 }

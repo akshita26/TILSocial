@@ -1,5 +1,7 @@
 package com.example.tilsocial.comments.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class CommentModel {
 
     String commentId;
@@ -9,6 +11,8 @@ public class CommentModel {
     String comment;
     String createdAt;
     String empImgUrl;
+    @SerializedName("designation")
+    String designation;
 
     public CommentModel()
     {
@@ -22,6 +26,15 @@ public class CommentModel {
         this.empId = empId;
         this.comment = comment;
         this.createdAt = createdAt;
+    }
+
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
     public String getCommentId() {
@@ -90,6 +103,7 @@ public class CommentModel {
                 ", comment='" + comment + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", empImgUrl='" + empImgUrl + '\'' +
+                ", designation='" + designation + '\'' +
                 '}';
     }
 }

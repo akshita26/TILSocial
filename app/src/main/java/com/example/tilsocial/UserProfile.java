@@ -19,6 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +32,7 @@ import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.FeedDetail.model.TagDetails;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
+import com.example.tilsocial.FeedDetail.view.ImageFragment;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.example.tilsocial.signup.view.EditProfile;
 import com.google.android.material.chip.Chip;
@@ -146,12 +149,29 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
                     .error(R.drawable.ic_error_outline)
                     .into(profilee);
 
-            if(sharedPreferences.getString("imgurl","")==null){
-                Glide.with(getActivity()).load(R.drawable.man)
-                        .placeholder(R.drawable.man)
-                        .error(R.drawable.ic_error_outline)
-                        .into(profilee);
-            }
+            profilee.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageFragment imageFragment= new ImageFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("postimg",sharedPreferences.getString("imgurl",""));
+                    imageFragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                    fragmentTransaction.add(R.id.dashboard, imageFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.add(android.R.id.content, imageFragment).commit();
+                }
+            });
+
+//            if(sharedPreferences.getString("imgurl","")==null){
+//                Glide.with(getActivity()).load(R.drawable.man)
+//                        .placeholder(R.drawable.man)
+//                        .error(R.drawable.ic_error_outline)
+//                        .into(profilee);
+//            }
         Log.d("Checkuserprof", "onCreateView: "+sharedPreferences.getString("imgurl",""));
             HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
             tags = new ArrayList(set);

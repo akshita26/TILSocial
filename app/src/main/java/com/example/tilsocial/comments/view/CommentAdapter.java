@@ -26,7 +26,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
     Context context;
     List<CommentModel> commentss;
-    SharedPreferences sharedPreferences;
 
     public CommentAdapter(Context context, List<CommentModel> commentss) {
         this.context = context;
@@ -49,8 +48,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
         holder.commentt.setText(commentModel.getComment());
         holder.designation.setText(commentModel.getDesignation());
 
-        sharedPreferences= context.getSharedPreferences("details",0);
-        Glide.with(context).load(sharedPreferences.getString("imgurl",""))
+        Glide.with(context).load(commentModel.getEmpImgUrl())
                 .error(R.drawable.ic_error_outline)
                 .into(holder.userimg);
 

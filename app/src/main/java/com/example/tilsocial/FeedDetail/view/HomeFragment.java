@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -67,9 +68,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     Context context;
     Parcelable recyclerViewState;
     HomeFragment fragment1;
-
-
-    ActionBar actionBar;
 
 
 
@@ -269,7 +267,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void callsaveinterset(List<String> interestList, int empidd, Context context) {
         Log.e("HomeActivityfeedtag3535", "onResponse: " + interestList.toString());
         Log.e("empidcheck", "onResponse: " + empidd);
@@ -282,6 +279,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         super.onResume();
         ((DashboardActivity) getActivity()).setActionBarTitle("Home");
     }
-
-
 }
+
+

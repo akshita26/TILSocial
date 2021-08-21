@@ -178,8 +178,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             });
         }
 
-
-
     }
 
 
@@ -304,7 +302,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     }
 
-
     @Override
     public void SetSignupdata(SignupRequestParams signupRequestParams) {
 
@@ -322,7 +319,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         editor.putString("imgurl", signupRequestParams.getImgUrl());
         Log.d("DPcheck ", "SetSignupdata: "+signupRequestParams.getImgUrl());
         editor.commit();
-
 
     }
 

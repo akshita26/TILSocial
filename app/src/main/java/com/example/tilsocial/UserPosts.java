@@ -1,16 +1,21 @@
 package com.example.tilsocial;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
+import com.example.tilsocial.FeedDetail.view.ImageFragment;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
@@ -55,6 +60,21 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
                 .placeholder(R.drawable.icprofile)
                 .error(R.drawable.ic_error_outline)
                 .into(holder.imageView);
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageFragment imageFragment= new ImageFragment();
+                Bundle bundle=new Bundle();
+                bundle.putString("postimg", modelPost.getImages().get(0));
+                imageFragment.setArguments(bundle);
+
+                FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                imageFragment.show(fragmentTransaction, "dialog");
+            }
+        });
 
     }
 

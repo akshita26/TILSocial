@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -215,13 +216,27 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
                 }
 
-
-
             }
-//               Glide.with(context).load(modelPost.getImages().get(0))
-//                       .placeholder(R.drawable.icprofile)
-//                       .error(R.drawable.ic_error_outline)
-//                       .into(holder1.imageView);
+
+            holder1.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageFragment imageFragment= new ImageFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("postimg", modelPost.getImages().get(0));
+                    imageFragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                    fragmentTransaction.add(R.id.dashboard, imageFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.add(android.R.id.content, imageFragment).commit();
+
+//                    imageFragment.show(fragmentTransaction, "dialog");
+                }
+            });
+
             holder1.commentimg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -240,7 +255,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                      FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                      // fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
-                     fragmentTransaction.add(R.id.dashboard, commentFragment);
+                     fragmentTransaction.replace(R.id.dashboard, commentFragment);
                      fragmentTransaction.addToBackStack(null);
                      fragmentTransaction.commit();
                     //int commentcount = Integer.parseInt(modelPost.getCommentsCount()) + 1;

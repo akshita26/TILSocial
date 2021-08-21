@@ -167,7 +167,7 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="30dp"
                             android:backgroundTint="@color/basic"
-                            android:text="Sign up"
+                            android:text="Save Profile"
                             android:textStyle="bold"
                             />
 

@@ -49,8 +49,9 @@ public class SignInModel implements ModeltoPresenter.SignInModel {
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
                 Log.e("Failure", "onResponse: " + t.getMessage() );
-                onFinishedListener.onFailure(t);
                 mProgress.dismiss();
+                onFinishedListener.onFailure(t);
+
             }
         });
     }

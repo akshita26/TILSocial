@@ -3,29 +3,37 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/drawable/btn_rounded_primary.xml" value="0.21302083333333333" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/drawable/button_shape.xml" value="0.21302083333333333" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/drawable/clrgrad.xml" value="0.19739583333333333" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/activity_dashboard.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/activity_main.xml" value="0.196875" />
-        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_add_post.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/customizesignupp.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/feedcardview.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_add_post.xml" value="0.25" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_comment.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_edit_profile.xml" value="0.25" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_image.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_profile.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_siggnuppfragment.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_signin.xml" value="0.22" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_user_profile.xml" value="0.25" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/intersetcardview.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/intersetrow.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/menu_nav.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/notselected_interests.xml" value="0.196875" />
-        <entry key="..\:/Android_/ws/TILSocial/app/src/main/res/drawable/ic_thumb_up.xml" value="0.2046875" />
-        <entry key="..\:/Android_/ws/TILSocial/app/src/main/res/layout/activity_dashboard.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_/ws/TILSocial/app/src/main/res/layout/feedcardview.xml" value="0.67" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/postcardview.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/profile_main.xml" value="0.2" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/row_comment.xml" value="0.20052083333333334" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/spinnneritem.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/taggss.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/toast_icon_text.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/toolbar.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/trial.xml" value="0.1828125" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/menu/my_menu.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/menu/my_menu2.xml" value="0.196875" />
         <entry key="..\:/Android_/ws/TILSocial/app/src/main/res/layout/fragment_add_post.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_/ws/TILSocial/app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="..\:/Android_/ws/TILSocial/app/src/main/res/layout/fragment_siggnuppfragment.xml" value="0.1" />
-        <entry key="..\:/Android_/ws/TILSocial/app/src/main/res/layout/fragment_user_profile.xml" value="0.20416666666666666" />
-        <entry key="..\:/Android_/ws/TILSocial/app/src/main/res/menu/my_menu.xml" value="0.18854166666666666" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/drawable/button_shape.xml" value="0.18333333333333332" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/drawable/feedcustomspinner.xml" value="0.18229166666666666" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/drawable/ic_error_outline.xml" value="0.18333333333333332" />
@@ -35,10 +43,10 @@
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/feedcardview.xml" value="0.196875" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_add_post.xml" value="0.196875" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_comment.xml" value="0.196875" />
-        <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_edit_profile.xml" value="0.3022113022113022" />
+        <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_edit_profile.xml" value="0.18125" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_home.xml" value="0.18" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_profile.xml" value="0.196875" />
-        <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_siggnuppfragment.xml" value="0.25" />
+        <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_siggnuppfragment.xml" value="0.1" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/fragment_signin.xml" value="0.18125" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/row_comment.xml" value="0.15885416666666666" />
         <entry key="..\:/android_/ws/TILSocial/app/src/main/res/layout/sdgd.xml" value="0.196875" />

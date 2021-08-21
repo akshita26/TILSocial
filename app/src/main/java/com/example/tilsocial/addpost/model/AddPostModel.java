@@ -32,6 +32,9 @@ public class AddPostModel  {
                     Log.e("name", "name-: " + response.body().getName() );
                     Log.e("Response", "hasLiked-: " + response.body().getHasLiked());
                     Log.e("Response", "EmpId-: " + response.body().getEmpId() );
+                    for(int i=0;i<response.body().getTags().length;i++) {
+                        Log.e("Response", "Tag-: "+i+":" + response.body().getTags()[i]);
+                    }
 
 //                    onFinishedListener.onFinished( list);
 //                    Log.e("Response", "CreatedAt-: " + response.body().getCreatedAt());

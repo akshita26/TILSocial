@@ -39,17 +39,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
 public class AddPostFragment extends Fragment implements AddPostPresenter.AddPostView {
     Button post;
-    Spinner interest_tag;
     ImageView btncamera, btngallery, imageView, cancelimage;
-    EditText title, desc;
-    ChipGroup chipGroup, chipGroup2;
+    EditText desc;
+    ChipGroup chipGroup;
     Chip chip;
-    Integer count, cinterest, isdesc = 0, isinterest = 0, i_width=0;
+    Integer isdesc = 0,  i_width=0;
     Uri imageUri;
     List<String> interest;
     String[] interestList;
@@ -57,8 +57,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     AddPostPresenter addPostPresenter;
     SharedPreferences sharedPreferences,preferences;
     String empid;
-    Integer empidinteger;
-    ArrayList tags;
+    Integer empidinteger, cnt=0;
 
     public AddPostFragment() {
         // Required empty public constructor
@@ -76,21 +75,14 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_post, container, false);
         post = view.findViewById(R.id.postupload);
-//        title = view.findViewById(R.id.title);
         desc = view.findViewById(R.id.description);
         btncamera = view.findViewById(R.id.camera);
         btngallery = view.findViewById(R.id.gallery);
         imageView = view.findViewById(R.id.image);
         chipGroup = view.findViewById(R.id.chip_group);
-        interest_tag = view.findViewById(R.id.spinner);
         cancelimage = view.findViewById(R.id.cancelimage);
 
         preferences= getActivity().getSharedPreferences("tags",0);
-
-//        HashSet set = (HashSet<String>) preferences.getStringSet("interests", null);
-//        Log.d("Interestsss", "onCreateView: "+set);
-//        tags = new ArrayList(set);
-//        Log.d("tagsss", "onCreateView: "+tags);
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +90,6 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 interestList=new String[]{};
                 interestList=interest.toArray(interestList);
                 AddPostRequestParams addPostRequestParams = new AddPostRequestParams();
-//                addPostRequestParams.setTitle(title.getText().toString());
                 addPostRequestParams.setContent(desc.getText().toString());
                 addPostRequestParams.setImages(imageList);
                 addPostRequestParams.setTags(interestList);
@@ -112,9 +103,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                     e.printStackTrace();
                 }
 
-                count = chipGroup.getChildCount();
                 Toast.makeText(getActivity(), "Posted", Toast.LENGTH_LONG).show();
-//                title.getText().clear();
                 desc.getText().clear();
                 imageView.setImageDrawable(null);
                 imageView.getLayoutParams().height = 0;
@@ -124,18 +113,17 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 cancelimage.getLayoutParams().height = 0;
                 cancelimage.getLayoutParams().width = 0;
                 String a = "";
-                for (int i = 0; i < count; i++) {
-                    Chip chip = (Chip) chipGroup.getChildAt(0);
-                    a += chipGroup.getChildCount() + chip.getText().toString();
-                    chipGroup.removeView(chip);
+                for (int i = 0; i < chipGroup.getChildCount(); i++) {
+                    Chip chip = (Chip) chipGroup.getChildAt(i);
+                    chip.setChecked(false);
                 }
                 post.setTextColor(getResources().getColor(R.color.white));
                 post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
                 post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey_20)));
                 post.setEnabled(false);
                 isdesc=0;
-                isinterest=0;
                 interest = new ArrayList<>();
+                cnt=0;
             }
         });
 
@@ -166,7 +154,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 isdesc = 1;
-                if (isinterest >= 1) {
+                if (cnt >= 1) {
                     Boolean b=!s.toString().trim().isEmpty();
                     post.setEnabled(b);
                     if(b) {
@@ -187,9 +175,8 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             }
         });
 
-//        Interest Tag selection
-        String[] Interests = new String[]{
-                "Select Interest...",
+        //        Interest Tag selection
+        String[] tagss = new String[]{
                 "React",
                 "Spring",
                 "Python",
@@ -199,70 +186,54 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
                 "Backend"
         };
 
-        final List<String> InterestList = new ArrayList<>(Arrays.asList(Interests));
-
-        // Initializing an ArrayAdapter
-        final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<String>(
-                getActivity(), R.layout.spinnneritem, Interests);
-        TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
-
-        interest_tag.setAdapter(TeamArrayAdapter);
-
         interest = new ArrayList<>();
-        interest_tag.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i != 0) {
-                    if (!interest.contains(adapterView.getItemAtPosition(i).toString())) {
-                        interest.add(adapterView.getItemAtPosition(i).toString());
-                        isinterest += 1;
-                        chip = new Chip(getActivity());
-                        chip.setText(adapterView.getItemAtPosition(i).toString());
-                        chip.setCloseIconVisible(true);
-                        chipGroup.addView(chip);
+        for (int i = 0; i < tagss.length; i++) {
+            chip = new Chip(getActivity());
+            chip.setText(tagss[i]);
+            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+            chip.setCheckable(true);
+            chipGroup.addView(chip);
 
-                        interest_tag.setSelection(i);
+        }
 
-                        cinterest = chipGroup.getChildCount();
-                        for (int j = 0; j < cinterest; j++) {
-                            Chip chip = (Chip) chipGroup.getChildAt(j);
-                            chip.setOnCloseIconClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    chipGroup.removeView(chip);
-                                    interest.remove(chip.getText());
-                                    isinterest -= 1;
-                                    if (isinterest == 0) {
-                                        post.setTextColor(getResources().getColor(R.color.white));
-                                        post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
-                                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey_20)));
-                                        post.setEnabled(false);
-                                    }
-                                }
-                            });
-                        }
-                        if (isdesc == 1 && isinterest >= 1) {
-                            post.setEnabled(true);
-                            post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
-                            post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.basic)));
-                        }
+        for(int i=0 ;i <tagss.length;i++){
+            Chip chip = (Chip)chipGroup.getChildAt(i);
+            chip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(chip.isChecked()){
+                        Log.e("11111y",""+cnt);
+                        interest.add(chip.getText().toString());
+                        cnt++;
                     }
-                    else{
-                        Toast.makeText(getActivity(), adapterView.getItemAtPosition(i).toString()+" already selected", Toast.LENGTH_SHORT).show();
-                        interest_tag.setSelection(0);
+                    else {
+                        Log.e("11111n",""+cnt);
+                        interest.remove(chip.getText());
+                        cnt--;
                     }
+                    Log.e("11111o",""+cnt);
+                    if (isdesc == 1 && cnt>0) {
+                        Log.e("11111w",""+cnt);
+                        post.setEnabled(true);
+                        post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
+                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.basic)));
+                    }
+                    else if(cnt < 1 || isdesc==0){
+                        Log.e("11111p",""+cnt);
+                        post.setTextColor(getResources().getColor(R.color.white));
+                        post.setBackground(getActivity().getResources().getDrawable(R.drawable.button_shape));
+                        post.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.grey_20)));
+                        post.setEnabled(false);
+                    }
+
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-
-        });
+            });
+        }
 
         return view;
     }
+
+
 
 
     @Override
@@ -273,8 +244,6 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             imageView.setImageBitmap(bitmap);
             imageView.getLayoutParams().height = 200;
             imageView.getLayoutParams().width = 200;
-//            i_width = 200;
-//            i_width = i_width + i_width/2;
             try {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
                 File mFileTemp = null;

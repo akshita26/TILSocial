@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -36,6 +37,7 @@ import com.example.tilsocial.likes.view.LikeView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -274,7 +276,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.putExtra(Intent.EXTRA_TEXT, modelPost.getContent());
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, modelPost.getImages().get(0));
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(modelPost.getImages().get(0)));
+                    Log.d("sharecheck", "onClick: "+Uri.parse(modelPost.getImages().get(0)));
                     shareIntent.setType("image/*");
                     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     context.startActivity(Intent.createChooser(shareIntent, "Share post..."));

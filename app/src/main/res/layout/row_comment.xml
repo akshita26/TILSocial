@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/commenttime"
-        android:background="@color/grey_500"/>
+        android:background="@color/grey_400" />
     </RelativeLayout>
 
 <!--</androidx.cardview.widget.CardView>-->

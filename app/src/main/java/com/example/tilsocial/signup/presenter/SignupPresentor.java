@@ -139,11 +139,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
             mainView.showinterestvalidation();
             return true;
         }
-        if(empimg==null || empimg.isEmpty())
-        {
-            mainView.validationonprofilepic();
-            return  true;
-        }
+
         return false;
 
     }

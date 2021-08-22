@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -104,6 +105,11 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         spinnerDetails = new SpinnerDetails();
         presenter.requestDataFromServerSpinner();
 
+        Bundle bundle=getArguments();
+        employeeidd.setText(bundle.getString("emp"));
+        employeeidd.setEnabled(false);
+        employeeidd.setTextColor(Color.DKGRAY);
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
@@ -171,8 +177,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                 }
             });
         }
-
-
 
     }
 
@@ -277,10 +281,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
     public void showinterestvalidation() {
         Toast.makeText(getActivity(), "Please select minimum 1 Interest", Toast.LENGTH_SHORT).show();
     }
-    @Override
-    public void validationonprofilepic() {
-        Toast.makeText(getActivity(), "Please upload profilepic", Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     public void nextfragment() {
@@ -301,7 +302,6 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
 
     }
 
-
     @Override
     public void SetSignupdata(SignupRequestParams signupRequestParams) {
 
@@ -317,8 +317,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         editor.putStringSet("inter", set);
         editor.putString("team", signupRequestParams.getTeam());
         editor.putString("imgurl", signupRequestParams.getImgUrl());
+        Log.d("DPcheck ", "SetSignupdata: "+signupRequestParams.getImgUrl());
         editor.commit();
-
 
     }
 
@@ -342,6 +342,7 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
         //Log.e("Signuppresentor", "onResponse: " + TeamList.toString());
 
             final ArrayAdapter<String> TeamArrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinnneritem, TeamList);
+        Log.d("TeamListtt", "getspinnerdata: "+TeamList);
             TeamArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
             team.setAdapter(TeamArrayAdapter);
             team.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -378,21 +379,15 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
                                    DesignationArrayAdapter.setDropDownViewResource(R.layout.spinnneritem);
                                    designation.setAdapter(DesignationArrayAdapter);
 
-
-
                             }
 
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
 
-
-
-
                             }
                         });
 
                     }
-
 
 
                 @Override

@@ -26,8 +26,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.view.HomeFragment;
 import com.example.tilsocial.R;
+import com.example.tilsocial.UserProfile;
 import com.example.tilsocial.signup.model.Departments;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;
@@ -61,10 +63,11 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     MainContractSignup.presenter presenter;
     SharedPreferences sharedPreferences;
     ArrayList interestList= new ArrayList();
-    String dept, desig, empid, teamm;
+    String dept, desig, empid, teamm, imageurl;
     Uri imageUri, selectedImage;
     ArrayList tagspref = new ArrayList();
 
+    SharedPreferences.Editor editor;
 
     public EditProfile() {
 
@@ -88,7 +91,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         updatebtn = view.findViewById(R.id.buttonupdate);
         bioo = view.findViewById(R.id.editTextTextPersonName3);
         chipGroup = view.findViewById(R.id.chip_group);
-        userprofile = view.findViewById(R.id.user);
+        userprofile = view.findViewById(R.id.userprofilee);
         spinnerDetails =new SpinnerDetails();
         presenter.requestDataFromServerSpinner();
 
@@ -106,13 +109,18 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
             Log.e("editprofilee", "onResponse133: " + tagspref.toString());
 
-        userprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+                    .placeholder(R.drawable.profile)
+                    .error(R.drawable.ic_error_outline)
+                    .into(userprofile);
 
-                selectImage();
-            }
-        });
+            userprofile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    selectImage();
+                }
+            });
 
 
 
@@ -129,7 +137,13 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
                 signupRequestParams.setTeam(team.getSelectedItem().toString());
                 signupRequestParams.setDesignation(designation.getSelectedItem().toString());
                 signupRequestParams.setInterests((ArrayList) interestList);
+                signupRequestParams.setImgUrl(imageurl);
                 presenter.gotoprofile(signupRequestParams);
+
+                UserProfile userProfile=new UserProfile();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.dashboard, userProfile);
+                ft.commit();
             }
         });
         return view;
@@ -187,7 +201,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     }
 
 
-
     private void selectImage() {
 
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
@@ -198,7 +211,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Take Photo")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, 0);
+                    startActivityForResult(intent,0);
                 } else if (options[item].equals("Choose from Gallery")) {
                     Intent intent = new Intent();
                     intent.setType("image/*");
@@ -217,7 +230,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         switch (requestCode) {
             case 0:
-
                 if (resultCode == RESULT_OK) {
                     Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     userprofile.setImageBitmap(photo);
@@ -244,6 +256,8 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
                     presenter.uploadFb(getActivity(), selectedImage);
                 }
                 break;
+            default:
+                userprofile.setImageURI(imageUri);
         }
     }
 
@@ -284,10 +298,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     public void showinterestvalidation() {
         Toast.makeText(getActivity(), "Please select minimum 1 interests", Toast.LENGTH_SHORT).show();
     }
-    @Override
-    public void validationonprofilepic() {
-        Toast.makeText(getActivity(), "Please Upload profile pic", Toast.LENGTH_SHORT).show();
-    }
+
 
     @Override
     public void nextfragment() {
@@ -310,17 +321,29 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void SetSignupdata(SignupRequestParams signupRequestParams) {
-
+        Log.e("Signuppdataa", "data" + signupRequestParams);
+        sharedPreferences = getActivity().getSharedPreferences("details", 0);
+        editor = sharedPreferences.edit();
+        editor.putString("empid", signupRequestParams.getEmpId().toString());
+        editor.putString("name", signupRequestParams.getName());
+        editor.putString("dept", signupRequestParams.getDept());
+        editor.putString("bio", signupRequestParams.getBio());
+        editor.putString("desig", signupRequestParams.getDesignation());
+        HashSet<String> set = new HashSet(signupRequestParams.getInterests());
+        editor.putStringSet("inter", set);
+        editor.putString("team", signupRequestParams.getTeam());
+        editor.putString("imgurl", signupRequestParams.getImgUrl());
+        Log.d("DPcheck ", "SetSignupdata: "+signupRequestParams.getImgUrl());
+        editor.commit();
     }
 
     @Override
     public void extractFb(String s) {
-
+        imageurl = s;
     }
 
     @Override
     public void getspinnerdata(HashMap<String, List<Departments>> map) {
-
 
         List<String> TeamList = new ArrayList<>();
         HashMap<String,List<String>> map2 = new HashMap<>();

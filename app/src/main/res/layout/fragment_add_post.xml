@@ -20,17 +20,6 @@
             android:padding="10dp">
 
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="3dp"
-            app:cardElevation="3dp"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="5dp"
-            android:visibility="visible">
-
-
             <LinearLayout
                 android:id="@+id/linearlayout"
                 android:layout_width="match_parent"
@@ -67,6 +56,13 @@
                     android:singleLine="true"
                     android:textSize="14dp"
                     android:layout_marginBottom="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="    Please select interests:"
+                    android:paddingBottom="2dp"
+                    android:textColor="@color/black"
+                    />
 
 
                 <com.google.android.material.chip.ChipGroup
@@ -74,7 +70,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_middle"
-                    app:singleSelection="false" />
+                    app:singleSelection="false" >
+
+            </com.google.android.material.chip.ChipGroup>
 
                 <ImageView
                     android:id="@+id/cancelimage"
@@ -91,17 +89,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp" />
 
-<!--                <View-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:layout_weight="1" />-->
 
-<!--                <com.google.android.material.chip.ChipGroup-->
-<!--                    android:id="@+id/chip_group2"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-
-<!--                </com.google.android.material.chip.ChipGroup>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,14 +128,8 @@
                 </LinearLayout>
 
 
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-            <!--    </ScrollView>-->
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>

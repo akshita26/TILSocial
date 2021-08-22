@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,9 +123,12 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
     @Override
     public void noUserfound(String error) {
         Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
-        SignUpFragment SignUpFragment = new SignUpFragment();
+        SignUpFragment signUpFragment = new SignUpFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("emp",editText.getText().toString());
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.your_placeholder, SignUpFragment);
+        signUpFragment.setArguments(bundle);
+        ft.replace(R.id.your_placeholder, signUpFragment);
         ft.commit();
     }
 }

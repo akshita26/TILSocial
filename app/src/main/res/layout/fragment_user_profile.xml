@@ -16,30 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            android:background="#293859" />
+            android:background="@color/basic" />
 
-<!--        &lt;!&ndash;Top Header Layout&ndash;&gt;-->
-<!--        <LinearLayout-->
-<!--            android:id="@+id/topbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:padding="16dp">-->
-
-
-<!--            <Space-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1" />-->
-<!--            -->
-
-<!--            <Space-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1" />-->
-<!--android:layout_below="@+id/topbar"-->
-<!--        </LinearLayout>-->
 
         <ScrollView
             android:layout_width="match_parent"
@@ -160,9 +138,9 @@
                         android:padding="13dp"
                         android:text="User Activity"
                         android:textAllCaps="true"
-                        android:textColor="@color/blue_grey_400"
+                        android:textColor="@color/blue_grey_500"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                        />
 
                 </LinearLayout>
 
@@ -266,7 +244,7 @@
                                     android:id="@+id/team"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="61dp"
+                                    android:layout_marginLeft="62dp"
                                     android:fontFamily="@font/proximanovaregular"
                                     android:text="your team"
                                     android:textColor="@color/goodgrey"

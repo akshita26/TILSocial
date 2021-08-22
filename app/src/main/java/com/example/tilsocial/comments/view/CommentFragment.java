@@ -4,19 +4,25 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.view.AdapterPosts;
+import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.API.CommentAPIInterface;
 import com.example.tilsocial.comments.model.CommentModel;
@@ -48,6 +54,7 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
 
 
 
+    ActionBar actionBar;
 
     public CommentFragment() {
 
@@ -61,6 +68,9 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+//        actionBar = ((DashboardActivity)getActivity()).getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
        View view = inflater.inflate(R.layout.fragment_comment, container, false);
         presenter = new CommentPresenter(this,new ModelComment());
@@ -110,6 +120,7 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         return view;
     }
 
+
     private void loadComments() {
         presenter.requestdatafromserver(postId);
 
@@ -117,9 +128,6 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
 
     @Override
     public void setDataToRecyclerViewComment(List<CommentModel> commentModelList) {
-
-
-
         if(commentModelList.size()==0)
         {
             nocomment.setVisibility(View.VISIBLE);
@@ -127,6 +135,8 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         else
         {
             Log.d("position", "onClick: "+commentcnt+" "+commnetposition);
+
+            //Log.d("positioncontext", "onClick: "+ getActivity());
             nocomment.setVisibility(View.GONE);
             commentss.addAll(commentModelList);
             commentAdapter.notifyDataSetChanged();

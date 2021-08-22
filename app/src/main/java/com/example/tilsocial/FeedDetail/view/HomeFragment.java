@@ -1,5 +1,6 @@
 package com.example.tilsocial.FeedDetail.view;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -23,12 +25,14 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.FeedDetail.model.TagDetails;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
+import com.example.tilsocial.MainActivity;
 import com.example.tilsocial.R;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 
@@ -41,8 +45,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
     RecyclerView recyclerView;
     AdapterPosts adapterPosts;
-     MainContract.presenter presenter;
-     ProgressBar loadingPB;
+    private MainContract.presenter presenter;
+    private ProgressBar loadingPB;
     SharedPreferences prf;
     Integer empidinterger;
     String empid;
@@ -80,14 +84,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-
 //        Toast.makeText(getActivity(), "employeeidis" + empid, Toast.LENGTH_SHORT).show();
 
     }
-
-
-
     @Override
     public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater) {
         inflater.inflate(R.menu.my_menu, menu);
@@ -125,11 +124,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
                 if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
                 {
                     isScrolling = true;
-                    //recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
                 }
 
             }
@@ -189,7 +186,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
         presenter.requestDataFromServer(pageno, "recency", empidinterger, "feed",loadingPB);
-
 
     }
 
@@ -305,7 +301,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void callsaveinterset(List<String> interestList, int empidd, Context context) {
         Log.e("HomeActivityfeedtag3535", "onResponse: " + interestList.toString());
         Log.e("empidcheck", "onResponse: " + empidd);
@@ -313,5 +308,11 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         presenter.setnewtagss(empidd,interestList,context);
     }
 
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        ((DashboardActivity) getActivity()).setActionBarTitle("Home");
+    }
 }
+
+

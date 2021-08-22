@@ -40,7 +40,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     Context context;
     List<ModelPost> modelPosts;
@@ -55,8 +55,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     ArrayList intersett ;
     List<String> interestList = new ArrayList<>();
     int empidinterger;
-    FragmentActivity activity;
-    boolean commentdonee = false;
 
 
     public AdapterPosts(Context context, List<ModelPost> modelPosts, List<String> taggs, ArrayList intersett, int empidinterger) {
@@ -65,9 +63,10 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.taggs = taggs;
         this.intersett = intersett;
         this.empidinterger = empidinterger;
+
+
+
     }
-
-
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -81,6 +80,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             view= LayoutInflater.from(context).inflate(R.layout.taggss, parent, false);
             return new Interestholder(view);
         }
+
+
 
     }
 
@@ -105,6 +106,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Log.d("modelpostt", "Liked: " + modelPost.getHasLiked());
             if(modelPost.getHasLiked()==true) {
                 holder1.likeimage.setColorFilter(Color.rgb(0, 0, 255));
+
+
             }
             else{
                 holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
@@ -166,7 +169,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Log.d("Datetime_calender3", "onBindViewHolder: "+calendar);
 
             }
-           String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+            String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 //            Log.d("datetime_format", "onBindViewHolder: "+timedate);
 //
 //            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.S",Locale.ENGLISH)
@@ -205,8 +208,30 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
                 catch (Exception e) {
 
-                } }
-            holder1.comments.setOnClickListener(new View.OnClickListener() {
+                }
+
+            }
+
+            holder1.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageFragment imageFragment= new ImageFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("postimg", modelPost.getImages().get(0));
+                    imageFragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                    fragmentTransaction.add(R.id.dashboard, imageFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.add(android.R.id.content, imageFragment).commit();
+
+//                    imageFragment.show(fragmentTransaction, "dialog");
+                }
+            });
+
+            holder1.commentimg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String postid;
@@ -222,7 +247,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                      FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                     // fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
+                      fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
                      fragmentTransaction.add(R.id.dashboard, commentFragment);
                      fragmentTransaction.addToBackStack(null);
                      fragmentTransaction.commit();
@@ -260,7 +285,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             holder2.chip.setCheckable(true);
                             holder2.chip.setChecked(true);
                             holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
-                            holder2.chip.setTextAppearanceResource(R.style.ChipTextStyle_Selected);
                             holder2.chip.setElevation(5F);
                             holder2.chipGroup.addView(holder2.chip);
 
@@ -305,6 +329,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                     HomeFragment homeFragment = new HomeFragment();
                     homeFragment.callsaveinterset(interestList,empidinterger,context);
+
+
 
                 }
             });
@@ -355,8 +381,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     class PostsHolder extends RecyclerView.ViewHolder {
 
-        TextView name, content,like, comments,time,tags,desgination;
-        ImageView imageView,share, userprof,likeimage ;
+        TextView name, content,like, comments,time,tags, desgination;
+        ImageView imageView,share, userprof,commentimg, likeimage;
         ChipGroup chipGroup;
 
         public PostsHolder(View itemView) {
@@ -369,6 +395,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             like = itemView.findViewById(R.id.nooflikepost);
             likeimage = itemView.findViewById(R.id.likeimagepost);
             comments = itemView.findViewById(R.id.noofcomment);
+            commentimg=itemView.findViewById(R.id.commentimgbtn);
             imageView = itemView.findViewById(R.id.userPostimage);
             userprof=itemView.findViewById(R.id.userprofileimg);
             time = itemView.findViewById(R.id.timeofpost);

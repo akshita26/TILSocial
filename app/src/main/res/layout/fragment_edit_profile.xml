@@ -36,18 +36,29 @@
                         android:orientation="vertical"
                         android:padding="20dp">
 
-
                         <com.mikhaellopez.circularimageview.CircularImageView
-                            android:id="@+id/user"
+                            android:id="@+id/userprofilee"
                             android:layout_width="140dp"
                             android:layout_height="140dp"
-                            android:layout_gravity="center"
                             android:src="@drawable/profile"
                             app:civ_border_color="@color/basic"
                             app:civ_border_width="1dp"
                             app:civ_shadow="true"
+                            app:civ_shadow_radius="10dp"
                             app:civ_shadow_color="@color/basic"
-                            app:civ_shadow_radius="10dp" />
+                            android:layout_gravity="center" />
+
+<!--                        <com.mikhaellopez.circularimageview.CircularImageView-->
+<!--                            android:id="@+id/userr"-->
+<!--                            android:layout_width="140dp"-->
+<!--                            android:layout_height="140dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:src="@drawable/profile"-->
+<!--                            app:civ_border_color="@color/basic"-->
+<!--                            app:civ_border_width="1dp"-->
+<!--                            app:civ_shadow="true"-->
+<!--                            app:civ_shadow_color="@color/basic"-->
+<!--                            app:civ_shadow_radius="10dp" />-->
 
 
                         <EditText

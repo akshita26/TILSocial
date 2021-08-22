@@ -1,5 +1,6 @@
 package com.example.tilsocial.addpost.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -82,6 +84,9 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         chipGroup = view.findViewById(R.id.chip_group);
         cancelimage = view.findViewById(R.id.cancelimage);
 
+        desc.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         preferences= getActivity().getSharedPreferences("tags",0);
 
         post.setOnClickListener(new View.OnClickListener() {

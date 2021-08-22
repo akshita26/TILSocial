@@ -44,6 +44,10 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
     String commentcnt;
     int commnetposition;
     AdapterPosts adapterPosts;
+    LinearLayoutManager manager;
+
+
+
 
     public CommentFragment() {
 
@@ -95,6 +99,8 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
                 Log.d("postemp", "onClick: "+postId+" "+empId);
                 int empid = Integer.parseInt(empId);
                 postComment.setEmpId(empid);
+
+                //adaptorinterface.submitt(commnetposition);
                 presenter.postcomment(postComment);
 //                loadComments();
 //                commentss.clear();
@@ -121,10 +127,6 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         else
         {
             Log.d("position", "onClick: "+commentcnt+" "+commnetposition);
-
-
-
-            //Log.d("positioncontext", "onClick: "+ getActivity());
             nocomment.setVisibility(View.GONE);
             commentss.addAll(commentModelList);
             commentAdapter.notifyDataSetChanged();
@@ -133,9 +135,6 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
         }
 
 
-
-
-//        Log.d("TAG", "setDataToRecyclerViewComment: "+commentModelList);
     }
 
     @Override
@@ -145,9 +144,15 @@ public class CommentFragment extends Fragment implements MainContractComment.Mai
 
     @Override
     public void SetNewComment(CommentModel body) {
+
         Log.d("TAG", "SetNewComment: "+body.toString());
         nocomment.setVisibility(View.GONE);
         commentss.add(body);
         commentAdapter.notifyDataSetChanged();
     }
+
+
+
+
+
 }

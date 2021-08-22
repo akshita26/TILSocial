@@ -40,7 +40,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
 
     Context context;
     List<ModelPost> modelPosts;
@@ -55,6 +55,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     ArrayList intersett ;
     List<String> interestList = new ArrayList<>();
     int empidinterger;
+    FragmentActivity activity;
+    boolean commentdonee = false;
 
 
     public AdapterPosts(Context context, List<ModelPost> modelPosts, List<String> taggs, ArrayList intersett, int empidinterger) {
@@ -63,10 +65,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.taggs = taggs;
         this.intersett = intersett;
         this.empidinterger = empidinterger;
-
-
-
     }
+
+
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -80,8 +81,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             view= LayoutInflater.from(context).inflate(R.layout.taggss, parent, false);
             return new Interestholder(view);
         }
-
-
 
     }
 
@@ -106,8 +105,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             Log.d("modelpostt", "Liked: " + modelPost.getHasLiked());
             if(modelPost.getHasLiked()==true) {
                 holder1.likeimage.setColorFilter(Color.rgb(0, 0, 255));
-
-
             }
             else{
                 holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
@@ -122,9 +119,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         PostLike postLike=new PostLike();
                         postId = modelPost.getPostId();
                         postLike.setPostId(postId);
-                        //empId = modelPost.getEmpId();
                         postLike.setEmpId(empidinterger);
-//                        postLike.setHasLiked(true);
                         modelPost.setHasLiked(true);
                         Log.e("LikePosteeeee", "falseeeeeee: "+postId );
                         Log.e("LikePosteeeee", "falseeeeeee: "+empId );
@@ -139,7 +134,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         PostLike postLike=new PostLike();
                         postId = modelPost.getPostId();
                         postLike.setPostId(postId);
-                        //empId = modelPost.getEmpId();
                         postLike.setEmpId(empidinterger);
                         likeView.postlike(postLike);
                         modelPost.setHasLiked(false);
@@ -211,15 +205,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 catch (Exception e) {
 
-                }
-
-
-
-            }
-//               Glide.with(context).load(modelPost.getImages().get(0))
-//                       .placeholder(R.drawable.icprofile)
-//                       .error(R.drawable.ic_error_outline)
-//                       .into(holder1.imageView);
+                } }
             holder1.comments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -234,19 +220,16 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                      bundle.putInt("commentposition",position);
                      commentFragment.setArguments(bundle);
 
-
                      FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                      // fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
                      fragmentTransaction.add(R.id.dashboard, commentFragment);
                      fragmentTransaction.addToBackStack(null);
                      fragmentTransaction.commit();
-                    //int commentcount = Integer.parseInt(modelPost.getCommentsCount()) + 1;
-//                       modelPost.setCommentsCount("90");
-//                       holder1.comments.setText("5");
-                     notifyItemChanged(position);
 
-                   // Log.d("commentcountt", "onBindViewHolder: " +modelPosts.get(position).getCommentsCount());
+
+                    // notifyItemChanged(position);
+                    //Log.d("commentcountt", "onBindViewHolder: " +modelPosts.get(position).getCommentsCount());
 
                 }
             });
@@ -264,10 +247,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
             });
 
-
-
-
-        } else {
+        } else if(flag == 0) {
 
                 Interestholder holder2 = (Interestholder) holder;
                   for(int j =0 ;j<taggs.size();j++)
@@ -280,6 +260,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             holder2.chip.setCheckable(true);
                             holder2.chip.setChecked(true);
                             holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                            holder2.chip.setTextAppearanceResource(R.style.ChipTextStyle_Selected);
                             holder2.chip.setElevation(5F);
                             holder2.chipGroup.addView(holder2.chip);
 
@@ -291,11 +272,12 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             holder2.chip.setText(taggs.get(j));
                             holder2.chip.setCheckable(true);
                             holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                            holder2.chip.setTextAppearanceResource(R.style.ChipTextStyle_Selected);
                             holder2.chip.setElevation(5F);
                             holder2.chipGroup.addView(holder2.chip);
                         }
-
                     }
+                  flag = 1;
 
                   interestList.addAll(intersett);
 
@@ -324,10 +306,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     HomeFragment homeFragment = new HomeFragment();
                     homeFragment.callsaveinterset(interestList,empidinterger,context);
 
-
-
-
-
                 }
             });
 
@@ -341,7 +319,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public int getItemViewType(int position) {
 
-        if (position == 2 ) {
+        if (position == 5 ) {
 
             return INTEREST_VIEW;
 
@@ -372,6 +350,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 //        hasLiked=postLike.getHasLiked();
 //        likesCount=postLike.getLikesCount();
     }
+
+
 
     class PostsHolder extends RecyclerView.ViewHolder {
 
@@ -413,5 +393,11 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
+
+
+
+
 }
+
+
 

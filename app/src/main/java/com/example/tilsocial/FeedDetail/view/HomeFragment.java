@@ -41,8 +41,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
     RecyclerView recyclerView;
     AdapterPosts adapterPosts;
-    private MainContract.presenter presenter;
-    private ProgressBar loadingPB;
+     MainContract.presenter presenter;
+     ProgressBar loadingPB;
     SharedPreferences prf;
     Integer empidinterger;
     String empid;
@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     Context context;
     Parcelable recyclerViewState;
     HomeFragment fragment1;
+    boolean trendingpageon = false;
 
 
 
@@ -144,12 +145,31 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                 if(!isloading && !islastpage&& isScrolling)
                 {
                     isScrolling =false;
-                    if((currentItems + scrollOutItems >= totalItems) && scrollOutItems >=0 && totalItems>=pagesize&&pageno!=totalpages)
+
+                    if(trendingpageon == true)
                     {
-                        //
-                        pageno++;
-                        loadfeeddata();
+                        if((currentItems + scrollOutItems >= totalItems) && scrollOutItems >=0 && totalItems>=pagesize&&pageno!=totalpages)
+                        {
+
+                            pageno++;
+                            loadfeeddatatrending();
+                        }
+
                     }
+                    else
+                    {
+                        if((currentItems + scrollOutItems >= totalItems) && scrollOutItems >=0 && totalItems>=pagesize&&pageno!=totalpages)
+                        {
+                            //
+                            pageno++;
+                            loadfeeddata();
+                            //loadfeeddatatrending();
+                        }
+
+                    }
+
+
+
                 }
 
             }
@@ -161,10 +181,10 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void loadfeeddata() {
 
 
-//        if(pageno == 0)
-//        {
-//         loadingPB.setVisibility(View.VISIBLE);
-//        }
+        if(pageno == 0)
+        {
+         loadingPB.setVisibility(View.VISIBLE);
+        }
 
         Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
@@ -179,6 +199,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
         presenter.requestDataFromServer(pageno, "trending", empidinterger, "feed",loadingPB);
 
+
     }
 
     @Override
@@ -192,8 +213,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         else
         {
 
+
             totalpages = feedContent.getTotalPages()-1;
-            //loadingPB.setVisibility(View.GONE);
+            loadingPB.setVisibility(View.GONE);
             isloading = true;
 
 
@@ -272,6 +294,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         {
             modelPosts.clear();
             pageno = 0;
+            trendingpageon = true;
             loadfeeddatatrending();
             Toast.makeText(getActivity(), "Trending", Toast.LENGTH_SHORT).show();
         }

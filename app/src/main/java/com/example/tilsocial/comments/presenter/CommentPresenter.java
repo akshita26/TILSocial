@@ -7,8 +7,8 @@ import java.util.List;
 
 public class CommentPresenter implements MainContractComment.presenter, MainContractComment.Model.OnFinishedListener {
 
-    private MainContractComment.MainView mainView;
-    private MainContractComment.Model model;
+     MainContractComment.MainView mainView;
+     MainContractComment.Model model;
 
     public CommentPresenter(MainContractComment.MainView mainView, MainContractComment.Model model) {
         this.mainView = mainView;

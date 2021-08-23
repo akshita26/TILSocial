@@ -29,7 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.example.tilsocial.FeedDetail.view.HomeFragment;
 import com.example.tilsocial.R;
-import com.example.tilsocial.UserProfile;
+import com.example.tilsocial.profile.UserProfile;
 import com.example.tilsocial.signup.model.Departments;
 import com.example.tilsocial.signup.model.SignUpModel;
 import com.example.tilsocial.signup.model.SignupRequestParams;

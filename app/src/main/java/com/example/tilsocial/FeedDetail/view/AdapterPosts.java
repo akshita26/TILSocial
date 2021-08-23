@@ -3,6 +3,7 @@ package com.example.tilsocial.FeedDetail.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -26,6 +27,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tilsocial.FeedDetail.api.ApiClient;
+import com.example.tilsocial.FeedDetail.api.ApiInterface;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.view.CommentFragment;
@@ -33,6 +36,13 @@ import com.example.tilsocial.likes.model.LikeModel;
 import com.example.tilsocial.likes.model.PostLike;
 import com.example.tilsocial.likes.presenter.LikePresenter;
 import com.example.tilsocial.likes.view.LikeView;
+import com.example.tilsocial.profile.ColleagueProfile;
+import com.example.tilsocial.signin.data.SigninAPIClient;
+import com.example.tilsocial.signin.data.SigninAPIinterface;
+import com.example.tilsocial.signin.model.ErrorResponse;
+import com.example.tilsocial.signin.model.ErrorUtils;
+import com.example.tilsocial.signin.model.UserData;
+import com.example.tilsocial.signup.view.SignUpFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -42,8 +52,13 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -60,6 +75,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     ArrayList intersett ;
     List<String> interestList = new ArrayList<>();
     int empidinterger;
+    ApiInterface apiInterface;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     public AdapterPosts(Context context, List<ModelPost> modelPosts, List<String> taggs, ArrayList intersett, int empidinterger) {
@@ -277,6 +295,65 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     shareIntent.setType("image/jpg");
 //                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     context.startActivity(Intent.createChooser(shareIntent, "Share post..."));
+                }
+            });
+
+   //colleague profile
+            holder1.userprof.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+                    int EmployeeId=Integer.parseInt(modelPost.getEmpId());
+
+                    Call<UserData> GetCall = apiInterface.getColleagueProf(EmployeeId);
+
+                    GetCall.enqueue(new Callback<UserData>() {
+                        @Override
+                        public void onResponse(Call<UserData> call, Response<UserData> response) {
+                            if(response.isSuccessful())
+                            {
+                                Log.e("Employeeid", "onResponse: " + response.body().getEmpId());
+                                Log.e("Employeename", "onResponse: " + response.body().getName());
+                                sharedPreferences = context.getSharedPreferences("colleague", 0);
+                                editor = sharedPreferences.edit();
+                                editor.putString("empid",response.body().getEmpId().toString());
+                                editor.putString("name", response.body().getName());
+                                editor.putString("dept", response.body().getDept());
+                                editor.putString("bio", response.body().getBio());
+                                editor.putString("desig", response.body().getDesignation());
+                                HashSet<String> set = new HashSet(response.body().getInterests());
+                                editor.putStringSet("inter", set);
+                                editor.putString("team", response.body().getTeam());
+                                editor.putString("imgurl",response.body().getImgUrl());
+                                Log.d("profilepicture", "setDataToRecyclerView: "+response.body().getInterests());
+                                editor.commit();
+
+                                ColleagueProfile colleagueProfile = new ColleagueProfile();
+                                FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
+                                fragmentTransaction.add(R.id.dashboard, colleagueProfile);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+
+                            }
+                            else
+                            {
+                                ErrorResponse errorResponse = ErrorUtils.parseError(response);
+                                Log.d("Errorhandling", "onResponse: "+errorResponse.getError());
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserData> call, Throwable t) {
+                            Log.e("Failure", "onResponse: " + t.getMessage() );
+
+                        }
+                    });
+
                 }
             });
 

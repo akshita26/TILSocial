@@ -3,13 +3,13 @@ package com.example.tilsocial;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tilsocial.FeedDetail.view.HomeFragment;
 import com.example.tilsocial.addpost.view.AddPostFragment;
+import com.example.tilsocial.profile.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DashboardActivity extends AppCompatActivity {

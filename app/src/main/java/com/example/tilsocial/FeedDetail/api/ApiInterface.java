@@ -2,12 +2,14 @@ package com.example.tilsocial.FeedDetail.api;
 
 import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.TagDetails;
+import com.example.tilsocial.signin.model.UserData;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -27,5 +29,8 @@ public interface ApiInterface {
 
     @POST("profile/tag/save")
     Call<TagDetails> settagssdetails(@Body TagDetails tagDetails);
+
+    @GET("profile/fetch/{empId}")
+    Call<UserData> getColleagueProf(@Path("empId") Integer empId);
 
 }

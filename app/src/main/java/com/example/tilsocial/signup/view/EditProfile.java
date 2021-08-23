@@ -165,6 +165,8 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
                 chip.setCheckable(true);
                 chip.setChecked(true);
                 chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+                chip.setChipStrokeColor(getResources().getColorStateList(R.color.grey_500));
+                chip.setChipStrokeWidth(1);
                 chipGroup.addView(chip);
 
             }
@@ -173,6 +175,8 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
                 chip = new Chip(getActivity());
                 chip.setText(tagss.get(i));
                 chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+                chip.setChipStrokeColor(getResources().getColorStateList(R.color.grey_500));
+                chip.setChipStrokeWidth(1);
                 chip.setCheckable(true);
                 chipGroup.addView(chip);
 

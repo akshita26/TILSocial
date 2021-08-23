@@ -12,6 +12,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -23,9 +26,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.tilsocial.MainActivity;
 import com.example.tilsocial.R;
 import com.example.tilsocial.addpost.model.AddPostModel;
 import com.example.tilsocial.addpost.model.AddPostRequestParams;
@@ -69,7 +74,30 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPostPresenter = new AddPostPresenter(this, new AddPostModel());
+        setHasOptionsMenu(true);
     }
+
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.menu_post, menu);
+//        super.onCreateOptionsMenu(menu,inflater);
+//
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        if (item.getItemId() == R.id.postbtn)
+//        {
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.clear();
+//            editor.commit();
+//            Intent intent = new Intent(getActivity(), MainActivity.class);
+//            startActivity(intent);
+//            getActivity().finish();
+//            Toast.makeText(getActivity(), "Logout Done", Toast.LENGTH_SHORT).show();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,6 +116,8 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         preferences= getActivity().getSharedPreferences("tags",0);
+
+
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +227,8 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             chip.setText(tagss[i]);
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chip.setCheckable(true);
+            chip.setChipStrokeColor(getResources().getColorStateList(R.color.grey_500));
+            chip.setChipStrokeWidth(1);
             chipGroup.addView(chip);
 
         }

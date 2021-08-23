@@ -37,7 +37,6 @@
                     android:id="@+id/userprofileimg"
                     android:layout_width="@dimen/spacing_xxlarge"
                     android:layout_height="@dimen/spacing_xxlarge"
-                    android:foreground="#33FFFFFF"
                     app:civ_shadow="true"
                     app:civ_shadow_radius="0dp"
                     android:src="@drawable/profile"

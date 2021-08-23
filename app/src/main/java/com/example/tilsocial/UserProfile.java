@@ -207,6 +207,8 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
             chip = new Chip(getActivity());
             chip.setText(tags.get(i).toString());
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+            chip.setChipStrokeColor(getResources().getColorStateList(R.color.grey_500));
+            chip.setChipStrokeWidth(1);
             chipGroup.addView(chip);
         }
 

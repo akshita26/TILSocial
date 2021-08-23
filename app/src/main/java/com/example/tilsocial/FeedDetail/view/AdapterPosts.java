@@ -37,6 +37,9 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.net.URI;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -156,35 +159,37 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     .placeholder(R.drawable.profile)
                     .error(R.drawable.profile)
                     .into(holder1.userprof);
+
             String datetime= modelPost.getCreatedAt();
             Log.d("datetime", "onBindViewHolder: "+datetime);
 
-
-            Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
-            Log.d("Datetime_calender", "onBindViewHolder: "+calendar);
-            try {
-                calendar.setTimeInMillis(Long.parseLong(modelPost.getCreatedAt()));
-                Log.d("Datetime_calender2", "onBindViewHolder: "+calendar);
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Log.d("Datetime_calender3", "onBindViewHolder: "+calendar);
-
-            }
-            String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+//
+//            Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+//            Log.d("Datetime_calender", "onBindViewHolder: "+calendar);
+//            try {
+//                calendar.setTimeInMillis(Long.parseLong(modelPost.getCreatedAt()));
+//                Log.d("Datetime_calender2", "onBindViewHolder: "+calendar);
+//
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//                Log.d("Datetime_calender3", "onBindViewHolder: "+calendar);
+//
+//            }
+//            String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 //            Log.d("datetime_format", "onBindViewHolder: "+timedate);
-//
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.S",Locale.ENGLISH)
-//                    .withZone(ZoneId.of("Etc/UTC"));
-//
-//            ZonedDateTime zdtUtc = ZonedDateTime.parse(datetime, formatter);
-//
-//            ZonedDateTime zdtInd = zdtUtc.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
-//
-//            DateTimeFormatter dtfOutput = DateTimeFormatter.ofPattern("MM-dd-uuuu hh:mm:ss a", Locale.ENGLISH);
-//
-//            Log.d("datetimeformatted", "onBindViewHolder: "+zdtInd.format(dtfOutput));
-            holder1.time.setText(timedate);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]",Locale.ENGLISH)
+                    .withZone(ZoneId.of("Etc/UTC"));
+
+            ZonedDateTime zdtUtc = ZonedDateTime.parse(datetime, formatter);
+
+            ZonedDateTime zdtInd = zdtUtc.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+
+            DateTimeFormatter dtfOutput = DateTimeFormatter.ofPattern("dd-MM-uuuu hh:mm a", Locale.ENGLISH);
+
+            Log.d("datetimeformatted", "onBindViewHolder: "+zdtInd.format(dtfOutput));
+            holder1.time.setText(zdtInd.format(dtfOutput));
+
             String taggs[] = modelPost.getTags();
             if (taggs == null) {
                 holder1.tags.setText("Empty");

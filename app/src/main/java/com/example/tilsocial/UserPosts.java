@@ -1,13 +1,16 @@
 package com.example.tilsocial;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,7 +21,13 @@ import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.FeedDetail.view.ImageFragment;
 import com.google.android.material.chip.ChipGroup;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import org.ocpsoft.prettytime.PrettyTime;
 
 public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
     Context context;
@@ -37,6 +46,7 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(UserPosts.MyHolder holder, int position) {
 
@@ -44,7 +54,7 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
         holder.name.setText( modelPost.getName());
         holder.like.setText(modelPost.getLikesCount() + " Likes"  );
         holder.comments.setText(modelPost.getCommentsCount() + " Comments");
-        holder.time.setText(modelPost.getCreatedAt());
+//        holder.time.setText(modelPost.getCreatedAt());
         holder.content.setText(modelPost.getContent());
         Glide.with(context).load(modelPost.getEmpImgUrl())
                 .placeholder(R.drawable.icprofile)
@@ -60,6 +70,21 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
                 .placeholder(R.drawable.icprofile)
                 .error(R.drawable.ic_error_outline)
                 .into(holder.imageView);
+
+        String datetime= modelPost.getCreatedAt();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]", Locale.ENGLISH)
+                .withZone(ZoneId.of("Etc/UTC"));
+
+        ZonedDateTime zdtUtc = ZonedDateTime.parse(datetime, formatter);
+
+        ZonedDateTime zdtInd = zdtUtc.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+
+        DateTimeFormatter dtfOutput = DateTimeFormatter.ofPattern("dd-MM-uuuu hh:mm a", Locale.ENGLISH);
+
+        Log.d("datetimeformatted", "onBindViewHolder: "+zdtInd.format(dtfOutput));
+        holder.time.setText(zdtInd.format(dtfOutput));
+
+        Log.d("TAGDate", "onBindViewHolder: "+zdtInd.format(dtfOutput));
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -278,8 +278,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     shareIntent.putExtra(Intent.EXTRA_TEXT, modelPost.getContent());
                     shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(modelPost.getImages().get(0)));
                     Log.d("sharecheck", "onClick: "+Uri.parse(modelPost.getImages().get(0)));
-                    shareIntent.setType("image/*");
-                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    shareIntent.setType("image/jpg");
+//                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     context.startActivity(Intent.createChooser(shareIntent, "Share post..."));
                 }
             });

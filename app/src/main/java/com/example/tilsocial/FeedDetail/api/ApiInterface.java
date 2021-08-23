@@ -5,6 +5,8 @@ import com.example.tilsocial.FeedDetail.model.TagDetails;
 import com.example.tilsocial.signin.model.UserData;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -33,4 +35,6 @@ public interface ApiInterface {
     @GET("profile/fetch/{empId}")
     Call<UserData> getColleagueProf(@Path("empId") Integer empId);
 
+    @GET("recommend/fetch/{empId}")
+    Call<List<UserData>> getRecommendation(@Path("empId") Integer empId);
 }

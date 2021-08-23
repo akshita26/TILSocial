@@ -423,14 +423,42 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             holder3.recyclerView.setHasFixedSize(true);
 
             ArrayList colleagues= new ArrayList();
-            List<String> modelPosts=new ArrayList<>();
-            modelPosts.add("abcdx12");
-            modelPosts.add("kfsk");
-            modelPosts.add("lkaskhjd2");
-            RecommendationAdapter recommendationAdapter=new RecommendationAdapter(modelPosts,holder3.recyclerView.getContext());
+            List<UserData> recomData=new ArrayList<>();
+//            modelPosts.add("abcdx12");
+//            modelPosts.add("kfsk");
+//            modelPosts.add("lkaskhjd2");
+            RecommendationAdapter recommendationAdapter=new RecommendationAdapter(recomData,holder3.recyclerView.getContext());
 
             holder3.recyclerView.setAdapter(recommendationAdapter);
             //call api
+            apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+            Call<List<UserData>> GetCall = apiInterface.getRecommendation(empidinterger);
+
+            GetCall.enqueue(new Callback<List<UserData>>() {
+                @Override
+                public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
+                    if(response.isSuccessful())
+                    {
+                        Log.e("Employeeidrecom", "onResponse: " + response.body().get(0).getEmpId());
+                        Log.e("Employeenamerecom", "onResponse: " + response.body().get(0).getName());
+                        recomData.addAll(response.body());
+                        recommendationAdapter.notifyDataSetChanged();
+                    }
+                    else
+                    {
+                        ErrorResponse errorResponse = ErrorUtils.parseError(response);
+                        Log.d("Errorhandling", "onResponse: "+errorResponse.getError());
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<List<UserData>> call, Throwable t) {
+                    Log.e("Failure", "onResponse: " + t.getMessage() );
+
+                }
+            });
         }
 
     }

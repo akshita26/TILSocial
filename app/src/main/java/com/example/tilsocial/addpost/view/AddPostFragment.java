@@ -1,5 +1,6 @@
 package com.example.tilsocial.addpost.view;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -88,13 +89,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 //        if (item.getItemId() == R.id.postbtn)
 //        {
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor.clear();
-//            editor.commit();
-//            Intent intent = new Intent(getActivity(), MainActivity.class);
-//            startActivity(intent);
-//            getActivity().finish();
-//            Toast.makeText(getActivity(), "Logout Done", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "Post Done", Toast.LENGTH_SHORT).show();
 //        }
 //        return super.onOptionsItemSelected(item);
 //    }

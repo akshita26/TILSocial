@@ -4,7 +4,6 @@
     <style name="ChipTextStyle_Selected">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="fontFamily">@font/dancingscriptbold</item>
 
     </style>
 

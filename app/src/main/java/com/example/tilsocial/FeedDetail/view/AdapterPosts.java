@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,10 +39,8 @@ import com.google.android.material.chip.ChipGroup;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -127,9 +124,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         PostLike postLike=new PostLike();
                         postId = modelPost.getPostId();
                         postLike.setPostId(postId);
-                        //empId = modelPost.getEmpId();
                         postLike.setEmpId(empidinterger);
-//                        postLike.setHasLiked(true);
                         modelPost.setHasLiked(true);
                         Log.e("LikePosteeeee", "falseeeeeee: "+postId );
                         Log.e("LikePosteeeee", "falseeeeeee: "+empId );
@@ -144,7 +139,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         PostLike postLike=new PostLike();
                         postId = modelPost.getPostId();
                         postLike.setPostId(postId);
-                        //empId = modelPost.getEmpId();
                         postLike.setEmpId(empidinterger);
                         likeView.postlike(postLike);
                         modelPost.setHasLiked(false);
@@ -179,7 +173,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
             String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 //            Log.d("datetime_format", "onBindViewHolder: "+timedate);
-
+//
 //            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.S",Locale.ENGLISH)
 //                    .withZone(ZoneId.of("Etc/UTC"));
 //
@@ -253,19 +247,16 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                      bundle.putInt("commentposition",position);
                      commentFragment.setArguments(bundle);
 
-
                      FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                     // fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
-                     fragmentTransaction.replace(R.id.dashboard, commentFragment);
+                      fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
+                     fragmentTransaction.add(R.id.dashboard, commentFragment);
                      fragmentTransaction.addToBackStack(null);
                      fragmentTransaction.commit();
-                    //int commentcount = Integer.parseInt(modelPost.getCommentsCount()) + 1;
-//                       modelPost.setCommentsCount("90");
-//                       holder1.comments.setText("5");
-                     notifyItemChanged(position);
 
-                   // Log.d("commentcountt", "onBindViewHolder: " +modelPosts.get(position).getCommentsCount());
+
+                    // notifyItemChanged(position);
+                    //Log.d("commentcountt", "onBindViewHolder: " +modelPosts.get(position).getCommentsCount());
 
                 }
             });
@@ -284,10 +275,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
             });
 
-
-
-
-        } else {
+        } else if(flag == 0) {
 
                 Interestholder holder2 = (Interestholder) holder;
                   for(int j =0 ;j<taggs.size();j++)
@@ -311,10 +299,12 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             holder2.chip.setText(taggs.get(j));
                             holder2.chip.setCheckable(true);
                             holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                            holder2.chip.setTextAppearanceResource(R.style.ChipTextStyle_Selected);
+                            holder2.chip.setElevation(5F);
                             holder2.chipGroup.addView(holder2.chip);
                         }
-
                     }
+                  flag = 1;
 
                   interestList.addAll(intersett);
 
@@ -358,7 +348,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public int getItemViewType(int position) {
 
-        if (position == 2 ) {
+        if (position == 5 ) {
 
             return INTEREST_VIEW;
 
@@ -369,7 +359,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        if(modelPosts.size()==0)
+        if(modelPosts.size() == 0)
         {
             return 0;
         }
@@ -389,6 +379,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 //        hasLiked=postLike.getHasLiked();
 //        likesCount=postLike.getLikesCount();
     }
+
+
 
     class PostsHolder extends RecyclerView.ViewHolder {
 
@@ -431,5 +423,11 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
+
+
+
+
 }
+
+
 

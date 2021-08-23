@@ -65,6 +65,8 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     ArrayList interestList= new ArrayList();
     String dept, desig, empid, teamm, imageurl;
     Uri imageUri, selectedImage;
+    ArrayList tagspref = new ArrayList();
+
     SharedPreferences.Editor editor;
 
     public EditProfile() {
@@ -103,9 +105,9 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             empid =sharedPreferences.getString("empid", "");
             teamm=sharedPreferences.getString("team","");
             HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
-            ArrayList tags = new ArrayList(set);
+            tagspref = new ArrayList(set);
 
-            Log.e("editprofilee", "onResponse133: " + tags.toString());
+            Log.e("editprofilee", "onResponse133: " + tagspref.toString());
 
             Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
                     .placeholder(R.drawable.profile)
@@ -150,17 +152,36 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
     @Override
     public void gettagsdata(List<String> tagss) {
 
+
+        Log.e("tagggg", "onResponse133: " + tagss.toString());
+
         //Interests
         for(int i = 0 ; i<tagss.size(); i++) {
 
-            chip = new Chip(getActivity());
-            chip.setText(tagss.get(i));
-            chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
-            chip.setCheckable(true);
-            chipGroup.addView(chip);
+            if(tagspref.contains(tagss.get(i)))
+            {
+                chip = new Chip(getActivity());
+                chip.setText(tagss.get(i));
+                chip.setCheckable(true);
+                chip.setChecked(true);
+                chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+                chipGroup.addView(chip);
+
+            }
+            else
+            {
+                chip = new Chip(getActivity());
+                chip.setText(tagss.get(i));
+                chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
+                chip.setCheckable(true);
+                chipGroup.addView(chip);
+
+            }
+
+
         }
 
-
+        interestList.addAll(tagss);
         Integer c = chipGroup.getChildCount();
         for (int j = 0; j < c; j++) {
             Chip chip = (Chip) chipGroup.getChildAt(j);

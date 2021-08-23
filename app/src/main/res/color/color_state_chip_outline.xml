@@ -6,6 +6,8 @@
     <item
         android:color="@color/basic_light"
         android:state_checked="true"/>
-    <item android:color="@color/grey_20"/>
+    <item android:color="@color/white"/>
+
+
 
 </selector>

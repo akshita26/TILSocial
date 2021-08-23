@@ -23,7 +23,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:srcCompat="@drawable/noimage"
+            app:srcCompat="@drawable/nocomment"
             app:tint="@color/grey_20" />
 
         <TextView
@@ -72,8 +72,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/commentimge"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="12dp"
+            android:layout_height="25dp"
             android:layout_weight="1"
             android:src="@drawable/profile"></de.hdodenhof.circleimageview.CircleImageView>
 
@@ -87,13 +87,13 @@
             android:hint="Enter Comment"
             android:inputType="textCapSentences|textMultiLine"
             android:background="@null"
-            android:minHeight="48dp" />
+            android:minHeight="25dp" />
 
 
         <ImageView
             android:id="@+id/sendcomment"
             android:layout_width="15dp"
-            android:layout_height="25dp"
+            android:layout_height="15dp"
             android:layout_weight="1"
             android:layout_gravity="center"
             app:srcCompat="@drawable/rightarrow" />

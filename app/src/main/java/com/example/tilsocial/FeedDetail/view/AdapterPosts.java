@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -68,9 +69,10 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     String postId,empId;
     private static int POST_VIEW = 0;
     private static int  INTEREST_VIEW = 1;
+    private static int  RECOMMEND_VIEW = 2;
     List<String> tagss = new ArrayList<>();
     LikeView likeView;
-    int flag =0;
+    int flag =0, colleagueflag=0;
     List<String> taggs;
     ArrayList intersett ;
     List<String> interestList = new ArrayList<>();
@@ -99,11 +101,14 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
             return new PostsHolder(view);
         }
+        else if(viewType==RECOMMEND_VIEW){
+            view = LayoutInflater.from(context).inflate(R.layout.recomrecyclerview, parent, false);
+            return new RecommendatnHolder(view);
+        }
         else{
             view= LayoutInflater.from(context).inflate(R.layout.taggss, parent, false);
             return new Interestholder(view);
         }
-
 
 
     }
@@ -181,20 +186,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             String datetime= modelPost.getCreatedAt();
             Log.d("datetime", "onBindViewHolder: "+datetime);
 
-//
-//            Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
-//            Log.d("Datetime_calender", "onBindViewHolder: "+calendar);
-//            try {
-//                calendar.setTimeInMillis(Long.parseLong(modelPost.getCreatedAt()));
-//                Log.d("Datetime_calender2", "onBindViewHolder: "+calendar);
-//
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//                Log.d("Datetime_calender3", "onBindViewHolder: "+calendar);
-//
-//            }
-//            String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
-//            Log.d("datetime_format", "onBindViewHolder: "+timedate);
+
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]",Locale.ENGLISH)
                     .withZone(ZoneId.of("Etc/UTC"));
@@ -272,8 +264,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
                      FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                      fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
-                     fragmentTransaction.add(R.id.dashboard, commentFragment);
+//                      fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
+                     fragmentTransaction.replace(R.id.dashboard, commentFragment);
                      fragmentTransaction.addToBackStack(null);
                      fragmentTransaction.commit();
 
@@ -337,7 +329,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                                 fragmentTransaction.add(R.id.dashboard, colleagueProfile);
                                 fragmentTransaction.addToBackStack(null);
                                 fragmentTransaction.commit();
-
+                                actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
+                                actionBar.setTitle("Home");
                             }
                             else
                             {
@@ -421,9 +414,24 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             });
 
 
-
         }
+        else if(getItemViewType(position) == RECOMMEND_VIEW && colleagueflag==0){
+            colleagueflag=1;
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            RecommendatnHolder holder3 = (RecommendatnHolder) holder;
+            holder3.recyclerView.setLayoutManager(layoutManager);
+            holder3.recyclerView.setHasFixedSize(true);
 
+            ArrayList colleagues= new ArrayList();
+            List<String> modelPosts=new ArrayList<>();
+            modelPosts.add("abcdx12");
+            modelPosts.add("kfsk");
+            modelPosts.add("lkaskhjd2");
+            RecommendationAdapter recommendationAdapter=new RecommendationAdapter(modelPosts,holder3.recyclerView.getContext());
+
+            holder3.recyclerView.setAdapter(recommendationAdapter);
+            //call api
+        }
 
     }
 
@@ -434,7 +442,10 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             return INTEREST_VIEW;
 
-        } else {
+        }else if(position==10){
+            return RECOMMEND_VIEW;
+        }
+        else {
             return POST_VIEW;
         }
     }
@@ -496,7 +507,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Chip chip;
         Button applybtn;
 
-
         public Interestholder(@NonNull View itemView) {
             super(itemView);
 
@@ -505,9 +515,13 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
-
-
-
+    class RecommendatnHolder extends RecyclerView.ViewHolder{
+        RecyclerView recyclerView;
+        public RecommendatnHolder(@NonNull View itemView) {
+            super(itemView);
+            recyclerView=itemView.findViewById(R.id.recomrecy);
+        }
+    }
 
 }
 

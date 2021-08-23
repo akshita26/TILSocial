@@ -66,10 +66,24 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
             tagg = tagg + "#" + taggs[i] + " ";
         }
         holder.tags.setText(tagg);
-        Glide.with(context).load(modelPost.getImages().get(0))
-                .placeholder(R.drawable.icprofile)
-                .error(R.drawable.ic_error_outline)
-                .into(holder.imageView);
+
+//        if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
+//        {
+//            holder.imageView.setVisibility(View.GONE);
+//        }
+//        else
+//        {
+//            try{
+//                Glide.with(context).load(modelPost.getImages().get(0))
+//                        .placeholder(R.drawable.noimageeee)
+//                        .error(R.drawable.noimageeee)
+//                        .into(holder.imageView);
+//
+//            }
+//            catch (Exception e) {
+//
+//            }
+//        }
 
         String datetime= modelPost.getCreatedAt();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]", Locale.ENGLISH)

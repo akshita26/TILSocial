@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
@@ -52,6 +54,7 @@ public class ColleagueProfile extends Fragment implements MainContract.MainView 
     TextView bio,name,dept,desig,empid, editprof, team;
     RecyclerView recyclerView;
     UserPosts userPosts;
+    ActionBar actionBar;
 
     //    List<ModelPost> posts;
     ImageView profilee;
@@ -71,7 +74,7 @@ public class ColleagueProfile extends Fragment implements MainContract.MainView 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_colleague_profile, container, false);
 
         personalinfo = view.findViewById(R.id.personalinfo);
         activity = view.findViewById(R.id.review);
@@ -79,6 +82,10 @@ public class ColleagueProfile extends Fragment implements MainContract.MainView 
         activitybtn = view.findViewById(R.id.reviewbtn);
         personalinfo.setVisibility(View.VISIBLE);
         activity.setVisibility(View.GONE);
+
+        actionBar = ((DashboardActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle("Profile");
+
 
         personalinfobtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +119,7 @@ public class ColleagueProfile extends Fragment implements MainContract.MainView 
         empid=view.findViewById(R.id.idd);
         team=view.findViewById(R.id.team);
 
-        sharedPreferences= getActivity().getSharedPreferences("details",0);
+        sharedPreferences= getActivity().getSharedPreferences("colleague",0);
 
         name.setText(sharedPreferences.getString("name",""));
         dept.setText(sharedPreferences.getString("dept",""));

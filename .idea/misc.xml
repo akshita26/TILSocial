@@ -14,7 +14,7 @@
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_colleague_profile.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_comment.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_edit_profile.xml" value="0.25" />
-        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_image.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_profile.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/fragment_siggnuppfragment.xml" value="0.196875" />
@@ -26,6 +26,8 @@
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/notselected_interests.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/postcardview.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/profile_main.xml" value="0.2" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/recommendation.xml" value="0.196875" />
+        <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/recomrecyclerview.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/row_comment.xml" value="0.20052083333333334" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/spinnneritem.xml" value="0.196875" />
         <entry key="..\:/Android/workspace/TILSocial/app/src/main/res/layout/taggss.xml" value="0.196875" />

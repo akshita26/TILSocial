@@ -38,6 +38,7 @@
                     android:layout_width="@dimen/spacing_xxlarge"
                     android:layout_height="@dimen/spacing_xxlarge"
                     app:civ_shadow="true"
+                    android:layout_gravity="top"
                     app:civ_shadow_radius="0dp"
                     android:src="@drawable/profile"
                     app:civ_border="false" />
@@ -58,8 +59,7 @@
                         android:gravity="center_vertical"
                         android:text="Homer J. Allen"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/grey_60"
-                        android:textStyle="bold" />
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/Designation"
@@ -67,8 +67,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:text="Designation"
+                        android:textSize="13dp"
+                        android:textColor="@color/grey_700"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/grey_40"
                          />
 
                     <TextView
@@ -77,6 +78,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="end|right"
                         android:text="12h ago"
+                        android:textSize="12dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/grey_80" />
 

@@ -302,8 +302,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     }
 
     public void callsaveinterset(List<String> interestList, int empidd, Context context) {
-        Log.e("HomeActivityfeedtag3535", "onResponse: " + interestList.toString());
-        Log.e("empidcheck", "onResponse: " + empidd);
         presenter = new FeedPresentor(this,new MainFeedModel());
         presenter.setnewtagss(empidd,interestList,context);
     }
@@ -311,7 +309,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     @Override
     public void onResume(){
         super.onResume();
-        ((DashboardActivity) getActivity()).setActionBarTitle("Home");
+        ((DashboardActivity) getActivity()).setActionBarTitle("TIL Social");
     }
 }
 

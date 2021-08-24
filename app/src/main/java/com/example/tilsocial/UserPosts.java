@@ -52,6 +52,7 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
 
         ModelPost modelPost = modelPosts.get(position);
         holder.name.setText( modelPost.getName());
+        holder.designation.setText(modelPost.getDesignation());
         holder.like.setText(modelPost.getLikesCount() + " Likes"  );
         holder.comments.setText(modelPost.getCommentsCount() + " Comments");
 //        holder.time.setText(modelPost.getCreatedAt());
@@ -67,23 +68,23 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
         }
         holder.tags.setText(tagg);
 
-//        if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
-//        {
-//            holder.imageView.setVisibility(View.GONE);
-//        }
-//        else
-//        {
-//            try{
-//                Glide.with(context).load(modelPost.getImages().get(0))
-//                        .placeholder(R.drawable.noimageeee)
-//                        .error(R.drawable.noimageeee)
-//                        .into(holder.imageView);
-//
-//            }
-//            catch (Exception e) {
-//
-//            }
-//        }
+        if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
+        {
+            holder.imageView.setVisibility(View.GONE);
+        }
+        else
+        {
+            try{
+                Glide.with(context).load(modelPost.getImages().get(0))
+                        .placeholder(R.drawable.noimageeee)
+                        .error(R.drawable.noimageeee)
+                        .into(holder.imageView);
+
+            }
+            catch (Exception e) {
+
+            }
+        }
 
         String datetime= modelPost.getCreatedAt();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]", Locale.ENGLISH)
@@ -124,7 +125,7 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
     }
 
     class MyHolder extends RecyclerView.ViewHolder {
-        TextView name, content,like, comments,time,tags;
+        TextView name, content,like, comments,time,tags, designation;
         ImageView imageView, userprof;
         ChipGroup chipGroup;
 
@@ -140,6 +141,7 @@ public class UserPosts extends RecyclerView.Adapter<UserPosts.MyHolder>{
             time = itemView.findViewById(R.id.timeofpost);
             chipGroup = itemView.findViewById(R.id.chip_groupfortags);
             tags = itemView.findViewById(R.id.tagss);
+            designation=itemView.findViewById(R.id.Designation);
         }
     }
 }

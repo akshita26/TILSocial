@@ -279,8 +279,8 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         if (requestCode == 26 && resultCode != 0) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(bitmap);
-            imageView.getLayoutParams().height = 200;
-            imageView.getLayoutParams().width = 200;
+//            imageView.getLayoutParams().height = 200;
+//            imageView.getLayoutParams().width = 200;
             try {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
                 File mFileTemp = null;
@@ -308,8 +308,8 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             Uri selectedImageUri = data.getData();
             if (null != selectedImageUri) {
                 imageView.setImageURI(selectedImageUri);
-                imageView.getLayoutParams().height = 200;
-                imageView.getLayoutParams().width = 200;
+//                imageView.getLayoutParams().height = 200;
+//                imageView.getLayoutParams().width = 200;
                 i_width = 200;
                 i_width = i_width + i_width/2;
                 cancelimage.setVisibility(View.VISIBLE);

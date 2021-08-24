@@ -113,7 +113,7 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
                 personalinfo.setVisibility(View.VISIBLE);
                 activity.setVisibility(View.GONE);
                 personalinfobtn.setTextColor(getResources().getColor(R.color.blue));
-                activitybtn.setTextColor(getResources().getColor(R.color.grey));
+                activitybtn.setTextColor(getResources().getColor(R.color.grey_600));
             }
         });
 
@@ -123,7 +123,7 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
 
                 personalinfo.setVisibility(View.GONE);
                 activity.setVisibility(View.VISIBLE);
-                personalinfobtn.setTextColor(getResources().getColor(R.color.grey));
+                personalinfobtn.setTextColor(getResources().getColor(R.color.grey_600));
                 activitybtn.setTextColor(getResources().getColor(R.color.blue));
             }
         });
@@ -147,10 +147,16 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
             empid.setText(sharedPreferences.getString("empid", ""));
             team.setText(sharedPreferences.getString("team",""));
 
-            Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
-                    .placeholder(R.drawable.profile)
-                    .error(R.drawable.ic_error_outline)
-                    .into(profilee);
+            try {
+                Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+                        .placeholder(R.drawable.profile)
+                        .error(R.drawable.profile)
+                        .into(profilee);
+            }
+            catch (Exception e){
+
+            }
+
 
             profilee.setOnClickListener(new View.OnClickListener() {
                 @Override

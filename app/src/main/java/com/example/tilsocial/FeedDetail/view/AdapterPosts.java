@@ -88,8 +88,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.taggs = taggs;
         this.intersett = intersett;
         this.empidinterger = empidinterger;
-
-
+        actionBar = ((AppCompatActivity) context).getSupportActionBar();
+        actionBar.setTitle("TIL Social");
 
     }
 
@@ -329,8 +329,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                                 fragmentTransaction.add(R.id.dashboard, colleagueProfile);
                                 fragmentTransaction.addToBackStack(null);
                                 fragmentTransaction.commit();
-                                actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
-                                actionBar.setTitle("Home");
+
                             }
                             else
                             {

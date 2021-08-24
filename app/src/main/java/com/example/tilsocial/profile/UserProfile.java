@@ -3,6 +3,7 @@ package com.example.tilsocial.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -106,28 +107,6 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         personalinfo.setVisibility(View.VISIBLE);
         activity.setVisibility(View.GONE);
 
-        personalinfobtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                personalinfo.setVisibility(View.VISIBLE);
-                activity.setVisibility(View.GONE);
-                personalinfobtn.setTextColor(getResources().getColor(R.color.blue));
-                activitybtn.setTextColor(getResources().getColor(R.color.grey));
-            }
-        });
-
-        activitybtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                personalinfo.setVisibility(View.GONE);
-                activity.setVisibility(View.VISIBLE);
-                personalinfobtn.setTextColor(getResources().getColor(R.color.grey));
-                activitybtn.setTextColor(getResources().getColor(R.color.blue));
-            }
-        });
-
         name=view.findViewById(R.id.textView);
         dept=view.findViewById(R.id.textView4);
         bio=view.findViewById(R.id.bio);
@@ -137,6 +116,36 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         chipGroup = view.findViewById(R.id.chip_group);
         empid=view.findViewById(R.id.idd);
         team=view.findViewById(R.id.team);
+        personalinfobtn.setPaintFlags(personalinfobtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        personalinfobtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                personalinfo.setVisibility(View.VISIBLE);
+                activity.setVisibility(View.GONE);
+                personalinfobtn.setTextColor(getResources().getColor(R.color.blue));
+                activitybtn.setTextColor(getResources().getColor(R.color.grey_600));
+                personalinfobtn.setPaintFlags(personalinfobtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                activitybtn.setPaintFlags(activitybtn.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+
+            }
+        });
+
+        activitybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                personalinfo.setVisibility(View.GONE);
+                activity.setVisibility(View.VISIBLE);
+                personalinfobtn.setTextColor(getResources().getColor(R.color.grey_600));
+                activitybtn.setTextColor(getResources().getColor(R.color.blue));
+                activitybtn.setPaintFlags(activitybtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                personalinfobtn.setPaintFlags(personalinfobtn.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+            }
+        });
+
+
 
         sharedPreferences= getActivity().getSharedPreferences("details",0);
 
@@ -147,10 +156,16 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
             empid.setText(sharedPreferences.getString("empid", ""));
             team.setText(sharedPreferences.getString("team",""));
 
-            Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
-                    .placeholder(R.drawable.profile)
-                    .error(R.drawable.ic_error_outline)
-                    .into(profilee);
+            try {
+                Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+                        .placeholder(R.drawable.profile)
+                        .error(R.drawable.profile)
+                        .into(profilee);
+            }
+            catch (Exception e){
+
+            }
+
 
             profilee.setOnClickListener(new View.OnClickListener() {
                 @Override

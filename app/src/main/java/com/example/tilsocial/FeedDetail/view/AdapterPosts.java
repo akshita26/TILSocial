@@ -52,7 +52,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -88,8 +87,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.taggs = taggs;
         this.intersett = intersett;
         this.empidinterger = empidinterger;
-
-
+        actionBar = ((AppCompatActivity) context).getSupportActionBar();
+        actionBar.setTitle("TIL Social");
 
     }
 
@@ -133,7 +132,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             holder1.like.setText(modelPost.getLikesCount()+ " Likes");
             Log.d("modelpostt", "Liked: " + modelPost.getHasLiked());
             if(modelPost.getHasLiked()==true) {
-                holder1.likeimage.setColorFilter(Color.rgb(0, 0, 255));
+                holder1.likeimage.setColorFilter(Color.rgb(51, 153, 255));
 
 
             }
@@ -146,7 +145,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 public void onClick(View v) {
                     if(modelPost.getHasLiked()==false) {
                         Log.e("LikePosteeeee", "falseeeeeee: " );
-                        holder1.likeimage.setColorFilter(Color.rgb(0, 0, 255));
+                        holder1.likeimage.setColorFilter(Color.rgb(51, 153, 255));
                         PostLike postLike=new PostLike();
                         postId = modelPost.getPostId();
                         postLike.setPostId(postId);
@@ -321,8 +320,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                                 fragmentTransaction.add(R.id.dashboard, colleagueProfile);
                                 fragmentTransaction.addToBackStack(null);
                                 fragmentTransaction.commit();
-                                actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
-                                actionBar.setTitle("Home");
+
                             }
                             else
                             {

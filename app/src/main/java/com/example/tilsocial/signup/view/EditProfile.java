@@ -140,10 +140,6 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
                 signupRequestParams.setImgUrl(imageurl);
                 presenter.gotoprofile(signupRequestParams);
 
-                UserProfile userProfile=new UserProfile();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.dashboard, userProfile);
-                ft.commit();
             }
         });
         return view;
@@ -339,6 +335,10 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
         editor.putString("imgurl", signupRequestParams.getImgUrl());
         Log.d("DPcheck ", "SetSignupdata: "+signupRequestParams.getImgUrl());
         editor.commit();
+        UserProfile userProfile=new UserProfile();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.dashboard, userProfile);
+        ft.commit();
     }
 
     @Override

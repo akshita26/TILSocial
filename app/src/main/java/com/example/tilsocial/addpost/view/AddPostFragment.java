@@ -1,5 +1,6 @@
 package com.example.tilsocial.addpost.view;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -88,13 +89,7 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 //        if (item.getItemId() == R.id.postbtn)
 //        {
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor.clear();
-//            editor.commit();
-//            Intent intent = new Intent(getActivity(), MainActivity.class);
-//            startActivity(intent);
-//            getActivity().finish();
-//            Toast.makeText(getActivity(), "Logout Done", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "Post Done", Toast.LENGTH_SHORT).show();
 //        }
 //        return super.onOptionsItemSelected(item);
 //    }
@@ -279,8 +274,8 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
         if (requestCode == 26 && resultCode != 0) {
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(bitmap);
-            imageView.getLayoutParams().height = 200;
-            imageView.getLayoutParams().width = 200;
+//            imageView.getLayoutParams().height = 200;
+//            imageView.getLayoutParams().width = 200;
             try {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
                 File mFileTemp = null;
@@ -308,8 +303,8 @@ public class AddPostFragment extends Fragment implements AddPostPresenter.AddPos
             Uri selectedImageUri = data.getData();
             if (null != selectedImageUri) {
                 imageView.setImageURI(selectedImageUri);
-                imageView.getLayoutParams().height = 200;
-                imageView.getLayoutParams().width = 200;
+//                imageView.getLayoutParams().height = 200;
+//                imageView.getLayoutParams().width = 200;
                 i_width = 200;
                 i_width = i_width + i_width/2;
                 cancelimage.setVisibility(View.VISIBLE);

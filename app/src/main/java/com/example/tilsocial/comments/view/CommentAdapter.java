@@ -3,20 +3,25 @@ package com.example.tilsocial.comments.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.model.CommentModel;
 
-import java.util.Calendar;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,6 +44,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(CommentAdapter.MyHolder holder, int position) {
 
@@ -52,14 +58,19 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
                 .error(R.drawable.ic_error_outline)
                 .into(holder.userimg);
 
-        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
-        try {
-            calendar.setTimeInMillis(Long.parseLong(commentModel.getCreatedAt()));
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-        String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
-        holder.time.setText(timedate);
+        String datetime= commentModel.getCreatedAt();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]",Locale.ENGLISH)
+                .withZone(ZoneId.of("Etc/UTC"));
+
+        ZonedDateTime zdtUtc = ZonedDateTime.parse(datetime, formatter);
+
+        ZonedDateTime zdtInd = zdtUtc.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+
+        DateTimeFormatter dtfOutput = DateTimeFormatter.ofPattern("dd-MM-uuuu hh:mm a", Locale.ENGLISH);
+
+        Log.d("datetimeformatted", "onBindViewHolder: "+zdtInd.format(dtfOutput));
+        holder.time.setText(zdtInd.format(dtfOutput));
 
 
     }

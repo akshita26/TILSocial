@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".siggnuppfragment"
-    >
+    tools:context=".signup.view.SignUpFragment">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".SignIn">
+        >
 
         <ScrollView
             android:layout_width="match_parent"
@@ -21,40 +20,38 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="350dp"
+
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
-                    app:cardCornerRadius="20dp"
-                    >
+
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="3dp"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true"
+                    app:contentPadding="5dp"
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:padding="20dp"
-                        >
+                        android:padding="20dp">
 
 
                         <com.mikhaellopez.circularimageview.CircularImageView
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
+                            android:id="@+id/userprofilee"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
                             android:src="@drawable/profile"
-                            app:civ_border_color="#FF018786"
-                            app:civ_border_width="4dp"
+                            app:civ_border_color="@color/basic"
+                            app:civ_border_width="1dp"
                             app:civ_shadow="true"
                             app:civ_shadow_radius="10dp"
-                            app:civ_shadow_color="#FF018786"
-                            android:layout_gravity="center"/>
-
-
-
-
+                            app:civ_shadow_color="@color/basic"
+                            android:layout_gravity="center" />
 
                         <EditText
                             android:id="@+id/editTextTextPersonName"
@@ -70,7 +67,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
-                            android:inputType="textPersonName"
+                            android:inputType="number"
                             android:hint="Employee Id"
                             android:layout_marginBottom="20dp"
                             />
@@ -85,15 +82,12 @@
                             android:layout_marginBottom="20dp"
                             android:maxLines="20"/>
 
-                        <Spinner
-                            android:id="@+id/spinner4"
+                        <TextView
+                            android:id="@+id/textView2"
                             android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:layout_marginBottom="20dp"
-                            android:background="@drawable/customspinner"
-                            android:textColor="@color/grey_3"
-
-                            />
+                            android:layout_height="wrap_content"
+                            android:text="Team"
+                            android:layout_marginBottom="3dp"/>
 
                         <Spinner
                             android:id="@+id/spinner5"
@@ -101,9 +95,32 @@
                             android:layout_height="60dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/customspinner"
-                            android:textColor="@color/grey_3"
+                            android:textColor="@color/grey_3" />
+                        <TextView
+                            android:id="@+id/depart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Department"
+                            android:layout_marginBottom="3dp"/>
 
-                            />
+                        <Spinner
+                            android:id="@+id/spinner4"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/customspinner"
+                            android:textColor="@color/grey_3" />
+
+                        <TextView
+                            android:id="@+id/desigationn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Designation"
+                            android:layout_marginBottom="3dp"/>
+
+
+
+
 
                         <Spinner
                             android:id="@+id/spinner6"
@@ -111,127 +128,37 @@
                             android:layout_height="60dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/customspinner"
-                            android:textColor="@color/grey_3"
+                            android:textColor="@color/grey_3" />
 
-                            />
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center"
-                            app:cardCornerRadius="20dp">
 
                             <LinearLayout
+                                android:id="@+id/linearlayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:padding="20dp"
-                                >
+                                android:padding="20dp">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1" />
+
                                 <TextView
+                                    android:id="@+id/textView5"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Please select minimum 3 interests"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                                    android:textSize="15dp"
-                                    android:layout_marginBottom="10dp"
-                                    android:textColor="@color/grey_80">
-                                </TextView>
+                                    android:text="Select Intersets" />
 
                                 <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/chip_group"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginHorizontal="@dimen/spacing_middle"
                                     app:singleSelection="false">
 
-                                    <com.google.android.material.chip.Chip
-                                        android:id="@+id/interest1"
-                                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/spacing_xxxlarge"
-                                        android:text="@string/interest1"
-                                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                                        android:textColor="@color/grey_60"
-                                        app:checkedIcon="@drawable/ic_done"
-                                        app:checkedIconEnabled="true"
-                                        app:checkedIconTint="@color/grey_60"
-                                        app:chipEndPadding="@dimen/spacing_medium"
-                                        app:chipStartPadding="@dimen/spacing_medium" />
-
-                                    <com.google.android.material.chip.Chip
-                                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/spacing_xxxlarge"
-                                        android:text="@string/interest2"
-                                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                                        android:textColor="@color/grey_60"
-                                        app:checkedIcon="@drawable/ic_done"
-                                        app:checkedIconEnabled="true"
-                                        app:checkedIconTint="@color/grey_60"
-                                        app:chipEndPadding="@dimen/spacing_medium"
-                                        app:chipStartPadding="@dimen/spacing_medium" />
-
-                                    <com.google.android.material.chip.Chip
-                                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/spacing_xxxlarge"
-                                        android:text="@string/interest3"
-                                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                                        android:textColor="@color/grey_60"
-                                        app:checkedIcon="@drawable/ic_done"
-                                        app:checkedIconEnabled="true"
-                                        app:checkedIconTint="@color/grey_60"
-                                        app:chipEndPadding="@dimen/spacing_medium"
-                                        app:chipStartPadding="@dimen/spacing_medium" />
-
-                                    <com.google.android.material.chip.Chip
-                                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/spacing_xxxlarge"
-                                        android:text="@string/interest4"
-                                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                                        android:textColor="@color/grey_60"
-                                        app:checkedIcon="@drawable/ic_done"
-                                        app:checkedIconEnabled="true"
-                                        app:checkedIconTint="@color/grey_60"
-                                        app:chipEndPadding="@dimen/spacing_medium"
-                                        app:chipStartPadding="@dimen/spacing_medium" />
-
-                                    <com.google.android.material.chip.Chip
-                                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/spacing_xxxlarge"
-                                        android:text="@string/interest5"
-                                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                                        android:textColor="@color/grey_60"
-                                        app:checkedIcon="@drawable/ic_done"
-                                        app:checkedIconEnabled="true"
-                                        app:checkedIconTint="@color/grey_60"
-                                        app:chipEndPadding="@dimen/spacing_medium"
-                                        app:chipStartPadding="@dimen/spacing_medium" />
-
-                                    <com.google.android.material.chip.Chip
-                                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/spacing_xxxlarge"
-                                        android:text="@string/interest6"
-                                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                                        android:textColor="@color/grey_60"
-                                        app:checkedIcon="@drawable/ic_done"
-                                        app:checkedIconEnabled="true"
-                                        app:checkedIconTint="@color/grey_60"
-                                        app:chipEndPadding="@dimen/spacing_medium"
-                                        app:chipStartPadding="@dimen/spacing_medium" />
-
-
-
-
                                 </com.google.android.material.chip.ChipGroup>
 
                             </LinearLayout>
-
-                        </androidx.cardview.widget.CardView>
-
 
                         <Button
                             android:id="@+id/buttonsignup"
@@ -239,8 +166,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="30dp"
-                            android:backgroundTint="#FF018786"
-                            android:text="Sign up"
+                            android:backgroundTint="@color/basic"
+                            android:text="Save Profile"
                             android:textStyle="bold"
                             />
 

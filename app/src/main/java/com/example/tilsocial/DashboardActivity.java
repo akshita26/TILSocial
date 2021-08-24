@@ -1,17 +1,18 @@
 package com.example.tilsocial;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-
+import com.example.tilsocial.FeedDetail.view.HomeFragment;
+import com.example.tilsocial.addpost.view.AddPostFragment;
+import com.example.tilsocial.profile.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class DashboardActivity extends AppCompatActivity {
-
 
     ActionBar actionBar;
     BottomNavigationView navigationView;
@@ -23,7 +24,6 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(selectedListener);
@@ -31,20 +31,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         HomeFragment fragment = new HomeFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.dashboard, fragment, "");
+        fragmentTransaction.add(R.id.dashboard, fragment, "");
         fragmentTransaction.commit();
 
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -65,12 +54,13 @@ public class DashboardActivity extends AppCompatActivity {
                     AddPostFragment fragment1 = new AddPostFragment();
                     FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction1.replace(R.id.dashboard, fragment1);
+                    fragmentTransaction1.setReorderingAllowed(true);
                     fragmentTransaction1.commit();
                     return true;
 
                 case R.id.nav_profile:
-                    actionBar.setTitle("Users");
-                    ProfileFragment fragment2 = new ProfileFragment();
+                    actionBar.setTitle("Profile");
+                    UserProfile fragment2 = new UserProfile();
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction2.replace(R.id.dashboard, fragment2, "");
                     fragmentTransaction2.commit();
@@ -80,6 +70,17 @@ public class DashboardActivity extends AppCompatActivity {
             return false;
         }
     };
-
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().getBackStackEntryCount() == 0) {
+            super.onBackPressed();
+        }
+        else {
+            getFragmentManager().popBackStack();
+        }
+    }
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
 
 }

@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="1dp"
-    android:orientation="vertical"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
-    app:cardUseCompatPadding="true"
-    app:contentPadding="5dp"
-    android:visibility="visible"
+<!--<androidx.cardview.widget.CardView-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_margin="1dp"-->
+<!--    android:orientation="vertical"-->
+<!--    app:cardBackgroundColor="@color/white"-->
+<!--    app:cardCornerRadius="3dp"-->
+<!--    app:cardElevation="3dp"-->
+<!--    app:cardUseCompatPadding="true"-->
+<!--    app:contentPadding="5dp"-->
+<!--    android:visibility="visible"-->
 
-    >
+<!--    >-->
 
     <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/loadcomment"
@@ -26,7 +31,6 @@
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:src="@drawable/profile" />
-
 
 
         <TextView
@@ -40,10 +44,19 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/commenttext"
+            android:id="@+id/designationn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/commentname"
+            android:layout_toEndOf="@id/loadcomment"
+            android:layout_toRightOf="@id/loadcomment"
+            android:text="Designation" />
+
+        <TextView
+            android:id="@+id/commenttext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/designationn"
             android:layout_toEndOf="@id/loadcomment"
             android:layout_toRightOf="@id/loadcomment"
             android:text="Actual Comment"
@@ -57,9 +70,15 @@
             android:layout_toEndOf="@id/loadcomment"
             android:layout_toRightOf="@id/loadcomment"
             android:text="12/06/19" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/commenttime"
+        android:background="@color/grey_400" />
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+<!--</androidx.cardview.widget.CardView>-->
 
 
 

@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".signinfragment">
+    android:layout_height="match_parent">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:background="#FF018786"/>
+        android:background="@color/basic"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
@@ -36,16 +35,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="#FF018786"
-                app:hintTextColor="#FF018786"
+                app:boxStrokeColor="@color/basic"
+                app:hintTextColor="@color/basic"
                 android:focusable="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Employee Id" />
+                    android:hint="Employee Id"
+                    android:keyboardNavigationCluster="false"
+                    android:inputType="number"
+                    android:singleLine="true"/>
             </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Incorrect id"
+                android:visibility="gone"
+                android:textSize="10sp"
+                android:textColor="@color/red_400"/>
 
             <Button
                 android:id="@+id/button"
@@ -53,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:backgroundTint="#FF018786"
+                app:backgroundTint="@color/basic"
                 android:textStyle="bold"
                 android:text="Sign In"/>
 
@@ -62,22 +72,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="viewEnd"
-                    android:layout_weight="1"
-                    android:text="@string/new_user" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="#FF018786"
-                    android:clickable="true"
-                    android:text="@string/create_profile" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

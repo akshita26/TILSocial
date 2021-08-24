@@ -184,9 +184,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     .into(holder1.userprof);
 
             String datetime= modelPost.getCreatedAt();
-            Log.d("datetime", "onBindViewHolder: "+datetime);
-
-
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]",Locale.ENGLISH)
                     .withZone(ZoneId.of("Etc/UTC"));
@@ -197,7 +194,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             DateTimeFormatter dtfOutput = DateTimeFormatter.ofPattern("dd-MM-uuuu hh:mm a", Locale.ENGLISH);
 
-            Log.d("datetimeformatted", "onBindViewHolder: "+zdtInd.format(dtfOutput));
             holder1.time.setText(zdtInd.format(dtfOutput));
 
             String taggs[] = modelPost.getTags();
@@ -240,11 +236,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                    fragmentTransaction.add(R.id.dashboard, imageFragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.add(android.R.id.content, imageFragment).commit();
 
-//                    imageFragment.show(fragmentTransaction, "dialog");
                 }
             });
 
@@ -270,8 +264,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                      fragmentTransaction.commit();
 
 
-                    // notifyItemChanged(position);
-                    //Log.d("commentcountt", "onBindViewHolder: " +modelPosts.get(position).getCommentsCount());
 
                 }
             });

@@ -50,17 +50,6 @@
                         android:src="@drawable/profile"
                         app:civ_border="false"
                         android:layout_gravity="center"/>
-<!--                    <com.mikhaellopez.circularimageview.CircularImageView-->
-<!--                        android:id="@+id/profile_image"-->
-<!--                        android:layout_width="120dp"-->
-<!--                        android:layout_height="120dp"-->
-<!--                        android:src="@drawable/profile"-->
-<!--                        app:civ_border_color="@color/basic"-->
-<!--                        app:civ_border_width="1dp"-->
-<!--                        app:civ_shadow="true"-->
-<!--                        app:civ_shadow_radius="10dp"-->
-<!--                        app:civ_shadow_color="@color/basic"-->
-<!--                        android:layout_gravity="center" />-->
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -73,9 +62,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="Name"
-                            android:textColor="#424242"
                             android:textSize="21sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            style="@style/text.header.sb.18" />
 
                         <TextView
                             android:id="@+id/idd"
@@ -83,7 +72,7 @@
                             android:layout_height="wrap_content"
                             android:text="Employee Id"
                             android:layout_gravity="center"
-                            android:textSize="14sp" />
+                            style="@style/text.body.m.16"/>
 
 
                     </LinearLayout>
@@ -96,7 +85,8 @@
                         android:layout_marginEnd="10dp"
                         android:text="Edit"
                         android:textColor="#F44336"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:fontFamily="@font/metropolis_medium"/>
 
                 </LinearLayout>
 
@@ -121,8 +111,9 @@
                         android:text="User Info"
                         android:textAllCaps="true"
                         android:textColor="@color/blue"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp"
+
+                        android:fontFamily="@font/metropolis_bold"/>
 
                     <LinearLayout
                         android:layout_width="1dp"
@@ -144,8 +135,8 @@
                         android:text="User Activity"
                         android:textAllCaps="true"
                         android:textColor="@color/grey_600"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/metropolis_bold"
                         />
 
                 </LinearLayout>
@@ -178,8 +169,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Bio"
-                                    android:textSize="17sp"
-                                    android:textStyle="bold" />
+                                    style="@style/text.header.sb.18"/>
 
                                 <Space
                                     android:layout_width="wrap_content"
@@ -192,7 +182,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="your bio here..." />
+                                android:text="your bio here..."
+                                style="@style/text.body.m.16"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -214,8 +205,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Employee Details"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
+                                style="@style/text.header.sb.18"/>
 
                             <Space
                                 android:layout_width="wrap_content"
@@ -241,7 +231,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="Team"
                                     android:textColor="@color/black"
-                                    android:textSize="15sp" />
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/metropolis_medium"/>
 
                                 <TextView
                                     android:id="@+id/team"
@@ -250,7 +241,8 @@
                                     android:layout_marginLeft="62dp"
                                     android:text="your team"
                                     android:textColor="@color/goodgrey"
-                                    android:textSize="15sp" />
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/metropolis_medium"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -265,7 +257,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="Department"
                                     android:textColor="@color/black"
-                                    android:textSize="15sp" />
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/metropolis_medium"/>
 
                                 <TextView
                                     android:id="@+id/textView4"
@@ -274,7 +267,8 @@
                                     android:layout_marginLeft="20dp"
                                     android:text="HR/Tech"
                                     android:textColor="@color/goodgrey"
-                                    android:textSize="15sp" />
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/metropolis_medium"/>
                             </LinearLayout>
 
                             <LinearLayout
@@ -289,7 +283,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="Designation"
                                     android:textColor="@color/black"
-                                    android:textSize="15sp" />
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/metropolis_medium"/>
 
                                 <TextView
                                     android:id="@+id/desig"
@@ -298,7 +293,8 @@
                                     android:layout_marginLeft="20dp"
                                     android:text="Your Designation"
                                     android:textColor="@color/goodgrey"
-                                    android:textSize="15sp" />
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/metropolis_medium"/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -321,8 +317,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Interests"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
+                                style="@style/text.header.sb.18"/>
 
                             <Space
                                 android:layout_width="wrap_content"

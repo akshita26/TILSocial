@@ -10,7 +10,7 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="android:actionModeBackground">@color/blue_grey_600</item>
         <item name="android:dialogTheme">@style/Dialog.Theme</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/metropolis_medium</item>
     </style>
 
 
@@ -33,7 +33,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/metropolis_medium</item>
         <!-- Customize your theme here. -->
     </style>
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">

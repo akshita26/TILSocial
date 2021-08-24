@@ -3,6 +3,7 @@ package com.example.tilsocial.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -106,6 +107,17 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         personalinfo.setVisibility(View.VISIBLE);
         activity.setVisibility(View.GONE);
 
+        name=view.findViewById(R.id.textView);
+        dept=view.findViewById(R.id.textView4);
+        bio=view.findViewById(R.id.bio);
+        profilee=view.findViewById(R.id.profile_image);
+        desig=view.findViewById(R.id.desig);
+        editprof=view.findViewById(R.id.editprof);
+        chipGroup = view.findViewById(R.id.chip_group);
+        empid=view.findViewById(R.id.idd);
+        team=view.findViewById(R.id.team);
+        personalinfobtn.setPaintFlags(personalinfobtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         personalinfobtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +126,9 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
                 activity.setVisibility(View.GONE);
                 personalinfobtn.setTextColor(getResources().getColor(R.color.blue));
                 activitybtn.setTextColor(getResources().getColor(R.color.grey_600));
+                personalinfobtn.setPaintFlags(personalinfobtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                activitybtn.setPaintFlags(activitybtn.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+
             }
         });
 
@@ -125,18 +140,12 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
                 activity.setVisibility(View.VISIBLE);
                 personalinfobtn.setTextColor(getResources().getColor(R.color.grey_600));
                 activitybtn.setTextColor(getResources().getColor(R.color.blue));
+                activitybtn.setPaintFlags(activitybtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                personalinfobtn.setPaintFlags(personalinfobtn.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
             }
         });
 
-        name=view.findViewById(R.id.textView);
-        dept=view.findViewById(R.id.textView4);
-        bio=view.findViewById(R.id.bio);
-        profilee=view.findViewById(R.id.profile_image);
-        desig=view.findViewById(R.id.desig);
-        editprof=view.findViewById(R.id.editprof);
-        chipGroup = view.findViewById(R.id.chip_group);
-        empid=view.findViewById(R.id.idd);
-        team=view.findViewById(R.id.team);
+
 
         sharedPreferences= getActivity().getSharedPreferences("details",0);
 

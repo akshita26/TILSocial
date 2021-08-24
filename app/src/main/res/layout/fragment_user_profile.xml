@@ -45,13 +45,22 @@
                         android:id="@+id/profile_image"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:src="@drawable/profile"
-                        app:civ_border_color="@color/basic"
-                        app:civ_border_width="1dp"
                         app:civ_shadow="true"
-                        app:civ_shadow_radius="10dp"
-                        app:civ_shadow_color="@color/basic"
-                        android:layout_gravity="center" />
+                        app:civ_shadow_radius="0dp"
+                        android:src="@drawable/profile"
+                        app:civ_border="false"
+                        android:layout_gravity="center"/>
+<!--                    <com.mikhaellopez.circularimageview.CircularImageView-->
+<!--                        android:id="@+id/profile_image"-->
+<!--                        android:layout_width="120dp"-->
+<!--                        android:layout_height="120dp"-->
+<!--                        android:src="@drawable/profile"-->
+<!--                        app:civ_border_color="@color/basic"-->
+<!--                        app:civ_border_width="1dp"-->
+<!--                        app:civ_shadow="true"-->
+<!--                        app:civ_shadow_radius="10dp"-->
+<!--                        app:civ_shadow_color="@color/basic"-->
+<!--                        android:layout_gravity="center" />-->
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -63,7 +72,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="@font/proximanovaregular"
                             android:text="Name"
                             android:textColor="#424242"
                             android:textSize="21sp"
@@ -73,7 +81,6 @@
                             android:id="@+id/idd"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/proximanovaregular"
                             android:text="Employee Id"
                             android:layout_gravity="center"
                             android:textSize="14sp" />
@@ -109,7 +116,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:fontFamily="@font/proximanovaregular"
                         android:gravity="center"
                         android:padding="13dp"
                         android:text="User Info"
@@ -133,13 +139,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:fontFamily="@font/proximanovaregular"
                         android:gravity="center"
                         android:padding="13dp"
                         android:text="User Activity"
                         android:textAllCaps="true"
-                        android:textColor="@color/blue_grey_500"
+                        android:textColor="@color/grey_600"
                         android:textSize="14sp"
+                        android:textStyle="bold"
                         />
 
                 </LinearLayout>
@@ -171,7 +177,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/proximanovaregular"
                                     android:text="Bio"
                                     android:textSize="17sp"
                                     android:textStyle="bold" />
@@ -208,7 +213,6 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/proximanovaregular"
                                 android:text="Employee Details"
                                 android:textSize="17sp"
                                 android:textStyle="bold" />
@@ -235,7 +239,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/proximanovaregular"
                                     android:text="Team"
                                     android:textColor="@color/black"
                                     android:textSize="15sp" />
@@ -245,7 +248,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="62dp"
-                                    android:fontFamily="@font/proximanovaregular"
                                     android:text="your team"
                                     android:textColor="@color/goodgrey"
                                     android:textSize="15sp" />
@@ -261,7 +263,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/proximanovaregular"
                                     android:text="Department"
                                     android:textColor="@color/black"
                                     android:textSize="15sp" />
@@ -271,7 +272,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
-                                    android:fontFamily="@font/proximanovaregular"
                                     android:text="HR/Tech"
                                     android:textColor="@color/goodgrey"
                                     android:textSize="15sp" />
@@ -287,7 +287,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/proximanovaregular"
                                     android:text="Designation"
                                     android:textColor="@color/black"
                                     android:textSize="15sp" />
@@ -297,7 +296,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20dp"
-                                    android:fontFamily="@font/proximanovaregular"
                                     android:text="Your Designation"
                                     android:textColor="@color/goodgrey"
                                     android:textSize="15sp" />
@@ -362,7 +360,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyid"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+                        android:layout_height="match_parent">
+
+                    </androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

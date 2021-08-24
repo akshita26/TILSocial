@@ -159,6 +159,8 @@ public class SignUpFragment extends Fragment implements MainContractSignup.MainV
             chip.setText(tagss.get(i));
             chip.setChipBackgroundColor(getResources().getColorStateList(R.color.color_state_chip_outline));
             chip.setCheckable(true);
+            chip.setChipStrokeColor(getResources().getColorStateList(R.color.grey_500));
+            chip.setChipStrokeWidth(1);
             chipGroup.addView(chip);
         }
 

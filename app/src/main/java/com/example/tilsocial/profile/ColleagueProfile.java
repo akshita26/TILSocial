@@ -1,4 +1,4 @@
-package com.example.tilsocial;
+package com.example.tilsocial.profile;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tilsocial.DashboardActivity;
 import com.example.tilsocial.FeedDetail.model.FeedContent;
 import com.example.tilsocial.FeedDetail.model.MainFeedModel;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
@@ -33,6 +35,9 @@ import com.example.tilsocial.FeedDetail.model.TagDetails;
 import com.example.tilsocial.FeedDetail.presentor.FeedPresentor;
 import com.example.tilsocial.FeedDetail.presentor.MainContract;
 import com.example.tilsocial.FeedDetail.view.ImageFragment;
+import com.example.tilsocial.MainActivity;
+import com.example.tilsocial.R;
+import com.example.tilsocial.UserPosts;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.example.tilsocial.signup.view.EditProfile;
 import com.google.android.material.chip.Chip;
@@ -42,13 +47,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class UserProfile extends Fragment implements MainContract.MainView  {
+public class ColleagueProfile extends Fragment implements MainContract.MainView  {
 
     LinearLayout personalinfo, activity;
     TextView personalinfobtn, activitybtn;
     TextView bio,name,dept,desig,empid, editprof, team;
     RecyclerView recyclerView;
     UserPosts userPosts;
+    ActionBar actionBar;
 
     //    List<ModelPost> posts;
     ImageView profilee;
@@ -60,41 +66,15 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
     SharedPreferences sharedPreferencessignup;
 
 
-    public UserProfile() {
+    public ColleagueProfile() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.my_menu2, menu);
-        super.onCreateOptionsMenu(menu,inflater);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.logoutuser)
-        {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.clear();
-            editor.commit();
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-            Toast.makeText(getActivity(), "Logout Done", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_colleague_profile, container, false);
 
         personalinfo = view.findViewById(R.id.personalinfo);
         activity = view.findViewById(R.id.review);
@@ -102,6 +82,10 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         activitybtn = view.findViewById(R.id.reviewbtn);
         personalinfo.setVisibility(View.VISIBLE);
         activity.setVisibility(View.GONE);
+
+        actionBar = ((DashboardActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle("Profile");
+
 
         personalinfobtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,46 +119,41 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         empid=view.findViewById(R.id.idd);
         team=view.findViewById(R.id.team);
 
-        sharedPreferences= getActivity().getSharedPreferences("details",0);
+        sharedPreferences= getActivity().getSharedPreferences("colleague",0);
 
-            name.setText(sharedPreferences.getString("name",""));
-            dept.setText(sharedPreferences.getString("dept",""));
-            bio.setText(sharedPreferences.getString("bio",""));
-            desig.setText(sharedPreferences.getString("desig",""));
-            empid.setText(sharedPreferences.getString("empid", ""));
-            team.setText(sharedPreferences.getString("team",""));
+        name.setText(sharedPreferences.getString("name",""));
+        dept.setText(sharedPreferences.getString("dept",""));
+        bio.setText(sharedPreferences.getString("bio",""));
+        desig.setText(sharedPreferences.getString("desig",""));
+        empid.setText(sharedPreferences.getString("empid", ""));
+        team.setText(sharedPreferences.getString("team",""));
 
-            Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
-                    .placeholder(R.drawable.profile)
-                    .error(R.drawable.ic_error_outline)
-                    .into(profilee);
+        Glide.with(getActivity()).load(sharedPreferences.getString("imgurl",""))
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.ic_error_outline)
+                .into(profilee);
 
-            profilee.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ImageFragment imageFragment= new ImageFragment();
-                    Bundle bundle=new Bundle();
-                    bundle.putString("postimg",sharedPreferences.getString("imgurl",""));
-                    imageFragment.setArguments(bundle);
+        profilee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageFragment imageFragment= new ImageFragment();
+                Bundle bundle=new Bundle();
+                bundle.putString("postimg",sharedPreferences.getString("imgurl",""));
+                imageFragment.setArguments(bundle);
 
-                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 //                    fragmentTransaction.add(R.id.dashboard, imageFragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.add(android.R.id.content, imageFragment).commit();
-                }
-            });
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.add(android.R.id.content, imageFragment).commit();
+            }
+        });
 
-//            if(sharedPreferences.getString("imgurl","")==null){
-//                Glide.with(getActivity()).load(R.drawable.man)
-//                        .placeholder(R.drawable.man)
-//                        .error(R.drawable.ic_error_outline)
-//                        .into(profilee);
-//            }
+
         Log.d("Checkuserprof", "onCreateView: "+sharedPreferences.getString("imgurl",""));
-            HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
-            tags = new ArrayList(set);
+        HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
+        tags = new ArrayList(set);
 
         presenter = new FeedPresentor(this,new MainFeedModel());
         int empidd=Integer.parseInt(empid.getText().toString());
@@ -185,20 +164,6 @@ public class UserProfile extends Fragment implements MainContract.MainView  {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-
-        editprof.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditProfile editProfile = new EditProfile();
-                Bundle args = new Bundle();
-                args.putString("key", empid.getText().toString());
-                editProfile.setArguments(args);
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.dashboard, editProfile);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
 
         //Interests
 //        String[] genres = {"Mobile Application Development", "Android", "iOS","System Design"};

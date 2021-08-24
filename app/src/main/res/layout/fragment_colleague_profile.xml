@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profile.UserProfile">
+    tools:context=".profile.ColleagueProfile">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:background="@color/basic" />
-
 
         <ScrollView
             android:layout_width="match_parent"
@@ -45,22 +44,13 @@
                         android:id="@+id/profile_image"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        app:civ_shadow="true"
-                        app:civ_shadow_radius="0dp"
                         android:src="@drawable/profile"
-                        app:civ_border="false"
-                        android:layout_gravity="center"/>
-<!--                    <com.mikhaellopez.circularimageview.CircularImageView-->
-<!--                        android:id="@+id/profile_image"-->
-<!--                        android:layout_width="120dp"-->
-<!--                        android:layout_height="120dp"-->
-<!--                        android:src="@drawable/profile"-->
-<!--                        app:civ_border_color="@color/basic"-->
-<!--                        app:civ_border_width="1dp"-->
-<!--                        app:civ_shadow="true"-->
-<!--                        app:civ_shadow_radius="10dp"-->
-<!--                        app:civ_shadow_color="@color/basic"-->
-<!--                        android:layout_gravity="center" />-->
+                        app:civ_border_color="@color/basic"
+                        app:civ_border_width="1dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_radius="10dp"
+                        app:civ_shadow_color="@color/basic"
+                        android:layout_gravity="center" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -87,16 +77,6 @@
 
 
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/editprof"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="10dp"
-                        android:text="Edit"
-                        android:textColor="#F44336"
-                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -143,9 +123,8 @@
                         android:padding="13dp"
                         android:text="User Activity"
                         android:textAllCaps="true"
-                        android:textColor="@color/grey_600"
+                        android:textColor="@color/blue_grey_500"
                         android:textSize="14sp"
-                        android:textStyle="bold"
                         />
 
                 </LinearLayout>
@@ -360,9 +339,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyid"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                    </androidx.recyclerview.widget.RecyclerView>
+                        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

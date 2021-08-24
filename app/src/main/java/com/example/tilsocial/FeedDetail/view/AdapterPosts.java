@@ -3,6 +3,7 @@ package com.example.tilsocial.FeedDetail.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -23,9 +24,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tilsocial.FeedDetail.api.ApiClient;
+import com.example.tilsocial.FeedDetail.api.ApiInterface;
 import com.example.tilsocial.FeedDetail.model.ModelPost;
 import com.example.tilsocial.R;
 import com.example.tilsocial.comments.view.CommentFragment;
@@ -33,6 +37,13 @@ import com.example.tilsocial.likes.model.LikeModel;
 import com.example.tilsocial.likes.model.PostLike;
 import com.example.tilsocial.likes.presenter.LikePresenter;
 import com.example.tilsocial.likes.view.LikeView;
+import com.example.tilsocial.profile.ColleagueProfile;
+import com.example.tilsocial.signin.data.SigninAPIClient;
+import com.example.tilsocial.signin.data.SigninAPIinterface;
+import com.example.tilsocial.signin.model.ErrorResponse;
+import com.example.tilsocial.signin.model.ErrorUtils;
+import com.example.tilsocial.signin.model.UserData;
+import com.example.tilsocial.signup.view.SignUpFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -42,8 +53,13 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -53,13 +69,17 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     String postId,empId;
     private static int POST_VIEW = 0;
     private static int  INTEREST_VIEW = 1;
+    private static int  RECOMMEND_VIEW = 2;
     List<String> tagss = new ArrayList<>();
     LikeView likeView;
-    int flag =0;
+    int flag =0, colleagueflag=0;
     List<String> taggs;
     ArrayList intersett ;
     List<String> interestList = new ArrayList<>();
     int empidinterger;
+    ApiInterface apiInterface;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     public AdapterPosts(Context context, List<ModelPost> modelPosts, List<String> taggs, ArrayList intersett, int empidinterger) {
@@ -68,8 +88,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.taggs = taggs;
         this.intersett = intersett;
         this.empidinterger = empidinterger;
-
-
+        actionBar = ((AppCompatActivity) context).getSupportActionBar();
+        actionBar.setTitle("TIL Social");
 
     }
 
@@ -81,11 +101,14 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
             return new PostsHolder(view);
         }
+        else if(viewType==RECOMMEND_VIEW){
+            view = LayoutInflater.from(context).inflate(R.layout.recomrecyclerview, parent, false);
+            return new RecommendatnHolder(view);
+        }
         else{
             view= LayoutInflater.from(context).inflate(R.layout.taggss, parent, false);
             return new Interestholder(view);
         }
-
 
 
     }
@@ -163,20 +186,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             String datetime= modelPost.getCreatedAt();
             Log.d("datetime", "onBindViewHolder: "+datetime);
 
-//
-//            Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
-//            Log.d("Datetime_calender", "onBindViewHolder: "+calendar);
-//            try {
-//                calendar.setTimeInMillis(Long.parseLong(modelPost.getCreatedAt()));
-//                Log.d("Datetime_calender2", "onBindViewHolder: "+calendar);
-//
-//            } catch (Exception ex) {
-//                ex.printStackTrace();
-//                Log.d("Datetime_calender3", "onBindViewHolder: "+calendar);
-//
-//            }
-//            String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
-//            Log.d("datetime_format", "onBindViewHolder: "+timedate);
+
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]",Locale.ENGLISH)
                     .withZone(ZoneId.of("Etc/UTC"));
@@ -254,8 +264,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
                      FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                      fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
-                     fragmentTransaction.add(R.id.dashboard, commentFragment);
+//                      fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
+                     fragmentTransaction.replace(R.id.dashboard, commentFragment);
                      fragmentTransaction.addToBackStack(null);
                      fragmentTransaction.commit();
 
@@ -277,6 +287,65 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     shareIntent.setType("image/jpg");
 //                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     context.startActivity(Intent.createChooser(shareIntent, "Share post..."));
+                }
+            });
+
+   //colleague profile
+            holder1.userprof.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+                    int EmployeeId=Integer.parseInt(modelPost.getEmpId());
+
+                    Call<UserData> GetCall = apiInterface.getColleagueProf(EmployeeId);
+
+                    GetCall.enqueue(new Callback<UserData>() {
+                        @Override
+                        public void onResponse(Call<UserData> call, Response<UserData> response) {
+                            if(response.isSuccessful())
+                            {
+                                Log.e("Employeeid", "onResponse: " + response.body().getEmpId());
+                                Log.e("Employeename", "onResponse: " + response.body().getName());
+                                sharedPreferences = context.getSharedPreferences("colleague", 0);
+                                editor = sharedPreferences.edit();
+                                editor.putString("empid",response.body().getEmpId().toString());
+                                editor.putString("name", response.body().getName());
+                                editor.putString("dept", response.body().getDept());
+                                editor.putString("bio", response.body().getBio());
+                                editor.putString("desig", response.body().getDesignation());
+                                HashSet<String> set = new HashSet(response.body().getInterests());
+                                editor.putStringSet("inter", set);
+                                editor.putString("team", response.body().getTeam());
+                                editor.putString("imgurl",response.body().getImgUrl());
+                                Log.d("profilepicture", "setDataToRecyclerView: "+response.body().getInterests());
+                                editor.commit();
+
+                                ColleagueProfile colleagueProfile = new ColleagueProfile();
+                                FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
+                                fragmentTransaction.add(R.id.dashboard, colleagueProfile);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+
+                            }
+                            else
+                            {
+                                ErrorResponse errorResponse = ErrorUtils.parseError(response);
+                                Log.d("Errorhandling", "onResponse: "+errorResponse.getError());
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<UserData> call, Throwable t) {
+                            Log.e("Failure", "onResponse: " + t.getMessage() );
+
+                        }
+                    });
+
                 }
             });
 
@@ -344,9 +413,52 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             });
 
 
-
         }
+        else if(getItemViewType(position) == RECOMMEND_VIEW && colleagueflag==0){
+            colleagueflag=1;
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            RecommendatnHolder holder3 = (RecommendatnHolder) holder;
+            holder3.recyclerView.setLayoutManager(layoutManager);
+            holder3.recyclerView.setHasFixedSize(true);
 
+            ArrayList colleagues= new ArrayList();
+            List<UserData> recomData=new ArrayList<>();
+//            modelPosts.add("abcdx12");
+//            modelPosts.add("kfsk");
+//            modelPosts.add("lkaskhjd2");
+            RecommendationAdapter recommendationAdapter=new RecommendationAdapter(recomData,holder3.recyclerView.getContext());
+
+            holder3.recyclerView.setAdapter(recommendationAdapter);
+            //call api
+            apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+            Call<List<UserData>> GetCall = apiInterface.getRecommendation(empidinterger);
+
+            GetCall.enqueue(new Callback<List<UserData>>() {
+                @Override
+                public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
+                    if(response.isSuccessful())
+                    {
+                        Log.e("Employeeidrecom", "onResponse: " + response.body().get(0).getEmpId());
+                        Log.e("Employeenamerecom", "onResponse: " + response.body().get(0).getName());
+                        recomData.addAll(response.body());
+                        recommendationAdapter.notifyDataSetChanged();
+                    }
+                    else
+                    {
+                        ErrorResponse errorResponse = ErrorUtils.parseError(response);
+                        Log.d("Errorhandling", "onResponse: "+errorResponse.getError());
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<List<UserData>> call, Throwable t) {
+                    Log.e("Failure", "onResponse: " + t.getMessage() );
+
+                }
+            });
+        }
 
     }
 
@@ -357,7 +469,10 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             return INTEREST_VIEW;
 
-        } else {
+        }else if(position==10){
+            return RECOMMEND_VIEW;
+        }
+        else {
             return POST_VIEW;
         }
     }
@@ -419,7 +534,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Chip chip;
         Button applybtn;
 
-
         public Interestholder(@NonNull View itemView) {
             super(itemView);
 
@@ -428,9 +542,13 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
-
-
-
+    class RecommendatnHolder extends RecyclerView.ViewHolder{
+        RecyclerView recyclerView;
+        public RecommendatnHolder(@NonNull View itemView) {
+            super(itemView);
+            recyclerView=itemView.findViewById(R.id.recomrecy);
+        }
+    }
 
 }
 

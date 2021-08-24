@@ -62,7 +62,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         tv=view.findViewById(R.id.textview);
 
         mProgress = new ProgressDialog(getActivity());
-        mProgress.setTitle("Processing...");
+        mProgress.setTitle("Something going on...");
         mProgress.setMessage("Please wait...");
         mProgress.setCancelable(false);
         mProgress.setIndeterminate(true);
@@ -106,14 +106,16 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
     @Override
     public void onResponseFailure(Throwable t) {
         Log.e("Signin", "onResponse: " +  t.getMessage());
-        tv.setText("User not exist");
+        tv.setText("Server Error");
         tv.setVisibility(View.VISIBLE);
+        mProgress.dismiss();
     }
 
     @Override
     public void showError() {
         tv.setVisibility(View.VISIBLE);
-        tv.setText("Incorrect user id");
+        tv.setText("Invalid user id");
+        mProgress.dismiss();
     }
 
     @Override

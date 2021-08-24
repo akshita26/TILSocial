@@ -30,7 +30,7 @@ public class SigninPresentor implements ModeltoPresenter.presenter, ModeltoPrese
 
     @Override
     public void doSigninn(SigninRequestParams signinRequestParams, ProgressDialog mProgress) {
-        if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16)
+        if(signinRequestParams.getEmployeeid().length() > 0 && signinRequestParams.getEmployeeid().length() <=16 && signinRequestParams.getEmployeeid().startsWith("1450"))
         {
             signInModel.doSignin(signinRequestParams, this,mProgress);
             mainView.nextActivity();

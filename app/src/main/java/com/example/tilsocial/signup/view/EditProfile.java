@@ -203,7 +203,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
 
     @Override
     public void Servererrorrr(String message) {
-        Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Invalid Id", Toast.LENGTH_SHORT).show();
     }
 
 

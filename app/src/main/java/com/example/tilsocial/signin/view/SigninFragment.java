@@ -35,7 +35,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
     TextView tv;
     Button signinbtn;
     TextInputEditText editText;
-//    SigninPresentor signinPresentor;
+    //    SigninPresentor signinPresentor;
     private ModeltoPresenter.presenter presenter;
     private ProgressDialog mProgress;
     SharedPreferences sharedPreferences;
@@ -48,18 +48,18 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter=new SigninPresentor(this, new SignInModel());
+        presenter = new SigninPresentor(this, new SignInModel());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_signin, container, false);
+        View view = inflater.inflate(R.layout.fragment_signin, container, false);
 
-        editText=view.findViewById(R.id.edittext);
-        signinbtn=view.findViewById(R.id.button);
-        tv=view.findViewById(R.id.textview);
+        editText = view.findViewById(R.id.edittext);
+        signinbtn = view.findViewById(R.id.button);
+        tv = view.findViewById(R.id.textview);
 
         mProgress = new ProgressDialog(getActivity());
         mProgress.setTitle("Something going on...");
@@ -85,7 +85,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
     public void setDataToRecyclerView(UserData userData) {
         sharedPreferences = getActivity().getSharedPreferences("details", 0);
         editor = sharedPreferences.edit();
-        editor.putString("empid",userData.getEmpId().toString());
+        editor.putString("empid", userData.getEmpId().toString());
         editor.putString("name", userData.getName());
         editor.putString("dept", userData.getDept());
         editor.putString("bio", userData.getBio());
@@ -93,8 +93,8 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
         HashSet<String> set = new HashSet(userData.getInterests());
         editor.putStringSet("inter", set);
         editor.putString("team", userData.getTeam());
-        editor.putString("imgurl",userData.getImgUrl());
-        Log.d("profilepicture", "setDataToRecyclerView: "+userData.getInterests());
+        editor.putString("imgurl", userData.getImgUrl());
+        Log.d("profilepicture", "setDataToRecyclerView: " + userData.getInterests());
         editor.commit();
 
         Intent intent = new Intent(getActivity(), DashboardActivity.class);
@@ -105,7 +105,7 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
 
     @Override
     public void onResponseFailure(Throwable t) {
-        Log.e("Signin", "onResponse: " +  t.getMessage());
+        Log.e("Signin", "onResponse: " + t.getMessage());
         tv.setText("Server Error");
         tv.setVisibility(View.VISIBLE);
         mProgress.dismiss();
@@ -124,10 +124,10 @@ public class SigninFragment extends Fragment implements ModeltoPresenter.MainVie
 
     @Override
     public void noUserfound(String error) {
-        Toast.makeText(getActivity(), ""+error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "" + error, Toast.LENGTH_SHORT).show();
         SignUpFragment signUpFragment = new SignUpFragment();
-        Bundle bundle=new Bundle();
-        bundle.putString("emp",editText.getText().toString());
+        Bundle bundle = new Bundle();
+        bundle.putString("emp", editText.getText().toString());
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         signUpFragment.setArguments(bundle);
         ft.replace(R.id.your_placeholder, signUpFragment);

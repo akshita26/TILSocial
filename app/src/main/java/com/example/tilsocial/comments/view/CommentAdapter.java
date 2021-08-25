@@ -25,8 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder>{
-
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder> {
 
 
     Context context;
@@ -58,9 +57,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
                 .error(R.drawable.ic_error_outline)
                 .into(holder.userimg);
 
-        String datetime= commentModel.getCreatedAt();
+        String datetime = commentModel.getCreatedAt();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]",Locale.ENGLISH)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]", Locale.ENGLISH)
                 .withZone(ZoneId.of("Etc/UTC"));
 
         ZonedDateTime zdtUtc = ZonedDateTime.parse(datetime, formatter);
@@ -69,7 +68,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
         DateTimeFormatter dtfOutput = DateTimeFormatter.ofPattern("dd-MM-uuuu hh:mm a", Locale.ENGLISH);
 
-        Log.d("datetimeformatted", "onBindViewHolder: "+zdtInd.format(dtfOutput));
+        Log.d("datetimeformatted", "onBindViewHolder: " + zdtInd.format(dtfOutput));
         holder.time.setText(zdtInd.format(dtfOutput));
 
 
@@ -83,23 +82,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyHolder
 
     class MyHolder extends RecyclerView.ViewHolder {
         //        ImageView picture, image;
-        TextView commentuser, commentt, time,designation;
+        TextView commentuser, commentt, time, designation;
         ImageView userimg;
 
 
-        public MyHolder( View itemView) {
+        public MyHolder(View itemView) {
             super(itemView);
 
             commentuser = itemView.findViewById(R.id.commentname);
             commentt = itemView.findViewById(R.id.commenttext);
             time = itemView.findViewById(R.id.commenttime);
-            userimg=itemView.findViewById(R.id.loadcomment);
+            userimg = itemView.findViewById(R.id.loadcomment);
             designation = itemView.findViewById(R.id.designationn);
 
         }
     }
-
-
 
 
 }

@@ -60,20 +60,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
     List<ModelPost> modelPosts;
     ActionBar actionBar;
-    String postId,empId;
+    String postId, empId;
     private static int POST_VIEW = 0;
-    private static int  INTEREST_VIEW = 1;
-    private static int  RECOMMEND_VIEW = 2;
+    private static int INTEREST_VIEW = 1;
+    private static int RECOMMEND_VIEW = 2;
     List<String> tagss = new ArrayList<>();
     LikeView likeView;
-    int flag =0, colleagueflag=0;
+    int flag = 0, colleagueflag = 0;
     List<String> taggs;
-    ArrayList intersett ;
+    ArrayList intersett;
     List<String> interestList = new ArrayList<>();
     int empidinterger;
     ApiInterface apiInterface;
@@ -95,17 +95,15 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
 
-        if(viewType==POST_VIEW) {
+        if (viewType == POST_VIEW) {
 
             view = LayoutInflater.from(context).inflate(R.layout.feedcardview, parent, false);
             return new PostsHolder(view);
-        }
-        else if(viewType==RECOMMEND_VIEW){
+        } else if (viewType == RECOMMEND_VIEW) {
             view = LayoutInflater.from(context).inflate(R.layout.recomrecyclerview, parent, false);
             return new RecommendatnHolder(view);
-        }
-        else{
-            view= LayoutInflater.from(context).inflate(R.layout.taggss, parent, false);
+        } else {
+            view = LayoutInflater.from(context).inflate(R.layout.taggss, parent, false);
             return new Interestholder(view);
         }
 
@@ -117,8 +115,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
 
-        Log.d("postionn", "onBindViewHolder: "+ position);
-        if (getItemViewType(position) == POST_VIEW ) {
+        Log.d("postionn", "onBindViewHolder: " + position);
+        if (getItemViewType(position) == POST_VIEW) {
 
             PostsHolder holder1 = (PostsHolder) holder;
             ModelPost modelPost = modelPosts.get(position);
@@ -128,47 +126,45 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             Log.d("postidd", "onBindViewHolder: " + postId);
             holder1.like.setText(modelPost.getLikesCount() + " Likes");
             Log.d("postidd", "onBindViewHolder: " + postId);
-            likeView=new LikeView(new LikePresenter(new LikeModel()));
-            holder1.like.setText(modelPost.getLikesCount()+ " Likes");
+            likeView = new LikeView(new LikePresenter(new LikeModel()));
+            holder1.like.setText(modelPost.getLikesCount() + " Likes");
             Log.d("modelpostt", "Liked: " + modelPost.getHasLiked());
-            if(modelPost.getHasLiked()==true) {
+            if (modelPost.getHasLiked() == true) {
                 holder1.likeimage.setColorFilter(Color.rgb(51, 153, 255));
 
 
-            }
-            else{
+            } else {
                 holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
             }
 
             holder1.likeimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(modelPost.getHasLiked()==false) {
-                        Log.e("LikePosteeeee", "falseeeeeee: " );
+                    if (modelPost.getHasLiked() == false) {
+                        Log.e("LikePosteeeee", "falseeeeeee: ");
                         holder1.likeimage.setColorFilter(Color.rgb(51, 153, 255));
-                        PostLike postLike=new PostLike();
+                        PostLike postLike = new PostLike();
                         postId = modelPost.getPostId();
                         postLike.setPostId(postId);
                         postLike.setEmpId(empidinterger);
                         modelPost.setHasLiked(true);
-                        Log.e("LikePosteeeee", "falseeeeeee: "+postId );
-                        Log.e("LikePosteeeee", "falseeeeeee: "+empId );
+                        Log.e("LikePosteeeee", "falseeeeeee: " + postId);
+                        Log.e("LikePosteeeee", "falseeeeeee: " + empId);
                         likeView.postlike(postLike);
-                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())+1+ " Likes");
-                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount())+1));
+                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount()) + 1 + " Likes");
+                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount()) + 1));
                         notifyItemChanged(position);
-                    }
-                    else{
-                        Log.e("LikePosteeee", "trueeeeeeeeeeeee: " );
+                    } else {
+                        Log.e("LikePosteeee", "trueeeeeeeeeeeee: ");
                         holder1.likeimage.setColorFilter(Color.rgb(55, 71, 79));
-                        PostLike postLike=new PostLike();
+                        PostLike postLike = new PostLike();
                         postId = modelPost.getPostId();
                         postLike.setPostId(postId);
                         postLike.setEmpId(empidinterger);
                         likeView.postlike(postLike);
                         modelPost.setHasLiked(false);
-                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount())-1+ " Likes");
-                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount())-1));
+                        holder1.like.setText(Integer.parseInt(modelPost.getLikesCount()) - 1 + " Likes");
+                        modelPost.setLikesCount(Integer.toString(Integer.parseInt(modelPost.getLikesCount()) - 1));
                         notifyItemChanged(position);
                     }
 
@@ -182,9 +178,9 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     .error(R.drawable.profile)
                     .into(holder1.userprof);
 
-            String datetime= modelPost.getCreatedAt();
+            String datetime = modelPost.getCreatedAt();
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]",Locale.ENGLISH)
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]", Locale.ENGLISH)
                     .withZone(ZoneId.of("Etc/UTC"));
 
             ZonedDateTime zdtUtc = ZonedDateTime.parse(datetime, formatter);
@@ -193,7 +189,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             DateTimeFormatter dtfOutput = DateTimeFormatter.ofPattern("dd-MM-uuuu hh:mm a", Locale.ENGLISH);
 
-            Log.d("datetimeformatted", "onBindViewHolder: "+zdtInd.format(dtfOutput));
+            Log.d("datetimeformatted", "onBindViewHolder: " + zdtInd.format(dtfOutput));
             holder1.time.setText(zdtInd.format(dtfOutput));
 
             String taggs[] = modelPost.getTags();
@@ -206,20 +202,16 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
                 holder1.tags.setText(tagg);
             }
-            if(modelPost.getImages()==null||modelPost.getImages().isEmpty()||modelPost.getImages().get(0)==null)
-            {
+            if (modelPost.getImages() == null || modelPost.getImages().isEmpty() || modelPost.getImages().get(0) == null) {
                 holder1.imageView.setVisibility(View.GONE);
-            }
-            else
-            {
-                try{
+            } else {
+                try {
                     Glide.with(context).load(modelPost.getImages().get(0))
                             .placeholder(R.drawable.noimageeee)
                             .error(R.drawable.noimageeee)
                             .into(holder1.imageView);
 
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
 
                 }
 
@@ -228,8 +220,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             holder1.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ImageFragment imageFragment= new ImageFragment();
-                    Bundle bundle=new Bundle();
+                    ImageFragment imageFragment = new ImageFragment();
+                    Bundle bundle = new Bundle();
                     bundle.putString("postimg", modelPost.getImages().get(0));
                     imageFragment.setArguments(bundle);
 
@@ -248,22 +240,22 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 @Override
                 public void onClick(View v) {
                     String postid;
-                    postid=modelPost.getPostId();
+                    postid = modelPost.getPostId();
                     actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
                     actionBar.setTitle("Comment");
                     CommentFragment commentFragment = new CommentFragment();
-                     Bundle bundle=new Bundle();
-                     bundle.putString("postid", postid);
-                     bundle.putString("comments", modelPost.getCommentsCount());
-                     bundle.putInt("commentposition",position);
-                     commentFragment.setArguments(bundle);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("postid", postid);
+                    bundle.putString("comments", modelPost.getCommentsCount());
+                    bundle.putInt("commentposition", position);
+                    commentFragment.setArguments(bundle);
 
-                     FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
-                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //                      fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
-                     fragmentTransaction.replace(R.id.dashboard, commentFragment);
-                     fragmentTransaction.addToBackStack(null);
-                     fragmentTransaction.commit();
+                    fragmentTransaction.replace(R.id.dashboard, commentFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
 
 
                     // notifyItemChanged(position);
@@ -279,34 +271,33 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     shareIntent.setAction(Intent.ACTION_SEND);
                     shareIntent.putExtra(Intent.EXTRA_TEXT, modelPost.getContent());
                     shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(modelPost.getImages().get(0)));
-                    Log.d("sharecheck", "onClick: "+Uri.parse(modelPost.getImages().get(0)));
+                    Log.d("sharecheck", "onClick: " + Uri.parse(modelPost.getImages().get(0)));
                     shareIntent.setType("image/jpg");
 //                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     context.startActivity(Intent.createChooser(shareIntent, "Share post..."));
                 }
             });
 
-   //colleague profile
+            //colleague profile
             holder1.userprof.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-                    int EmployeeId=Integer.parseInt(modelPost.getEmpId());
+                    int EmployeeId = Integer.parseInt(modelPost.getEmpId());
 
                     Call<UserData> GetCall = apiInterface.getColleagueProf(EmployeeId);
 
                     GetCall.enqueue(new Callback<UserData>() {
                         @Override
                         public void onResponse(Call<UserData> call, Response<UserData> response) {
-                            if(response.isSuccessful())
-                            {
+                            if (response.isSuccessful()) {
                                 Log.e("Employeeid", "onResponse: " + response.body().getEmpId());
                                 Log.e("Employeename", "onResponse: " + response.body().getName());
                                 sharedPreferences = context.getSharedPreferences("colleague", 0);
                                 editor = sharedPreferences.edit();
-                                editor.putString("empid",response.body().getEmpId().toString());
+                                editor.putString("empid", response.body().getEmpId().toString());
                                 editor.putString("name", response.body().getName());
                                 editor.putString("dept", response.body().getDept());
                                 editor.putString("bio", response.body().getBio());
@@ -314,8 +305,8 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                                 HashSet<String> set = new HashSet(response.body().getInterests());
                                 editor.putStringSet("inter", set);
                                 editor.putString("team", response.body().getTeam());
-                                editor.putString("imgurl",response.body().getImgUrl());
-                                Log.d("profilepicture", "setDataToRecyclerView: "+response.body().getInterests());
+                                editor.putString("imgurl", response.body().getImgUrl());
+                                Log.d("profilepicture", "setDataToRecyclerView: " + response.body().getInterests());
                                 editor.commit();
 
                                 ColleagueProfile colleagueProfile = new ColleagueProfile();
@@ -326,18 +317,16 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                                 fragmentTransaction.addToBackStack(null);
                                 fragmentTransaction.commit();
 
-                            }
-                            else
-                            {
+                            } else {
                                 ErrorResponse errorResponse = ErrorUtils.parseError(response);
-                                Log.d("Errorhandling", "onResponse: "+errorResponse.getError());
+                                Log.d("Errorhandling", "onResponse: " + errorResponse.getError());
                             }
 
                         }
 
                         @Override
                         public void onFailure(Call<UserData> call, Throwable t) {
-                            Log.e("Failure", "onResponse: " + t.getMessage() );
+                            Log.e("Failure", "onResponse: " + t.getMessage());
 
                         }
                     });
@@ -345,38 +334,34 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 }
             });
 
-        } else if(flag == 0) {
+        } else if (flag == 0) {
 
-                Interestholder holder2 = (Interestholder) holder;
-                  for(int j =0 ;j<taggs.size();j++)
-                    {
-                        if(intersett.contains(taggs.get(j)))
-                        {
-                            holder2.chip = new Chip(context);
-                           // Log.d("intersets", "onBindViewHolder: " + taggs.get(i));
-                            holder2.chip.setText(taggs.get(j));
-                            holder2.chip.setCheckable(true);
-                            holder2.chip.setChecked(true);
-                            holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
-                            holder2.chip.setElevation(5F);
-                            holder2.chipGroup.addView(holder2.chip);
+            Interestholder holder2 = (Interestholder) holder;
+            for (int j = 0; j < taggs.size(); j++) {
+                if (intersett.contains(taggs.get(j))) {
+                    holder2.chip = new Chip(context);
+                    // Log.d("intersets", "onBindViewHolder: " + taggs.get(i));
+                    holder2.chip.setText(taggs.get(j));
+                    holder2.chip.setCheckable(true);
+                    holder2.chip.setChecked(true);
+                    holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                    holder2.chip.setElevation(5F);
+                    holder2.chipGroup.addView(holder2.chip);
 
-                        }
-                        else
-                        {
-                            holder2.chip = new Chip(context);
-                            // Log.d("intersets", "onBindViewHolder: " + taggs.get(i));
-                            holder2.chip.setText(taggs.get(j));
-                            holder2.chip.setCheckable(true);
-                            holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
-                            holder2.chip.setTextAppearanceResource(R.style.ChipTextStyle_Selected);
-                            holder2.chip.setElevation(5F);
-                            holder2.chipGroup.addView(holder2.chip);
-                        }
-                    }
-                  flag = 1;
+                } else {
+                    holder2.chip = new Chip(context);
+                    // Log.d("intersets", "onBindViewHolder: " + taggs.get(i));
+                    holder2.chip.setText(taggs.get(j));
+                    holder2.chip.setCheckable(true);
+                    holder2.chip.setChipBackgroundColor(context.getResources().getColorStateList(R.color.color_state_chip_outline));
+                    holder2.chip.setTextAppearanceResource(R.style.ChipTextStyle_Selected);
+                    holder2.chip.setElevation(5F);
+                    holder2.chipGroup.addView(holder2.chip);
+                }
+            }
+            flag = 1;
 
-                  interestList.addAll(intersett);
+            interestList.addAll(intersett);
 
             Integer c = holder2.chipGroup.getChildCount();
             for (int j = 0; j < c; j++) {
@@ -390,7 +375,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             interestList.remove(chip.getText());
                         }
                         Log.d("intersetslistchecking", "onBindViewHolder: " + interestList.toString());
-                     //Toast.makeText(context, "-" + interestList, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context, "-" + interestList, Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -401,28 +386,26 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 public void onClick(View v) {
 
                     HomeFragment homeFragment = new HomeFragment();
-                    homeFragment.callsaveinterset(interestList,empidinterger,context);
-
+                    homeFragment.callsaveinterset(interestList, empidinterger, context);
 
 
                 }
             });
 
 
-        }
-        else if(getItemViewType(position) == RECOMMEND_VIEW && colleagueflag==0){
-            colleagueflag=1;
+        } else if (getItemViewType(position) == RECOMMEND_VIEW && colleagueflag == 0) {
+            colleagueflag = 1;
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             RecommendatnHolder holder3 = (RecommendatnHolder) holder;
             holder3.recyclerView.setLayoutManager(layoutManager);
             holder3.recyclerView.setHasFixedSize(true);
 
-            ArrayList colleagues= new ArrayList();
-            List<UserData> recomData=new ArrayList<>();
+            ArrayList colleagues = new ArrayList();
+            List<UserData> recomData = new ArrayList<>();
 //            modelPosts.add("abcdx12");
 //            modelPosts.add("kfsk");
 //            modelPosts.add("lkaskhjd2");
-            RecommendationAdapter recommendationAdapter=new RecommendationAdapter(recomData,holder3.recyclerView.getContext());
+            RecommendationAdapter recommendationAdapter = new RecommendationAdapter(recomData, holder3.recyclerView.getContext());
 
             holder3.recyclerView.setAdapter(recommendationAdapter);
             //call api
@@ -433,24 +416,21 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             GetCall.enqueue(new Callback<List<UserData>>() {
                 @Override
                 public void onResponse(Call<List<UserData>> call, Response<List<UserData>> response) {
-                    if(response.isSuccessful())
-                    {
+                    if (response.isSuccessful()) {
                         Log.e("Employeeidrecom", "onResponse: " + response.body().get(0).getEmpId());
                         Log.e("Employeenamerecom", "onResponse: " + response.body().get(0).getName());
                         recomData.addAll(response.body());
                         recommendationAdapter.notifyDataSetChanged();
-                    }
-                    else
-                    {
+                    } else {
                         ErrorResponse errorResponse = ErrorUtils.parseError(response);
-                        Log.d("Errorhandling", "onResponse: "+errorResponse.getError());
+                        Log.d("Errorhandling", "onResponse: " + errorResponse.getError());
                     }
 
                 }
 
                 @Override
                 public void onFailure(Call<List<UserData>> call, Throwable t) {
-                    Log.e("Failure", "onResponse: " + t.getMessage() );
+                    Log.e("Failure", "onResponse: " + t.getMessage());
 
                 }
             });
@@ -461,29 +441,23 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public int getItemViewType(int position) {
 
-        if (position == 5 ) {
-
+        if (position == 5) {
             return INTEREST_VIEW;
 
-        }else if(position==10){
+        } else if (position == 11) {
             return RECOMMEND_VIEW;
-        }
-        else {
+        } else {
             return POST_VIEW;
         }
     }
 
     @Override
     public int getItemCount() {
-        if(modelPosts.size() == 0)
-        {
+        if (modelPosts.size() == 0) {
             return 0;
-        }
-        else
-        {
+        } else {
             return modelPosts.size();
         }
-
 
 
     }
@@ -497,11 +471,10 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
 
-
     class PostsHolder extends RecyclerView.ViewHolder {
 
-        TextView name, content,like, comments,time,tags, desgination;
-        ImageView imageView,share, userprof,commentimg, likeimage;
+        TextView name, content, like, comments, time, tags, desgination;
+        ImageView imageView, share, userprof, commentimg, likeimage;
         ChipGroup chipGroup;
 
         public PostsHolder(View itemView) {
@@ -514,17 +487,17 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             like = itemView.findViewById(R.id.nooflikepost);
             likeimage = itemView.findViewById(R.id.likeimagepost);
             comments = itemView.findViewById(R.id.noofcomment);
-            commentimg=itemView.findViewById(R.id.commentimgbtn);
+            commentimg = itemView.findViewById(R.id.commentimgbtn);
             imageView = itemView.findViewById(R.id.userPostimage);
-            userprof=itemView.findViewById(R.id.userprofileimg);
+            userprof = itemView.findViewById(R.id.userprofileimg);
             time = itemView.findViewById(R.id.timeofpost);
             chipGroup = itemView.findViewById(R.id.chip_groupfortags);
             tags = itemView.findViewById(R.id.tagss);
-            share=itemView.findViewById(R.id.sharebtn);
+            share = itemView.findViewById(R.id.sharebtn);
         }
     }
 
-    class Interestholder extends RecyclerView.ViewHolder{
+    class Interestholder extends RecyclerView.ViewHolder {
 
         ChipGroup chipGroup;
         Chip chip;
@@ -538,11 +511,12 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
-    class RecommendatnHolder extends RecyclerView.ViewHolder{
+    class RecommendatnHolder extends RecyclerView.ViewHolder {
         RecyclerView recyclerView;
+
         public RecommendatnHolder(@NonNull View itemView) {
             super(itemView);
-            recyclerView=itemView.findViewById(R.id.recomrecy);
+            recyclerView = itemView.findViewById(R.id.recomrecy);
         }
     }
 

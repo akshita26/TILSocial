@@ -163,7 +163,7 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
             model.dosignup(signupRequestParams,this);
 
-//            mainView.nextfragmentprofile();
+//           mainView.nextfragmentprofile();
         }
     }
 
@@ -195,5 +195,10 @@ public class SignupPresentor implements MainContractSignup.presenter ,MainContra
 
         }
 
+    }
+
+    @Override
+    public void Servererror(String message) {
+        mainView.Servererrorrr(message);
     }
 }

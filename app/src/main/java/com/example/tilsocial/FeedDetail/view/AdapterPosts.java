@@ -248,7 +248,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     postid=modelPost.getPostId();
                     actionBar = ((AppCompatActivity) v.getContext()).getSupportActionBar();
                     actionBar.setTitle("Comment");
-                    CommentFragment commentFragment = new CommentFragment();
+                     CommentFragment commentFragment = new CommentFragment();
                      Bundle bundle=new Bundle();
                      bundle.putString("postid", postid);
                      bundle.putString("comments", modelPost.getCommentsCount());
@@ -257,7 +257,6 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
                      FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
                      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                      fragmentTransaction.hide(((FragmentActivity) v.getContext()).getSupportFragmentManager().findFragmentById(R.id.dashboard));
                      fragmentTransaction.replace(R.id.dashboard, commentFragment);
                      fragmentTransaction.addToBackStack(null);
                      fragmentTransaction.commit();
@@ -342,6 +341,15 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         } else if(flag == 0) {
 
+
+
+
+
+
+
+
+
+
                 Interestholder holder2 = (Interestholder) holder;
                   for(int j =0 ;j<taggs.size();j++)
                     {
@@ -388,6 +396,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                      //Toast.makeText(context, "-" + interestList, Toast.LENGTH_LONG).show();
                     }
                 });
+
             }
             Log.d("empidchecking", "onBindViewHolder: " + empidinterger);
 
@@ -460,7 +469,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
             return INTEREST_VIEW;
 
-        }else if(position==10){
+        }else if(position==11){
             return RECOMMEND_VIEW;
         }
         else {
@@ -476,7 +485,7 @@ public class AdapterPosts extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
         else
         {
-            return modelPosts.size();
+            return modelPosts.size() ;
         }
 
 

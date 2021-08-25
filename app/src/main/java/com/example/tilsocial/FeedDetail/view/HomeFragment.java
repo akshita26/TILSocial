@@ -119,6 +119,8 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
           recyclerView.setLayoutManager(manager);
           adapterPosts = new AdapterPosts(getActivity(),modelPosts,taggs, intersett,empidinterger);
           recyclerView.setAdapter(adapterPosts);
+          taggs.clear();
+
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -249,6 +251,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
 
         taggs.addAll(spinnerDetails.getTagslist());
+
 
 
 

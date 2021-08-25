@@ -26,19 +26,22 @@ public class SignUpModel implements MainContractSignup.Model
         PostCall.enqueue(new Callback<SignupRequestParams>() {
             @Override
             public void onResponse(Call<SignupRequestParams> call, Response<SignupRequestParams> response) {
-   if(response.isSuccessful()){
                 Log.e(TAG, "onResponse: " + response.code() );
+           if(response.isSuccessful()){
+
 
                     onFinishedListener.OnFinishedSignupdata(response.body());
 
                     Log.e(TAG, "onResponseasasxa: " + response.body());}
-   else {
+         else {
 
-       ErrorResponse errorResponse = ErrorUtils.parseError(response);
-       Log.d("Errorhandling", "onResponse: " + errorResponse.getError());
 
-       Log.d(TAG, "onResponse: errorrrr ");
-   }
+            ErrorResponse errorResponse = ErrorUtils.parseError(response);
+            Log.d("Errorhandling", "onResponse: " + errorResponse.getError());
+             onFinishedListener.Servererror(errorResponse.getMessage());
+
+            Log.d(TAG, "onResponse: errorrrr ");
+           }
 
             }
             @Override

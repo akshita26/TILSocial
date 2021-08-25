@@ -39,6 +39,8 @@ public interface MainContractSignup {
         void extractFb(String s);
         void getspinnerdata(HashMap<String,List<Departments>> map);
         void gettagsdata(List<String> tagss);
+
+        void Servererrorrr(String message);
     }
 
     /**
@@ -51,6 +53,8 @@ public interface MainContractSignup {
             void onFinished(SpinnerDetails spinnerDetails);
             void OnFinishedSignupdata(SignupRequestParams signupRequestParams);
             void onFailure(Throwable t);
+
+            void Servererror(String message);
         }
         void dosignup(SignupRequestParams signupRequestParams, OnFinishedListener onFinishedListener);
         void getSpinnerDetail(OnFinishedListener onFinishedListener);

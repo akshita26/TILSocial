@@ -37,7 +37,7 @@ public class SignUpModel implements MainContractSignup.Model
 
 
             ErrorResponse errorResponse = ErrorUtils.parseError(response);
-            Log.d("Errorhandling", "onResponse: " + errorResponse.getError());
+            Log.d("signupppp123", "onResponse: " + errorResponse.getMessage());
              onFinishedListener.Servererror(errorResponse.getMessage());
 
             Log.d(TAG, "onResponse: errorrrr ");

@@ -104,6 +104,7 @@ public class EditProfile extends Fragment implements MainContractSignup.MainView
             desig= sharedPreferences.getString("desig","");
             empid =sharedPreferences.getString("empid", "");
             teamm=sharedPreferences.getString("team","");
+            imageurl = sharedPreferences.getString("imgurl","");
             HashSet set = (HashSet<String>) sharedPreferences.getStringSet("inter", null);
             tagspref = new ArrayList(set);
 

@@ -40,6 +40,7 @@ import com.example.tilsocial.R;
 import com.example.tilsocial.UserPosts;
 import com.example.tilsocial.signup.model.SpinnerDetails;
 import com.example.tilsocial.signup.view.EditProfile;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -63,7 +64,6 @@ public class ColleagueProfile extends Fragment implements MainContract.MainView 
     ArrayList tags;
     private MainContract.presenter presenter;
     SharedPreferences sharedPreferences;
-    SharedPreferences sharedPreferencessignup;
 
 
     public ColleagueProfile() {
@@ -85,7 +85,6 @@ public class ColleagueProfile extends Fragment implements MainContract.MainView 
 
         actionBar = ((DashboardActivity)getActivity()).getSupportActionBar();
         actionBar.setTitle("Profile");
-
 
         personalinfobtn.setOnClickListener(new View.OnClickListener() {
             @Override

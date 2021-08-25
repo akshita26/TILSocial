@@ -60,20 +60,13 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     int lastpage = 1;
     Boolean isloading = false;
     Boolean islastpage = false;
-    int totalpages ;
+    int totalpages;
     LinearLayout nopost;
-    List<String > taggs = new ArrayList<>();
+    List<String> taggs = new ArrayList<>();
     SharedPreferences sharedPreferences;
     ArrayList intersett = new ArrayList();
     Context context;
-    Parcelable recyclerViewState;
-    HomeFragment fragment1;
     boolean trendingpageon = false;
-
-
-
-
-
 
     public HomeFragment() {
         // Required empty public constructor
@@ -84,13 +77,13 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-//        Toast.makeText(getActivity(), "employeeidis" + empid, Toast.LENGTH_SHORT).show();
 
     }
+
     @Override
-    public void onCreateOptionsMenu( Menu menu,  MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.my_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
 
     }
 
@@ -98,34 +91,34 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-           View view =  inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-          prf = getActivity().getSharedPreferences("details", 0);
-          context = getActivity();
-          empid = prf.getString("empid","");
-          HashSet set = (HashSet<String>) prf.getStringSet("inter", null);
-          ArrayList tags = new ArrayList(set);
-          intersett.addAll(tags);
-          Log.e("editprofileehome", "onResponse133: " + tags.toString());
-          empidinterger = Integer.parseInt(empid);
-          presenter = new FeedPresentor(this,new MainFeedModel());
-          presenter.gettagg();
-          loadingPB = view.findViewById(R.id.preogressbar);
-          nopost = view.findViewById(R.id.noresultt);
-          recyclerView = view.findViewById(R.id.postrecyclerview);
-          modelPosts = new ArrayList<>();
-          loadfeeddata();
-          manager = new LinearLayoutManager(getActivity());
-          recyclerView.setLayoutManager(manager);
-          adapterPosts = new AdapterPosts(getActivity(),modelPosts,taggs, intersett,empidinterger);
-          recyclerView.setAdapter(adapterPosts);
+        prf = getActivity().getSharedPreferences("details", 0);
+        context = getActivity();
+        empid = prf.getString("empid", "");
+        HashSet set = (HashSet<String>) prf.getStringSet("inter", null);
+        ArrayList tags = new ArrayList(set);
+        intersett.addAll(tags);
+        Log.e("editprofileehome", "onResponse133: " + tags.toString());
+        empidinterger = Integer.parseInt(empid);
+        presenter = new FeedPresentor(this, new MainFeedModel());
+        presenter.gettagg();
+        loadingPB = view.findViewById(R.id.preogressbar);
+        nopost = view.findViewById(R.id.noresultt);
+        recyclerView = view.findViewById(R.id.postrecyclerview);
+        modelPosts = new ArrayList<>();
+        loadfeeddata();
+        manager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(manager);
+        adapterPosts = new AdapterPosts(getActivity(), modelPosts, taggs, intersett, empidinterger);
+        recyclerView.setAdapter(adapterPosts);
+        taggs.clear();
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
-                {
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                     isScrolling = true;
                 }
 
@@ -137,38 +130,26 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
                 currentItems = manager.getChildCount();
                 totalItems = manager.getItemCount();
                 scrollOutItems = manager.findFirstVisibleItemPosition();
-                Log.e("HomeActivityfeed12323", "onResponse: " +   "curr" + currentItems  + "/" + totalItems + "/"  + scrollOutItems);
+                Log.e("HomeActivityfeed12323", "onResponse: " + "curr" + currentItems + "/" + totalItems + "/" + scrollOutItems);
 
-                if(!isloading && !islastpage&& isScrolling)
-                {
-                    isScrolling =false;
+                if (!isloading && !islastpage && isScrolling) {
+                    isScrolling = false;
 
-                    if(trendingpageon == true)
-                    {
-                        if((currentItems + scrollOutItems >= totalItems) && scrollOutItems >=0 && totalItems>=pagesize&&pageno!=totalpages)
-                        {
-
+                    if (trendingpageon == true) {
+                        if ((currentItems + scrollOutItems >= totalItems) && scrollOutItems >= 0 && totalItems >= pagesize && pageno != totalpages) {
                             pageno++;
                             loadfeeddatatrending();
                         }
 
-                    }
-                    else
-                    {
-                        if((currentItems + scrollOutItems >= totalItems) && scrollOutItems >=0 && totalItems>=pagesize&&pageno!=totalpages)
-                        {
+                    } else {
+                        if ((currentItems + scrollOutItems >= totalItems) && scrollOutItems >= 0 && totalItems >= pagesize && pageno != totalpages) {
                             //
                             pageno++;
                             loadfeeddata();
                             //loadfeeddatatrending();
                         }
-
                     }
-
-
-
                 }
-
             }
         });
 
@@ -178,39 +159,31 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
     public void loadfeeddata() {
 
 
-        if(pageno == 0)
-        {
-         loadingPB.setVisibility(View.VISIBLE);
+        if (pageno == 0) {
+            loadingPB.setVisibility(View.VISIBLE);
         }
 
-        Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
-        //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
-        presenter.requestDataFromServer(pageno, "recency", empidinterger, "feed",loadingPB);
+        Log.e("HomeActivityfeed13", "onResponse: " + pageno);
+        presenter.requestDataFromServer(pageno, "recency", empidinterger, "feed", loadingPB);
 
     }
 
     private void loadfeeddatatrending() {
 
-        Log.e("HomeActivityfeed13", "onResponse: " +  pageno);
-        //Toast.makeText(getActivity(), "pagg" + pageno, Toast.LENGTH_SHORT).show();
-        presenter.requestDataFromServer(pageno, "trending", empidinterger, "feed",loadingPB);
-
+        Log.e("HomeActivityfeed13", "onResponse: " + pageno);
+        presenter.requestDataFromServer(pageno, "trending", empidinterger, "feed", loadingPB);
 
     }
 
     @Override
     public void setDataToRecyclerView(List<ModelPost> modelPostListt, FeedContent feedContent) {
-        Log.e("HomeActivityfeedlistt", "onResponse: " +  modelPostListt.toString());
-        Log.e("HomeActivityfeedpagenoo", "onResponse: " +  feedContent.getTotalPages());
-        if(modelPostListt.size() == 0 && pageno == 0)
-        {
+        Log.e("HomeActivityfeedlistt", "onResponse: " + modelPostListt.toString());
+        if (modelPostListt.size() == 0 && pageno == 0) {
             nopost.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
 
 
-            totalpages = feedContent.getTotalPages()-1;
+            totalpages = feedContent.getTotalPages() - 1;
             loadingPB.setVisibility(View.GONE);
             isloading = true;
 
@@ -220,12 +193,9 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
             //recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             isloading = false;
             Log.e("size", "onResponse: " + modelPosts.size());
-            if(modelPosts.size()>0)
-            {
-                islastpage = modelPosts.size()<pagesize;
-            }
-            else
-            {
+            if (modelPosts.size() > 0) {
+                islastpage = modelPosts.size() < pagesize;
+            } else {
                 islastpage = true;
             }
 
@@ -234,6 +204,7 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
 
     }
+
     @Override
     public void onResponseFailure(Throwable t) {
         Toast.makeText(getActivity(),
@@ -249,7 +220,6 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
 
         taggs.addAll(spinnerDetails.getTagslist());
-
 
 
     }
@@ -270,10 +240,10 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
         fragmentTransaction.commit();
 
 
-
         Log.e("HomeActivityfeedtag464", "onResponse: " + tagDetails.getTagglist());
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -286,28 +256,25 @@ public class HomeFragment extends Fragment implements MainContract.MainView {
 
             Toast.makeText(getActivity(), "Recent", Toast.LENGTH_SHORT).show();
 //            drawer.openDrawer(GravityCompat.END);
-        } else if(item.getItemId() == R.id.Trending)
-        {
+        } else if (item.getItemId() == R.id.Trending) {
             modelPosts.clear();
             pageno = 0;
             trendingpageon = true;
             loadfeeddatatrending();
             Toast.makeText(getActivity(), "Trending", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             Toast.makeText(getActivity(), item.getTitle(), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void callsaveinterset(List<String> interestList, int empidd, Context context) {
-        presenter = new FeedPresentor(this,new MainFeedModel());
-        presenter.setnewtagss(empidd,interestList,context);
+        presenter = new FeedPresentor(this, new MainFeedModel());
+        presenter.setnewtagss(empidd, interestList, context);
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         ((DashboardActivity) getActivity()).setActionBarTitle("TIL Social");
     }
